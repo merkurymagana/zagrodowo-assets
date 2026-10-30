@@ -1,0 +1,1355 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zagrodowo</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;font-family:'Nunito',Arial,sans-serif}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+
+:root{--wood:url("https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/drewno-bok.jpg")}
+
+body{background:#70482f var(--wood) repeat center/auto 100vh}
+
+#appStage{
+ position:fixed;left:50%;top:50%;width:1720px;height:675px;
+ transform:translate(-50%,-50%) scale(var(--stage-scale,1));
+ transform-origin:center;overflow:hidden;
+ background:#70482f var(--wood) repeat center/auto 100%;
+ box-shadow:0 0 35px #0009
+}
+
+.main-btn,.auth-title,.auth-submit,.farm-title,.farm-area,.farm-home,
+.logout-button,.view-placeholder button,#gameViewTitle,.side-menu button,
+.profile-heading,.map-farm-button,.social-title{
+ font-family:'Bree Serif',Georgia,serif;font-weight:normal
+}
+
+/* EKRAN STARTOWY */
+
+#start{
+ position:absolute;left:260px;top:0;width:1200px;height:675px;
+ z-index:1;overflow:hidden;isolation:isolate;background:#70482f;
+ transition:background 1s
+}
+#seasonImage{position:absolute;inset:0;z-index:1;display:block;width:100%;height:100%;object-fit:fill;object-position:center;pointer-events:none}
+#start.spring{--start-login:#E7AFC0;--start-register:#789B68;--start-border:#946675;--start-text:#49313A}
+#start.summer{--start-login:#E9C36D;--start-register:#83A84D;--start-border:#8C713A;--start-text:#493719}
+#start.autumn{--start-login:#B96B45;--start-register:#D99B45;--start-border:#70412D;--start-text:#FFFFFF}
+#start.winter{--start-login:#78A9C8;--start-register:#DCEAF2;--start-border:#587F99;--start-text:#29495E}
+.season-shade{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to bottom,#18221205,transparent 65%,#141c0e1f)}
+.sun-rays{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;background:repeating-conic-gradient(from 0deg at 50% 50%,#fff4b114 0deg,transparent 8deg,transparent 18deg);animation:raysMove 45s linear infinite}
+#start.summer .sun-rays{opacity:.7}
+@keyframes raysMove{to{transform:rotate(360deg)}}
+.season-effects{position:absolute;inset:0;z-index:4;overflow:hidden;pointer-events:none}
+.effect{position:absolute;top:-12%;left:var(--left);font-size:var(--size);opacity:var(--opacity);animation:fall var(--duration) linear var(--delay) infinite;user-select:none}
+@keyframes fall{0%{transform:translate(0,-5vh) rotate(0)}50%{transform:translate(var(--sway),50vh) rotate(180deg)}100%{transform:translate(var(--sway-end),115vh) rotate(360deg)}}
+
+.start-buttons{position:absolute;z-index:10;right:7%;bottom:8%;width:340px;min-height:58px;display:flex;gap:12px}
+.main-btn{flex:1;min-width:0;min-height:52px;padding:9px 12px;border:2px solid var(--start-border);border-radius:8px;background:var(--start-login);color:var(--start-text);font-size:16px;box-shadow:0 3px 6px #23160a55;transition:background .2s,transform .2s}
+.main-btn.register{background:var(--start-register)}
+.main-btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.main-btn:active{transform:translateY(1px)}
+
+/* FORMULARZE */
+
+.auth-overlay,.profile-overlay{
+ position:absolute;left:260px;top:0;width:1200px;height:675px;
+ z-index:80;display:none;align-items:center;justify-content:center;
+ overflow-y:auto;overflow-x:hidden;padding:18px;background:#11190dc2;
+ backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+ -webkit-overflow-scrolling:touch;overscroll-behavior:contain
+}
+.auth-overlay.visible,.profile-overlay.visible{display:flex}
+
+#authOverlay.spring{--auth-panel:#FFF4F5;--auth-panel-bottom:#F1DDE3;--auth-border:#D5A8B6;--auth-title:#814D60;--auth-description:#956C7B;--auth-text:#634653;--auth-input:#FFFAFB;--auth-input-border:#D9AFBB;--auth-input-focus:#8CA978;--auth-login-color:#789B68;--auth-register-color:#D98FA9;--auth-button-text:#FFFFFF;--link-season-color:#A65375;--message-bg:#FFF0F3;--message-border:#DDB5C1;--check-color:#789B68}
+#authOverlay.summer{--auth-panel:#FFF9E9;--auth-panel-bottom:#F2E5C1;--auth-border:#D8C18A;--auth-title:#765627;--auth-description:#967B4B;--auth-text:#66502D;--auth-input:#FFFDF5;--auth-input-border:#D8C38F;--auth-input-focus:#B99545;--auth-login-color:#E0AD38;--auth-register-color:#789B3F;--auth-button-text:#FFFFFF;--link-season-color:#A27625;--message-bg:#FFF8E6;--message-border:#DDC88F;--check-color:#789B3F}
+#authOverlay.autumn{--auth-panel:#FFF1DF;--auth-panel-bottom:#EBD4B8;--auth-border:#BD916A;--auth-title:#70432C;--auth-description:#956C4D;--auth-text:#65452E;--auth-input:#FFFAF2;--auth-input-border:#C5A17A;--auth-input-focus:#A85D3D;--auth-login-color:#A85D3D;--auth-register-color:#D99B45;--auth-button-text:#FFFFFF;--link-season-color:#A9572D;--message-bg:#FFF5E8;--message-border:#D3AD82;--check-color:#C87937}
+#authOverlay.winter{--auth-panel:#F0F7FB;--auth-panel-bottom:#DCE9F1;--auth-border:#A9C4D6;--auth-title:#36576D;--auth-description:#607F94;--auth-text:#3F5C70;--auth-input:#FBFDFF;--auth-input-border:#B1C9D8;--auth-input-focus:#79A9C7;--auth-login-color:#5C91B5;--auth-register-color:#345E7B;--auth-button-text:#FFFFFF;--link-season-color:#477FA4;--message-bg:#F5FAFF;--message-border:#B5D0E0;--check-color:#5C91B5}
+
+.auth-window{position:relative;flex:0 1 420px;width:420px;max-width:100%;max-height:calc(100% - 36px);margin:auto;overflow-y:auto;overflow-x:hidden;padding:30px 28px 26px;border:1px solid var(--auth-border,#c3ad83);border-radius:12px;background:linear-gradient(145deg,var(--auth-panel,#fff7e0),var(--auth-panel-bottom,#f1e0b8));box-shadow:0 12px 40px #0008;scrollbar-width:thin}
+.close-btn{position:absolute;top:7px;right:9px;z-index:3;width:34px;height:34px;padding:0;border:0;background:transparent;color:#d52b2b;font:bold 32px/30px Arial}
+.auth-title{margin:0 24px 8px;color:var(--auth-title);font-size:26px;text-align:center}
+.auth-description{margin:0 0 22px;color:var(--auth-description);font-size:14px;line-height:1.5;text-align:center}
+.auth-form{display:none}.auth-form.active{display:block}
+.field{display:block;margin-bottom:14px;color:var(--auth-text);font-size:14px;font-weight:700}
+.field input{display:block;width:100%;min-height:43px;margin-top:6px;padding:10px 12px;border:1px solid var(--auth-input-border);border-radius:6px;background:var(--auth-input);color:#33251a;outline:none;font-size:15px}
+.field input:focus{border-color:var(--auth-input-focus);box-shadow:0 0 0 2px #79985b33}
+.password-wrap{position:relative}.password-wrap input{padding-right:49px}
+.eye-btn{position:absolute;top:7px;right:5px;width:38px;height:35px;display:flex;align-items:center;justify-content:center;border:0;border-radius:5px;background:transparent;color:var(--auth-text)}
+.eye-btn svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.auth-submit{display:block;width:100%;min-height:48px;margin:12px 0 0;padding:11px 15px;border:2px solid var(--auth-login-color)!important;border-radius:7px;background:var(--auth-login-color)!important;color:white!important;font-size:16px;cursor:pointer}
+#registerForm .auth-submit{border-color:var(--auth-register-color)!important;background:var(--auth-register-color)!important}
+.auth-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin-top:18px}
+.text-link{padding:0;border:0;background:transparent;color:var(--link-season-color);font-size:13px;text-decoration:underline}
+.rules-row{display:flex;align-items:flex-start;gap:10px;margin:15px 0;color:var(--auth-text);font-size:13px;line-height:1.5;cursor:pointer}
+.message{display:none;margin-top:14px;padding:10px;border:1px solid var(--message-border);border-radius:6px;background:var(--message-bg);color:var(--auth-text);font-size:13px}
+.message.visible{display:block}
+
+/* GRA */
+
+#game{display:none;position:absolute;inset:0;z-index:50;overflow:hidden;background:#70482f var(--wood) repeat center/auto 100%;color:#493d2c}
+#gameMain{position:absolute;left:260px;top:0;right:320px;bottom:0;width:auto;overflow:hidden;background:#e9e4d1}
+#gameViewport{position:absolute;inset:0;overflow:hidden;touch-action:none;user-select:none;overscroll-behavior:none;cursor:grab;background:#e9e4d1}
+#gameViewport.dragging{cursor:grabbing}
+#gameCanvas{position:absolute;left:0;top:0;width:1200px;height:766px;transform-origin:0 0;background:#e9e4d1;color:#493d2c;will-change:transform;overflow:auto}
+#gameCanvas button{touch-action:manipulation}
+#gameCanvas input,#gameCanvas textarea{user-select:text}
+.game-content{width:1200px;min-height:766px;padding:22px 28px 30px}
+.farm-title{margin:0 0 5px;text-align:center;font-size:27px;color:#536d3b}
+.farm-subtitle{margin:0 0 20px;text-align:center;color:#776d55}
+.farm-land{position:relative;width:1120px;min-height:440px;margin:0 auto;padding:24px;border:1px solid #b4b98b;border-radius:15px;background:linear-gradient(145deg,#dce4b6,#b6ca8e 60%,#c8d39f);box-shadow:0 5px 18px #414b2a1f}
+.farm-map{display:grid;grid-template-columns:repeat(3,minmax(200px,1fr));gap:16px;width:880px;margin:0 auto}
+.farm-area{position:relative;min-height:125px;border:2px solid #9ba978;border-radius:12px;background:#f6f2d1b8;color:#4c6138;font-size:18px}
+.farm-area.available{border-color:#789553;background:#e9edc8}
+.farm-area.locked{border-color:#b2b09a;background:#cfcfbcba;color:#777563}
+.farm-home{display:block;width:240px;min-height:90px;margin:20px auto 0;border:2px solid #a58d60;border-radius:12px;background:#f2dfad;color:#66502e;font-size:19px}
+.game-notice{width:880px;margin:16px auto 0;padding:12px 15px;border:1px solid #c5bd91;border-radius:8px;background:#fffee6cc;color:#5b573e;text-align:center}
+#gameViewTitle{margin:0 0 8px;text-align:center;color:#536d3b}
+#gameViewDescription{width:850px;margin:0 auto 18px;text-align:center;line-height:1.6;color:#6d634c}
+.view-placeholder{width:850px;margin:25px auto;padding:28px;border:1px solid #c5bd91;border-radius:12px;background:#f8f3df;text-align:center}
+.view-placeholder .big-icon{font-size:48px}
+.view-placeholder button{margin:8px;padding:10px 15px;border:1px solid #a7a07e;border-radius:7px;background:#e9edc8;color:#4d5c37}
+
+/* MAPA */
+
+#mapContent{display:none;width:900px;margin:25px auto;padding:24px;border:1px solid #b7a77e;border-radius:14px;background:linear-gradient(145deg,#f5efd9,#e7dfc2);box-shadow:0 5px 16px #51432b20}
+.map-heading{margin:0 0 8px;color:#536d3b;font:normal 25px 'Bree Serif',Georgia,serif;text-align:center}
+.map-description{margin:0 0 22px;color:#786c51;text-align:center}
+.map-farms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.map-farm-button{min-height:150px;padding:18px;border:2px solid #a58d60;border-radius:12px;background:linear-gradient(145deg,#e5edc8,#cbd9a5);color:#4e6339;font-size:19px}
+.map-farm-button .farm-map-icon{display:block;margin-bottom:9px;font-size:38px}
+.map-farm-button small{display:block;margin-top:7px;font:normal 13px 'Nunito',Arial,sans-serif;color:#69764c}
+.map-farm-button.locked-farm{border-color:#b2ad9c;background:#dedccf;color:#777563;cursor:not-allowed}
+.map-note{margin:18px 0 0;padding:11px;border:1px solid #c5bd91;border-radius:8px;background:#fffde7;color:#6b6148;text-align:center;font-size:13px}
+
+/* PRAWY PANEL */
+
+#playerPanel{position:absolute;top:0;right:0;bottom:0;width:320px;z-index:10;padding:13px 12px 12px;background:#765037 var(--wood) repeat center/auto 100%;border-left:5px solid #4d3020;box-shadow:inset 5px 0 10px #0003;display:flex;flex-direction:column;gap:10px;overflow-y:auto;color:#fff4df}
+.profile-card{padding:12px 10px;border:2px solid #b38b5c;border-radius:10px;background:linear-gradient(145deg,#f1e1bf,#dfc69b);color:#59432c;box-shadow:0 3px 8px #29180d66,inset 0 1px 3px #fff9}
+.avatar-row{display:flex;align-items:center;gap:10px}
+.avatar-frame{flex:0 0 76px;width:76px;height:76px;overflow:hidden;display:flex;align-items:center;justify-content:center;border:3px solid #9a7145;border-radius:9px;background:#c9b18a}
+#playerAvatar{width:100%;height:100%;object-fit:cover;display:block}
+.avatar-placeholder{font-size:42px}
+.player-info{min-width:0;flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.player-name{display:block;width:100%;margin:0;font-family:'Bree Serif',Georgia,serif;font-size:18px;line-height:1.2;overflow-wrap:anywhere;text-align:left}
+.player-level{display:block;width:100%;margin:4px 0 0;padding:0;font-size:13px;font-weight:800;color:#705333;text-align:left}
+.xp-label{display:flex;justify-content:space-between;gap:4px;margin-top:11px;font-size:11px;font-weight:800;color:#715536}
+.xp-track{height:9px;margin-top:4px;border:1px solid #9e865f;border-radius:8px;background:#c4b18c;overflow:hidden}
+#xpFill{height:100%;width:0;background:linear-gradient(#9fbd65,#638641);transition:width .3s}
+.currency-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}
+.currency-box{padding:7px 5px;border:1px solid #c5ad81;border-radius:7px;background:#fff4dd;text-align:center}
+.currency-label{font-size:10px;font-weight:800;color:#7c613c}
+.currency-value{margin-top:2px;font-family:'Bree Serif',Georgia,serif;font-size:19px;color:#58432c}
+.profile-edit{width:100%;margin-top:9px;padding:7px;border:1px solid #9a7549;border-radius:6px;background:#d3b17c;color:#503a25;font-size:12px;font-weight:800}
+.side-menu{display:flex;flex-direction:column;gap:6px}
+.side-menu button{width:100%;min-height:43px;display:flex;align-items:center;gap:10px;padding:7px 10px;border:1px solid #b18a5d;border-radius:7px;background:linear-gradient(#a77c50,#89613e);color:#fff3dc;text-align:left;font-size:15px;box-shadow:0 2px 4px #24150c66}
+.side-menu button:hover,.side-menu button.selected{background:linear-gradient(#d5b47e,#b88c57);color:#49331f;border-color:#e2c99c}
+.menu-icon{width:27px;text-align:center;font-family:Arial,sans-serif;font-size:20px}
+.menu-count{margin-left:auto;min-width:20px;height:20px;padding:1px 5px;border-radius:12px;background:#a52f25;color:white;font:800 11px/18px Nunito;text-align:center}
+.panel-bottom{margin-top:auto;display:flex;flex-direction:column;gap:7px}
+.logout-button{width:100%;padding:9px;border:1px solid #d2b58c;border-radius:7px;background:#eee0c2;color:#573c26;font-size:14px}
+.panel-version{text-align:center;color:#e6cfad;font-size:10px}
+
+/* EDYCJA PROFILU */
+
+.profile-window{position:relative;flex:0 1 390px;width:390px;max-width:100%;max-height:calc(100% - 36px);margin:auto;padding:25px 22px 20px;overflow-y:auto;border:2px solid #b18b5d;border-radius:12px;background:linear-gradient(145deg,#f5e7c9,#e3cba2);color:#59432c;box-shadow:0 12px 40px #0009}
+.profile-window h2{margin:0 25px 15px;text-align:center;font:normal 23px 'Bree Serif',serif}
+.profile-window .field{color:#59432c}
+.profile-window .field input{background:#fffaf0;border-color:#c3a77c}
+.profile-preview{display:flex;justify-content:center;margin:10px 0}
+.profile-preview .avatar-frame{width:105px;height:105px;flex-basis:105px}
+.profile-actions{display:flex;gap:8px;margin-top:12px}
+.profile-actions button{flex:1;min-height:40px;padding:9px 6px;border:1px solid #967248;border-radius:6px;background:#a77c50;color:white;font-weight:800}
+.profile-actions button.secondary{background:#e8d6b5;color:#60462c}
+.profile-hint{font-size:11px;line-height:1.4;color:#806748;margin-top:9px}
+.profile-error{font-size:12px;color:#a12d20;margin-top:8px;min-height:16px}
+
+/* SĄSIEDZI — NOWA SEKCJA */
+
+#neighborsContent{
+ display:none;width:1040px;min-height:540px;margin:8px auto;padding:20px;
+ border:2px solid #b59a6b;border-radius:14px;
+ background:linear-gradient(145deg,#f7f0dc,#e8dfc4);
+ box-shadow:0 5px 18px #51432b20
+}
+.social-title{margin:0 0 5px;text-align:center;color:#536d3b;font-size:27px}
+.social-description{text-align:center;color:#786c51;margin:0 0 18px}
+.social-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+.social-tab{min-width:145px;padding:11px 15px;border:1px solid #a58d60;border-radius:8px;background:linear-gradient(#eee5cb,#d9c9a4);color:#59452d;font-family:'Bree Serif',serif;font-size:16px}
+.social-tab.active{background:linear-gradient(#a77c50,#89613e);color:#fff4df;border-color:#70482f}
+.social-pane{display:none}
+.social-pane.active{display:block}
+.social-search{display:flex;gap:8px;max-width:650px;margin:0 auto 15px}
+.social-search input{flex:1;min-width:0;padding:11px 13px;border:1px solid #b8a47a;border-radius:7px;background:#fffdf3;color:#4c3d29}
+.social-action{padding:9px 14px;border:1px solid #8d754e;border-radius:7px;background:#9b784e;color:white;font-weight:800}
+.social-action:hover{filter:brightness(1.08)}
+.social-action.secondary{background:#e7dcc0;color:#5c482f}
+.social-action.danger{background:#a84c3c;color:white;border-color:#823b30}
+.social-list{display:flex;flex-direction:column;gap:9px;max-width:780px;margin:0 auto}
+.social-card{display:flex;align-items:center;gap:12px;padding:11px 13px;border:1px solid #c6b58f;border-radius:9px;background:#fff9e9;box-shadow:0 2px 5px #49361b12}
+.social-avatar{flex:0 0 48px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border:2px solid #b49a6b;border-radius:50%;background:#e4d5b2;font-size:25px;overflow:hidden}
+.social-avatar img{width:100%;height:100%;object-fit:cover}
+.social-user{min-width:0;flex:1}
+.social-user strong{display:block;color:#55432c;font-family:'Bree Serif',serif;font-size:17px;overflow-wrap:anywhere}
+.social-user small{display:block;margin-top:3px;color:#837252;font-size:12px}
+.online-dot{color:#4d9a4e;font-weight:800}
+.offline-dot{color:#999}
+.social-buttons{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.social-buttons button{padding:7px 10px;font-size:12px}
+.social-empty{padding:24px;text-align:center;color:#857657;border:1px dashed #c1b18c;border-radius:9px;background:#fff9e7}
+.social-note{max-width:780px;margin:12px auto;padding:10px;border-radius:7px;background:#f2e8cd;color:#776344;font-size:12px;text-align:center}
+.conversation-layout{display:grid;grid-template-columns:270px 1fr;gap:12px;min-height:380px}
+.conversation-list{padding:9px;border:1px solid #c5b58f;border-radius:9px;background:#f5edda;overflow:auto;max-height:410px}
+.conversation-choice{width:100%;display:flex;gap:9px;align-items:center;padding:10px;margin-bottom:6px;border:1px solid transparent;border-radius:7px;background:#fff9e9;text-align:left;color:#55432c}
+.conversation-choice.active{border-color:#a98b5c;background:#e9dfc4}
+.conversation-choice strong{display:block;font-family:'Bree Serif',serif}
+.conversation-choice small{color:#877655}
+.conversation-window{display:flex;flex-direction:column;min-width:0;min-height:380px;border:1px solid #c5b58f;border-radius:9px;background:#fffaf0;overflow:hidden}
+.conversation-heading{padding:12px 15px;background:#e8ddc2;border-bottom:1px solid #c5b58f;color:#59452d;font-family:'Bree Serif',serif;font-size:18px}
+.conversation-messages{flex:1;min-height:250px;max-height:300px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px}
+.chat-message{max-width:78%;padding:9px 12px;border-radius:10px;background:#eee4cc;color:#51432e;align-self:flex-start;overflow-wrap:anywhere}
+.chat-message.mine{align-self:flex-end;background:#dce8c7}
+.chat-message small{display:block;margin-top:5px;color:#897a5e;font-size:10px;text-align:right}
+.chat-compose{display:flex;gap:8px;padding:10px;border-top:1px solid #d3c5a5;background:#f6eedc}
+.chat-compose textarea{flex:1;min-width:0;min-height:43px;max-height:90px;resize:vertical;padding:10px;border:1px solid #c5b58f;border-radius:7px;background:white;color:#51432e}
+.chat-compose button{align-self:stretch}
+.chat-locked{padding:18px;text-align:center;color:#8b7551}
+
+/* MENU I OKNA */
+
+@media(max-height:520px){
+ .auth-overlay,.profile-overlay{padding:8px}
+ .auth-window,.profile-window{max-height:calc(100% - 16px);padding-top:24px;padding-bottom:18px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+
+<body>
+<div id="appStage">
+
+<div id="start" class="autumn">
+ <img id="seasonImage" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jesien.png" alt="Zagrodowo — sezonowy ekran startowy">
+ <div class="season-shade"></div><div class="sun-rays"></div><div class="season-effects" id="seasonEffects"></div>
+ <div class="start-buttons">
+  <button id="loginButton" class="main-btn" type="button">Zaloguj się</button>
+  <button id="registerButton" class="main-btn register" type="button">Zarejestruj się</button>
+ </div>
+</div>
+
+<div class="auth-overlay" id="authOverlay">
+ <div class="auth-window">
+  <button class="close-btn" type="button" aria-label="Zamknij" id="closeAuthButton">×</button>
+  <h2 class="auth-title" id="authTitle">Witaj ponownie!</h2>
+  <p class="auth-description" id="authDescription">Zaloguj się i wróć do swojego gospodarstwa.</p>
+
+  <form class="auth-form active" id="loginForm">
+   <label class="field">Nick gracza<input type="text" name="login" autocomplete="username" placeholder="Wpisz swój nick" required></label>
+   <label class="field">Hasło<div class="password-wrap"><input type="password" name="password" autocomplete="current-password" placeholder="Wpisz hasło" required><button class="eye-btn" type="button" aria-label="Pokaż hasło"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></label>
+   <button class="auth-submit" type="submit">Zaloguj się</button>
+   <div class="auth-links"><button class="text-link" type="button" data-form="forgot">Nie pamiętam hasła</button><button class="text-link" type="button" data-form="register">Utwórz konto</button></div>
+  </form>
+
+  <form class="auth-form" id="registerForm">
+   <label class="field">Nazwa gracza<input type="text" name="nickname" autocomplete="nickname" minlength="3" maxlength="20" placeholder="Wymyśl nazwę gracza" required></label>
+   <label class="field">Adres e-mail<input type="email" name="email" autocomplete="email" placeholder="twoj@email.pl" required></label>
+   <label class="field">Hasło<div class="password-wrap"><input type="password" name="password" autocomplete="new-password" minlength="8" placeholder="Minimum 8 znaków" required><button class="eye-btn" type="button" aria-label="Pokaż hasło"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></label>
+   <label class="field">Powtórz hasło<div class="password-wrap"><input type="password" name="confirmPassword" autocomplete="new-password" minlength="8" placeholder="Wpisz hasło ponownie" required><button class="eye-btn" type="button" aria-label="Pokaż hasło"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></label>
+   <label class="rules-row"><input type="checkbox" name="rules" required><span>Akceptuję regulamin gry i zasady korzystania z serwisu.</span></label>
+   <button class="auth-submit" type="submit">Zarejestruj się</button>
+   <div class="auth-links"><button class="text-link" type="button" data-form="login">Masz już konto? Zaloguj się</button></div>
+  </form>
+
+  <form class="auth-form" id="forgotForm">
+   <label class="field">Adres e-mail przypisany do konta<input type="email" name="email" placeholder="twoj@email.pl" required></label>
+   <button class="auth-submit" type="submit">Odzyskaj hasło</button>
+   <div class="auth-links"><button class="text-link" type="button" data-form="login">Wróć do logowania</button></div>
+  </form>
+  <div class="message" id="authMessage" role="status" aria-live="polite"></div>
+ </div>
+</div>
+
+<div id="game">
+ <main id="gameMain">
+  <div id="gameViewport">
+   <div id="gameCanvas">
+    <main class="game-content">
+     <section id="farmView">
+      <h1 class="farm-title">Twoja pierwsza farma</h1>
+      <p class="farm-subtitle">Witaj w Zagrodowie! Tutaj zaczyna się Twoja wiejska przygoda.</p>
+      <div class="farm-land">
+       <div class="farm-map">
+        <button class="farm-area available" onclick="showNotice('Obszar 1 jest dostępny. To tutaj rozpoczniesz uprawę roślin.')">🌱<br>Obszar 1<br><small>Dostępny</small></button>
+        <button class="farm-area locked" onclick="showNotice('Obszar 2 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 2<br><small>Zablokowany</small></button>
+        <button class="farm-area locked" onclick="showNotice('Obszar 3 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 3<br><small>Zablokowany</small></button>
+        <button class="farm-area locked" onclick="showNotice('Obszar 4 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 4<br><small>Zablokowany</small></button>
+        <button class="farm-area locked" onclick="showNotice('Obszar 5 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 5<br><small>Zablokowany</small></button>
+        <button class="farm-area locked" onclick="showNotice('Obszar 6 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 6<br><small>Zablokowany</small></button>
+       </div>
+       <button class="farm-home" onclick="openGameView('home')">🏡<br>Twój dom</button>
+       <div class="game-notice" id="gameNotice">Wybierz obszar gospodarstwa, aby dowiedzieć się więcej.</div>
+      </div>
+     </section>
+
+     <section id="otherView" style="display:none">
+      <h1 id="gameViewTitle"></h1><p id="gameViewDescription"></p>
+
+      <div id="mapContent">
+       <h2 class="map-heading">Twoje gospodarstwa</h2>
+       <p class="map-description">Wybierz farmę, na którą chcesz się przenieść.</p>
+       <div class="map-farms">
+        <button class="map-farm-button" type="button" onclick="openGameView('farm')"><span class="farm-map-icon">🏡</span>Pierwsza farma<small>Twoje gospodarstwo początkowe</small></button>
+        <button class="map-farm-button locked-farm" type="button" disabled><span class="farm-map-icon">🔒</span>Kolejna farma<small>Jeszcze niedostępna</small></button>
+       </div>
+       <div class="map-note">Kolejne gospodarstwa pojawią się na mapie, gdy zostaną odblokowane w grze.</div>
+      </div>
+
+      <div class="view-placeholder" id="genericViewContent">
+       <div class="big-icon" id="viewIcon">🌱</div>
+       <h2 id="viewSubTitle">Twoja przygoda dopiero się zaczyna</h2>
+       <p id="viewText">Ta część gry będzie rozwijana w kolejnych etapach gry.</p>
+      </div>
+
+      <!-- NOWY PANEL SĄSIADÓW -->
+      <div id="neighborsContent">
+       <h2 class="social-title">🏡 Sąsiedzi Zagrodowa</h2>
+       <p class="social-description">Znajdź gospodarzy, dodawaj znajomych i rozmawiaj z nimi.</p>
+
+       <div class="social-tabs">
+        <button class="social-tab active" data-social-tab="friends" onclick="showSocialTab('friends')">👥 Znajomi <span id="friendsCount">0</span></button>
+        <button class="social-tab" data-social-tab="messages" onclick="showSocialTab('messages')">✉ Wiadomości <span id="unreadCount"></span></button>
+        <button class="social-tab" data-social-tab="search" onclick="showSocialTab('search')">🔎 Szukaj graczy</button>
+        <button class="social-tab" data-social-tab="requests" onclick="showSocialTab('requests')">📨 Zaproszenia <span id="requestsCount"></span></button>
+       </div>
+
+       <section class="social-pane active" id="socialFriends">
+        <div class="social-list" id="friendsList"></div>
+       </section>
+
+       <section class="social-pane" id="socialMessages">
+        <div class="conversation-layout">
+         <div class="conversation-list" id="conversationList"></div>
+         <div class="conversation-window">
+          <div class="conversation-heading" id="conversationHeading">Wybierz znajomego</div>
+          <div class="conversation-messages" id="conversationMessages"><div class="chat-locked">Wybierz rozmowę z listy po lewej stronie.</div></div>
+          <form class="chat-compose" id="chatForm">
+           <textarea id="chatInput" maxlength="500" placeholder="Napisz wiadomość..." disabled></textarea>
+           <button class="social-action" id="sendMessageButton" type="submit" disabled>Wyślij</button>
+          </form>
+         </div>
+        </div>
+       </section>
+
+       <section class="social-pane" id="socialSearch">
+        <div class="social-search">
+         <input id="playerSearchInput" type="search" placeholder="Wpisz nick gracza..." autocomplete="off">
+         <button class="social-action" type="button" onclick="searchPlayers()">Szukaj</button>
+        </div>
+        <div class="social-list" id="searchResults"><div class="social-empty">Wpisz nick, aby znaleźć graczy.</div></div>
+        <div class="social-note">W wersji demonstracyjnej wyszukiwarka korzysta z przykładowej listy graczy. Prawdziwa wyszukiwarka będzie połączona z serwerem.</div>
+       </section>
+
+       <section class="social-pane" id="socialRequests">
+        <h3>Otrzymane zaproszenia</h3>
+        <div class="social-list" id="incomingRequests"></div>
+        <h3 style="margin-top:20px">Wysłane zaproszenia</h3>
+        <div class="social-list" id="outgoingRequests"></div>
+       </section>
+      </div>
+     </section>
+    </main>
+   </div>
+  </div>
+ </main>
+
+ <aside id="playerPanel">
+  <section class="profile-card">
+   <div class="avatar-row">
+    <div class="avatar-frame"><img id="playerAvatar" src="" alt="Awatar gracza" style="display:none"><span class="avatar-placeholder" id="avatarPlaceholder">👨‍🌾</span></div>
+    <div class="player-info"><div class="player-name" id="playerName">Nowy gospodarz</div><div class="player-level">⭐ Poziom <span id="level">1</span></div></div>
+   </div
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zagrodowo</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;font-family:'Nunito',Arial,sans-serif}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+
+:root{--wood:url("https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/drewno-bok.jpg")}
+
+body{background:#70482f var(--wood) repeat center/auto 100vh}
+
+#appStage{
+ position:fixed;left:50%;top:50%;width:1720px;height:675px;
+ transform:translate(-50%,-50%) scale(var(--stage-scale,1));
+ transform-origin:center;overflow:hidden;
+ background:#70482f var(--wood) repeat center/auto 100%;
+ box-shadow:0 0 35px #0009
+}
+
+.main-btn,.auth-title,.auth-submit,.farm-title,.farm-area,.farm-home,
+.logout-button,.view-placeholder button,#gameViewTitle,.side-menu button,
+.profile-heading,.map-farm-button,.social-title{
+ font-family:'Bree Serif',Georgia,serif;font-weight:normal
+}
+
+/* EKRAN STARTOWY */
+
+#start{
+ position:absolute;left:260px;top:0;width:1200px;height:675px;
+ z-index:1;overflow:hidden;isolation:isolate;background:#70482f;
+ transition:background 1s
+}
+#seasonImage{position:absolute;inset:0;z-index:1;display:block;width:100%;height:100%;object-fit:fill;object-position:center;pointer-events:none}
+#start.spring{--start-login:#E7AFC0;--start-register:#789B68;--start-border:#946675;--start-text:#49313A}
+#start.summer{--start-login:#E9C36D;--start-register:#83A84D;--start-border:#8C713A;--start-text:#493719}
+#start.autumn{--start-login:#B96B45;--start-register:#D99B45;--start-border:#70412D;--start-text:#FFFFFF}
+#start.winter{--start-login:#78A9C8;--start-register:#DCEAF2;--start-border:#587F99;--start-text:#29495E}
+.season-shade{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to bottom,#18221205,transparent 65%,#141c0e1f)}
+.sun-rays{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;background:repeating-conic-gradient(from 0deg at 50% 50%,#fff4b114 0deg,transparent 8deg,transparent 18deg);animation:raysMove 45s linear infinite}
+#start.summer .sun-rays{opacity:.7}
+@keyframes raysMove{to{transform:rotate(360deg)}}
+.season-effects{position:absolute;inset:0;z-index:4;overflow:hidden;pointer-events:none}
+.effect{position:absolute;top:-12%;left:var(--left);font-size:var(--size);opacity:var(--opacity);animation:fall var(--duration) linear var(--delay) infinite;user-select:none}
+@keyframes fall{0%{transform:translate(0,-5vh) rotate(0)}50%{transform:translate(var(--sway),50vh) rotate(180deg)}100%{transform:translate(var(--sway-end),115vh) rotate(360deg)}}
+
+.start-buttons{position:absolute;z-index:10;right:7%;bottom:8%;width:340px;min-height:58px;display:flex;gap:12px}
+.main-btn{flex:1;min-width:0;min-height:52px;padding:9px 12px;border:2px solid var(--start-border);border-radius:8px;background:var(--start-login);color:var(--start-text);font-size:16px;box-shadow:0 3px 6px #23160a55;transition:background .2s,transform .2s}
+.main-btn.register{background:var(--start-register)}
+.main-btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.main-btn:active{transform:translateY(1px)}
+
+/* FORMULARZE */
+
+.auth-overlay,.profile-overlay{
+ position:absolute;left:260px;top:0;width:1200px;height:675px;
+ z-index:80;display:none;align-items:center;justify-content:center;
+ overflow-y:auto;overflow-x:hidden;padding:18px;background:#11190dc2;
+ backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+ -webkit-overflow-scrolling:touch;overscroll-behavior:contain
+}
+.auth-overlay.visible,.profile-overlay.visible{display:flex}
+
+#authOverlay.spring{--auth-panel:#FFF4F5;--auth-panel-bottom:#F1DDE3;--auth-border:#D5A8B6;--auth-title:#814D60;--auth-description:#956C7B;--auth-text:#634653;--auth-input:#FFFAFB;--auth-input-border:#D9AFBB;--auth-input-focus:#8CA978;--auth-login-color:#789B68;--auth-register-color:#D98FA9;--auth-button-text:#FFFFFF;--link-season-color:#A65375;--message-bg:#FFF0F3;--message-border:#DDB5C1;--check-color:#789B68}
+#authOverlay.summer{--auth-panel:#FFF9E9;--auth-panel-bottom:#F2E5C1;--auth-border:#D8C18A;--auth-title:#765627;--auth-description:#967B4B;--auth-text:#66502D;--auth-input:#FFFDF5;--auth-input-border:#D8C38F;--auth-input-focus:#B99545;--auth-login-color:#E0AD38;--auth-register-color:#789B3F;--auth-button-text:#FFFFFF;--link-season-color:#A27625;--message-bg:#FFF8E6;--message-border:#DDC88F;--check-color:#789B3F}
+#authOverlay.autumn{--auth-panel:#FFF1DF;--auth-panel-bottom:#EBD4B8;--auth-border:#BD916A;--auth-title:#70432C;--auth-description:#956C4D;--auth-text:#65452E;--auth-input:#FFFAF2;--auth-input-border:#C5A17A;--auth-input-focus:#A85D3D;--auth-login-color:#A85D3D;--auth-register-color:#D99B45;--auth-button-text:#FFFFFF;--link-season-color:#A9572D;--message-bg:#FFF5E8;--message-border:#D3AD82;--check-color:#C87937}
+#authOverlay.winter{--auth-panel:#F0F7FB;--auth-panel-bottom:#DCE9F1;--auth-border:#A9C4D6;--auth-title:#36576D;--auth-description:#607F94;--auth-text:#3F5C70;--auth-input:#FBFDFF;--auth-input-border:#B1C9D8;--auth-input-focus:#79A9C7;--auth-login-color:#5C91B5;--auth-register-color:#345E7B;--auth-button-text:#FFFFFF;--link-season-color:#477FA4;--message-bg:#F5FAFF;--message-border:#B5D0E0;--check-color:#5C91B5}
+
+.auth-window{position:relative;flex:0 1 420px;width:420px;max-width:100%;max-height:calc(100% - 36px);margin:auto;overflow-y:auto;overflow-x:hidden;padding:30px 28px 26px;border:1px solid var(--auth-border,#c3ad83);border-radius:12px;background:linear-gradient(145deg,var(--auth-panel,#fff7e0),var(--auth-panel-bottom,#f1e0b8));box-shadow:0 12px 40px #0008;scrollbar-width:thin}
+.close-btn{position:absolute;top:7px;right:9px;z-index:3;width:34px;height:34px;padding:0;border:0;background:transparent;color:#d52b2b;font:bold 32px/30px Arial}
+.auth-title{margin:0 24px 8px;color:var(--auth-title);font-size:26px;text-align:center}
+.auth-description{margin:0 0 22px;color:var(--auth-description);font-size:14px;line-height:1.5;text-align:center}
+.auth-form{display:none}.auth-form.active{display:block}
+.field{display:block;margin-bottom:14px;color:var(--auth-text);font-size:14px;font-weight:700}
+.field input{display:block;width:100%;min-height:43px;margin-top:6px;padding:10px 12px;border:1px solid var(--auth-input-border);border-radius:6px;background:var(--auth-input);color:#33251a;outline:none;font-size:15px}
+.field input:focus{border-color:var(--auth-input-focus);box-shadow:0 0 0 2px #79985b33}
+.password-wrap{position:relative}.password-wrap input{padding-right:49px}
+.eye-btn{position:absolute;top:7px;right:5px;width:38px;height:35px;display:flex;align-items:center;justify-content:center;border:0;border-radius:5px;background:transparent;color:var(--auth-text)}
+.eye-btn svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.auth-submit{display:block;width:100%;min-height:48px;margin:12px 0 0;padding:11px 15px;border:2px solid var(--auth-login-color)!important;border-radius:7px;background:var(--auth-login-color)!important;color:white!important;font-size:16px;cursor:pointer}
+#registerForm .auth-submit{border-color:var(--auth-register-color)!important;background:var(--auth-register-color)!important}
+.auth-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin-top:18px}
+.text-link{padding:0;border:0;background:transparent;color:var(--link-season-color);font-size:13px;text-decoration:underline}
+.rules-row{display:flex;align-items:flex-start;gap:10px;margin:15px 0;color:var(--auth-text);font-size:13px;line-height:1.5;cursor:pointer}
+.message{display:none;margin-top:14px;padding:10px;border:1px solid var(--message-border);border-radius:6px;background:var(--message-bg);color:var(--auth-text);font-size:13px}
+.message.visible{display:block}
+
+/* GRA */
+
+#game{display:none;position:absolute;inset:0;z-index:50;overflow:hidden;background:#70482f var(--wood) repeat center/auto 100%;color:#493d2c}
+#gameMain{position:absolute;left:260px;top:0;right:320px;bottom:0;width:auto;overflow:hidden;background:#e9e4d1}
+#gameViewport{position:absolute;inset:0;overflow:hidden;touch-action:none;user-select:none;overscroll-behavior:none;cursor:grab;background:#e9e4d1}
+#gameViewport.dragging{cursor:grabbing}
+#gameCanvas{position:absolute;left:0;top:0;width:1200px;height:766px;transform-origin:0 0;background:#e9e4d1;color:#493d2c;will-change:transform;overflow:auto}
+#gameCanvas button{touch-action:manipulation}
+#gameCanvas input,#gameCanvas textarea{user-select:text}
+.game-content{width:1200px;min-height:766px;padding:22px 28px 30px}
+.farm-title{margin:0 0 5px;text-align:center;font-size:27px;color:#536d3b}
+.farm-subtitle{margin:0 0 20px;text-align:center;color:#776d55}
+.farm-land{position:relative;width:1120px;min-height:440px;margin:0 auto;padding:24px;border:1px solid #b4b98b;border-radius:15px;background:linear-gradient(145deg,#dce4b6,#b6ca8e 60%,#c8d39f);box-shadow:0 5px 18px #414b2a1f}
+.farm-map{display:grid;grid-template-columns:repeat(3,minmax(200px,1fr));gap:16px;width:880px;margin:0 auto}
+.farm-area{position:relative;min-height:125px;border:2px solid #9ba978;border-radius:12px;background:#f6f2d1b8;color:#4c6138;font-size:18px}
+.farm-area.available{border-color:#789553;background:#e9edc8}
+.farm-area.locked{border-color:#b2b09a;background:#cfcfbcba;color:#777563}
+.farm-home{display:block;width:240px;min-height:90px;margin:20px auto 0;border:2px solid #a58d60;border-radius:12px;background:#f2dfad;color:#66502e;font-size:19px}
+.game-notice{width:880px;margin:16px auto 0;padding:12px 15px;border:1px solid #c5bd91;border-radius:8px;background:#fffee6cc;color:#5b573e;text-align:center}
+#gameViewTitle{margin:0 0 8px;text-align:center;color:#536d3b}
+#gameViewDescription{width:850px;margin:0 auto 18px;text-align:center;line-height:1.6;color:#6d634c}
+.view-placeholder{width:850px;margin:25px auto;padding:28px;border:1px solid #c5bd91;border-radius:12px;background:#f8f3df;text-align:center}
+.view-placeholder .big-icon{font-size:48px}
+.view-placeholder button{margin:8px;padding:10px 15px;border:1px solid #a7a07e;border-radius:7px;background:#e9edc8;color:#4d5c37}
+
+/* MAPA */
+
+#mapContent{display:none;width:900px;margin:25px auto;padding:24px;border:1px solid #b7a77e;border-radius:14px;background:linear-gradient(145deg,#f5efd9,#e7dfc2);box-shadow:0 5px 16px #51432b20}
+.map-heading{margin:0 0 8px;color:#536d3b;font:normal 25px 'Bree Serif',Georgia,serif;text-align:center}
+.map-description{margin:0 0 22px;color:#786c51;text-align:center}
+.map-farms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.map-farm-button{min-height:150px;padding:18px;border:2px solid #a58d60;border-radius:12px;background:linear-gradient(145deg,#e5edc8,#cbd9a5);color:#4e6339;font-size:19px}
+.map-farm-button .farm-map-icon{display:block;margin-bottom:9px;font-size:38px}
+.map-farm-button small{display:block;margin-top:7px;font:normal 13px 'Nunito',Arial,sans-serif;color:#69764c}
+.map-farm-button.locked-farm{border-color:#b2ad9c;background:#dedccf;color:#777563;cursor:not-allowed}
+.map-note{margin:18px 0 0;padding:11px;border:1px solid #c5bd91;border-radius:8px;background:#fffde7;color:#6b6148;text-align:center;font-size:13px}
+
+/* PRAWY PANEL */
+
+#playerPanel{position:absolute;top:0;right:0;bottom:0;width:320px;z-index:10;padding:13px 12px 12px;background:#765037 var(--wood) repeat center/auto 100%;border-left:5px solid #4d3020;box-shadow:inset 5px 0 10px #0003;display:flex;flex-direction:column;gap:10px;overflow-y:auto;color:#fff4df}
+.profile-card{padding:12px 10px;border:2px solid #b38b5c;border-radius:10px;background:linear-gradient(145deg,#f1e1bf,#dfc69b);color:#59432c;box-shadow:0 3px 8px #29180d66,inset 0 1px 3px #fff9}
+.avatar-row{display:flex;align-items:center;gap:10px}
+.avatar-frame{flex:0 0 76px;width:76px;height:76px;overflow:hidden;display:flex;align-items:center;justify-content:center;border:3px solid #9a7145;border-radius:9px;background:#c9b18a}
+#playerAvatar{width:100%;height:100%;object-fit:cover;display:block}
+.avatar-placeholder{font-size:42px}
+.player-info{min-width:0;flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.player-name{display:block;width:100%;margin:0;font-family:'Bree Serif',Georgia,serif;font-size:18px;line-height:1.2;overflow-wrap:anywhere;text-align:left}
+.player-level{display:block;width:100%;margin:4px 0 0;padding:0;font-size:13px;font-weight:800;color:#705333;text-align:left}
+.xp-label{display:flex;justify-content:space-between;gap:4px;margin-top:11px;font-size:11px;font-weight:800;color:#715536}
+.xp-track{height:9px;margin-top:4px;border:1px solid #9e865f;border-radius:8px;background:#c4b18c;overflow:hidden}
+#xpFill{height:100%;width:0;background:linear-gradient(#9fbd65,#638641);transition:width .3s}
+.currency-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}
+.currency-box{padding:7px 5px;border:1px solid #c5ad81;border-radius:7px;background:#fff4dd;text-align:center}
+.currency-label{font-size:10px;font-weight:800;color:#7c613c}
+.currency-value{margin-top:2px;font-family:'Bree Serif',Georgia,serif;font-size:19px;color:#58432c}
+.profile-edit{width:100%;margin-top:9px;padding:7px;border:1px solid #9a7549;border-radius:6px;background:#d3b17c;color:#503a25;font-size:12px;font-weight:800}
+.side-menu{display:flex;flex-direction:column;gap:6px}
+.side-menu button{width:100%;min-height:43px;display:flex;align-items:center;gap:10px;padding:7px 10px;border:1px solid #b18a5d;border-radius:7px;background:linear-gradient(#a77c50,#89613e);color:#fff3dc;text-align:left;font-size:15px;box-shadow:0 2px 4px #24150c66}
+.side-menu button:hover,.side-menu button.selected{background:linear-gradient(#d5b47e,#b88c57);color:#49331f;border-color:#e2c99c}
+.menu-icon{width:27px;text-align:center;font-family:Arial,sans-serif;font-size:20px}
+.menu-count{margin-left:auto;min-width:20px;height:20px;padding:1px 5px;border-radius:12px;background:#a52f25;color:white;font:800 11px/18px Nunito;text-align:center}
+.panel-bottom{margin-top:auto;display:flex;flex-direction:column;gap:7px}
+.logout-button{width:100%;padding:9px;border:1px solid #d2b58c;border-radius:7px;background:#eee0c2;color:#573c26;font-size:14px}
+.panel-version{text-align:center;color:#e6cfad;font-size:10px}
+
+/* EDYCJA PROFILU */
+
+.profile-window{position:relative;flex:0 1 390px;width:390px;max-width:100%;max-height:calc(100% - 36px);margin:auto;padding:25px 22px 20px;overflow-y:auto;border:2px solid #b18b5d;border-radius:12px;background:linear-gradient(145deg,#f5e7c9,#e3cba2);color:#59432c;box-shadow:0 12px 40px #0009}
+.profile-window h2{margin:0 25px 15px;text-align:center;font:normal 23px 'Bree Serif',serif}
+.profile-window .field{color:#59432c}
+.profile-window .field input{background:#fffaf0;border-color:#c3a77c}
+.profile-preview{display:flex;justify-content:center;margin:10px 0}
+.profile-preview .avatar-frame{width:105px;height:105px;flex-basis:105px}
+.profile-actions{display:flex;gap:8px;margin-top:12px}
+.profile-actions button{flex:1;min-height:40px;padding:9px 6px;border:1px solid #967248;border-radius:6px;background:#a77c50;color:white;font-weight:800}
+.profile-actions button.secondary{background:#e8d6b5;color:#60462c}
+.profile-hint{font-size:11px;line-height:1.4;color:#806748;margin-top:9px}
+.profile-error{font-size:12px;color:#a12d20;margin-top:8px;min-height:16px}
+
+/* SĄSIEDZI — NOWA SEKCJA */
+
+#neighborsContent{
+ display:none;width:1040px;min-height:540px;margin:8px auto;padding:20px;
+ border:2px solid #b59a6b;border-radius:14px;
+ background:linear-gradient(145deg,#f7f0dc,#e8dfc4);
+ box-shadow:0 5px 18px #51432b20
+}
+.social-title{margin:0 0 5px;text-align:center;color:#536d3b;font-size:27px}
+.social-description{text-align:center;color:#786c51;margin:0 0 18px}
+.social-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+.social-tab{min-width:145px;padding:11px 15px;border:1px solid #a58d60;border-radius:8px;background:linear-gradient(#eee5cb,#d9c9a4);color:#59452d;font-family:'Bree Serif',serif;font-size:16px}
+.social-tab.active{background:linear-gradient(#a77c50,#89613e);color:#fff4df;border-color:#70482f}
+.social-pane{display:none}
+.social-pane.active{display:block}
+.social-search{display:flex;gap:8px;max-width:650px;margin:0 auto 15px}
+.social-search input{flex:1;min-width:0;padding:11px 13px;border:1px solid #b8a47a;border-radius:7px;background:#fffdf3;color:#4c3d29}
+.social-action{padding:9px 14px;border:1px solid #8d754e;border-radius:7px;background:#9b784e;color:white;font-weight:800}
+.social-action:hover{filter:brightness(1.08)}
+.social-action.secondary{background:#e7dcc0;color:#5c482f}
+.social-action.danger{background:#a84c3c;color:white;border-color:#823b30}
+.social-list{display:flex;flex-direction:column;gap:9px;max-width:780px;margin:0 auto}
+.social-card{display:flex;align-items:center;gap:12px;padding:11px 13px;border:1px solid #c6b58f;border-radius:9px;background:#fff9e9;box-shadow:0 2px 5px #49361b12}
+.social-avatar{flex:0 0 48px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border:2px solid #b49a6b;border-radius:50%;background:#e4d5b2;font-size:25px;overflow:hidden}
+.social-avatar img{width:100%;height:100%;object-fit:cover}
+.social-user{min-width:0;flex:1}
+.social-user strong{display:block;color:#55432c;font-family:'Bree Serif',serif;font-size:17px;overflow-wrap:anywhere}
+.social-user small{display:block;margin-top:3px;color:#837252;font-size:12px}
+.online-dot{color:#4d9a4e;font-weight:800}
+.offline-dot{color:#999}
+.social-buttons{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.social-buttons button{padding:7px 10px;font-size:12px}
+.social-empty{padding:24px;text-align:center;color:#857657;border:1px dashed #c1b18c;border-radius:9px;background:#fff9e7}
+.social-note{max-width:780px;margin:12px auto;padding:10px;border-radius:7px;background:#f2e8cd;color:#776344;font-size:12px;text-align:center}
+.conversation-layout{display:grid;grid-template-columns:270px 1fr;gap:12px;min-height:380px}
+.conversation-list{padding:9px;border:1px solid #c5b58f;border-radius:9px;background:#f5edda;overflow:auto;max-height:410px}
+.conversation-choice{width:100%;display:flex;gap:9px;align-items:center;padding:10px;margin-bottom:6px;border:1px solid transparent;border-radius:7px;background:#fff9e9;text-align:left;color:#55432c}
+.conversation-choice.active{border-color:#a98b5c;background:#e9dfc4}
+.conversation-choice strong{display:block;font-family:'Bree Serif',serif}
+.conversation-choice small{color:#877655}
+.conversation-window{display:flex;flex-direction:column;min-width:0;min-height:380px;border:1px solid #c5b58f;border-radius:9px;background:#fffaf0;overflow:hidden}
+.conversation-heading{padding:12px 15px;background:#e8ddc2;border-bottom:1px solid #c5b58f;color:#59452d;font-family:'Bree Serif',serif;font-size:18px}
+.conversation-messages{flex:1;min-height:250px;max-height:300px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px}
+.chat-message{max-width:78%;padding:9px 12px;border-radius:10px;background:#eee4cc;color:#51432e;align-self:flex-start;overflow-wrap:anywhere}
+.chat-message.mine{align-self:flex-end;background:#dce8c7}
+.chat-message small{display:block;margin-top:5px;color:#897a5e;font-size:10px;text-align:right}
+.chat-compose{display:flex;gap:8px;padding:10px;border-top:1px solid #d3c5a5;background:#f6eedc}
+.chat-compose textarea{flex:1;min-width:0;min-height:43px;max-height:90px;resize:vertical;padding:10px;border:1px solid #c5b58f;border-radius:7px;background:white;color:#51432e}
+.chat-compose button{align-self:stretch}
+.chat-locked{padding:18px;text-align:center;color:#8b7551}
+
+/* MENU I OKNA */
+
+@media(max-height:520px){
+ .auth-overlay,.profile-overlay{padding:8px}
+ .auth-window,.profile-window{max-height:calc(100% - 16px);padding-top:24px;padding-bottom:18px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+
+<body>
+<div id="appStage">
+
+<div id="start" class="autumn">
+ <img id="seasonImage" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jesien.png" alt="Zagrodowo — sezonowy ekran startowy">
+ <div class="season-shade"></div><div class="sun-rays"></div><div class="season-effects" id="seasonEffects"></div>
+ <div class="start-buttons">
+  <button id="loginButton" class="main-btn" type="button">Zaloguj się</button>
+  <button id="registerButton" class="main-btn register" type="button">Zarejestruj się</button>
+ </div>
+</div>
+
+<div class="auth-overlay" id="authOverlay">
+ <div class="auth-window">
+  <button class="close-btn" type="button" aria-label="Zamknij" id="closeAuthButton">×</button>
+  <h2 class="auth-title" id="authTitle">Witaj ponownie!</h2>
+  <p class="auth-description" id="authDescription">Zaloguj się i wróć do swojego gospodarstwa.</p>
+
+  <form class="auth-form active" id="loginForm">
+   <label class="field">Nick gracza<input type="text" name="login" autocomplete="username" placeholder="Wpisz swój nick" required></label>
+   <label class="field">Hasło<div class="password-wrap"><input type="password" name="password" autocomplete="current-password" placeholder="Wpisz hasło" required><button class="eye-btn" type="button" aria-label="Pokaż hasło"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></label>
+   <button class="auth-submit" type="submit">Zaloguj się</button>
+   <div class="auth-links"><button class="text-link" type="button" data-form="forgot">Nie pamiętam hasła</button><button class="text-link" type="button" data-form="register">Utwórz konto</button></div>
+  </form>
+
+  <form class="auth-form" id="registerForm">
+   <label class="field">Nazwa gracza<input type="text" name="nickname" autocomplete="nickname" minlength="3" maxlength="20" placeholder="Wymyśl nazwę gracza" required></label>
+   <label class="field">Adres e-mail<input type="email" name="email" autocomplete="email" placeholder="twoj@email.pl" required></label>
+   <label class="field">Hasło<div class="password-wrap"><input type="password" name="password" autocomplete="new-password" minlength="8" placeholder="Minimum 8 znaków" required><button class="eye-btn" type="button" aria-label="Pokaż hasło"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></label>
+   <label class="field">Powtórz hasło<div class="password-wrap"><input type="password" name="confirmPassword" autocomplete="new-password" minlength="8" placeholder="Wpisz hasło ponownie" required><button class="eye-btn" type="button" aria-label="Pokaż hasło"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></label>
+   <label class="rules-row"><input type="checkbox" name="rules" required><span>Akceptuję regulamin gry i zasady korzystania z serwisu.</span></label>
+   <button class="auth-submit" type="submit">Zarejestruj się</button>
+   <div class="auth-links"><button class="text-link" type="button" data-form="login">Masz już konto? Zaloguj się</button></div>
+  </form>
+
+  <form class="auth-form" id="forgotForm">
+   <label class="field">Adres e-mail przypisany do konta<input type="email" name="email" placeholder="twoj@email.pl" required></label>
+   <button class="auth-submit" type="submit">Odzyskaj hasło</button>
+   <div class="auth-links"><button class="text-link" type="button" data-form="login">Wróć do logowania</button></div>
+  </form>
+  <div class="message" id="authMessage" role="status" aria-live="polite"></div>
+ </div>
+</div>
+
+<div id="game">
+ <main id="gameMain">
+  <div id="gameViewport">
+   <div id="gameCanvas">
+    <main class="game-content">
+     <section id="farmView">
+      <h1 class="farm-title">Twoja pierwsza farma</h1>
+      <p class="farm-subtitle">Witaj w Zagrodowie! Tutaj zaczyna się Twoja wiejska przygoda.</p>
+      <div class="farm-land">
+       <div class="farm-map">
+        <button class="farm-area available" onclick="showNotice('Obszar 1 jest dostępny. To tutaj rozpoczniesz uprawę roślin.')">🌱<br>Obszar 1<br><small>Dostępny</small></button>
+        <button class="farm-area locked" onclick="showNotice('Obszar 2 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 2<br><small>Zablokowany</small></button>
+        <button class="farm-area locked" onclick="showNotice('Obszar 3 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 3<br><small>Zablokowany</small></button>
+        <button class="farm-area locked" onclick="showNotice('Obszar 4 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 4<br><small>Zablokowany</small></button>
+        <button class="farm-area locked" onclick="showNotice('Obszar 5 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 5<br><small>Zablokowany</small></button>
+        <button class="farm-area locked" onclick="showNotice('Obszar 6 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 6<br><small>Zablokowany</small></button>
+       </div>
+       <button class="farm-home" onclick="openGameView('home')">🏡<br>Twój dom</button>
+       <div class="game-notice" id="gameNotice">Wybierz obszar gospodarstwa, aby dowiedzieć się więcej.</div>
+      </div>
+     </section>
+
+     <section id="otherView" style="display:none">
+      <h1 id="gameViewTitle"></h1><p id="gameViewDescription"></p>
+
+      <div id="mapContent">
+       <h2 class="map-heading">Twoje gospodarstwa</h2>
+       <p class="map-description">Wybierz farmę, na którą chcesz się przenieść.</p>
+       <div class="map-farms">
+        <button class="map-farm-button" type="button" onclick="openGameView('farm')"><span class="farm-map-icon">🏡</span>Pierwsza farma<small>Twoje gospodarstwo początkowe</small></button>
+        <button class="map-farm-button locked-farm" type="button" disabled><span class="farm-map-icon">🔒</span>Kolejna farma<small>Jeszcze niedostępna</small></button>
+       </div>
+       <div class="map-note">Kolejne gospodarstwa pojawią się na mapie, gdy zostaną odblokowane w grze.</div>
+      </div>
+
+      <div class="view-placeholder" id="genericViewContent">
+       <div class="big-icon" id="viewIcon">🌱</div>
+       <h2 id="viewSubTitle">Twoja przygoda dopiero się zaczyna</h2>
+       <p id="viewText">Ta część gry będzie rozwijana w kolejnych etapach gry.</p>
+      </div>
+
+      <!-- NOWY PANEL SĄSIADÓW -->
+      <div id="neighborsContent">
+       <h2 class="social-title">🏡 Sąsiedzi Zagrodowa</h2>
+       <p class="social-description">Znajdź gospodarzy, dodawaj znajomych i rozmawiaj z nimi.</p>
+
+       <div class="social-tabs">
+        <button class="social-tab active" data-social-tab="friends" onclick="showSocialTab('friends')">👥 Znajomi <span id="friendsCount">0</span></button>
+        <button class="social-tab" data-social-tab="messages" onclick="showSocialTab('messages')">✉ Wiadomości <span id="unreadCount"></span></button>
+        <button class="social-tab" data-social-tab="search" onclick="showSocialTab('search')">🔎 Szukaj graczy</button>
+        <button class="social-tab" data-social-tab="requests" onclick="showSocialTab('requests')">📨 Zaproszenia <span id="requestsCount"></span></button>
+       </div>
+
+       <section class="social-pane active" id="socialFriends">
+        <div class="social-list" id="friendsList"></div>
+       </section>
+
+       <section class="social-pane" id="socialMessages">
+        <div class="conversation-layout">
+         <div class="conversation-list" id="conversationList"></div>
+         <div class="conversation-window">
+          <div class="conversation-heading" id="conversationHeading">Wybierz znajomego</div>
+          <div class="conversation-messages" id="conversationMessages"><div class="chat-locked">Wybierz rozmowę z listy po lewej stronie.</div></div>
+          <form class="chat-compose" id="chatForm">
+           <textarea id="chatInput" maxlength="500" placeholder="Napisz wiadomość..." disabled></textarea>
+           <button class="social-action" id="sendMessageButton" type="submit" disabled>Wyślij</button>
+          </form>
+         </div>
+        </div>
+       </section>
+
+       <section class="social-pane" id="socialSearch">
+        <div class="social-search">
+         <input id="playerSearchInput" type="search" placeholder="Wpisz nick gracza..." autocomplete="off">
+         <button class="social-action" type="button" onclick="searchPlayers()">Szukaj</button>
+        </div>
+        <div class="social-list" id="searchResults"><div class="social-empty">Wpisz nick, aby znaleźć graczy.</div></div>
+        <div class="social-note">W wersji demonstracyjnej wyszukiwarka korzysta z przykładowej listy graczy. Prawdziwa wyszukiwarka będzie połączona z serwerem.</div>
+       </section>
+
+       <section class="social-pane" id="socialRequests">
+        <h3>Otrzymane zaproszenia</h3>
+        <div class="social-list" id="incomingRequests"></div>
+        <h3 style="margin-top:20px">Wysłane zaproszenia</h3>
+        <div class="social-list" id="outgoingRequests"></div>
+       </section>
+      </div>
+     </section>
+    </main>
+   </div>
+  </div>
+ </main>
+
+ <aside id="playerPanel">
+  <section class="profile-card">
+   <div class="avatar-row">
+    <div class="avatar-frame"><img id="playerAvatar" src="" alt="Awatar gracza" style="display:none"><span class="avatar-placeholder" id="avatarPlaceholder">👨‍🌾</span></div>
+    <div class="player-info"><div class="player-name" id="playerName">Nowy gospodarz</div><div class="player-level">⭐ Poziom <span id="level">1</span></div></div>
+   </div>
+   <div class="xp-label"><span>Doświadczenie</span><span id="xpText">0 / 100 XP</span></div>
+   <div class="xp-track"><div id="xpFill"></div></div>
+   <div class="currency-grid">
+    <div class="currency-box"><div class="currency-label">🪙 GOTÓWKA</div><div class="currency-value" id="money">1,00</div></div>
+    <div class="currency-box"><div class="currency-label">💎 DIAMENTY</div><div class="currency-value" id="diamonds">0</div></div>
+   </div>
+   <button class="profile-edit" type="button" onclick="openProfileEditor()">✎ Edytuj profil</button>
+  </section>
+
+  <nav class="side-menu">
+   <button class="selected" data-view="map" onclick="openGameView('map',this)"><span class="menu-icon">🗺️</span>Mapa</button>
+   <button data-view="tasks" onclick="openGameView('tasks',this)"><span class="menu-icon">📜</span>Zadania</button>
+   <button data-view="buildings" onclick="openGameView('buildings',this)"><span class="menu-icon">🏗️</span>Budynki</button>
+   <button data-view="inventory" onclick="openGameView('inventory',this)"><span class="menu-icon">📦</span>Magazyn</button>
+   <button data-view="neighbors" onclick="openGameView('neighbors',this)"><span class="menu-icon">🏡</span>Sąsiedzi <span class="menu-count" id="neighborsBadge" style="display:none">0</span></button>
+   <button data-view="settings" onclick="openGameView('settings',this)"><span class="menu-icon">⚙️</span>Ustawienia</button>
+  </nav>
+
+  <div class="panel-bottom">
+   <button class="logout-button" type="button" onclick="backToStart()">↩ Wyloguj się</button>
+   <div class="panel-version">Zagrodowo • wersja demonstracyjna</div>
+  </div>
+ </aside>
+</div>
+
+<!-- EDYCJA PROFILU -->
+<div class="profile-overlay" id="profileOverlay" onclick="profileOverlayClick(event)">
+ <div class="profile-window">
+  <button class="close-btn" type="button" onclick="closeProfileEditor()" aria-label="Zamknij">×</button>
+  <h2>Edytuj swój profil</h2>
+  <div class="profile-preview"><div class="avatar-frame"><img id="previewAvatar" src="" alt="Podgląd awatara" style="display:none"><span class="avatar-placeholder" id="previewPlaceholder">👨‍🌾</span></div></div>
+  <label class="field">Nazwa gracza<input id="nicknameInput" type="text" maxlength="20" minlength="3" placeholder="Wpisz nazwę gracza"></label>
+  <label class="field">Link do zdjęcia<input id="avatarUrlInput" type="url" placeholder="https://adres-zdjecia.jpg"></label>
+  <label class="field">Lub wgraj zdjęcie z urządzenia<input id="avatarFileInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
+  <div class="profile-hint">Zdjęcie zostanie dopasowane do kwadratowej ramki. Wersja demonstracyjna zapamiętuje wybrany awatar w tej przeglądarce. W przyszłości dodamy przechowywanie zdjęć na serwerze.</div>
+  <div class="profile-error" id="profileError"></div>
+  <div class="profile-actions"><button type="button" onclick="saveProfile()">Zapisz</button><button class="secondary" type="button" onclick="removeAvatar()">Usuń awatar</button></div>
+  <div class="profile-actions"><button class="secondary" type="button" onclick="closeProfileEditor()">Anuluj</button></div>
+ </div>
+</div>
+
+</div>
+
+<script>
+/* SKALOWANIE */
+
+const appStage=document.getElementById("appStage");
+function fitStage(){appStage.style.setProperty("--stage-scale",Math.min(window.innerWidth/1720,window.innerHeight/675))}
+fitStage();
+window.addEventListener("resize",()=>{fitStage();if(document.getElementById("game").style.display==="block")requestAnimationFrame(fitGame)});
+
+/* PORY ROKU */
+
+const seasons={
+ spring:{image:"https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wiosna.png",effects:["🌸","🌼","✿"]},
+ summer:{image:"https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lato.png",effects:["✦","✧","·"]},
+ autumn:{image:"https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jesien.png",effects:["🍂","🍁","🍂"]},
+ winter:{image:"https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zima.png",effects:["❄","❅","❆"]}
+};
+const start=document.getElementById("start");
+const seasonImage=document.getElementById("seasonImage");
+const seasonEffects=document.getElementById("seasonEffects");
+function getSeasonName(month){if(month>=2&&month<=4)return"spring";if(month>=5&&month<=7)return"summer";if(month>=8&&month<=10)return"autumn";return"winter"}
+function createEffects(items){
+ seasonEffects.innerHTML="";
+ if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ for(let i=0;i<22;i++){
+  const p=document.createElement("span");p.className="effect";p.textContent=items[i%items.length];
+  p.style.setProperty("--left",Math.random()*100+"%");p.style.setProperty("--size",(12+Math.random()*15)+"px");
+  p.style.setProperty("--duration",(8+Math.random()*11)+"s");p.style.setProperty("--delay",(-Math.random()*18)+"s");
+  p.style.setProperty("--opacity",.35+Math.random()*.5);p.style.setProperty("--sway",(Math.random()*100-50)+"px");
+  p.style.setProperty("--sway-end",(Math.random()*100-50)+"px");seasonEffects.appendChild(p);
+ }
+}
+function updateSeason(){
+ const name=getSeasonName(new Date().getMonth()),season=seasons[name];
+ start.classList.remove("spring","summer","autumn","winter");start.classList.add(name);
+ const auth=document.getElementById("authOverlay");auth.classList.remove("spring","summer","autumn","winter");auth.classList.add(name);
+ createEffects(season.effects);seasonImage.src=season.image;
+}
+updateSeason();
+
+/* FORMULARZE */
+
+const authOverlay=document.getElementById("authOverlay");
+const authTitle=document.getElementById("authTitle");
+const authDescription=document.getElementById("authDescription");
+const authMessage=document.getElementById("authMessage");
+const formInfo={
+ login:{title:"Witaj ponownie!",description:"Zaloguj się i wróć do swojego gospodarstwa."},
+ register:{title:"Dołącz do Zagrodowa!",description:"Stwórz konto i rozpocznij przygodę na wsi."},
+ forgot:{title:"Odzyskiwanie hasła",description:"Podaj e-mail przypisany do swojego konta."}
+};
+function openAuth(name){authOverlay.classList.add("visible");showForm(name);const input=document.getElementById(name+"Form")?.querySelector("input");if(input)setTimeout(()=>input.focus(),50)}
+function closeAuth(){authOverlay.classList.remove("visible");hideMessage()}
+function overlayClick(event){if(event.target===authOverlay)closeAuth()}
+function showForm(name){
+ const form=document.getElementById(name+"Form");if(!form||!formInfo[name])return;
+ document.querySelectorAll(".auth-form").forEach(f=>f.classList.remove("active"));form.classList.add("active");
+ authTitle.textContent=formInfo[name].title;authDescription.textContent=formInfo[name].description;hideMessage();
+ document.querySelector(".auth-window").scrollTop=0;
+}
+document.getElementById("loginButton").addEventListener("click",()=>openAuth("login"));
+document.getElementById("registerButton").addEventListener("click",()=>openAuth("register"));
+document.getElementById("closeAuthButton").addEventListener("click",closeAuth);
+authOverlay.addEventListener("click",overlayClick);
+document.querySelectorAll("[data-form]").forEach(b=>b.addEventListener("click",()=>showForm(b.dataset.form)));
+
+function togglePassword(button){
+ const input=button.parentElement.querySelector("input"),showing=input.type==="password";
+ input.type=showing?"text":"password";button.setAttribute("aria-label",showing?"Ukryj hasło":"Pokaż hasło");
+ const svg=button.querySelector("svg");let slash=svg.querySelector(".eye-slash");
+ if(showing&&!slash){slash=document.createElementNS("http://www.w3.org/2000/svg","path");slash.setAttribute("d","M3 3l18 18");slash.setAttribute("class","eye-slash");svg.appendChild(slash)}
+ else if(!showing&&slash)slash.remove();
+}
+document.querySelectorAll(".eye-btn").forEach(b=>b.addEventListener("click",()=>togglePassword(b)));
+function showMessage(message){authMessage.textContent=message;authMessage.classList.add("visible")}
+function hideMessage(){authMessage.textContent="";authMessage.classList.remove("visible")}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeAuth();closeProfileEditor()}});
+
+/* DANE GRACZA */
+
+let player={nickname:"Nowy gospodarz",level:1,xp:0,xpNeeded:100,money:1,diamonds:0,avatar:""};
+let pendingAvatar="";
+function formatMoney(value){return new Intl.NumberFormat("pl-PL",{minimumFractionDigits:2,maximumFractionDigits:2}).format(Number(value)||0)}
+function formatDiamonds(value){return new Intl.NumberFormat("pl-PL",{maximumFractionDigits:0}).format(value)}
+function updatePlayerPanel(){
+ document.getElementById("playerName").textContent=player.nickname;document.getElementById("level").textContent=player.level;
+ document.getElementById("xpText").textContent=player.xp+" / "+player.xpNeeded+" XP";
+ document.getElementById("xpFill").style.width=Math.min(100,player.xp/player.xpNeeded*100)+"%";
+ document.getElementById("money").textContent=formatMoney(player.money);document.getElementById("diamonds").textContent=formatDiamonds(player.diamonds);setAvatar(player.avatar);
+}
+function setAvatar(src){
+ const img=document.getElementById("playerAvatar"),placeholder=document.getElementById("avatarPlaceholder");
+ if(src){img.src=src;img.style.display="block";placeholder.style.display="none";img.onerror=()=>{img.style.display="none";placeholder.style.display="block"}}
+ else{img.removeAttribute("src");img.style.display="none";placeholder.style.display="block"}
+}
+function loadDemoProfile(){
+ try{const saved=localStorage.getItem("zagrodowoDemoProfile");if(saved){const data=JSON.parse(saved);player={...player,...data};if(Number(player.money)===1000){player.money=1;localStorage.setItem("zagrodowoDemoProfile",JSON.stringify(player))}}}catch(e){}
+ updatePlayerPanel();
+}
+function saveDemoProfile(){
+ try{localStorage.setItem("zagrodowoDemoProfile",JSON.stringify(player));return true}
+ catch(e){document.getElementById("profileError").textContent="Nie udało się zapisać profilu. Spróbuj użyć mniejszego zdjęcia.";return false}
+}
+
+/* EDYCJA PROFILU */
+
+function openProfileEditor(){
+ document.getElementById("nicknameInput").value=player.nickname;document.getElementById("avatarUrlInput").value="";
+ document.getElementById("avatarFileInput").value="";document.getElementById("profileError").textContent="";
+ pendingAvatar="";setPreviewAvatar(player.avatar);document.getElementById("profileOverlay").classList.add("visible");
+}
+function closeProfileEditor(){document.getElementById("profileOverlay").classList.remove("visible");pendingAvatar=""}
+function profileOverlayClick(e){if(e.target===document.getElementById("profileOverlay"))closeProfileEditor()}
+function setPreviewAvatar(src){
+ const img=document.getElementById("previewAvatar"),placeholder=document.getElementById("previewPlaceholder");
+ if(src){img.src=src;img.style.display="block";placeholder.style.display="none";img.onerror=()=>{img.style.display="none";placeholder.style.display="block"}}
+ else{img.removeAttribute("src");img.style.display="none";placeholder.style.display="block"}
+}
+document.getElementById("avatarUrlInput").addEventListener("input",function(){const v=this.value.trim();pendingAvatar="";if(v)setPreviewAvatar(v);else setPreviewAvatar(player.avatar)});
+document.getElementById("avatarFileInput").addEventListener("change",function(){
+ const file=this.files[0];if(!file)return;
+ if(!["image/jpeg","image/png","image/webp"].includes(file.type)){document.getElementById("profileError").textContent="Wybierz zdjęcie JPG, PNG lub WEBP.";this.value="";return}
+ if(file.size>2*1024*1024){document.getElementById("profileError").textContent="Zdjęcie może mieć maksymalnie 2 MB.";this.value="";return}
+ const reader=new FileReader();reader.onload=()=>{pendingAvatar=reader.result;setPreviewAvatar(pendingAvatar);document.getElementById("avatarUrlInput").value="";document.getElementById("profileError").textContent=""};
+ reader.onerror=()=>document.getElementById("profileError").textContent="Nie udało się odczytać zdjęcia.";reader.readAsDataURL(file);
+});
+function saveProfile(){
+ const nickname=document.getElementById("nicknameInput").value.trim(),url=document.getElementById("avatarUrlInput").value.trim(),error=document.getElementById("profileError");
+ error.textContent="";if(nickname.length<3){error.textContent="Nazwa gracza musi mieć co najmniej 3 znaki.";return}
+ if(url){try{const u=new URL(url);if(!["http:","https:"].includes(u.protocol)){error.textContent="Link musi zaczynać się od https:// lub http://.";return}}catch(e){error.textContent="Wklej poprawny adres zdjęcia.";return}}
+ const previous={...player};player.nickname=nickname;if(pendingAvatar)player.avatar=pendingAvatar;else if(url)player.avatar=url;
+ updatePlayerPanel();if(!saveDemoProfile()){player=previous;updatePlayerPanel();return}closeProfileEditor();
+}
+function removeAvatar(){player.avatar="";pendingAvatar="";document.getElementById("avatarUrlInput").value="";document.getElementById("avatarFileInput").value="";setPreviewAvatar("");updatePlayerPanel();saveDemoProfile()}
+
+/* KAMERA — POPRAWIONA OBSŁUGA KLIKNIĘĆ */
+
+const viewport=document.getElementById("gameViewport"),
+      canvas=document.getElementById("gameCanvas");
+
+let camera={x:0,y:0,scale:1},
+    pointers=new Map(),
+    gesture=null,
+    dragged=false,
+    suppressClickUntil=0;
+
+function applyCamera(){
+ canvas.style.transform=`translate3d(${camera.x}px,${camera.y}px,0) scale(${camera.scale})`;
+}
+
+function fitGame(){
+ const w=viewport.clientWidth,h=viewport.clientHeight;
+ camera.scale=Math.min(1,w/1200,h/766);
+ camera.x=(w-1200*camera.scale)/2;
+ camera.y=(h-766*camera.scale)/2;
+ applyCamera();
+}
+
+function clampScale(v){
+ return Math.max(.25,Math.min(3,v));
+}
+
+function point(e){
+ return{x:e.clientX,y:e.clientY};
+}
+
+function distance(a,b){
+ return Math.hypot(b.x-a.x,b.y-a.y);
+}
+
+function midpoint(a,b){
+ return{x:(a.x+b.x)/2,y:(a.y+b.y)/2};
+}
+
+function isInteractiveTarget(target){
+ return !!target.closest(
+  "button,a,input,textarea,select,label,form,"+
+  ".social-tabs,.social-pane,.social-card,"+
+  ".conversation-list,.conversation-window"
+ );
+}
+
+viewport.addEventListener("pointerdown",e=>{
+ // Nie przechwytuj kliknięć w przyciski, formularze i panel Sąsiadów.
+ if(isInteractiveTarget(e.target))return;
+
+ if(e.pointerType==="mouse"&&e.button!==0)return;
+
+ try{
+  viewport.setPointerCapture(e.pointerId);
+ }catch(err){}
+
+ pointers.set(e.pointerId,point(e));
+
+ if(pointers.size===1){
+  dragged=false;
+  gesture={
+   type:"pan",
+   startX:e.clientX,
+   startY:e.clientY,
+   camX:camera.x,
+   camY:camera.y
+  };
+ }else if(pointers.size===2){
+  const pts=[...pointers.values()];
+  const mid=midpoint(pts[0],pts[1]);
+
+  gesture={
+   type:"pinch",
+   startDistance:Math.max(1,distance(pts[0],pts[1])),
+   startScale:camera.scale,
+   worldX:(mid.x-camera.x)/camera.scale,
+   worldY:(mid.y-camera.y)/camera.scale
+  };
+ }
+});
+
+viewport.addEventListener("pointermove",e=>{
+ if(!pointers.has(e.pointerId)||!gesture)return;
+
+ pointers.set(e.pointerId,point(e));
+
+ if(pointers.size===1&&gesture.type==="pan"){
+  const dx=e.clientX-gesture.startX;
+  const dy=e.clientY-gesture.startY;
+
+  if(Math.abs(dx)>6||Math.abs(dy)>6)dragged=true;
+
+  if(dragged){
+   camera.x=gesture.camX+dx;
+   camera.y=gesture.camY+dy;
+   viewport.classList.add("dragging");
+   applyCamera();
+   e.preventDefault();
+  }
+
+ }else if(pointers.size>=2&&gesture.type==="pinch"){
+  const pts=[...pointers.values()];
+  const mid=midpoint(pts[0],pts[1]);
+
+  camera.scale=clampScale(
+   gesture.startScale*distance(pts[0],pts[1])/gesture.startDistance
+  );
+
+  camera.x=mid.x-gesture.worldX*camera.scale;
+  camera.y=mid.y-gesture.worldY*camera.scale;
+
+  dragged=true;
+  applyCamera();
+  e.preventDefault();
+ }
+},{passive:false});
+
+function endPointer(e){
+ if(!pointers.has(e.pointerId))return;
+
+ pointers.delete(e.pointerId);
+
+ if(dragged)suppressClickUntil=Date.now()+350;
+
+ viewport.classList.remove("dragging");
+
+ if(pointers.size===1){
+  const p=[...pointers.values()][0];
+
+  gesture={
+   type:"pan",
+   startX:p.x,
+   startY:p.y,
+   camX:camera.x,
+   camY:camera.y
+  };
+ }else if(pointers.size===0){
+  gesture=null;
+  dragged=false;
+ }else{
+  gesture=null;
+ }
+}
+
+viewport.addEventListener("pointerup",endPointer);
+viewport.addEventListener("pointercancel",endPointer);
+
+viewport.addEventListener("click",e=>{
+ // Nie blokuj kliknięć w kontrolki nawet po przesunięciu kamery.
+ if(
+  Date.now()<suppressClickUntil &&
+  !isInteractiveTarget(e.target)
+ ){
+  e.preventDefault();
+  e.stopPropagation();
+  e.stopImmediatePropagation();
+ }
+},true);
+
+viewport.addEventListener("wheel",e=>{
+ if(document.getElementById("game").style.display!=="block")return;
+
+ e.preventDefault();
+
+ const old=camera.scale;
+
+ camera.scale=clampScale(
+  camera.scale*(e.deltaY<0?1.12:.89)
+ );
+
+ const r=viewport.getBoundingClientRect();
+ const px=e.clientX-r.left;
+ const py=e.clientY-r.top;
+
+ const wx=(px-camera.x)/old;
+ const wy=(py-camera.y)/old;
+
+ camera.x=px-wx*camera.scale;
+ camera.y=py-wy*camera.scale;
+
+ applyCamera();
+},{passive:false});
+
+/* NAWIGACJA */
+
+const gameViews={
+ farm:{title:"Twoja pierwsza farma",description:"To tutaj rozpoczynasz swoją przygodę. Rozwijaj gospodarstwo i odblokowuj kolejne obszary."},
+ map:{title:"Mapa Zagrodowa",description:"Wybierz jedno ze swoich gospodarstw, aby się do niego przenieść."},
+ tasks:{title:"Zadania",description:"Wykonuj zadania, zdobywaj doświadczenie i odblokowuj kolejne obszary.",icon:"📜",sub:"Twoje pierwsze zadania",text:"System zadań dodamy w kolejnym etapie rozwoju gry."},
+ buildings:{title:"Budynki",description:"W przyszłości postawisz tu budynki i rozwiniesz produkcję.",icon:"🏗️",sub:"Rozbuduj gospodarstwo",text:"Katalog budynków zostanie przygotowany w kolejnym etapie."},
+ inventory:{title:"Magazyn",description:"Tutaj znajdą się Twoje plony, nasiona i wyprodukowane towary.",icon:"📦",sub:"Twój magazyn",text:"System magazynu dodamy w kolejnym etapie."},
+ home:{title:"Twój dom",description:"Miejsce odpoczynku i przyszłych ulepszeń domu.",icon:"🏡",sub:"Witaj w swoim domu",text:"W przyszłości znajdziesz tu sypialnię, salon i ulepszenia domu."},
+ neighbors:{title:"Sąsiedzi",description:"Znajdź innych gospodarzy, dodawaj znajomych i rozmawiaj z nimi."},
+ settings:{title:"Ustawienia",description:"Dostosuj swoje konto i sposób korzystania z gry.",icon:"⚙️",sub:"Ustawienia gry",text:"Ustawienia konta i gry przygotujemy w kolejnym etapie."}
+};
+
+function openGameView(name,button){
+ const view=gameViews[name];if(!view)return;
+ const isFarm=name==="farm",isMap=name==="map",isNeighbors=name==="neighbors";
+ document.getElementById("farmView").style.display=isFarm?"block":"none";
+ document.getElementById("otherView").style.display=isFarm?"none":"block";
+ if(!isFarm){
+  document.getElementById("gameViewTitle").textContent=view.title;
+  document.getElementById("gameViewDescription").textContent=view.description;
+  document.getElementById("mapContent").style.display=isMap?"block":"none";
+  document.getElementById("genericViewContent").style.display=(!isMap&&!isNeighbors)?"block":"none";
+  document.getElementById("neighborsContent").style.display=isNeighbors?"block":"none";
+  if(!isMap&&!isNeighbors){document.getElementById("viewIcon").textContent=view.icon;document.getElementById("viewSubTitle").textContent=view.sub;document.getElementById("viewText").textContent=view.text}
+ }
+ document.querySelectorAll(".side-menu button").forEach(b=>b.classList.remove("selected"));
+ if(button)button.classList.add("selected");
+ else if(!isFarm){const target=document.querySelector('.side-menu button[data-view="'+name+'"]');if(target)target.classList.add("selected")}
+ if(isNeighbors){renderNeighbors();showSocialTab("friends")}
+}
+
+/* SYSTEM SĄSIADÓW — PROTOTYP LOKALNY */
+
+const demoDirectory=[
+ {id:"demo_ola",nickname:"OlaZielona",avatar:"",online:true},
+ {id:"demo_marek",nickname:"MarekRolnik",avatar:"",online:false},
+ {id:"demo_ania",nickname:"AniaZagroda",avatar:"",online:true},
+ {id:"demo_janek",nickname:"JanekFarmer",avatar:"",online:false},
+ {id:"demo_ewa",nickname:"EwaKwiaty",avatar:"",online:true},
+ {id:"demo_piotr",nickname:"PiotrSad",avatar:"",online:false},
+ {id:"demo_kasia",nickname:"KasiaMiodowa",avatar:"",online:true}
+];
+
+const socialKey="zagrodowoSocialDemo";
+let socialData={friends:[],incoming:[],outgoing:[],blocked:[],reported:[],conversations:{}};
+let activeConversation=null;
+
+function loadSocial(){
+ try{const saved=localStorage.getItem(socialKey);if(saved)socialData={...socialData,...JSON.parse(saved)}}catch(e){}
+}
+function saveSocial(){
+ try{localStorage.setItem(socialKey,JSON.stringify(socialData))}catch(e){alert("Nie udało się zapisać danych Sąsiadów w tej przeglądarce.")}
+}
+function currentId(){return "local_"+(player.nickname||"gospodarz").toLowerCase()}
+function sameName(a,b){return String(a).trim().toLowerCase()===String(b).trim().toLowerCase()}
+function isFriend(id){return socialData.friends.includes(id)}
+function findDemo(id){return demoDirectory.find(p=>p.id===id)||null}
+function playerInfo(id){
+ if(id===currentId())return{id,nickname:player.nickname,avatar:player.avatar,online:true};
+ return findDemo(id)||{id,nickname:"Nieznany gracz",avatar:"",online:false};
+}
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function avatarHTML(person){
+ return person.avatar?'<div class="social-avatar"><img src="'+escapeHTML(person.avatar)+'" alt=""></div>':'<div class="social-avatar">👨‍🌾</div>';
+}
+function renderNeighbors(){
+ renderFriends();renderRequests();renderConversations();updateSocialBadges();
+}
+function updateSocialBadges(){
+ document.getElementById("friendsCount").textContent=socialData.friends.length;
+ document.getElementById("requestsCount").textContent=socialData.incoming.length;
+ let unread=0;
+ Object.values(socialData.conversations).forEach(messages=>messages.forEach(m=>{if(!m.mine&&!m.read)unread++}));
+ document.getElementById("unreadCount").textContent=unread?"("+unread+")":"";
+ const total=socialData.incoming.length+unread,badge=document.getElementById("neighborsBadge");
+ badge.textContent=total;badge.style.display=total?"inline-block":"none";
+}
+function showSocialTab(name){
+ document.querySelectorAll(".social-tab").forEach(b=>b.classList.toggle("active",b.dataset.socialTab===name));
+ document.querySelectorAll(".social-pane").forEach(p=>p.classList.remove("active"));
+ const pane=document.getElementById("social"+name.charAt(0).toUpperCase()+name.slice(1));
+ if(pane)pane.classList.add("active");
+ if(name==="messages")renderConversations();
+ if(name==="friends")renderFriends();
+ if(name==="requests")renderRequests();
+}
+function socialCard(person,body,buttons=""){
+ return '<div class="social-card">'+avatarHTML(person)+'<div class="social-user"><strong>'+escapeHTML(person.nickname)+'</strong><small>'+body+'</small></div><div class="social-buttons">'+buttons+'</div></div>';
+}
+function renderFriends(){
+ const box=document.getElementById("friendsList");
+ if(!socialData.friends.length){box.innerHTML='<div class="social-empty">Nie masz jeszcze znajomych. Znajdź graczy i wyślij im zaproszenie!</div>';return}
+ box.innerHTML=socialData.friends.map(id=>{
+  const p=playerInfo(id),status=p.online?'<span class="online-dot">● Online</span>':'<span class="offline-dot">● Offline</span>';
+  return socialCard(p,status,
+   '<button class="social-action" onclick="startConversation(\''+id+'\')">Wiadomość</button>'+
+   '<button class="social-action secondary" onclick="friendOptions(\''+id+'\')">Opcje</button>');
+ }).join("");
+}
+function renderRequests(){
+ const incoming=document.getElementById("incomingRequests"),outgoing=document.getElementById("outgoingRequests");
+ incoming.innerHTML=socialData.incoming.length?socialData.incoming.map(id=>{
+  const p=playerInfo(id);
+  return socialCard(p,"Zaprasza Cię do znajomych",
+   '<button class="social-action" onclick="acceptRequest(\''+id+'\')">Akceptuj</button>'+
+   '<button class="social-action secondary" onclick="rejectRequest(\''+id+'\')">Odrzuć</button>');
+ }).join(""):'<div class="social-empty">Nie masz nowych zaproszeń.</div>';
+ outgoing.innerHTML=socialData.outgoing.length?socialData.outgoing.map(id=>{
+  const p=playerInfo(id);
+  return socialCard(p,"Oczekuje na odpowiedź",
+   '<button class="social-action secondary" onclick="cancelRequest(\''+id+'\')">Anuluj</button>');
+ }).join(""):'<div class="social-empty">Nie wysłano żadnych zaproszeń.</div>';
+}
+function searchPlayers(){
+ const query=document.getElementById("playerSearchInput").value.trim(),box=document.getElementById("searchResults");
+ if(!query){box.innerHTML='<div class="social-empty">Wpisz nick gracza, aby rozpocząć wyszukiwanie.</div>';return}
+ const results=demoDirectory.filter(p=>p.nickname.toLowerCase().includes(query.toLowerCase())&&!sameName(p.nickname,player.nickname)&&!socialData.blocked.includes(p.id));
+ if(!results.length){box.innerHTML='<div class="social-empty">Nie znaleziono gracza o takim nicku.</div>';return}
+ box.innerHTML=results.map(p=>{
+  let action="";
+  if(isFriend(p.id))action='<button class="social-action secondary" onclick="startConversation(\''+p.id+'\')">Wiadomość</button>';
+  else if(socialData.outgoing.includes(p.id))action='<button class="social-action secondary" disabled>Zaproszenie wysłane</button>';
+  else if(socialData.incoming.includes(p.id))action='<button class="social-action" onclick="acceptRequest(\''+p.id+'\')">Akceptuj</button>';
+  else action='<button class="social-action" onclick="sendRequest(\''+p.id+'\')">Dodaj do znajomych</button>';
+  return socialCard(p,p.online?'<span class="online-dot">● Online</span>':'<span class="offline-dot">● Offline</span>',action);
+ }).join("");
+}
+document.getElementById("playerSearchInput").addEventListener("keydown",e=>{if(e.key==="Enter")searchPlayers()});
+function sendRequest(id){
+ if(socialData.blocked.includes(id)){alert("Nie możesz wysłać zaproszenia temu graczowi.");return}
+ if(isFriend(id)||socialData.outgoing.includes(id))return;
+ socialData.outgoing.push(id);saveSocial();renderNeighbors();searchPlayers();
+ alert("Zaproszenie zostało wysłane. W tej wersji demonstracyjnej nie trafia ono na inne urządzenie.");
+}
+function acceptRequest(id){
+ socialData.incoming=socialData.incoming.filter(x=>x!==id);
+ if(!isFriend(id))socialData.friends.push(id);
+ saveSocial();renderNeighbors();searchPlayers();
+}
+function rejectRequest(id){socialData.incoming=socialData.incoming.filter(x=>x!==id);saveSocial();renderNeighbors()}
+function cancelRequest(id){socialData.outgoing=socialData.outgoing.filter(x=>x!==id);saveSocial();renderNeighbors();searchPlayers()}
+function friendOptions(id){
+ const p=playerInfo(id);
+ const choice=prompt("Opcje znajomego: wpisz USUN, BLOKUJ lub ZGLOS.");
+ if(!choice)return;
+ const action=choice.trim().toUpperCase();
+ if(action==="USUN"){
+  if(confirm("Usunąć gracza "+p.nickname+" ze znajomych?")){
+   socialData.friends=socialData.friends.filter(x=>x!==id);
+   activeConversation=activeConversation===id?null:activeConversation;
+   saveSocial();renderNeighbors();
+  }
+ }else if(action==="BLOKUJ"){
+  if(confirm("Zablokować gracza "+p.nickname+"?")){
+   socialData.friends=socialData.friends.filter(x=>x!==id);
+   socialData.incoming=socialData.incoming.filter(x=>x!==id);
+   socialData.outgoing=socialData.outgoing.filter(x=>x!==id);
+   if(!socialData.blocked.includes(id))socialData.blocked.push(id);
+   activeConversation=activeConversation===id?null:activeConversation;
+   saveSocial();renderNeighbors();
+  }
+ }else if(action==="ZGLOS")reportPlayer(id);
+}
+function reportPlayer(id){
+ const p=playerInfo(id),reason=prompt("Dlaczego chcesz zgłosić gracza "+p.nickname+"?");
+ if(!reason||!reason.trim())return;
+ socialData.reported.push({id,reason:reason.trim(),date:new Date().toISOString()});
+ saveSocial();alert("Zgłoszenie zapisano w wersji demonstracyjnej. W prawdziwej grze trafi do administracji.");
+}
+function startConversation(id){
+ if(!isFriend(id)){alert("Wiadomości mogą wymieniać wyłącznie wzajemni znajomi.");return}
+ activeConversation=id;
+ showSocialTab("messages");renderConversations();
+}
+function renderConversations(){
+ const list=document.getElementById("conversationList"),heading=document.getElementById("conversationHeading"),messages=document.getElementById("conversationMessages"),input=document.getElementById("chatInput"),send=document.getElementById("sendMessageButton");
+ list.innerHTML="";
+ if(!socialData.friends.length)list.innerHTML='<div class="social-empty">Dodaj znajomych, aby móc z nimi rozmawiać.</div>';
+ socialData.friends.forEach(id=>{
+  const p=playerInfo(id),b=document.createElement("button");
+  b.className="conversation-choice"+(activeConversation===id?" active":"");
+  b.innerHTML=avatarHTML(p)+'<span><strong>'+escapeHTML(p.nickname)+'</strong><small>'+(p.online?"Online":"Offline")+'</small></span>';
+  b.onclick=()=>{activeConversation=id;renderConversations()};
+  list.appendChild(b);
+ });
+ if(!activeConversation||!isFriend(activeConversation)){
+  heading.textContent="Wybierz znajomego";messages.innerHTML='<div class="chat-locked">Wybierz rozmowę z listy po lewej stronie.</div>';input.disabled=true;send.disabled=true;return;
+ }
+ const person=playerInfo(activeConversation);heading.textContent="Rozmowa z "+person.nickname;
+ input.disabled=false;send.disabled=false;
+ const thread=socialData.conversations[activeConversation]||[];
+ thread.forEach(m=>{if(!m.mine)m.read=true});
+ socialData.conversations[activeConversation]=thread;saveSocial();
+ messages.innerHTML=thread.length?thread.map(m=>'<div class="chat-message '+(m.mine?"mine":"")+'">'+escapeHTML(m.text)+'<small>'+escapeHTML(m.time||"")+(m.mine?"":"")+'</small></div>').join(""):'<div class="chat-locked">To początek Waszej rozmowy. Napisz pierwszą wiadomość!</div>';
+ messages.scrollTop=messages.scrollHeight;updateSocialBadges();
+}
+document.getElementById("chatForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ if(!activeConversation||!isFriend(activeConversation)){alert("Możesz pisać tylko do znajomych.");return}
+ const input=document.getElementById("chatInput"),text=input.value.trim();if(!text)return;
+ if(!socialData.conversations[activeConversation])socialData.conversations[activeConversation]=[];
+ socialData.conversations[activeConversation].push({mine:true,text,time:new Date().toLocaleString("pl-PL"),read:true});
+ input.value="";saveSocial();renderConversations();
+});
+document.getElementById("loginForm").addEventListener("submit",e=>{e.preventDefault();enterGame()});
+document.getElementById("registerForm").addEventListener("submit",function(e){
+ e.preventDefault();if(this.elements.password.value!==this.elements.confirmPassword.value){showMessage("Hasła nie są takie same. Sprawdź je i spróbuj ponownie.");return}
+ showMessage("Formularz jest gotowy. Tworzenie prawdziwych kont dodamy po przygotowaniu serwera.");
+});
+document.getElementById("forgotForm").addEventListener("submit",e=>{e.preventDefault();showMessage("Odzyskiwanie hasła skonfigurujemy później razem z serwerem.")});
+
+/* WEJŚCIE I WYJŚCIE */
+
+function enterGame(){
+ const loginNick=document.querySelector('#loginForm [name="login"]').value.trim();
+ const registerNick=document.querySelector('#registerForm [name="nickname"]').value.trim();
+ if(registerNick)player.nickname=registerNick;else if(loginNick)player.nickname=loginNick;
+ updatePlayerPanel();authOverlay.classList.remove("visible");start.style.display="none";
+ document.getElementById("game").style.display="block";
+ openGameView("farm");pointers.clear();gesture=null;dragged=false;requestAnimationFrame(fitGame);
+}
+function backToStart(){document.getElementById("game").style.display="none";start.style.display="block";closeAuth();closeProfileEditor()}
+function showNotice(message){document.getElementById("gameNotice").textContent=message}
+
+/* START */
+
+loadDemoProfile();
+loadSocial();
+renderNeighbors();
+</script>
+</body>
+</html>
