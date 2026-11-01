@@ -1031,10 +1031,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   height:100px;
 }
 .premium-menu-icon > img{
+  position:absolute;
+  left:50%;
+  top:50%;
   display:block;
-  width:100px;
-  height:100px;
+  width:120px;
+  height:120px;
+  max-width:none;
   object-fit:contain;
+  transform:translate(-50%,-50%);
   pointer-events:none;
   user-select:none;
   -webkit-user-drag:none;
