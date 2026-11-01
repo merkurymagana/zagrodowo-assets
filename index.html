@@ -792,6 +792,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 /* KOMPAS I MIEJSCE NA DRUGI LINK — 100 × 100 PX */
 
+.compass-premium-stack{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  flex:0 0 100px;
+  width:100px;
+}
 .compass-links-row{
   display:flex;
   align-items:center;
@@ -1875,25 +1882,27 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
       <nav class="side-menu">
         <div class="compass-links-row">
-          <button class="compass-menu-button" data-view="map" onclick="openGameView('map',this)" aria-label="Otwórz mapę" aria-pressed="false" type="button">
-            <span class="compass-menu-icon">
-              <img class="compass-dial" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/tarcza-kompasu.png" alt="">
-              <img class="compass-pointer" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wskazowka-kompasu.png" alt="">
-            </span>
-          </button>
+          <div class="compass-premium-stack">
+            <button class="compass-menu-button" data-view="map" onclick="openGameView('map',this)" aria-label="Otwórz mapę" aria-pressed="false" type="button">
+              <span class="compass-menu-icon">
+                <img class="compass-dial" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/tarcza-kompasu.png" alt="">
+                <img class="compass-pointer" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wskazowka-kompasu.png" alt="">
+              </span>
+            </button>
+            <div class="premium-menu-row">
+              <button class="premium-menu-button" data-view="premium" onclick="openGameView('premium',this)" aria-label="Otwórz Usługi Premium" aria-pressed="false" type="button">
+                <span class="premium-menu-icon">
+                  <img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ikona-uslugi-premium.png" alt="">
+                  <span class="premium-sparkle-coins" aria-hidden="true"></span>
+                  <span class="premium-sparkle-diamonds" aria-hidden="true"></span>
+                </span>
+              </button>
+            </div>
+          </div>
           <button class="tasks-menu-button" data-view="tasks" onclick="openGameView('tasks',this)" aria-label="Otwórz zadania" aria-pressed="false" type="button">
             <span class="tasks-menu-icon">
               <img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ikona-zadania.png" alt="">
               <img class="tasks-wax-seal" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lak.png?v=2" alt="" aria-hidden="true">
-            </span>
-          </button>
-        </div>
-        <div class="premium-menu-row">
-          <button class="premium-menu-button" data-view="premium" onclick="openGameView('premium',this)" aria-label="Otwórz Usługi Premium" aria-pressed="false" type="button">
-            <span class="premium-menu-icon">
-              <img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ikona-uslugi-premium.png" alt="">
-              <span class="premium-sparkle-coins" aria-hidden="true"></span>
-              <span class="premium-sparkle-diamonds" aria-hidden="true"></span>
             </span>
           </button>
         </div>
