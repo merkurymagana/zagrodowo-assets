@@ -789,7 +789,22 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .logout-button{width:100%;padding:9px;border:1px solid #d2b58c;border-radius:7px;background:#eee0c2;color:#573c26;font:normal 14px 'Bree Serif',Georgia,serif}
 .panel-version{text-align:center;color:#e6cfad;font-size:10px}
 
-/* KOMPAS W MENU — 100 × 100 PX */
+/* KOMPAS I MIEJSCE NA DRUGI LINK — 80 × 80 PX */
+
+.compass-links-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  width:100%;
+}
+
+.compass-link-placeholder{
+  display:block;
+  flex:0 0 80px;
+  width:80px;
+  height:80px;
+}
 
 .side-menu button.compass-menu-button,
 .side-menu button.compass-menu-button:hover,
@@ -800,13 +815,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   position:relative;
   display:flex;
   align-self:center;
-  flex:0 0 100px;
-  width:100px;
-  min-width:100px;
-  max-width:100px;
-  height:100px;
-  min-height:100px;
-  max-height:100px;
+  flex:0 0 80px;
+  width:80px;
+  min-width:80px;
+  max-width:80px;
+  height:80px;
+  min-height:80px;
+  max-height:80px;
   margin:0;
   padding:0;
   align-items:center;
@@ -826,9 +841,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .compass-menu-icon{
   position:relative;
   display:block;
-  flex:0 0 100px;
-  width:100px;
-  height:100px;
+  flex:0 0 80px;
+  width:80px;
+  height:80px;
 }
 
 .compass-menu-icon img{
@@ -843,17 +858,17 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .compass-dial{
   z-index:1;
   inset:0;
-  width:100px;
-  height:100px;
+  width:80px;
+  height:80px;
 }
 
 .compass-pointer{
   z-index:2;
   position:absolute;
-  width:68px !important;
-  height:68px !important;
-  left:16px !important;
-  top:16px !important;
+  width:52px !important;
+  height:52px !important;
+  left:14px !important;
+  top:14px !important;
   right:auto !important;
   bottom:auto !important;
   margin:0 !important;
@@ -861,7 +876,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   object-fit:contain;
   transform:none;
   transform-origin:50% 50%;
-  animation:compassSpin 3s linear infinite;
+  animation:compassSpin 3s linear infinite alternate;
   animation-play-state:paused;
 }
 
@@ -869,34 +884,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation-play-state:running;
 }
 
-/* Podpowiedź w stylu drewniano-pergaminowego interfejsu Zagrodowa */
-.compass-menu-button::after{
-  content:"Mapa";
-  position:absolute;
-  left:calc(100% + 10px);
-  top:50%;
-  z-index:20;
-  transform:translateY(-50%) translateX(-4px);
-  padding:6px 13px;
-  border:2px solid #8b633d;
-  border-radius:5px;
-  background:linear-gradient(180deg,#f8edcf 0%,#e8d2a7 100%);
-  box-shadow:0 2px 5px rgba(48,30,14,.35),inset 0 0 0 1px rgba(255,255,255,.55);
-  color:#573c26;
-  font:700 14px/1.2 "Bree Serif",Georgia,serif;
-  letter-spacing:.3px;
-  white-space:nowrap;
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-  transition:opacity .16s ease,transform .16s ease,visibility .16s ease;
-}
-
-.compass-menu-button:hover::after,
-.compass-menu-button:focus-visible::after{
-  opacity:1;
-  visibility:visible;
-  transform:translateY(-50%) translateX(0);
+@media (max-width:760px){
+  .compass-links-row{
+    grid-column:1 / -1;
+  }
 }
 
 @keyframes compassSpin{
@@ -1546,12 +1537,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
       </section>
 
       <nav class="side-menu">
-        <button class="compass-menu-button" data-view="map" onclick="openGameView('map',this)" aria-label="Otwórz mapę" aria-pressed="false" type="button">
-          <span class="compass-menu-icon">
-            <img class="compass-dial" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/tarcza-kompasu.png" alt="">
-            <img class="compass-pointer" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wskazowka-kompasu.png" alt="">
-          </span>
-        </button>
+        <div class="compass-links-row">
+          <button class="compass-menu-button" data-view="map" onclick="openGameView('map',this)" aria-label="Otwórz mapę" aria-pressed="false" type="button">
+            <span class="compass-menu-icon">
+              <img class="compass-dial" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/tarcza-kompasu.png" alt="">
+              <img class="compass-pointer" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wskazowka-kompasu.png" alt="">
+            </span>
+          </button>
+          <span class="compass-link-placeholder" aria-hidden="true"></span>
+        </div>
 
         <button data-view="tasks" onclick="openGameView('tasks',this)"><span class="menu-icon">📜</span>Zadania</button>
         <button data-view="premium" onclick="openGameView('premium',this)"><span class="menu-icon">💎</span>Usługi Premium</button>
