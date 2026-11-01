@@ -881,6 +881,94 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation-play-state:running;
 }
 
+/* Ikona zadań — samodzielny przycisk obok kompasu. */
+.side-menu button.tasks-menu-button,
+.side-menu button.tasks-menu-button:hover,
+.side-menu button.tasks-menu-button:focus,
+.side-menu button.tasks-menu-button:focus-visible,
+.side-menu button.tasks-menu-button:active,
+.side-menu button.tasks-menu-button.selected{
+  position:relative;
+  display:flex;
+  align-self:center;
+  flex:0 0 100px;
+  width:100px;
+  min-width:100px;
+  max-width:100px;
+  height:100px;
+  min-height:100px;
+  max-height:100px;
+  margin:0;
+  padding:0;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  overflow:visible;
+  border:0 !important;
+  outline:0;
+  border-radius:0;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:transparent !important;
+  filter:none !important;
+  transform:none !important;
+}
+
+.tasks-menu-icon{
+  position:relative;
+  display:block;
+  flex:0 0 100px;
+  width:100px;
+  height:100px;
+}
+
+.tasks-menu-icon img{
+  display:block;
+  width:100px;
+  height:100px;
+  object-fit:contain;
+  pointer-events:none;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+
+/* Etykieta widoczna po najechaniu kursorem na komputerze. */
+.tasks-menu-button::after{
+  content:"Zadania";
+  position:absolute;
+  left:calc(100% + 9px);
+  top:50%;
+  z-index:100;
+  padding:6px 12px;
+  border:2px solid #8b633d;
+  border-radius:5px;
+  background:linear-gradient(180deg,#f8edcf 0%,#e8d2a7 100%);
+  box-shadow:0 2px 5px rgba(48,30,14,.35),inset 0 0 0 1px rgba(255,255,255,.55);
+  color:#573c26 !important;
+  font:700 14px/1.2 "Bree Serif",Georgia,serif;
+  letter-spacing:.3px;
+  white-space:nowrap;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:translateY(-50%) translateX(-4px);
+  transition:opacity .16s ease,transform .16s ease,visibility .16s ease;
+}
+
+.tasks-menu-button:hover::after,
+.tasks-menu-button:focus-visible::after{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(-50%) translateX(0);
+}
+
+/* Etykieta zadań, tak jak etykieta kompasu, jest wyłączona na telefonach. */
+@media (max-width:760px){
+  .tasks-menu-button::after{
+    display:none;
+  }
+}
+
 /* Etykieta widoczna po najechaniu kursorem na komputerze. */
 .compass-menu-button::after{
   content:"Mapa";
@@ -1575,10 +1663,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
               <img class="compass-pointer" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wskazowka-kompasu.png" alt="">
             </span>
           </button>
-          <span class="compass-link-placeholder" aria-hidden="true"></span>
+          <button class="tasks-menu-button" data-view="tasks" onclick="openGameView('tasks',this)" aria-label="Otwórz zadania" aria-pressed="false" type="button">
+            <span class="tasks-menu-icon">
+              <img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ikona-zadania.png" alt="">
+            </span>
+          </button>
         </div>
-
-        <button data-view="tasks" onclick="openGameView('tasks',this)"><span class="menu-icon"><img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ikona-zadania.png" alt=""></span>Zadania</button>
         <button data-view="premium" onclick="openGameView('premium',this)"><span class="menu-icon">💎</span>Usługi Premium</button>
         <button data-view="help" onclick="openGameView('help',this)"><span class="menu-icon">📖</span>Pomoc</button>
         <button data-view="neighbors" onclick="openGameView('neighbors',this)"><span class="menu-icon">🏡</span>Sąsiedzi <span class="menu-count" id="neighborsBadge" style="display:none">0</span></button>
