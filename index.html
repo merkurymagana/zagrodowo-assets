@@ -774,18 +774,38 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .menu-icon{width:27px;flex:0 0 27px;text-align:center;font-size:20px}
 .menu-icon img{display:block;width:27px;height:27px;object-fit:contain}
 
-/* Lupa w menu Pomoc — delikatne poszukiwanie odpowiedzi. */
-.help-menu-icon img{transform-origin:68% 72%;will-change:transform}
+/* Ikona Pomocy — samodzielny przycisk w stylu kompasu i Premium. */
+.help-menu-row{display:flex;align-items:center;justify-content:center;width:100%}
+.side-menu button.help-menu-button,
+.side-menu button.help-menu-button:hover,
+.side-menu button.help-menu-button:focus,
+.side-menu button.help-menu-button:focus-visible,
+.side-menu button.help-menu-button:active,
+.side-menu button.help-menu-button.selected{
+  position:relative;display:flex;align-self:center;flex:0 0 100px;
+  width:100px;min-width:100px;max-width:100px;height:100px;
+  min-height:100px;max-height:100px;margin:0;padding:0;
+  align-items:center;justify-content:center;gap:0;overflow:visible;
+  border:0!important;outline:0;border-radius:0;
+  background:transparent!important;box-shadow:none!important;
+  color:transparent!important;filter:none!important;transform:none!important;
+}
+.help-menu-icon{position:relative;display:block;flex:0 0 100px;width:100px;height:100px}
+.help-menu-icon img{
+  position:absolute;left:50%;top:50%;display:block;width:90px;height:90px;
+  max-width:none;object-fit:contain;transform:translate(-50%,-50%);
+  transform-origin:50% 50%;pointer-events:none;user-select:none;-webkit-user-drag:none;
+}
 .help-menu-button:hover .help-menu-icon img,
 .help-menu-button:focus-visible .help-menu-icon img,
 .help-menu-button.is-searching .help-menu-icon img{animation:helpSearch .72s ease-in-out}
 @keyframes helpSearch{
-  0%,100%{transform:translate(0,0) rotate(0)}
-  22%{transform:translate(-2px,-1px) rotate(-12deg)}
-  48%{transform:translate(2px,1px) rotate(10deg)}
-  72%{transform:translate(-1px,0) rotate(-5deg)}
+  0%,100%{transform:translate(-50%,-50%) rotate(0) scale(1)}
+  22%{transform:translate(calc(-50% - 2px),calc(-50% - 1px)) rotate(-12deg) scale(1.02)}
+  48%{transform:translate(calc(-50% + 2px),calc(-50% + 1px)) rotate(10deg) scale(1.02)}
+  72%{transform:translate(calc(-50% - 1px),-50%) rotate(-5deg) scale(1.01)}
 }
-@media (prefers-reduced-motion:reduce){
+@media(prefers-reduced-motion:reduce){
   .help-menu-button:hover .help-menu-icon img,
   .help-menu-button:focus-visible .help-menu-icon img,
   .help-menu-button.is-searching .help-menu-icon img{animation:none}
@@ -1923,7 +1943,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
             </span>
           </button>
         </div>
-        <button class="help-menu-button" data-view="help" onclick="openGameView('help',this)" aria-label="Otwórz pomoc" type="button"><span class="menu-icon help-menu-icon"><img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ikona-pomoc.png" alt=""></span>Pomoc</button>
+        <div class="help-menu-row">
+          <button class="help-menu-button" data-view="help" onclick="openGameView('help',this)" aria-label="Otwórz pomoc" title="Pomoc" aria-pressed="false" type="button">
+            <span class="help-menu-icon"><img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ikona-pomoc.png" alt=""></span>
+          </button>
+        </div>
         <button data-view="neighbors" onclick="openGameView('neighbors',this)"><span class="menu-icon">🏡</span>Sąsiedzi <span class="menu-count" id="neighborsBadge" style="display:none">0</span></button>
         <button data-view="settings" onclick="openGameView('settings',this)"><span class="menu-icon">⚙️</span>Ustawienia</button>
       </nav>
