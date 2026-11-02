@@ -1882,29 +1882,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 
 
-/* JESIENNY ŚWIT — chłodne, ciemniejsze światło przed wschodem słońca */
-#start::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:2;
-  pointer-events:none;
-  opacity:0;
-  transition:opacity 2s ease;
-}
-#start.autumn.time-dawn::after{
-  opacity:1;
-  background:linear-gradient(
-    180deg,
-    rgba(13,27,48,.58) 0%,
-    rgba(24,40,61,.48) 48%,
-    rgba(40,53,68,.30) 100%
-  );
-}
-@media(prefers-reduced-motion:reduce){
-  #start::after{transition:none}
-}
-
 </style>
 </head>
 
@@ -2297,14 +2274,6 @@ function updateSeason(){
 
 updateSeason();
  
-/* Podgląd jesiennego poranka — bez uzależniania efektu od godziny.
-   Po zatwierdzeniu efektów przywrócimy osobny harmonogram pór dnia. */
-start.classList.remove("time-midday","time-night","time-dawn","time-morning");
-if(start.classList.contains("autumn")){
-  start.classList.add("time-morning","time-dawn");
-}
-
-
 /* FORMULARZE */
 
 const authTitle=document.getElementById("authTitle");
