@@ -131,11 +131,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   #startCloud{animation:none;opacity:.85;left:50%;top:28%;filter:none}
 }
 
-/* Dwie dalsze chmurki — ten sam miękki ruch, nieco mniejszy rozmiar. */
+/* Dwie dalsze chmurki — ten sam tor i te same punkty pojawiania się oraz zanikania.
+   Ujemne opóźnienia sprawiają, że po otwarciu strony każda jest w innym miejscu lotu. */
 #startCloud2,
 #startCloud3{
   position:absolute;
   z-index:3;
+  top:28%;
+  left:50%;
   width:clamp(42px,4.2vw,62px);
   height:auto;
   display:block;
@@ -143,29 +146,27 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   user-select:none;
   opacity:0;
   filter:blur(0);
+  animation:cloud-second-half 90s linear infinite;
   will-change:transform,opacity,filter;
 }
-#startCloud2{
-  top:21%;
-  left:24%;
-  animation:cloud-second-half 108s linear -34s infinite;
-}
-#startCloud3{
-  top:35%;
-  left:66%;
-  animation:cloud-second-half 122s linear -67s infinite;
-}
+#startCloud2{animation-delay:-27s}
+#startCloud3{animation-delay:-56s}
+
 @media(max-width:700px){
   #startCloud2,
   #startCloud3{
+    top:28%;
+    left:50%;
     width:clamp(36px,9vw,52px);
+    animation-duration:84s;
   }
-  #startCloud2{top:21%;left:24%}
-  #startCloud3{top:35%;left:66%}
+  #startCloud2{animation-delay:-25s}
+  #startCloud3{animation-delay:-51s}
 }
+
 @media(prefers-reduced-motion:reduce){
-  #startCloud2{animation:none;opacity:.78;left:24%;top:21%;filter:none}
-  #startCloud3{animation:none;opacity:.78;left:66%;top:35%;filter:none}
+  #startCloud2{animation:none;opacity:.78;left:50%;top:28%;filter:none;transform:translate3d(16vw,0,0)}
+  #startCloud3{animation:none;opacity:.78;left:50%;top:28%;filter:none;transform:translate3d(32vw,0,0)}
 }
 
 .season-shade{
