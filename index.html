@@ -1987,7 +1987,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 
 
-/* Kot na ekranie startowym — rozgląda się, przykuca i wykonuje skok */
+/* Kot na ekranie startowym — subtelne, bardziej naturalne ruchy */
 #startCat{
   position:absolute;
   z-index:6;
@@ -2001,14 +2001,35 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   display:block;
   pointer-events:none;
   user-select:none;
-  transform-origin:50% 95%;
+  transform-origin:50% 96%;
   filter:drop-shadow(0 5px 5px #26351b55);
-  transition:transform .55s cubic-bezier(.2,.75,.25,1);
+  animation:cat-idle 4.8s ease-in-out infinite;
   will-change:transform;
 }
-#startCat.cat-watch{transform:rotate(-5deg) translateY(-2px)}
-#startCat.cat-crouch{transform:scale(.94,.88) translateY(5px) rotate(-4deg)}
-#startCat.cat-pounce{transform:translate( clamp(22px,3vw,48px), -42px) rotate(11deg) scale(1.04)}
+@keyframes cat-idle{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-1px) scale(1.004)}
+}
+#startCat.cat-watch{animation:cat-watch .7s ease-in-out both}
+@keyframes cat-watch{
+  0%{transform:translateY(0) rotate(0)}
+  45%{transform:translateY(-2px) rotate(-1.5deg)}
+  100%{transform:translateY(0) rotate(0)}
+}
+#startCat.cat-crouch{animation:cat-crouch .48s ease-in both}
+@keyframes cat-crouch{
+  0%{transform:translateY(0) scale(1,1)}
+  65%{transform:translateY(2px) scale(1.012,.965)}
+  100%{transform:translateY(1px) scale(1.005,.975)}
+}
+#startCat.cat-pounce{animation:cat-pounce .82s cubic-bezier(.22,.7,.28,1) both}
+@keyframes cat-pounce{
+  0%{transform:translate(0,1px) scale(1.005,.975)}
+  18%{transform:translate(-2px,4px) scale(1.04,.92)}
+  48%{transform:translate(17px,-24px) scale(.98,1.025)}
+  72%{transform:translate(23px,-5px) scale(1.035,.94)}
+  100%{transform:translate(18px,0) scale(1,1)}
+}
 @media(max-width:700px){
   #startCat{
     left:3%;
@@ -2016,10 +2037,16 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     width:clamp(82px,24vw,135px);
     max-height:27%;
   }
-  #startCat.cat-pounce{transform:translate(20px,-30px) rotate(10deg) scale(1.04)}
+  @keyframes cat-pounce{
+    0%{transform:translate(0,1px) scale(1.005,.975)}
+    18%{transform:translate(-1px,3px) scale(1.04,.92)}
+    48%{transform:translate(11px,-17px) scale(.98,1.025)}
+    72%{transform:translate(15px,-4px) scale(1.03,.95)}
+    100%{transform:translate(12px,0) scale(1,1)}
+  }
 }
 @media(prefers-reduced-motion:reduce){
-  #startCat{transition:none}
+  #startCat{animation:none!important}
 }
 
 </style>
@@ -3234,16 +3261,16 @@ loadDemoProfile();
 loadSocial();
 renderNeighbors();
 
-/* KOT — na razie ćwiczy polowanie bez liścia.
-   Gdy dodamy grafikę liścia, podepniemy ją pod moment wyskoku. */
+/* KOT — subtelna sekwencja przygotowania do polowania i skoku */
 (function animateStartCat(){
   const cat=document.getElementById("startCat");
   if(!cat || window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
 
-  let timer;
   function scheduleHunt(){
-    timer=window.setTimeout(()=>{
+    window.setTimeout(()=>{
       if(!cat.isConnected)return;
+      cat.classList.remove("cat-crouch","cat-pounce","cat-watch");
+      void cat.offsetWidth;
       cat.classList.add("cat-watch");
       window.setTimeout(()=>{
         cat.classList.remove("cat-watch");
@@ -3254,10 +3281,10 @@ renderNeighbors();
           window.setTimeout(()=>{
             cat.classList.remove("cat-pounce");
             scheduleHunt();
-          },700);
-        },650);
-      },900);
-    },4500+Math.random()*4500);
+          },850);
+        },480);
+      },700);
+    },6500+Math.random()*5000);
   }
   scheduleHunt();
 })();
