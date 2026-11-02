@@ -116,7 +116,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
 }
 
-/* PORANNA MGŁA — JESIEŃ: NISKO NAD ZIEMIĄ */
+/* PORANNA MGŁA — JESIEŃ: NISKIE, POSZARPANE PASMA */
 #morningFog{
   position:absolute;
   inset:0;
@@ -134,72 +134,61 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:148%;
   pointer-events:none;
   will-change:transform;
-  /* Mgła ma miękkie, nieregularne krawędzie, a nie kształt chmury. */
+  background-repeat:no-repeat;
 }
 
+/* Daleka mgła: cienkie pasma nad linią pól i drzew. */
 .fog-layer-back{
-  top:54%;
-  height:20%;
-  opacity:.38;
-  filter:blur(15px);
+  top:57%;
+  height:13%;
+  opacity:.30;
+  filter:blur(7px);
   background:
-    linear-gradient(to bottom,transparent 0%,#e8eddf18 28%,#e8eddf42 72%,transparent 100%),
-    radial-gradient(ellipse at 18% 78%,#e9eee0a0 0,transparent 64%),
-    radial-gradient(ellipse at 57% 72%,#e4ebdba0 0,transparent 68%),
-    radial-gradient(ellipse at 88% 82%,#eef0e390 0,transparent 60%);
-  animation:fogDriftBack 92s ease-in-out infinite alternate;
+    radial-gradient(ellipse 25% 43% at 12% 65%,#edf0e1a0 0%,#edf0e160 36%,transparent 76%),
+    radial-gradient(ellipse 31% 48% at 39% 53%,#e9eedfa0 0%,#e9eedf58 38%,transparent 77%),
+    radial-gradient(ellipse 27% 42% at 69% 65%,#edf0e1a0 0%,#edf0e15c 38%,transparent 78%),
+    radial-gradient(ellipse 20% 44% at 91% 55%,#e9eedf96 0%,#e9eedf50 38%,transparent 76%);
+  animation:fogDriftBack 105s ease-in-out infinite alternate;
 }
 
+/* Główna warstwa: nieregularne, poziome smugi przy powierzchni ziemi. */
 .fog-layer-mid{
-  top:68%;
-  height:19%;
-  opacity:.52;
-  filter:blur(18px);
+  top:70%;
+  height:15%;
+  opacity:.42;
+  filter:blur(8px);
   background:
-    linear-gradient(to bottom,transparent 0%,#e8eddf20 22%,#e8eddf55 78%,transparent 100%),
-    radial-gradient(ellipse at 12% 70%,#e8eddfb0 0,transparent 62%),
-    radial-gradient(ellipse at 46% 78%,#e5eadbb8 0,transparent 67%),
-    radial-gradient(ellipse at 82% 68%,#e5eadba8 0,transparent 64%);
-  animation:fogDriftMid 66s ease-in-out infinite alternate;
+    radial-gradient(ellipse 30% 40% at 8% 58%,#eef1e2b0 0%,#eef1e278 34%,transparent 76%),
+    radial-gradient(ellipse 24% 35% at 31% 72%,#e9eedfb0 0%,#e9eedf70 38%,transparent 78%),
+    radial-gradient(ellipse 34% 44% at 59% 52%,#edf0e1b0 0%,#edf0e16e 36%,transparent 77%),
+    radial-gradient(ellipse 25% 38% at 86% 68%,#e8eddfaa 0%,#e8eddf68 38%,transparent 78%);
+  animation:fogDriftMid 74s ease-in-out infinite alternate;
 }
 
+/* Najniższa smuga: mgła pełzająca po ziemi, nie zasłania całej sceny. */
 .fog-layer-front{
-  top:81%;
-  height:19%;
-  opacity:.34;
-  filter:blur(22px);
+  top:84%;
+  height:14%;
+  opacity:.32;
+  filter:blur(10px);
   background:
-    linear-gradient(to bottom,transparent 0%,#e9edde20 25%,#e9edde52 76%,transparent 100%),
-    radial-gradient(ellipse at 8% 66%,#e8ecdfad 0,transparent 65%),
-    radial-gradient(ellipse at 52% 72%,#e9eddeaa 0,transparent 70%),
-    radial-gradient(ellipse at 94% 62%,#e3e9d9a0 0,transparent 64%);
-  animation:fogDriftFront 78s ease-in-out infinite alternate;
+    radial-gradient(ellipse 34% 48% at 15% 58%,#edf0e1b0 0%,#edf0e16b 35%,transparent 78%),
+    radial-gradient(ellipse 29% 42% at 48% 68%,#e9eedfa8 0%,#e9eedf66 38%,transparent 79%),
+    radial-gradient(ellipse 35% 46% at 82% 55%,#edf0e1aa 0%,#edf0e16b 36%,transparent 78%);
+  animation:fogDriftFront 88s ease-in-out infinite alternate;
 }
 
 @keyframes fogDriftBack{
-  from{transform:translate3d(-3%,1%,0) scaleX(1)}
-  to{transform:translate3d(5%,3%,0) scaleX(1.07)}
+  from{transform:translate3d(-2%,0,0) scaleX(1)}
+  to{transform:translate3d(4%,1%,0) scaleX(1.035)}
 }
 @keyframes fogDriftMid{
-  from{transform:translate3d(4%,0,0) scaleX(1.04)}
-  to{transform:translate3d(-5%,-1%,0) scaleX(1)}
+  from{transform:translate3d(3%,0,0) scaleX(1.02)}
+  to{transform:translate3d(-4%,-1%,0) scaleX(1)}
 }
 @keyframes fogDriftFront{
-  from{transform:translate3d(-4%,0,0) scaleX(1)}
-  to{transform:translate3d(3%,1%,0) scaleX(1.05)}
-}
-
-@keyframes fogDriftBack{
   from{transform:translate3d(-3%,0,0) scaleX(1)}
-  to{transform:translate3d(5%,3%,0) scaleX(1.06)}
-}
-@keyframes fogDriftMid{
-  from{transform:translate3d(4%,0,0) scaleX(1.04)}
-  to{transform:translate3d(-5%,-2%,0) scaleX(1)}
-}
-@keyframes fogDriftFront{
-  from{transform:translate3d(-4%,0,0) scaleX(1)}
-  to{transform:translate3d(3%,2%,0) scaleX(1.05)}
+  to{transform:translate3d(3%,1%,0) scaleX(1.025)}
 }
 
 @media(prefers-reduced-motion:reduce){
