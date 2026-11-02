@@ -812,7 +812,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .help-menu-button::after{
   content:"Centrum Pomocy";
   position:absolute;
-  left:calc(100% - 6px);
+  left:auto;
+  right:calc(100% - 6px);
   top:50%;
   z-index:100;
   padding:6px 12px;
@@ -827,7 +828,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   opacity:0;
   visibility:hidden;
   pointer-events:none;
-  transform:translateY(-50%) translateX(-4px);
+  transform:translateY(-50%) translateX(4px);
   transition:opacity .16s ease,transform .16s ease,visibility .16s ease;
 }
 .help-menu-button:hover::after,
@@ -1232,7 +1233,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .tasks-menu-button::after{
   content:"Zadania";
   position:absolute;
-  left:calc(100% - 6px);
+  left:auto;
+  right:calc(100% - 6px);
   top:50%;
   z-index:100;
   padding:6px 12px;
@@ -1247,7 +1249,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   opacity:0;
   visibility:hidden;
   pointer-events:none;
-  transform:translateY(-50%) translateX(-4px);
+  transform:translateY(-50%) translateX(4px);
   transition:opacity .16s ease,transform .16s ease,visibility .16s ease;
 }
 
