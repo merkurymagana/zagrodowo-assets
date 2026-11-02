@@ -1881,32 +1881,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 
-/* PORY DNIA — JESIEŃ */
-#start::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:2;
-  pointer-events:none;
-  opacity:0;
-  transition:opacity 2.5s ease,background 2.5s ease;
-}
-#start.autumn.time-morning::after{
-  opacity:1;
-  background:
-    linear-gradient(180deg,rgba(105,137,165,.13) 0%,rgba(160,177,187,.04) 42%,rgba(238,184,139,.13) 76%,rgba(103,112,120,.05) 100%);
-}
-#start.autumn.time-midday::after{
-  opacity:0;
-}
-#start.autumn.time-night::after{
-  opacity:1;
-  background:linear-gradient(180deg,rgba(15,29,57,.43) 0%,rgba(26,39,63,.31) 55%,rgba(12,22,39,.48) 100%);
-}
-@media(prefers-reduced-motion:reduce){
-  #start::after{transition:none}
-}
-
 </style>
 </head>
 
