@@ -90,30 +90,29 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #startCloud{
   position:absolute;
   z-index:3;
-  top:11%;
-  left:-18%;
-  width:clamp(190px,25vw,410px);
+  top:4%;
+  left:-9%;
+  width:clamp(105px,12vw,190px);
   height:auto;
   display:block;
   pointer-events:none;
   user-select:none;
   opacity:.96;
-  animation:cloud-float 72s ease-in-out infinite alternate;
+  animation:cloud-float 88s linear infinite;
   will-change:transform;
 }
 
 @keyframes cloud-float{
-  0%{transform:translate3d(0,0,0)}
-  45%{transform:translate3d(43vw,7px,0)}
-  100%{transform:translate3d(88vw,-4px,0)}
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(112vw,0,0)}
 }
 
 @media(max-width:700px){
   #startCloud{
-    top:13%;
-    width:clamp(155px,47vw,280px);
-    left:-22%;
-    animation-duration:64s;
+    top:5%;
+    width:clamp(90px,25vw,145px);
+    left:-12%;
+    animation-duration:78s;
   }
 }
 
