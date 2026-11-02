@@ -1880,6 +1880,33 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   bottom:2px!important;
 }
 
+
+/* PORY DNIA — JESIEŃ */
+#start::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity 2.5s ease,background 2.5s ease;
+}
+#start.autumn.time-morning::after{
+  opacity:1;
+  background:
+    linear-gradient(180deg,rgba(105,137,165,.13) 0%,rgba(160,177,187,.04) 42%,rgba(238,184,139,.13) 76%,rgba(103,112,120,.05) 100%);
+}
+#start.autumn.time-midday::after{
+  opacity:0;
+}
+#start.autumn.time-night::after{
+  opacity:1;
+  background:linear-gradient(180deg,rgba(15,29,57,.43) 0%,rgba(26,39,63,.31) 55%,rgba(12,22,39,.48) 100%);
+}
+@media(prefers-reduced-motion:reduce){
+  #start::after{transition:none}
+}
+
 </style>
 </head>
 
@@ -2271,6 +2298,27 @@ function updateSeason(){
 }
 
 updateSeason();
+ 
+/* Jesienne pory dnia według lokalnego czasu gracza:
+   rano 05:00–09:00, południe 09:00–17:00, noc 17:00–05:00. */
+function updateDayPeriod(){
+  const now=new Date();
+  const hour=now.getHours()+now.getMinutes()/60;
+  const isAutumn=start.classList.contains("autumn");
+  start.classList.remove("time-morning","time-midday","time-night");
+  if(!isAutumn)return;
+  if(hour>=5&&hour<9){
+    start.classList.add("time-morning");
+  }else if(hour>=9&&hour<17){
+    start.classList.add("time-midday");
+  }else{
+    start.classList.add("time-night");
+  }
+}
+ 
+updateDayPeriod();
+window.setInterval(updateDayPeriod,60000);
+
 
 /* FORMULARZE */
 
