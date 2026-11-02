@@ -1881,6 +1881,30 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 
+
+/* JESIENNY ŚWIT — chłodne, ciemniejsze światło przed wschodem słońca */
+#start::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity 2s ease;
+}
+#start.autumn.time-dawn::after{
+  opacity:1;
+  background:linear-gradient(
+    180deg,
+    rgba(13,27,48,.58) 0%,
+    rgba(24,40,61,.48) 48%,
+    rgba(40,53,68,.30) 100%
+  );
+}
+@media(prefers-reduced-motion:reduce){
+  #start::after{transition:none}
+}
+
 </style>
 </head>
 
@@ -2275,21 +2299,28 @@ updateSeason();
  
 /* Jesienne pory dnia według lokalnego czasu gracza:
    rano 05:00–09:00, południe 09:00–17:00, noc 17:00–05:00. */
+const dayPreview=new URLSearchParams(window.location.search).get("dayPreview");
+
 function updateDayPeriod(){
   const now=new Date();
   const hour=now.getHours()+now.getMinutes()/60;
   const isAutumn=start.classList.contains("autumn");
-  start.classList.remove("time-morning","time-midday","time-night");
+  start.classList.remove("time-morning","time-midday","time-night","time-dawn");
   if(!isAutumn)return;
-  if(hour>=5&&hour<9){
+
+  /* Podgląd pozwala obejrzeć świt bez zmiany zegara urządzenia. */
+  if(dayPreview==="dawn"){
+    start.classList.add("time-morning","time-dawn");
+  }else if(hour>=5&&hour<9){
     start.classList.add("time-morning");
+    if(hour<6.5)start.classList.add("time-dawn");
   }else if(hour>=9&&hour<17){
     start.classList.add("time-midday");
   }else{
     start.classList.add("time-night");
   }
 }
- 
+
 updateDayPeriod();
 window.setInterval(updateDayPeriod,60000);
 
