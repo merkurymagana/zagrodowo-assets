@@ -116,39 +116,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
 }
 
-/* PORANNA MGŁA — JESIEŃ: NISKO, Z MARGINESEM OD RAMY */
-#morningFog{
-  position:absolute;
-  inset:0;
-  z-index:4;
-  overflow:hidden;
-  pointer-events:none;
-  opacity:0;
-  transition:opacity 90s linear;
-  contain:paint;
-}
-#morningFog .ground-mist{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
-}
-#morningFog .mist-ribbon{
-  transform-box:fill-box;
-  transform-origin:center;
-  animation:mistSlide 64s ease-in-out infinite alternate;
-}
-#morningFog .mist-ribbon:nth-of-type(2){animation-duration:82s;animation-delay:-29s}
-#morningFog .mist-ribbon:nth-of-type(3){animation-duration:73s;animation-delay:-16s}
-@keyframes mistSlide{
-  from{transform:translateX(-24px)}
-  to{transform:translateX(30px)}
-}
-@media(prefers-reduced-motion:reduce){
-  .fog-layer{animation:none}
-}
-
 .effect{
   position:absolute;
   top:-12%;
@@ -1925,34 +1892,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
 
-    <div id="morningFog" aria-hidden="true">
-      <svg class="ground-mist" viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="mistEdge" x="-8%" y="-30%" width="116%" height="160%">
-            <feTurbulence type="fractalNoise" baseFrequency=".009 .035" numOctaves="2" seed="8" result="noise"/>
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="30" xChannelSelector="R" yChannelSelector="G"/>
-          </filter>
-          <linearGradient id="mistFade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#e8eddf" stop-opacity="0"/>
-            <stop offset=".35" stop-color="#e8eddf" stop-opacity=".48"/>
-            <stop offset=".76" stop-color="#eef1e5" stop-opacity=".72"/>
-            <stop offset="1" stop-color="#eef1e5" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <!-- Wszystkie pasma pozostają wewnątrz bezpiecznego marginesu obrazu. -->
-        <g class="mist-ribbon" opacity=".42" filter="url(#mistEdge)">
-          <path fill="url(#mistFade)" d="M75 770 C155 746 218 781 300 763 S435 754 510 775 S650 787 730 762 S850 750 925 772 L925 835 C830 819 765 842 680 824 S520 841 435 820 S265 838 180 820 S110 830 75 822Z"/>
-          <path fill="#e9eedf" opacity=".20" d="M105 800 C195 782 260 812 350 793 S510 815 590 795 S760 811 895 785 L895 820 C780 832 690 812 590 829 S390 814 300 831 S170 815 105 825Z"/>
-        </g>
-        <g class="mist-ribbon" opacity=".52" filter="url(#mistEdge)">
-          <path fill="url(#mistFade)" d="M65 835 C150 811 225 848 315 827 S470 820 555 844 S700 852 785 828 S875 819 935 841 L935 900 C845 883 770 910 675 890 S500 907 410 885 S235 903 150 885 S90 894 65 885Z"/>
-          <path fill="#edf0e2" opacity=".24" d="M95 865 C190 845 260 876 360 855 S530 879 630 856 S800 875 905 848 L905 882 C810 893 715 874 620 891 S415 876 320 894 S165 878 95 888Z"/>
-        </g>
-        <g class="mist-ribbon" opacity=".38" filter="url(#mistEdge)">
-          <path fill="url(#mistFade)" d="M85 895 C175 874 245 910 340 889 S495 882 580 906 S730 913 810 891 S885 884 915 900 L915 945 C820 930 750 950 650 934 S470 950 380 932 S215 947 145 931 S105 940 85 932Z"/>
-        </g>
-      </svg>
-    </div>
+
 
     <div class="start-buttons">
       <button id="loginButton" class="main-btn" type="button">Zaloguj się</button>
@@ -2331,45 +2271,6 @@ function updateSeason(){
 }
 
 updateSeason();
-
-/* PORANNA MGŁA — LOKALNA GODZINA GRACZA */
-
-function updateMorningFog(){
-  const fog=document.getElementById("morningFog");
-  if(!fog)return;
-
-  const now=new Date();
-  const time=now.getHours()+now.getMinutes()/60;
-  const isAutumn=start.classList.contains("autumn");
-  const preview=new URLSearchParams(window.location.search).get("fogPreview")==="1";
-  const levels=[
-    {time:5,opacity:.78},
-    {time:6,opacity:.62},
-    {time:7,opacity:.40},
-    {time:8,opacity:.18},
-    {time:9,opacity:0}
-  ];
-
-  let opacity=0;
-  if(isAutumn&&preview){
-    opacity=.78;
-  }else if(isAutumn&&time>=5&&time<9){
-    for(let i=0;i<levels.length-1;i++){
-      const current=levels[i];
-      const next=levels[i+1];
-      if(time>=current.time&&time<=next.time){
-        const progress=(time-current.time)/(next.time-current.time);
-        opacity=current.opacity+(next.opacity-current.opacity)*progress;
-        break;
-      }
-    }
-  }
-
-  fog.style.opacity=String(opacity);
-}
-
-updateMorningFog();
-window.setInterval(updateMorningFog,60000);
 
 /* FORMULARZE */
 
