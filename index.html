@@ -86,51 +86,43 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
 }
 
-/* ANIMOWANA CHMURA — JESIENNY DZIEŃ */
+/* ANIMOWANA CHMURA — JESIENNY DZIEŃ
+   Ruch tylko w drugiej, prawej połowie obrazu, na wysokości 3/5. */
 #startCloud{
   position:absolute;
   z-index:3;
-  top:5%;
-  left:-12%;
+  top:60%;
+  left:50%;
   width:clamp(100px,11vw,175px);
   height:auto;
   display:block;
   pointer-events:none;
   user-select:none;
   opacity:0;
-  animation:cloud-sky-route 92s linear infinite;
+  animation:cloud-second-half 70s linear infinite;
   will-change:transform,opacity;
 }
 
-/* Trasa pozostaje w górnym pasie nieba.
-   Chmura delikatnie znika w miejscach, gdzie przecinałaby
-   elementy ilustracji, i wraca na otwartym niebie. */
-@keyframes cloud-sky-route{
+/* Chmurka pojawia się przy środku obrazu, przesuwa w prawo
+   i znika poza kadrem. Nie wędruje już przez lewą część grafiki. */
+@keyframes cloud-second-half{
   0%   {transform:translate3d(0,0,0);opacity:0}
-  5%   {transform:translate3d(8vw,0,0);opacity:.9}
-  18%  {transform:translate3d(25vw,-2px,0);opacity:.9}
-  23%  {transform:translate3d(31vw,-2px,0);opacity:0}
-  29%  {transform:translate3d(38vw,0,0);opacity:0}
-  35%  {transform:translate3d(46vw,1px,0);opacity:.88}
-  48%  {transform:translate3d(62vw,0,0);opacity:.88}
-  54%  {transform:translate3d(69vw,-2px,0);opacity:0}
-  61%  {transform:translate3d(77vw,-2px,0);opacity:0}
-  68%  {transform:translate3d(85vw,0,0);opacity:.88}
-  94%  {transform:translate3d(117vw,0,0);opacity:.88}
-  100% {transform:translate3d(124vw,0,0);opacity:0}
+  7%   {transform:translate3d(0,0,0);opacity:.88}
+  88%  {transform:translate3d(48vw,0,0);opacity:.88}
+  100% {transform:translate3d(55vw,0,0);opacity:0}
 }
 
 @media(max-width:700px){
   #startCloud{
-    top:6%;
-    left:-14%;
+    top:60%;
+    left:50%;
     width:clamp(82px,23vw,135px);
-    animation-duration:84s;
+    animation-duration:64s;
   }
 }
 
 @media(prefers-reduced-motion:reduce){
-  #startCloud{animation:none;opacity:.85;left:8%;top:5%}
+  #startCloud{animation:none;opacity:.85;left:50%;top:60%}
 }
 
 .season-shade{
