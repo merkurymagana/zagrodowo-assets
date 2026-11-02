@@ -116,6 +116,77 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
 }
 
+/* PORANNA MGŁA — JESIEŃ */
+#morningFog{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  overflow:hidden;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity 90s linear;
+  contain:paint;
+}
+
+.fog-layer{
+  position:absolute;
+  left:-22%;
+  width:144%;
+  pointer-events:none;
+  filter:blur(17px);
+  will-change:transform;
+}
+
+.fog-layer-back{
+  top:37%;
+  height:25%;
+  opacity:.48;
+  background:
+    radial-gradient(ellipse at 18% 65%,#e9eee0a8 0,transparent 62%),
+    radial-gradient(ellipse at 62% 55%,#e4ebdba1 0,transparent 66%),
+    radial-gradient(ellipse at 91% 72%,#eef0e3a1 0,transparent 58%);
+  animation:fogDriftBack 78s ease-in-out infinite alternate;
+}
+
+.fog-layer-mid{
+  top:49%;
+  height:29%;
+  opacity:.62;
+  background:
+    radial-gradient(ellipse at 28% 48%,#e8eddfb8 0,transparent 61%),
+    radial-gradient(ellipse at 72% 62%,#e5eadbb0 0,transparent 65%);
+  animation:fogDriftMid 56s ease-in-out infinite alternate;
+}
+
+.fog-layer-front{
+  top:62%;
+  height:25%;
+  opacity:.38;
+  filter:blur(23px);
+  background:
+    radial-gradient(ellipse at 12% 45%,#e8ecdfad 0,transparent 64%),
+    radial-gradient(ellipse at 52% 56%,#e9edde9c 0,transparent 68%),
+    radial-gradient(ellipse at 88% 42%,#e3e9d9a8 0,transparent 62%);
+  animation:fogDriftFront 68s ease-in-out infinite alternate;
+}
+
+@keyframes fogDriftBack{
+  from{transform:translate3d(-3%,0,0) scaleX(1)}
+  to{transform:translate3d(5%,3%,0) scaleX(1.06)}
+}
+@keyframes fogDriftMid{
+  from{transform:translate3d(4%,0,0) scaleX(1.04)}
+  to{transform:translate3d(-5%,-2%,0) scaleX(1)}
+}
+@keyframes fogDriftFront{
+  from{transform:translate3d(-4%,0,0) scaleX(1)}
+  to{transform:translate3d(3%,2%,0) scaleX(1.05)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .fog-layer{animation:none}
+}
+
 .effect{
   position:absolute;
   top:-12%;
@@ -1892,6 +1963,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
 
+    <div id="morningFog" aria-hidden="true">
+      <span class="fog-layer fog-layer-back"></span>
+      <span class="fog-layer fog-layer-mid"></span>
+      <span class="fog-layer fog-layer-front"></span>
+    </div>
+
     <div class="start-buttons">
       <button id="loginButton" class="main-btn" type="button">Zaloguj się</button>
       <button id="registerButton" class="main-btn register" type="button">Zarejestruj się</button>
@@ -2269,6 +2346,41 @@ function updateSeason(){
 }
 
 updateSeason();
+
+/* PORANNA MGŁA — LOKALNA GODZINA GRACZA */
+
+function updateMorningFog(){
+  const fog=document.getElementById("morningFog");
+  if(!fog)return;
+
+  const now=new Date();
+  const time=now.getHours()+now.getMinutes()/60;
+  const levels=[
+    {time:5,opacity:.78},
+    {time:6,opacity:.62},
+    {time:7,opacity:.40},
+    {time:8,opacity:.18},
+    {time:9,opacity:0}
+  ];
+
+  let opacity=0;
+  if(time>=5&&time<9){
+    for(let i=0;i<levels.length-1;i++){
+      const current=levels[i];
+      const next=levels[i+1];
+      if(time>=current.time&&time<=next.time){
+        const progress=(time-current.time)/(next.time-current.time);
+        opacity=current.opacity+(next.opacity-current.opacity)*progress;
+        break;
+      }
+    }
+  }
+
+  fog.style.opacity=String(opacity);
+}
+
+updateMorningFog();
+window.setInterval(updateMorningFog,60000);
 
 /* FORMULARZE */
 
