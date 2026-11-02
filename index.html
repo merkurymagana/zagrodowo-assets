@@ -1818,6 +1818,36 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   .side-menu > button[data-view="neighbors"]::after,
   .side-menu > button[data-view="settings"]::after{display:block!important}
 }
+
+/* Ostateczne nadpisanie wyglądu kafelków — bez ramek i teł. */
+.side-menu button.compass-menu-button,
+.side-menu button.premium-menu-button,
+.side-menu button.tasks-menu-button,
+.side-menu button.help-menu-button,
+.side-menu > button[data-view="neighbors"],
+.side-menu > button[data-view="settings"],
+.side-menu button.compass-menu-button:hover,
+.side-menu button.premium-menu-button:hover,
+.side-menu button.tasks-menu-button:hover,
+.side-menu button.help-menu-button:hover,
+.side-menu > button[data-view="neighbors"]:hover,
+.side-menu > button[data-view="settings"]:hover,
+.side-menu button.compass-menu-button:focus,
+.side-menu button.premium-menu-button:focus,
+.side-menu button.tasks-menu-button:focus,
+.side-menu button.help-menu-button:focus,
+.side-menu button.selected{
+  background:transparent!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+}
+.side-menu button.compass-menu-button:hover,
+.side-menu button.premium-menu-button:hover,
+.side-menu button.tasks-menu-button:hover,
+.side-menu button.help-menu-button:hover{filter:brightness(1.08)!important}
+
 </style>
 </head>
 
