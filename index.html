@@ -1987,7 +1987,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 
 
-/* Kot na ekranie startowym — subtelne, bardziej naturalne ruchy */
+/* Kot na ekranie startowym — animacja z 14 ponumerowanych klatek PNG */
 #startCat{
   position:absolute;
   z-index:6;
@@ -2003,32 +2003,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   user-select:none;
   transform-origin:50% 96%;
   filter:drop-shadow(0 5px 5px #26351b55);
-  animation:cat-idle 4.8s ease-in-out infinite;
+  animation:cat-frame-breathe 4.8s ease-in-out infinite;
   will-change:transform;
 }
-@keyframes cat-idle{
-  0%,100%{transform:translateY(0) scale(1)}
-  50%{transform:translateY(-1px) scale(1.004)}
-}
-#startCat.cat-watch{animation:cat-watch .7s ease-in-out both}
-@keyframes cat-watch{
-  0%{transform:translateY(0) rotate(0)}
-  45%{transform:translateY(-2px) rotate(-1.5deg)}
-  100%{transform:translateY(0) rotate(0)}
-}
-#startCat.cat-crouch{animation:cat-crouch .48s ease-in both}
-@keyframes cat-crouch{
-  0%{transform:translateY(0) scale(1,1)}
-  65%{transform:translateY(2px) scale(1.012,.965)}
-  100%{transform:translateY(1px) scale(1.005,.975)}
-}
-#startCat.cat-pounce{animation:cat-pounce .82s cubic-bezier(.22,.7,.28,1) both}
-@keyframes cat-pounce{
-  0%{transform:translate(0,1px) scale(1.005,.975)}
-  18%{transform:translate(-2px,4px) scale(1.04,.92)}
-  48%{transform:translate(17px,-24px) scale(.98,1.025)}
-  72%{transform:translate(23px,-5px) scale(1.035,.94)}
-  100%{transform:translate(18px,0) scale(1,1)}
+@keyframes cat-frame-breathe{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-1px)}
 }
 @media(max-width:700px){
   #startCat{
@@ -2036,13 +2016,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     bottom:clamp(88px,15vh,130px);
     width:clamp(82px,24vw,135px);
     max-height:27%;
-  }
-  @keyframes cat-pounce{
-    0%{transform:translate(0,1px) scale(1.005,.975)}
-    18%{transform:translate(-1px,3px) scale(1.04,.92)}
-    48%{transform:translate(11px,-17px) scale(.98,1.025)}
-    72%{transform:translate(15px,-4px) scale(1.03,.95)}
-    100%{transform:translate(12px,0) scale(1,1)}
   }
 }
 @media(prefers-reduced-motion:reduce){
@@ -2063,7 +2036,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud3" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-3-jesien-dzien.png" alt="" aria-hidden="true">
-    <img id="startCat" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-jesien.png" alt="Kot na gospodarstwie" draggable="false">
+    <img id="startCat" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-jesien/kot-animacja1.png" alt="Animowany kot na gospodarstwie" draggable="false">
 
 
 
@@ -3261,32 +3234,47 @@ loadDemoProfile();
 loadSocial();
 renderNeighbors();
 
-/* KOT — subtelna sekwencja przygotowania do polowania i skoku */
+/* KOT — 14 klatek odtwarzanych ściśle numerycznie, z preładowaniem */
 (function animateStartCat(){
   const cat=document.getElementById("startCat");
-  if(!cat || window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  if(!cat)return;
 
-  function scheduleHunt(){
-    window.setTimeout(()=>{
-      if(!cat.isConnected)return;
-      cat.classList.remove("cat-crouch","cat-pounce","cat-watch");
-      void cat.offsetWidth;
-      cat.classList.add("cat-watch");
-      window.setTimeout(()=>{
-        cat.classList.remove("cat-watch");
-        cat.classList.add("cat-crouch");
-        window.setTimeout(()=>{
-          cat.classList.remove("cat-crouch");
-          cat.classList.add("cat-pounce");
-          window.setTimeout(()=>{
-            cat.classList.remove("cat-pounce");
-            scheduleHunt();
-          },850);
-        },480);
-      },700);
-    },6500+Math.random()*5000);
+  const frameCount=14;
+  const frameDelay=100; // 10 klatek na sekundę — płynnie, bez nadmiernego migotania
+  const base="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-jesien/";
+  const frames=Array.from({length:frameCount},(_,i)=>{
+    const image=new Image();
+    image.src=base+"kot-animacja"+(i+1)+".png";
+    return image;
+  });
+
+  let frame=0;
+  let timer=null;
+  let started=false;
+
+  function startAnimation(){
+    if(started || !frames.every(image=>image.complete && image.naturalWidth>0))return;
+    started=true;
+    cat.src=frames[0].src;
+    timer=window.setInterval(()=>{
+      frame=(frame+1)%frameCount;
+      cat.src=frames[frame].src;
+    },frameDelay);
   }
-  scheduleHunt();
+
+  Promise.all(frames.map(image=>new Promise(resolve=>{
+    if(image.complete){resolve();return;}
+    image.onload=resolve;
+    image.onerror=resolve;
+  }))).then(()=>{
+    if(frames.every(image=>image.naturalWidth>0))startAnimation();
+    else console.warn("Nie udało się wczytać wszystkich klatek animacji kota.");
+  });
+
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    cat.src=frames[0].src;
+    if(timer)window.clearInterval(timer);
+  }
 })();
 </script>
 </body>
