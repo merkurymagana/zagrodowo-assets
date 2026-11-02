@@ -116,7 +116,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
 }
 
-/* PORANNA MGŁA — JESIEŃ: NISKIE, POSZARPANE PASMA */
+/* PORANNA MGŁA — JESIEŃ: ORGANICZNE PASMA SVG */
 #morningFog{
   position:absolute;
   inset:0;
@@ -127,70 +127,24 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   transition:opacity 90s linear;
   contain:paint;
 }
-
-.fog-layer{
+#morningFog .ground-mist{
   position:absolute;
-  left:-24%;
-  width:148%;
-  pointer-events:none;
-  will-change:transform;
-  background-repeat:no-repeat;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
 }
-
-/* Daleka mgła: cienkie pasma nad linią pól i drzew. */
-.fog-layer-back{
-  top:57%;
-  height:13%;
-  opacity:.30;
-  filter:blur(7px);
-  background:
-    radial-gradient(ellipse 25% 43% at 12% 65%,#edf0e1a0 0%,#edf0e160 36%,transparent 76%),
-    radial-gradient(ellipse 31% 48% at 39% 53%,#e9eedfa0 0%,#e9eedf58 38%,transparent 77%),
-    radial-gradient(ellipse 27% 42% at 69% 65%,#edf0e1a0 0%,#edf0e15c 38%,transparent 78%),
-    radial-gradient(ellipse 20% 44% at 91% 55%,#e9eedf96 0%,#e9eedf50 38%,transparent 76%);
-  animation:fogDriftBack 105s ease-in-out infinite alternate;
+#morningFog .mist-ribbon{
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:mistSlide 72s ease-in-out infinite alternate;
 }
-
-/* Główna warstwa: nieregularne, poziome smugi przy powierzchni ziemi. */
-.fog-layer-mid{
-  top:70%;
-  height:15%;
-  opacity:.42;
-  filter:blur(8px);
-  background:
-    radial-gradient(ellipse 30% 40% at 8% 58%,#eef1e2b0 0%,#eef1e278 34%,transparent 76%),
-    radial-gradient(ellipse 24% 35% at 31% 72%,#e9eedfb0 0%,#e9eedf70 38%,transparent 78%),
-    radial-gradient(ellipse 34% 44% at 59% 52%,#edf0e1b0 0%,#edf0e16e 36%,transparent 77%),
-    radial-gradient(ellipse 25% 38% at 86% 68%,#e8eddfaa 0%,#e8eddf68 38%,transparent 78%);
-  animation:fogDriftMid 74s ease-in-out infinite alternate;
+#morningFog .mist-ribbon:nth-of-type(2){animation-duration:94s;animation-delay:-31s}
+#morningFog .mist-ribbon:nth-of-type(3){animation-duration:83s;animation-delay:-17s}
+@keyframes mistSlide{
+  from{transform:translateX(-34px)}
+  to{transform:translateX(42px)}
 }
-
-/* Najniższa smuga: mgła pełzająca po ziemi, nie zasłania całej sceny. */
-.fog-layer-front{
-  top:84%;
-  height:14%;
-  opacity:.32;
-  filter:blur(10px);
-  background:
-    radial-gradient(ellipse 34% 48% at 15% 58%,#edf0e1b0 0%,#edf0e16b 35%,transparent 78%),
-    radial-gradient(ellipse 29% 42% at 48% 68%,#e9eedfa8 0%,#e9eedf66 38%,transparent 79%),
-    radial-gradient(ellipse 35% 46% at 82% 55%,#edf0e1aa 0%,#edf0e16b 36%,transparent 78%);
-  animation:fogDriftFront 88s ease-in-out infinite alternate;
-}
-
-@keyframes fogDriftBack{
-  from{transform:translate3d(-2%,0,0) scaleX(1)}
-  to{transform:translate3d(4%,1%,0) scaleX(1.035)}
-}
-@keyframes fogDriftMid{
-  from{transform:translate3d(3%,0,0) scaleX(1.02)}
-  to{transform:translate3d(-4%,-1%,0) scaleX(1)}
-}
-@keyframes fogDriftFront{
-  from{transform:translate3d(-3%,0,0) scaleX(1)}
-  to{transform:translate3d(3%,1%,0) scaleX(1.025)}
-}
-
 @media(prefers-reduced-motion:reduce){
   .fog-layer{animation:none}
 }
@@ -1972,9 +1926,31 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
 
     <div id="morningFog" aria-hidden="true">
-      <span class="fog-layer fog-layer-back"></span>
-      <span class="fog-layer fog-layer-mid"></span>
-      <span class="fog-layer fog-layer-front"></span>
+      <svg class="ground-mist" viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="mistEdge" x="-12%" y="-35%" width="124%" height="170%">
+            <feTurbulence type="fractalNoise" baseFrequency=".009 .035" numOctaves="2" seed="8" result="noise"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="34" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+          <linearGradient id="mistFade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#e8eddf" stop-opacity="0"/>
+            <stop offset=".38" stop-color="#e8eddf" stop-opacity=".48"/>
+            <stop offset=".78" stop-color="#eef1e5" stop-opacity=".68"/>
+            <stop offset="1" stop-color="#eef1e5" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <g class="mist-ribbon" opacity=".34" filter="url(#mistEdge)">
+          <path fill="url(#mistFade)" d="M-80 640 C40 610 100 668 205 640 S365 616 470 650 S650 672 760 635 S930 612 1080 650 L1080 760 L-80 760Z"/>
+          <path fill="#e9eedf" opacity=".18" d="M-60 700 C90 674 150 722 300 692 S520 715 650 690 S880 700 1060 675 L1060 750 L-60 750Z"/>
+        </g>
+        <g class="mist-ribbon" opacity=".43" filter="url(#mistEdge)">
+          <path fill="url(#mistFade)" d="M-90 760 C40 724 145 782 260 750 S430 738 540 770 S720 790 830 750 S970 744 1090 770 L1090 900 L-90 900Z"/>
+          <path fill="#edf0e2" opacity=".22" d="M-70 820 C80 790 180 842 330 810 S540 835 680 808 S890 830 1070 795 L1070 875 L-70 875Z"/>
+        </g>
+        <g class="mist-ribbon" opacity=".30" filter="url(#mistEdge)">
+          <path fill="url(#mistFade)" d="M-80 875 C70 842 160 900 300 870 S490 850 610 884 S800 902 900 870 S1010 858 1080 885 L1080 1000 L-80 1000Z"/>
+        </g>
+      </svg>
     </div>
 
     <div class="start-buttons">
