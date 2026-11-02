@@ -131,6 +131,43 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   #startCloud{animation:none;opacity:.85;left:50%;top:28%;filter:none}
 }
 
+/* Dwie dalsze chmurki — ten sam miękki ruch, nieco mniejszy rozmiar. */
+#startCloud2,
+#startCloud3{
+  position:absolute;
+  z-index:3;
+  width:clamp(42px,4.2vw,62px);
+  height:auto;
+  display:block;
+  pointer-events:none;
+  user-select:none;
+  opacity:0;
+  filter:blur(0);
+  will-change:transform,opacity,filter;
+}
+#startCloud2{
+  top:21%;
+  left:24%;
+  animation:cloud-second-half 108s linear -34s infinite;
+}
+#startCloud3{
+  top:35%;
+  left:66%;
+  animation:cloud-second-half 122s linear -67s infinite;
+}
+@media(max-width:700px){
+  #startCloud2,
+  #startCloud3{
+    width:clamp(36px,9vw,52px);
+  }
+  #startCloud2{top:21%;left:24%}
+  #startCloud3{top:35%;left:66%}
+}
+@media(prefers-reduced-motion:reduce){
+  #startCloud2{animation:none;opacity:.78;left:24%;top:21%;filter:none}
+  #startCloud3{animation:none;opacity:.78;left:66%;top:35%;filter:none}
+}
+
 .season-shade{
   position:absolute;
   inset:0;
@@ -1939,6 +1976,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
+    <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
+    <img id="startCloud3" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-3-jesien-dzien.png" alt="" aria-hidden="true">
 
 
 
