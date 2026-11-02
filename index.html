@@ -87,13 +87,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 /* ANIMOWANA CHMURA — JESIENNY DZIEŃ
-   Ruch tylko w drugiej, prawej połowie obrazu, wysoko wśród chmur. */
+   Mała chmurka przesuwa się w prawo i znika przed 85% szerokości obrazu. */
 #startCloud{
   position:absolute;
   z-index:3;
-  top:24%;
+  top:27%;
   left:50%;
-  width:clamp(80px,8vw,130px);
+  width:clamp(60px,6vw,90px);
   height:auto;
   display:block;
   pointer-events:none;
@@ -103,27 +103,27 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   will-change:transform,opacity;
 }
 
-/* Chmurka pojawia się przy środku obrazu, przesuwa w prawo
-   i znika poza kadrem. Nie wędruje już przez lewą część grafiki. */
+/* Chmurka kończy ruch, gdy jej lewa krawędź jest około 74% szerokości obrazu.
+   Zanikanie kończy się przed przekroczeniem 85% całego kadru. */
 @keyframes cloud-second-half{
   0%   {transform:translate3d(0,0,0);opacity:0}
   7%   {transform:translate3d(0,0,0);opacity:.88}
-  82%  {transform:translate3d(44vw,0,0);opacity:.88}
-  85%  {transform:translate3d(47vw,0,0);opacity:0}
-  100% {transform:translate3d(55vw,0,0);opacity:0}
+  76%  {transform:translate3d(24vw,0,0);opacity:.88}
+  80%  {transform:translate3d(24vw,0,0);opacity:0}
+  100% {transform:translate3d(24vw,0,0);opacity:0}
 }
 
 @media(max-width:700px){
   #startCloud{
-    top:24%;
+    top:27%;
     left:50%;
-    width:clamp(68px,18vw,105px);
+    width:clamp(52px,14vw,78px);
     animation-duration:64s;
   }
 }
 
 @media(prefers-reduced-motion:reduce){
-  #startCloud{animation:none;opacity:.85;left:50%;top:24%}
+  #startCloud{animation:none;opacity:.85;left:50%;top:27%}
 }
 
 .season-shade{
