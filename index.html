@@ -90,34 +90,47 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #startCloud{
   position:absolute;
   z-index:3;
-  top:4%;
-  left:-9%;
-  width:clamp(105px,12vw,190px);
+  top:5%;
+  left:-12%;
+  width:clamp(100px,11vw,175px);
   height:auto;
   display:block;
   pointer-events:none;
   user-select:none;
-  opacity:.96;
-  animation:cloud-float 88s linear infinite;
-  will-change:transform;
+  opacity:0;
+  animation:cloud-sky-route 92s linear infinite;
+  will-change:transform,opacity;
 }
 
-@keyframes cloud-float{
-  from{transform:translate3d(0,0,0)}
-  to{transform:translate3d(112vw,0,0)}
+/* Trasa pozostaje w górnym pasie nieba.
+   Chmura delikatnie znika w miejscach, gdzie przecinałaby
+   elementy ilustracji, i wraca na otwartym niebie. */
+@keyframes cloud-sky-route{
+  0%   {transform:translate3d(0,0,0);opacity:0}
+  5%   {transform:translate3d(8vw,0,0);opacity:.9}
+  18%  {transform:translate3d(25vw,-2px,0);opacity:.9}
+  23%  {transform:translate3d(31vw,-2px,0);opacity:0}
+  29%  {transform:translate3d(38vw,0,0);opacity:0}
+  35%  {transform:translate3d(46vw,1px,0);opacity:.88}
+  48%  {transform:translate3d(62vw,0,0);opacity:.88}
+  54%  {transform:translate3d(69vw,-2px,0);opacity:0}
+  61%  {transform:translate3d(77vw,-2px,0);opacity:0}
+  68%  {transform:translate3d(85vw,0,0);opacity:.88}
+  94%  {transform:translate3d(117vw,0,0);opacity:.88}
+  100% {transform:translate3d(124vw,0,0);opacity:0}
 }
 
 @media(max-width:700px){
   #startCloud{
-    top:5%;
-    width:clamp(90px,25vw,145px);
-    left:-12%;
-    animation-duration:78s;
+    top:6%;
+    left:-14%;
+    width:clamp(82px,23vw,135px);
+    animation-duration:84s;
   }
 }
 
 @media(prefers-reduced-motion:reduce){
-  #startCloud{animation:none}
+  #startCloud{animation:none;opacity:.85;left:8%;top:5%}
 }
 
 .season-shade{
