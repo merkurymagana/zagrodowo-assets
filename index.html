@@ -148,8 +148,23 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation:cloud-second-half 90s linear infinite;
   will-change:transform,opacity,filter;
 }
-#startCloud2{width:clamp(42px,4.2vw,62px);animation-delay:-27s}
-#startCloud3{width:clamp(42px,4.2vw,62px);animation-delay:-54s}
+#startCloud2{
+  width:clamp(42px,4.2vw,62px);
+  animation:cloud-second-half 90s linear -27s infinite,
+             cloud-initial-reveal 1.8s ease-out;
+}
+#startCloud3{
+  width:clamp(42px,4.2vw,62px);
+  animation:cloud-second-half 90s linear -54s infinite,
+             cloud-initial-reveal 1.8s ease-out;
+}
+
+/* Tylko przy pierwszym wczytaniu: ten sam miękki start z rozmycia.
+   Po 1,8 s wartości płynnie pokrywają się z aktualną fazą lotu chmurki. */
+@keyframes cloud-initial-reveal{
+  from{opacity:0;filter:blur(9px)}
+  to{opacity:.88;filter:blur(0)}
+}
 
 @media(max-width:700px){
   #startCloud2,
@@ -158,8 +173,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     width:clamp(36px,9vw,52px);
     animation-duration:84s;
   }
-  #startCloud2{animation-delay:-25s}
-  #startCloud3{animation-delay:-50s}
+  #startCloud2{
+    animation:cloud-second-half 84s linear -25s infinite,
+               cloud-initial-reveal 1.8s ease-out;
+  }
+  #startCloud3{
+    animation:cloud-second-half 84s linear -50s infinite,
+               cloud-initial-reveal 1.8s ease-out;
+  }
 }
 
 @media(prefers-reduced-motion:reduce){
