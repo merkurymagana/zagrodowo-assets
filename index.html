@@ -1890,7 +1890,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div class="start-wood-right"></div>
 
   <div id="start" class="autumn">
-    <img id="seasonImage" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jesien.png" alt="Zagrodowo — sezonowy ekran startowy">
+    <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
 
     <div class="start-buttons">
       <button id="loginButton" class="main-btn" type="button">Zaloguj się</button>
@@ -2234,15 +2234,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 /* PORY ROKU */
 
-const seasons={
-  spring:{image:"https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wiosna.png"},
-  summer:{image:"https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lato.png"},
-  autumn:{image:"https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jesien.png"},
-  winter:{image:"https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zima.png"}
-};
-
 const start=document.getElementById("start");
-const seasonImage=document.getElementById("seasonImage");
 const authOverlay=document.getElementById("authOverlay");
 
 function getSeasonName(month){
@@ -2254,13 +2246,8 @@ function getSeasonName(month){
 
 function updateSeason(){
   const name=getSeasonName(new Date().getMonth());
-  const season=seasons[name];
-
   start.classList.remove("spring","summer","autumn","winter");
   start.classList.add(name);
-  seasonImage.style.display="block";
-  seasonImage.src=season.image;
-  seasonImage.onerror=()=>{seasonImage.style.display="none"};
 }
 
 updateSeason();
