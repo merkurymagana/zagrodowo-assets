@@ -1680,6 +1680,39 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #gameCanvas img{-webkit-user-drag:none}
 
 /* Wspólny układ kafelków menu z chmurkami pod ikonami. */
+/* Same grafiki ikon — bez kwadratowych kafelków i obramowań. */
+.side-menu button.compass-menu-button,
+.side-menu button.premium-menu-button,
+.side-menu button.tasks-menu-button,
+.side-menu button.help-menu-button,
+.side-menu > button[data-view="neighbors"],
+.side-menu > button[data-view="settings"],
+.side-menu button.compass-menu-button:hover,
+.side-menu button.premium-menu-button:hover,
+.side-menu button.tasks-menu-button:hover,
+.side-menu button.help-menu-button:hover,
+.side-menu > button[data-view="neighbors"]:hover,
+.side-menu > button[data-view="settings"]:hover,
+.side-menu button.selected{
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.side-menu button.compass-menu-button:hover,
+.side-menu button.premium-menu-button:hover,
+.side-menu button.tasks-menu-button:hover,
+.side-menu button.help-menu-button:hover{
+  filter:brightness(1.08)!important;
+}
+.side-menu > button[data-view="neighbors"],
+.side-menu > button[data-view="settings"]{
+  color:#fff3dc!important;
+}
+.side-menu > button[data-view="neighbors"]:hover,
+.side-menu > button[data-view="settings"]:hover{
+  color:#ffe4ad!important;
+}
 .side-menu{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr));
