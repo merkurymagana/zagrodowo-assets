@@ -3249,32 +3249,24 @@ renderNeighbors();
   });
 
   let frame=0;
-  let timer=null;
-  let started=false;
-
-  function startAnimation(){
-    if(started || !frames.every(image=>image.complete && image.naturalWidth>0))return;
-    started=true;
-    cat.src=frames[0].src;
-    timer=window.setInterval(()=>{
-      frame=(frame+1)%frameCount;
-      cat.src=frames[frame].src;
-    },frameDelay);
-  }
+  const reduceMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   Promise.all(frames.map(image=>new Promise(resolve=>{
     if(image.complete){resolve();return;}
     image.onload=resolve;
     image.onerror=resolve;
   }))).then(()=>{
-    if(frames.every(image=>image.naturalWidth>0))startAnimation();
-    else console.warn("Nie udało się wczytać wszystkich klatek animacji kota.");
-  });
-
-  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    if(!frames.every(image=>image.naturalWidth>0)){
+      console.warn("Nie udało się wczytać wszystkich klatek animacji kota.");
+      return;
+    }
     cat.src=frames[0].src;
-    if(timer)window.clearInterval(timer);
-  }
+    if(reduceMotion)return;
+    window.setInterval(()=>{
+      frame=(frame+1)%frameCount;
+      cat.src=frames[frame].src;
+    },frameDelay);
+  });
 })();
 </script>
 </body>
