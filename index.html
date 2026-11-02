@@ -2244,10 +2244,28 @@ function getSeasonName(month){
   return "winter";
 }
 
+const seasonImages={
+  spring:"https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wiosna.png",
+  summer:"https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lato.png",
+  autumn:"https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jesien.png",
+  winter:"https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zima.png"
+};
+
 function updateSeason(){
   const name=getSeasonName(new Date().getMonth());
   start.classList.remove("spring","summer","autumn","winter");
   start.classList.add(name);
+
+  const seasonImage=document.getElementById("seasonImage");
+  if(seasonImage){
+    seasonImage.src=seasonImages[name];
+    seasonImage.alt="Zagrodowo — "+({
+      spring:"wiosna",
+      summer:"lato",
+      autumn:"jesień",
+      winter:"zima"
+    }[name]);
+  }
 }
 
 updateSeason();
