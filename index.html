@@ -2355,6 +2355,8 @@ function updateMorningFog(){
 
   const now=new Date();
   const time=now.getHours()+now.getMinutes()/60;
+  const isAutumn=start.classList.contains("autumn");
+  const preview=new URLSearchParams(window.location.search).get("fogPreview")==="1";
   const levels=[
     {time:5,opacity:.78},
     {time:6,opacity:.62},
@@ -2364,7 +2366,9 @@ function updateMorningFog(){
   ];
 
   let opacity=0;
-  if(time>=5&&time<9){
+  if(isAutumn&&preview){
+    opacity=.78;
+  }else if(isAutumn&&time>=5&&time<9){
     for(let i=0;i<levels.length-1;i++){
       const current=levels[i];
       const next=levels[i+1];
