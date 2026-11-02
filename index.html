@@ -1848,6 +1848,38 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .side-menu button.tasks-menu-button:hover,
 .side-menu button.help-menu-button:hover{filter:brightness(1.08)!important}
 
+
+/* Korekta proporcji: większe ilustracje, chmurki z wolnym odstępem poniżej. */
+.side-menu button.compass-menu-button,
+.side-menu button.premium-menu-button,
+.side-menu button.tasks-menu-button,
+.side-menu button.help-menu-button,
+.side-menu > button[data-view="neighbors"],
+.side-menu > button[data-view="settings"]{
+  height:124px!important;min-height:124px!important;max-height:124px!important;
+  padding:0 2px 0!important;
+}
+.side-menu .compass-menu-icon,
+.side-menu .premium-menu-icon,
+.side-menu .tasks-menu-icon{
+  width:100px!important;height:100px!important;flex:0 0 100px!important;
+}
+.side-menu .compass-dial{width:100px!important;height:100px!important}
+.side-menu .compass-pointer{width:66px!important;height:66px!important}
+.side-menu .premium-menu-icon>img{width:96px!important;height:96px!important}
+.side-menu .tasks-menu-icon>img:not(.tasks-wax-seal){width:100px!important;height:100px!important}
+.side-menu .tasks-menu-icon img.tasks-wax-seal{right:18px!important;bottom:2px!important;width:36px!important;height:36px!important}
+.side-menu .help-menu-icon{width:100px!important;height:100px!important;flex:0 0 100px!important}
+.side-menu .help-menu-icon img{width:124px!important;height:124px!important}
+.side-menu button.compass-menu-button::after,
+.side-menu button.premium-menu-button::after,
+.side-menu button.tasks-menu-button::after,
+.side-menu button.help-menu-button::after,
+.side-menu > button[data-view="neighbors"]::after,
+.side-menu > button[data-view="settings"]::after{
+  bottom:2px!important;
+}
+
 </style>
 </head>
 
