@@ -116,7 +116,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
 }
 
-/* PORANNA MGŁA — JESIEŃ: ORGANICZNE PASMA SVG */
+/* PORANNA MGŁA — JESIEŃ: NISKO, Z MARGINESEM OD RAMY */
 #morningFog{
   position:absolute;
   inset:0;
@@ -137,13 +137,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #morningFog .mist-ribbon{
   transform-box:fill-box;
   transform-origin:center;
-  animation:mistSlide 72s ease-in-out infinite alternate;
+  animation:mistSlide 64s ease-in-out infinite alternate;
 }
-#morningFog .mist-ribbon:nth-of-type(2){animation-duration:94s;animation-delay:-31s}
-#morningFog .mist-ribbon:nth-of-type(3){animation-duration:83s;animation-delay:-17s}
+#morningFog .mist-ribbon:nth-of-type(2){animation-duration:82s;animation-delay:-29s}
+#morningFog .mist-ribbon:nth-of-type(3){animation-duration:73s;animation-delay:-16s}
 @keyframes mistSlide{
-  from{transform:translateX(-34px)}
-  to{transform:translateX(42px)}
+  from{transform:translateX(-24px)}
+  to{transform:translateX(30px)}
 }
 @media(prefers-reduced-motion:reduce){
   .fog-layer{animation:none}
@@ -1928,27 +1928,28 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     <div id="morningFog" aria-hidden="true">
       <svg class="ground-mist" viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <filter id="mistEdge" x="-12%" y="-35%" width="124%" height="170%">
+          <filter id="mistEdge" x="-8%" y="-30%" width="116%" height="160%">
             <feTurbulence type="fractalNoise" baseFrequency=".009 .035" numOctaves="2" seed="8" result="noise"/>
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="34" xChannelSelector="R" yChannelSelector="G"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="30" xChannelSelector="R" yChannelSelector="G"/>
           </filter>
           <linearGradient id="mistFade" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stop-color="#e8eddf" stop-opacity="0"/>
-            <stop offset=".38" stop-color="#e8eddf" stop-opacity=".48"/>
-            <stop offset=".78" stop-color="#eef1e5" stop-opacity=".68"/>
+            <stop offset=".35" stop-color="#e8eddf" stop-opacity=".48"/>
+            <stop offset=".76" stop-color="#eef1e5" stop-opacity=".72"/>
             <stop offset="1" stop-color="#eef1e5" stop-opacity="0"/>
           </linearGradient>
         </defs>
-        <g class="mist-ribbon" opacity=".34" filter="url(#mistEdge)">
-          <path fill="url(#mistFade)" d="M-80 640 C40 610 100 668 205 640 S365 616 470 650 S650 672 760 635 S930 612 1080 650 L1080 760 L-80 760Z"/>
-          <path fill="#e9eedf" opacity=".18" d="M-60 700 C90 674 150 722 300 692 S520 715 650 690 S880 700 1060 675 L1060 750 L-60 750Z"/>
+        <!-- Wszystkie pasma pozostają wewnątrz bezpiecznego marginesu obrazu. -->
+        <g class="mist-ribbon" opacity=".42" filter="url(#mistEdge)">
+          <path fill="url(#mistFade)" d="M75 770 C155 746 218 781 300 763 S435 754 510 775 S650 787 730 762 S850 750 925 772 L925 835 C830 819 765 842 680 824 S520 841 435 820 S265 838 180 820 S110 830 75 822Z"/>
+          <path fill="#e9eedf" opacity=".20" d="M105 800 C195 782 260 812 350 793 S510 815 590 795 S760 811 895 785 L895 820 C780 832 690 812 590 829 S390 814 300 831 S170 815 105 825Z"/>
         </g>
-        <g class="mist-ribbon" opacity=".43" filter="url(#mistEdge)">
-          <path fill="url(#mistFade)" d="M-90 760 C40 724 145 782 260 750 S430 738 540 770 S720 790 830 750 S970 744 1090 770 L1090 900 L-90 900Z"/>
-          <path fill="#edf0e2" opacity=".22" d="M-70 820 C80 790 180 842 330 810 S540 835 680 808 S890 830 1070 795 L1070 875 L-70 875Z"/>
+        <g class="mist-ribbon" opacity=".52" filter="url(#mistEdge)">
+          <path fill="url(#mistFade)" d="M65 835 C150 811 225 848 315 827 S470 820 555 844 S700 852 785 828 S875 819 935 841 L935 900 C845 883 770 910 675 890 S500 907 410 885 S235 903 150 885 S90 894 65 885Z"/>
+          <path fill="#edf0e2" opacity=".24" d="M95 865 C190 845 260 876 360 855 S530 879 630 856 S800 875 905 848 L905 882 C810 893 715 874 620 891 S415 876 320 894 S165 878 95 888Z"/>
         </g>
-        <g class="mist-ribbon" opacity=".30" filter="url(#mistEdge)">
-          <path fill="url(#mistFade)" d="M-80 875 C70 842 160 900 300 870 S490 850 610 884 S800 902 900 870 S1010 858 1080 885 L1080 1000 L-80 1000Z"/>
+        <g class="mist-ribbon" opacity=".38" filter="url(#mistEdge)">
+          <path fill="url(#mistFade)" d="M85 895 C175 874 245 910 340 889 S495 882 580 906 S730 913 810 891 S885 884 915 900 L915 945 C820 930 750 950 650 934 S470 950 380 932 S215 947 145 931 S105 940 85 932Z"/>
         </g>
       </svg>
     </div>
