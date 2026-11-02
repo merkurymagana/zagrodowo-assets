@@ -1986,6 +1986,32 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 
 
+
+/* Kot na ekranie startowym */
+#startCat{
+  position:absolute;
+  z-index:6;
+  left:clamp(18px,8vw,120px);
+  bottom:clamp(18px,5.5vh,58px);
+  width:clamp(105px,13vw,180px);
+  height:auto;
+  max-height:34%;
+  object-fit:contain;
+  object-position:bottom;
+  display:block;
+  pointer-events:none;
+  user-select:none;
+  filter:drop-shadow(0 5px 5px #26351b55);
+}
+@media(max-width:700px){
+  #startCat{
+    left:3%;
+    bottom:clamp(88px,15vh,130px);
+    width:clamp(82px,24vw,135px);
+    max-height:27%;
+  }
+}
+
 </style>
 </head>
 
@@ -2000,6 +2026,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud3" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-3-jesien-dzien.png" alt="" aria-hidden="true">
+    <img id="startCat" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-jesien.png" alt="Kot na gospodarstwie" draggable="false">
 
 
 
