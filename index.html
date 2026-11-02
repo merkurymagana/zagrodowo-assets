@@ -87,32 +87,34 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 /* ANIMOWANA CHMURA — JESIENNY DZIEŃ
-   Niewielka chmurka przesuwa się w prawo i stopniowo rozpływa w powietrzu. */
+   Chmurka łagodnie pojawia się, długo płynie i rozpływa się w powietrzu. */
 #startCloud{
   position:absolute;
   z-index:3;
   top:27%;
   left:50%;
-  width:clamp(54px,5.5vw,82px);
+  width:clamp(52px,5.3vw,78px);
   height:auto;
   display:block;
   pointer-events:none;
   user-select:none;
   opacity:0;
   filter:blur(0);
-  animation:cloud-second-half 70s linear infinite;
+  animation:cloud-second-half 90s linear infinite;
   will-change:transform,opacity,filter;
 }
 
-/* Chmurka znika stopniowo: staje się coraz bardziej przejrzysta,
-   delikatnie rozmywa się i rozpływa przed 85% szerokości kadru. */
+/* Pojawienie i znikanie mają podobny, miękki efekt.
+   Chmurka znika całkowicie przed przekroczeniem 85% szerokości kadru. */
 @keyframes cloud-second-half{
-  0%   {transform:translate3d(0,0,0) scale(1);opacity:0;filter:blur(0)}
-  7%   {transform:translate3d(0,0,0) scale(1);opacity:.88;filter:blur(0)}
-  70%  {transform:translate3d(21vw,0,0) scale(1);opacity:.88;filter:blur(0)}
-  76%  {transform:translate3d(23vw,0,0) scale(1.04);opacity:.58;filter:blur(2px)}
-  82%  {transform:translate3d(25vw,0,0) scale(1.1);opacity:.18;filter:blur(6px)}
-  84%  {transform:translate3d(25.5vw,0,0) scale(1.14);opacity:0;filter:blur(9px)}
+  0%   {transform:translate3d(0,0,0) scale(1);opacity:0;filter:blur(9px)}
+  5%   {transform:translate3d(0,0,0) scale(1.08);opacity:.18;filter:blur(6px)}
+  10%  {transform:translate3d(0,0,0) scale(1.04);opacity:.58;filter:blur(2px)}
+  14%  {transform:translate3d(0,0,0) scale(1);opacity:.88;filter:blur(0)}
+  72%  {transform:translate3d(21vw,0,0) scale(1);opacity:.88;filter:blur(0)}
+  78%  {transform:translate3d(23vw,0,0) scale(1.04);opacity:.58;filter:blur(2px)}
+  84%  {transform:translate3d(25vw,0,0) scale(1.1);opacity:.18;filter:blur(6px)}
+  86%  {transform:translate3d(25.5vw,0,0) scale(1.14);opacity:0;filter:blur(9px)}
   100% {transform:translate3d(25.5vw,0,0) scale(1.14);opacity:0;filter:blur(9px)}
 }
 
@@ -120,8 +122,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   #startCloud{
     top:27%;
     left:50%;
-    width:clamp(46px,12vw,70px);
-    animation-duration:64s;
+    width:clamp(44px,11.5vw,66px);
+    animation-duration:84s;
   }
 }
 
