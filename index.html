@@ -91,9 +91,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #startCloud{
   position:absolute;
   z-index:3;
-  top:20%;
+  top:24%;
   left:50%;
-  width:clamp(100px,11vw,175px);
+  width:clamp(80px,8vw,130px);
   height:auto;
   display:block;
   pointer-events:none;
@@ -108,22 +108,22 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 @keyframes cloud-second-half{
   0%   {transform:translate3d(0,0,0);opacity:0}
   7%   {transform:translate3d(0,0,0);opacity:.88}
-  88%  {transform:translate3d(48vw,0,0);opacity:.88}
-  96%  {transform:translate3d(53vw,0,0);opacity:0}
+  82%  {transform:translate3d(44vw,0,0);opacity:.88}
+  85%  {transform:translate3d(47vw,0,0);opacity:0}
   100% {transform:translate3d(55vw,0,0);opacity:0}
 }
 
 @media(max-width:700px){
   #startCloud{
-    top:20%;
+    top:24%;
     left:50%;
-    width:clamp(82px,23vw,135px);
+    width:clamp(68px,18vw,105px);
     animation-duration:64s;
   }
 }
 
 @media(prefers-reduced-motion:reduce){
-  #startCloud{animation:none;opacity:.85;left:50%;top:20%}
+  #startCloud{animation:none;opacity:.85;left:50%;top:24%}
 }
 
 .season-shade{
