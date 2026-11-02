@@ -1679,7 +1679,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #gameCanvas{transform:none!important;user-select:text;-webkit-user-drag:none}
 #gameCanvas img{-webkit-user-drag:none}
 
-/* Wspólny układ kafelków menu z etykietami pod ikonami. */
+/* Wspólny układ kafelków menu z chmurkami pod ikonami. */
 .side-menu{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr));
@@ -1698,24 +1698,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .side-menu > button[data-view="neighbors"],
 .side-menu > button[data-view="settings"]{
   position:relative!important;
-  display:flex!important;
-  flex:0 0 auto!important;
-  width:100%!important;
-  min-width:0!important;
-  max-width:none!important;
-  height:91px!important;
-  min-height:91px!important;
-  max-height:91px!important;
-  margin:0!important;
-  padding:3px 2px 20px!important;
-  align-items:center!important;
-  justify-content:center!important;
-  overflow:visible!important;
-  border:1px solid #b18a5d!important;
+  display:flex!important;flex:0 0 auto!important;
+  width:100%!important;min-width:0!important;max-width:none!important;
+  height:91px!important;min-height:91px!important;max-height:91px!important;
+  margin:0!important;padding:3px 2px 3px!important;
+  align-items:center!important;justify-content:center!important;
+  overflow:visible!important;border:1px solid #b18a5d!important;
   border-radius:8px!important;
   background:linear-gradient(180deg,#a77c50,#89613e)!important;
-  box-shadow:0 2px 4px #24150c66!important;
-  color:#fff3dc!important;
+  box-shadow:0 2px 4px #24150c66!important;color:#fff3dc!important;
 }
 .side-menu button.compass-menu-button:hover,
 .side-menu button.premium-menu-button:hover,
@@ -1725,13 +1716,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .side-menu > button[data-view="settings"]:hover,
 .side-menu button.selected{
   background:linear-gradient(180deg,#d5b47e,#b88c57)!important;
-  color:#49331f!important;
-  border-color:#e2c99c!important;
+  color:#49331f!important;border-color:#e2c99c!important;
 }
-.side-menu .compass-menu-icon,
-.side-menu .premium-menu-icon,
-.side-menu .tasks-menu-icon,
-.side-menu .help-menu-icon{
+.side-menu .compass-menu-icon,.side-menu .premium-menu-icon,
+.side-menu .tasks-menu-icon,.side-menu .help-menu-icon{
   width:68px!important;height:68px!important;flex:0 0 68px!important;
 }
 .side-menu .compass-dial{width:68px!important;height:68px!important}
@@ -1746,26 +1734,26 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .side-menu button.help-menu-button::after,
 .side-menu > button[data-view="neighbors"]::after,
 .side-menu > button[data-view="settings"]::after{
-  position:absolute!important;
-  left:50%!important;right:auto!important;top:auto!important;bottom:5px!important;
-  z-index:5!important;
-  padding:0!important;border:0!important;border-radius:0!important;
-  background:none!important;box-shadow:none!important;
-  color:#fff3dc!important;
+  position:absolute!important;left:50%!important;right:auto!important;
+  top:auto!important;bottom:3px!important;z-index:20!important;
+  padding:4px 9px!important;border:1px solid #8b633d!important;
+  border-radius:6px!important;
+  background:linear-gradient(180deg,#fff4d9 0%,#e8d2a7 100%)!important;
+  box-shadow:0 2px 5px rgba(48,30,14,.4),inset 0 0 0 1px #ffffff80!important;
+  color:#573c26!important;
   font:700 12px/1.15 "Bree Serif",Georgia,serif!important;
-  letter-spacing:0!important;white-space:nowrap!important;
-  opacity:1!important;visibility:visible!important;
-  transform:translateX(-50%)!important;
+  letter-spacing:.2px!important;white-space:nowrap!important;
+  opacity:0!important;visibility:hidden!important;
+  transform:translate(-50%,5px)!important;
+  transition:opacity .16s ease,transform .16s ease,visibility .16s ease!important;
   pointer-events:none!important;
 }
 .side-menu button.compass-menu-button::after{content:"Mapa"!important}
-.side-menu button.premium-menu-button::after{content:"Premium"!important}
+.side-menu button.premium-menu-button::after{content:"Usługi Premium"!important}
 .side-menu button.tasks-menu-button::after{content:"Zadania"!important}
-.side-menu button.help-menu-button::after{content:"Pomoc"!important}
+.side-menu button.help-menu-button::after{content:"Centrum pomocy"!important}
 .side-menu > button[data-view="neighbors"],
-.side-menu > button[data-view="settings"]{
-  font-size:0!important;gap:0!important;
-}
+.side-menu > button[data-view="settings"]{font-size:0!important;gap:0!important}
 .side-menu > button[data-view="neighbors"] .menu-icon,
 .side-menu > button[data-view="settings"] .menu-icon{
   display:block!important;width:auto!important;flex:0 0 auto!important;
@@ -1774,6 +1762,21 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .side-menu > button[data-view="neighbors"]::after{content:"Sąsiedzi"!important}
 .side-menu > button[data-view="settings"]::after{content:"Ustawienia"!important}
 .side-menu .menu-count{position:absolute;top:5px;right:5px;margin:0!important}
+.side-menu button.compass-menu-button:hover::after,
+.side-menu button.compass-menu-button:focus-visible::after,
+.side-menu button.premium-menu-button:hover::after,
+.side-menu button.premium-menu-button:focus-visible::after,
+.side-menu button.tasks-menu-button:hover::after,
+.side-menu button.tasks-menu-button:focus-visible::after,
+.side-menu button.help-menu-button:hover::after,
+.side-menu button.help-menu-button:focus-visible::after,
+.side-menu > button[data-view="neighbors"]:hover::after,
+.side-menu > button[data-view="neighbors"]:focus-visible::after,
+.side-menu > button[data-view="settings"]:hover::after,
+.side-menu > button[data-view="settings"]:focus-visible::after{
+  opacity:1!important;visibility:visible!important;
+  transform:translate(-50%,0)!important;
+}
 @media(max-width:760px){
   .side-menu button.compass-menu-button::after,
   .side-menu button.premium-menu-button::after,
@@ -1782,7 +1785,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   .side-menu > button[data-view="neighbors"]::after,
   .side-menu > button[data-view="settings"]::after{display:block!important}
 }
-
 </style>
 </head>
 
