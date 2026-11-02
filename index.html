@@ -1987,7 +1987,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 
 
-/* Kot na ekranie startowym */
+/* Kot na ekranie startowym — rozgląda się, przykuca i wykonuje skok */
 #startCat{
   position:absolute;
   z-index:6;
@@ -2001,8 +2001,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   display:block;
   pointer-events:none;
   user-select:none;
+  transform-origin:50% 95%;
   filter:drop-shadow(0 5px 5px #26351b55);
+  transition:transform .55s cubic-bezier(.2,.75,.25,1);
+  will-change:transform;
 }
+#startCat.cat-watch{transform:rotate(-5deg) translateY(-2px)}
+#startCat.cat-crouch{transform:scale(.94,.88) translateY(5px) rotate(-4deg)}
+#startCat.cat-pounce{transform:translate( clamp(22px,3vw,48px), -42px) rotate(11deg) scale(1.04)}
 @media(max-width:700px){
   #startCat{
     left:3%;
@@ -2010,6 +2016,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     width:clamp(82px,24vw,135px);
     max-height:27%;
   }
+  #startCat.cat-pounce{transform:translate(20px,-30px) rotate(10deg) scale(1.04)}
+}
+@media(prefers-reduced-motion:reduce){
+  #startCat{transition:none}
 }
 
 </style>
@@ -3223,6 +3233,34 @@ function showNotice(message){
 loadDemoProfile();
 loadSocial();
 renderNeighbors();
+
+/* KOT — na razie ćwiczy polowanie bez liścia.
+   Gdy dodamy grafikę liścia, podepniemy ją pod moment wyskoku. */
+(function animateStartCat(){
+  const cat=document.getElementById("startCat");
+  if(!cat || window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+
+  let timer;
+  function scheduleHunt(){
+    timer=window.setTimeout(()=>{
+      if(!cat.isConnected)return;
+      cat.classList.add("cat-watch");
+      window.setTimeout(()=>{
+        cat.classList.remove("cat-watch");
+        cat.classList.add("cat-crouch");
+        window.setTimeout(()=>{
+          cat.classList.remove("cat-crouch");
+          cat.classList.add("cat-pounce");
+          window.setTimeout(()=>{
+            cat.classList.remove("cat-pounce");
+            scheduleHunt();
+          },700);
+        },650);
+      },900);
+    },4500+Math.random()*4500);
+  }
+  scheduleHunt();
+})();
 </script>
 </body>
 </html>
