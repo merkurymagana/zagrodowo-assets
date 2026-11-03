@@ -223,6 +223,22 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   will-change:transform;
   filter:drop-shadow(0 2px 3px #24170b22);
 }
+#pigBlink{
+  position:absolute;
+  z-index:4;
+  left:30.7%;
+  top:50.2%;
+  width:2.8%;
+  height:1.8%;
+  border-radius:75% 45% 65% 40%;
+  background:linear-gradient(180deg,#e7b1a7 0%,#cf9189 58%,#b97872 100%);
+  box-shadow:0 0 1px #9f625d88,inset 0 1px 1px #f4c8bd99;
+  opacity:0;
+  transform-origin:center;
+  transform:rotate(-12deg) scaleY(.12);
+  animation:pig-blink 28s linear infinite;
+  pointer-events:none;
+}
 #pigHead{
   z-index:3;
   width:calc(100% + 13px);
@@ -255,6 +271,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   95.5%{transform:translateY(0) rotate(3deg)}
   96.5%{transform:translateY(0) rotate(-1deg)}
   97.5%,100%{transform:translateY(0) rotate(0deg)}
+}
+@keyframes pig-blink{
+  0%,57.1%,72.5%,74.2%,87.5%,89.2%,96.5%,98.2%,100%{
+    opacity:0;transform:rotate(-12deg) scaleY(.12)
+  }
+  72.8%,73.9%,87.8%,88.9%,96.8%,97.9%{
+    opacity:1;transform:rotate(-12deg) scaleY(1)
+  }
 }
 #start:not(.autumn-morning) #pigGroup{
   visibility:hidden;
@@ -2231,6 +2255,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
       <img id="pigBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/swinia-rozowa-cialo.png" alt="">
       <img id="pigEar" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/swinia-rozowa-ucho.png" alt="">
       <img id="pigHead" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/swinia-rozowa-glowa.png" alt="">
+      <span id="pigBlink" aria-hidden="true"></span>
     </div>
     <div id="catGroup" aria-label="Biały kot">
       <img id="catBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-cialo.png" alt="Biały kot na gospodarstwie">
