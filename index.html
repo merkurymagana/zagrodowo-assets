@@ -345,11 +345,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 @keyframes autumn-leaf-breeze{
   0%{transform:translate3d(0,0,0) rotate(var(--turn-start)) scale(.92) scaleX(var(--leaf-flip,1));opacity:0}
-  5%{opacity:1}
-  20%{transform:translate3d(var(--drift-a),19vh,0) rotate(var(--turn-a)) scale(1) scaleX(var(--leaf-flip,1))}
-  42%{transform:translate3d(var(--drift-b),42vh,0) rotate(var(--turn-b)) scale(.96) scaleX(var(--leaf-flip,1))}
-  65%{transform:translate3d(var(--drift-c),66vh,0) rotate(var(--turn-c)) scale(1.02) scaleX(var(--leaf-flip,1))}
-  84%{transform:translate3d(var(--drift-d),88vh,0) rotate(var(--turn-d)) scale(.94);opacity:1}
+  5%{opacity:var(--leaf-opacity,1)}
+  20%{transform:translate3d(var(--drift-a),19vh,0) rotate(var(--turn-a)) scale(1) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1)}
+  42%{transform:translate3d(var(--drift-b),42vh,0) rotate(var(--turn-b)) scale(.96) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1)}
+  65%{transform:translate3d(var(--drift-c),66vh,0) rotate(var(--turn-c)) scale(1.02) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1)}
+  84%{transform:translate3d(var(--drift-d),88vh,0) rotate(var(--turn-d)) scale(.94);opacity:var(--leaf-opacity,1)}
   100%{transform:translate3d(var(--drift-end),calc(110vh - 10px),0) rotate(var(--turn-end)) scale(.9) scaleX(var(--leaf-flip,1));opacity:0}
 }
 @media(max-width:700px){
@@ -2545,18 +2545,18 @@ function updateSeason(){
         "lisc-brzoza-lot.png"
       ];
       const leaves=[
-        [0,"-2%","25px","90s","-4s","22vw","44vw","68vw","88vw","-5deg","72deg","-38deg","96deg","-52deg","285deg",".72"],
-        [1,"-1%","20px","105s","-19s","-24vw","-48vw","-72vw","-92vw","18deg","-62deg","42deg","-92deg","35deg","-245deg",".62"],
-        [2,"-3%","16px","84s","-11s","30vw","58vw","82vw","104vw","-12deg","88deg","-55deg","70deg","-30deg","310deg",".68"],
-        [0,"-2%","22px","112s","-28s","-18vw","-42vw","-66vw","-88vw","22deg","-75deg","58deg","-88deg","44deg","-270deg",".66"],
-        [1,"96%","27px","96s","-8s","-22vw","-46vw","-70vw","-94vw","-8deg","64deg","-48deg","105deg","-35deg","300deg",".7"],
-        [2,"97%","17px","108s","-23s","24vw","50vw","76vw","98vw","15deg","-82deg","48deg","-100deg","30deg","-260deg",".6"],
-        [0,"98%","23px","88s","-15s","-28vw","-54vw","-78vw","-102vw","-18deg","76deg","-44deg","92deg","-42deg","295deg",".7"],
-        [1,"99%","19px","116s","-32s","20vw","46vw","70vw","94vw","12deg","-68deg","52deg","-84deg","38deg","-250deg",".62"],
-        [2,"97%","15px","94s","-6s","-24vw","-50vw","-74vw","-96vw","-10deg","82deg","-50deg","96deg","-32deg","305deg",".64"],
-        [0,"-1%","18px","120s","-38s","28vw","56vw","82vw","106vw","20deg","-72deg","46deg","-90deg","34deg","-255deg",".56"]
+        [0,"-2%","25px","90s","-4s","22vw","44vw","68vw","88vw","102vw","-5deg","72deg","-38deg","96deg","-52deg","285deg",".72"],
+        [1,"-1%","20px","105s","-19s","-24vw","-48vw","-72vw","-92vw","-106vw","18deg","-62deg","42deg","-92deg","35deg","-245deg",".62"],
+        [2,"-3%","16px","84s","-11s","30vw","58vw","82vw","104vw","118vw","-12deg","88deg","-55deg","70deg","-30deg","310deg",".68"],
+        [0,"-2%","22px","112s","-28s","-18vw","-42vw","-66vw","-88vw","-102vw","22deg","-75deg","58deg","-88deg","44deg","-270deg",".66"],
+        [1,"96%","27px","96s","-8s","-22vw","-46vw","-70vw","-94vw","-108vw","-8deg","64deg","-48deg","105deg","-35deg","300deg",".7"],
+        [2,"97%","17px","108s","-23s","24vw","50vw","76vw","98vw","112vw","15deg","-82deg","48deg","-100deg","30deg","-260deg",".6"],
+        [0,"98%","23px","88s","-15s","-28vw","-54vw","-78vw","-102vw","-116vw","-18deg","76deg","-44deg","92deg","-42deg","295deg",".7"],
+        [1,"99%","19px","116s","-32s","20vw","46vw","70vw","94vw","108vw","12deg","-68deg","52deg","-84deg","38deg","-250deg",".62"],
+        [2,"97%","15px","94s","-6s","-24vw","-50vw","-74vw","-96vw","-110vw","-10deg","82deg","-50deg","96deg","-32deg","305deg",".64"],
+        [0,"-1%","18px","120s","-38s","28vw","56vw","82vw","106vw","120vw","20deg","-72deg","46deg","-90deg","34deg","-255deg",".56"]
       ];
-      leaves.forEach(([type,left,size,duration,delay,a,b,c,d,start,turnA,turnB,turnC,turnD,end,opacity],index)=>{
+      leaves.forEach(([type,left,size,duration,delay,a,b,c,d,endX,start,turnA,turnB,turnC,turnD,end,opacity],index)=>{
         const leaf=document.createElement("img");
         leaf.className="autumn-leaf";
         leaf.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/"+leafFiles[type];
@@ -2564,9 +2564,9 @@ function updateSeason(){
         leaf.setAttribute("aria-hidden","true");
         const vars={
           "--left":left,"--leaf-size":size,"--fall-time":duration,"--fall-delay":delay,
-          "--drift-a":a,"--drift-b":b,"--drift-c":c,"--drift-d":d,"--drift-end":d,
+          "--drift-a":a,"--drift-b":b,"--drift-c":c,"--drift-d":d,"--drift-end":endX,
           "--turn-start":start,"--turn-a":turnA,"--turn-b":turnB,"--turn-c":turnC,
-          "--turn-d":turnD,"--turn-end":end,"--leaf-opacity":"1",
+          "--turn-d":turnD,"--turn-end":end,"--leaf-opacity":opacity,
           "--leaf-flip":index%2===0?"1":"-1"
         };
         Object.entries(vars).forEach(([key,value])=>leaf.style.setProperty(key,value));
