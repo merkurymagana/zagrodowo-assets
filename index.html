@@ -194,7 +194,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:5;
   left:calc(clamp(650px,62vw,1050px) - 102px);
   bottom:19%;
-  width:clamp(125px,14vw,205px);
+  width:calc(clamp(125px,14vw,205px) + 5px);
   aspect-ratio:676 / 369;
   pointer-events:none;
   user-select:none;
@@ -215,8 +215,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 #pigHead{
   z-index:2;
-  width:calc(100% + 3px);
-  height:calc(100% + 3px);
+  width:calc(100% + 8px);
+  height:calc(100% + 8px);
   margin-top:-1px;
   transform-origin:40% 55%;
   animation:pig-eating 6.8s ease-in-out infinite;
@@ -239,14 +239,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     left:auto;
     right:calc(8vw + 102px);
     bottom:22%;
-    width:clamp(115px,22vw,175px);
+    width:calc(clamp(115px,22vw,175px) + 5px);
   }
 }
 @media(max-width:700px){
   #pigGroup{
     right:120px;
     bottom:90px;
-    width:clamp(95px,28vw,140px);
+    width:calc(clamp(95px,28vw,140px) + 5px);
   }
 }
 
