@@ -122,8 +122,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #catHead{
   z-index:3;
   transform:translateY(-10px) scale(.36);
-  transform-origin:50% 50%;
+  transform-origin:50% 65%;
+  animation:cat-head-move 5.5s ease-in-out infinite;
   filter:drop-shadow(0 3px 4px #24170b33);
+}
+@keyframes cat-head-move{
+  0%,100%{transform:translateY(-10px) scale(.36) rotate(0deg)}
+  35%{transform:translateY(-11px) scale(.36) rotate(-2deg)}
+  70%{transform:translateY(-9px) scale(.36) rotate(1.5deg)}
 }
 @keyframes cat-tail-sway{
   0%,100%{transform:rotate(-3deg)}
