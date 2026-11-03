@@ -86,95 +86,60 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
 }
 
-/* BIAŁY KOT — OSOBNE WARSTWY */
-#catBody{
+/* BIAŁY KOT — WSPÓLNA GRUPA, ŻEBY WARSTWY NIE ROZJEŻDŻAŁY SIĘ PRZY ZOOMIE */
+#catGroup{
   position:absolute;
-  left:calc(clamp(520px,40vw,700px) - 1px);
-  bottom:31%;
-  width:clamp(55px,6vw,82px);
-  height:auto;
-  max-height:15vh;
-  object-fit:contain;
-  display:block;
-  pointer-events:none;
-  user-select:none;
-}
-#catBody{
   z-index:6;
-  transform:scale(1.55);
-  transform-origin:50% 100%;
-  filter:drop-shadow(0 5px 7px #24170b55);
-}
-#catHead{
-  position:absolute;
-  z-index:8;
-  left:calc(clamp(520px,40vw,700px) + 7px);
-  bottom:calc(31% + 25px);
-  width:clamp(39px,4.2vw,57px);
-  height:auto;
-  object-fit:contain;
-  display:block;
-  pointer-events:none;
-  user-select:none;
-  transform:translateY(0);
-  filter:drop-shadow(0 3px 4px #24170b33);
-}
-#catTail{
-  position:absolute;
-  z-index:7;
   left:clamp(520px,40vw,700px);
   bottom:31%;
   width:clamp(55px,6vw,82px);
-  height:auto;
-  object-fit:contain;
-  display:block;
+  aspect-ratio:676 / 369;
   pointer-events:none;
   user-select:none;
+}
+#catGroup img{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:fill;
+  pointer-events:none;
+  user-select:none;
+}
+#catBody{
+  z-index:1;
+  filter:drop-shadow(0 5px 7px #24170b55);
+}
+#catTail{
+  z-index:2;
   transform-origin:63% 84%;
   animation:cat-tail-sway 3.8s ease-in-out infinite;
   will-change:transform;
 }
-
+#catHead{
+  z-index:3;
+  transform:scale(.78);
+  transform-origin:50% 50%;
+  filter:drop-shadow(0 3px 4px #24170b33);
+}
 @keyframes cat-tail-sway{
   0%,100%{transform:rotate(-3deg)}
   50%{transform:rotate(4deg)}
 }
-
 @media(max-width:1050px){
-  #catBody{
-    left:calc(4vw - 1px);
-    width:clamp(115px,17vw,170px);
-    max-height:25vh;
-  }
-  #catHead{
-    left:calc(4vw + 16px);
-    width:clamp(78px,11vw,112px);
-    left:calc(4vw + 13px);
-  }
-  #catTail{
-    left:calc(4vw - 1px);
+  #catGroup{
+    left:4vw;
     width:clamp(115px,17vw,170px);
   }
 }
 @media(max-width:700px){
-  #catBody{
+  #catGroup{
     left:12px;
-    bottom:82px;
-    width:clamp(88px,25vw,125px);
-    max-height:25vh;
-  }
-  #catHead{
-    left:calc(12px + 13px);
-    bottom:107px;
-    width:clamp(55px,15vw,76px);
-  }
-  #catTail{
-    left:11px;
     bottom:82px;
     width:clamp(88px,25vw,125px);
   }
 }
-
 /* ANIMOWANA CHMURA — JESIENNY DZIEŃ
    Chmurka pojawia się już w trakcie lotu, płynie przez niebo i rozpływa się przy 93% kadru. */
 #startCloud{
@@ -2087,9 +2052,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
-    <img id="catBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-cialo.png" alt="Biały kot na gospodarstwie">
-    <img id="catHead" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-glowa.png" alt="" aria-hidden="true">
-    <img id="catTail" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-ogon.png" alt="" aria-hidden="true">
+    <div id="catGroup" aria-label="Biały kot">
+      <img id="catBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-cialo.png" alt="Biały kot na gospodarstwie">
+      <img id="catTail" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-ogon.png" alt="" aria-hidden="true">
+      <img id="catHead" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-glowa.png" alt="" aria-hidden="true">
+    </div>
 <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud3" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-3-jesien-dzien.png" alt="" aria-hidden="true">
