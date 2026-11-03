@@ -213,8 +213,18 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:1;
   filter:drop-shadow(0 5px 7px #24170b44);
 }
-#pigHead{
+#pigEar{
   z-index:2;
+  width:calc(100% + 13px);
+  height:calc(100% + 13px);
+  margin-top:-1px;
+  transform-origin:40% 55%;
+  animation:pig-eating 28s linear infinite;
+  will-change:transform;
+  filter:drop-shadow(0 2px 3px #24170b22);
+}
+#pigHead{
+  z-index:3;
   width:calc(100% + 13px);
   height:calc(100% + 13px);
   margin-top:-1px;
@@ -2202,6 +2212,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     <div class="season-effects" id="seasonEffects" aria-hidden="true"></div>
     <div id="pigGroup" aria-label="Różowa świnka">
       <img id="pigBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/swinia-rozowa-cialo.png" alt="">
+      <img id="pigEar" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/swinia-rozowa-ucho.png" alt="">
       <img id="pigHead" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/swinia-rozowa-glowa.png" alt="">
     </div>
     <div id="catGroup" aria-label="Biały kot">
