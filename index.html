@@ -86,42 +86,27 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
 }
 
-/* BIAŁY KOT NA EKRANIE STARTOWYM */
-#startCat{
+/* BIAŁY KOT — OSOBNE WARSTWY */
+#catBody,
+#catHead{
   position:absolute;
-  z-index:6;
   left:calc(clamp(520px,40vw,700px) - 1px);
   bottom:31%;
   width:clamp(55px,6vw,82px);
-  max-height:15vh;
   height:auto;
+  max-height:15vh;
   object-fit:contain;
   display:block;
   pointer-events:none;
   user-select:none;
+}
+#catBody{
+  z-index:6;
   filter:drop-shadow(0 5px 7px #24170b55);
 }
-
-@media(max-width:1050px){
-  #startCat{
-    left:4vw;
-    width:clamp(115px,17vw,170px);
-  }
-}
-
-@media(max-width:700px){
-  #startCat{
-    left:12px;
-    bottom:82px;
-    width:clamp(88px,25vw,125px);
-    max-height:25vh;
-  }
-}
-
-/* NATURALNE MRUGANIE KOTKA */
 #catTail{
   position:absolute;
-  z-index:6;
+  z-index:7;
   left:clamp(520px,40vw,700px);
   bottom:31%;
   width:clamp(55px,6vw,82px);
@@ -134,57 +119,46 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation:cat-tail-sway 3.8s ease-in-out infinite;
   will-change:transform;
 }
+#catHead{
+  z-index:8;
+  transform-origin:50% 78%;
+  animation:cat-head-idle 11.5s ease-in-out infinite;
+  will-change:transform;
+}
 @keyframes cat-tail-sway{
   0%,100%{transform:rotate(-3deg)}
   50%{transform:rotate(4deg)}
 }
-@media(max-width:1050px){
-  #catTail{left:calc(4vw - 1px);width:clamp(115px,17vw,170px);}
-}
-@media(max-width:700px){
-  #catTail{left:11px;bottom:82px;width:clamp(88px,25vw,125px);}
-}
-
-#catBlink{
-  position:absolute;
-  z-index:7;
-  left:clamp(520px,40vw,700px);
-  bottom:31%;
-  width:clamp(55px,6vw,82px);
-  aspect-ratio:676 / 369;
-  pointer-events:none;
-  user-select:none;
-}
-#catBlink::before,
-#catBlink::after{
-  content:"";
-  position:absolute;
-  top:30.5%;
-  width:3.5%;
-  aspect-ratio:1 / 1;
-  height:auto;
-  border-radius:50%;
-  clip-path:none;
-  background:#f2efe8;
-  transform:scaleY(0);
-  transform-origin:center;
-  animation:cat-natural-blink 8.2s infinite;
-}
-#catBlink::before{left:45%}
-#catBlink::after{left:50.9%}
-@keyframes cat-natural-blink{
-  0%,93%,96%,100%{transform:scaleY(0)}
-  94.2%,95%{transform:scaleY(1)}
+@keyframes cat-head-idle{
+  0%,18%,100%{transform:rotate(0deg) translateY(0)}
+  22%{transform:rotate(-1.1deg) translateY(-1px)}
+  27%{transform:rotate(.7deg) translateY(0)}
+  32%{transform:rotate(0deg) translateY(0)}
+  68%{transform:rotate(0deg) translateY(0)}
+  72%{transform:rotate(.9deg) translateY(-1px)}
+  77%{transform:rotate(-.5deg) translateY(0)}
+  82%{transform:rotate(0deg) translateY(0)}
 }
 @media(max-width:1050px){
-  #catBlink{
-    left:4vw;
+  #catBody,#catHead{
+    left:calc(4vw - 1px);
+    width:clamp(115px,17vw,170px);
+    max-height:25vh;
+  }
+  #catTail{
+    left:calc(4vw - 1px);
     width:clamp(115px,17vw,170px);
   }
 }
 @media(max-width:700px){
-  #catBlink{
+  #catBody,#catHead{
     left:12px;
+    bottom:82px;
+    width:clamp(88px,25vw,125px);
+    max-height:25vh;
+  }
+  #catTail{
+    left:11px;
     bottom:82px;
     width:clamp(88px,25vw,125px);
   }
@@ -2102,9 +2076,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
-    <img id="startCat" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy.png?v=2" alt="Biały kot na gospodarstwie">
+    <img id="catBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-cialo.png" alt="Biały kot na gospodarstwie">
     <img id="catTail" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-ogon.png" alt="" aria-hidden="true">
-    <div id="catBlink" aria-hidden="true"></div>
+    <img id="catHead" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-glowa.png" alt="" aria-hidden="true">
     <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud3" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-3-jesien-dzien.png" alt="" aria-hidden="true">
