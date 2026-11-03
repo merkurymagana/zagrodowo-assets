@@ -90,7 +90,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #startCat{
   position:absolute;
   z-index:6;
-  left:clamp(520px,40vw,700px);
+  left:calc(clamp(520px,40vw,700px) - 5px);
   bottom:31%;
   width:clamp(55px,6vw,82px);
   max-height:15vh;
@@ -139,10 +139,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   50%{transform:rotate(4deg)}
 }
 @media(max-width:1050px){
-  #catTail{left:4vw;width:clamp(115px,17vw,170px);}
+  #catTail{left:calc(4vw - 5px);width:clamp(115px,17vw,170px);}
 }
 @media(max-width:700px){
-  #catTail{left:12px;bottom:82px;width:clamp(88px,25vw,125px);}
+  #catTail{left:7px;bottom:82px;width:clamp(88px,25vw,125px);}
 }
 
 #catBlink{
