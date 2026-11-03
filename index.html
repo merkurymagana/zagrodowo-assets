@@ -344,13 +344,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   will-change:transform,opacity;
 }
 @keyframes autumn-leaf-breeze{
-  0%{transform:translate3d(0,-5vh,0) rotate(var(--turn-start)) scale(.92);opacity:0}
+  0%{transform:translate3d(0,-5vh,0) rotate(var(--turn-start)) scale(.92) scaleX(var(--leaf-flip,1));opacity:0}
   8%{opacity:var(--leaf-opacity)}
-  23%{transform:translate3d(var(--drift-a),19vh,0) rotate(var(--turn-a)) scale(1)}
-  43%{transform:translate3d(var(--drift-b),42vh,0) rotate(var(--turn-b)) scale(.96)}
-  64%{transform:translate3d(var(--drift-c),66vh,0) rotate(var(--turn-c)) scale(1.02)}
-  84%{transform:translate3d(var(--drift-d),88vh,0) rotate(var(--turn-d)) scale(.94);opacity:var(--leaf-opacity)}
-  100%{transform:translate3d(var(--drift-end),112vh,0) rotate(var(--turn-end)) scale(.9);opacity:0}
+  23%{transform:translate3d(var(--drift-a),19vh,0) rotate(var(--turn-a)) scale(1) scaleX(var(--leaf-flip,1))}
+  43%{transform:translate3d(var(--drift-b),42vh,0) rotate(var(--turn-b)) scale(.96) scaleX(var(--leaf-flip,1))}
+  64%{transform:translate3d(var(--drift-c),66vh,0) rotate(var(--turn-c)) scale(1.02) scaleX(var(--leaf-flip,1))}
+  84%{transform:translate3d(var(--drift-d),88vh,0) rotate(var(--turn-d)) scale(.94) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity)}
+  100%{transform:translate3d(var(--drift-end),112vh,0) rotate(var(--turn-end)) scale(.9) scaleX(var(--leaf-flip,1));opacity:0}
 }
 @media(max-width:700px){
   .autumn-leaf{width:calc(var(--leaf-size) * .78)}
@@ -2532,7 +2532,7 @@ function updateSeason(){
         [2,"94%","15px","35s","-6s","18px","-22px","-18px","24px","-10deg","82deg","-50deg","96deg","-32deg","305deg",".64"],
         [0,"56%","18px","46s","-38s","-26px","20px","22px","-24px","20deg","-72deg","46deg","-90deg","34deg","-255deg",".56"]
       ];
-      leaves.forEach(([type,left,size,duration,delay,a,b,c,d,start,turnA,turnB,turnC,turnD,end,opacity])=>{
+      leaves.forEach(([type,left,size,duration,delay,a,b,c,d,start,turnA,turnB,turnC,turnD,end,opacity],index)=>{
         const leaf=document.createElement("img");
         leaf.className="autumn-leaf";
         leaf.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/"+leafFiles[type];
@@ -2542,7 +2542,8 @@ function updateSeason(){
           "--left":left,"--leaf-size":size,"--fall-time":duration,"--fall-delay":delay,
           "--drift-a":a,"--drift-b":b,"--drift-c":c,"--drift-d":d,
           "--turn-start":start,"--turn-a":turnA,"--turn-b":turnB,"--turn-c":turnC,
-          "--turn-d":turnD,"--turn-end":end,"--leaf-opacity":opacity
+          "--turn-d":turnD,"--turn-end":end,"--leaf-opacity":opacity,
+          "--leaf-flip":index%2===0?"1":"-1"
         };
         Object.entries(vars).forEach(([key,value])=>leaf.style.setProperty(key,value));
         effects.appendChild(leaf);
