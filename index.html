@@ -130,7 +130,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   position:absolute;
   inset:0;
   z-index:4;
-  transform:translate(1px,-12px) scale(.36);
+  transform:translate(.5px,-12.5px) scale(.36);
   transform-origin:50% 65%;
   pointer-events:none;
 }
@@ -144,10 +144,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   opacity:0;
   transform:scaleY(.15);
   transform-origin:center;
-  animation:cat-blink 7.2s infinite;
+  animation:cat-blink 15s infinite;
 }
 #catBlink span:first-child{left:39%}
-#catBlink span:last-child{left:54%;animation-delay:.08s}
+#catBlink span:last-child{left:54%;animation-delay:0s}
 @keyframes cat-blink{
   0%,3%,6%,100%{opacity:0;transform:scaleY(.15)}
   4.5%{opacity:1;transform:scaleY(1)}
