@@ -2533,10 +2533,14 @@ function getDayPeriod(date){
   return "day";
 }
 
+// TRYB ROBOCZY: wymusza podgląd jesiennego poranka podczas prac nad scenerią.
+ // Aby wrócić do automatycznego cyklu całorocznego, ustaw SCENE_PREVIEW na null.
+const SCENE_PREVIEW={season:"autumn",period:"morning"};
+
 function updateSeason(){
   const now=new Date();
-  const name=getSeasonName(now.getMonth());
-  const period=getDayPeriod(now);
+  const name=SCENE_PREVIEW?.season||getSeasonName(now.getMonth());
+  const period=SCENE_PREVIEW?.period||getDayPeriod(now);
   const sceneKey=name+"-"+period;
   if(sceneKey===lastSceneKey)return;
   lastSceneKey=sceneKey;
