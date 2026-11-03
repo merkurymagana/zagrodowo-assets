@@ -259,14 +259,19 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #goatHead{
   z-index:2;
   transform-origin:56% 72%;
-  animation:goat-head-tilt 12s ease-in-out infinite;
+  animation:goat-head-tilt 18s cubic-bezier(.45,0,.55,1) infinite;
   will-change:transform;
 }
 @keyframes goat-head-tilt{
-  0%,58%,100%{transform:translateY(5px) rotateY(0deg) rotate(0deg)}
-  66%{transform:translateY(5px) rotateY(10deg) rotate(-1deg)}
-  74%,84%{transform:translateY(5px) rotateY(20deg) rotate(-3deg)}
-  92%{transform:translateY(5px) rotateY(0deg) rotate(0deg)}
+  0%,38%,100%{transform:translateY(5px) rotateY(0deg) rotate(0deg)}
+  46%{transform:translateY(5px) rotateY(2deg) rotate(-.2deg)}
+  54%{transform:translateY(5px) rotateY(5deg) rotate(-.6deg)}
+  62%{transform:translateY(5px) rotateY(9deg) rotate(-1.2deg)}
+  70%{transform:translateY(5px) rotateY(14deg) rotate(-2deg)}
+  78%{transform:translateY(5px) rotateY(19deg) rotate(-2.8deg)}
+  84%,88%{transform:translateY(5px) rotateY(20deg) rotate(-3deg)}
+  94%{transform:translateY(5px) rotateY(12deg) rotate(-1.8deg)}
+  98%{transform:translateY(5px) rotateY(4deg) rotate(-.5deg)}
 }
 @media(prefers-reduced-motion:reduce){
   #goatHead{animation:none}
