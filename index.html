@@ -212,14 +212,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   filter:brightness(1.28) contrast(.94);
   animation:chimney-smoke-drift 3s linear infinite;
 }
-#chimneySmoke .smoke-puff:nth-child(2){
-  width:194px;height:156px;animation-delay:-1.45s;
+/* Wylatuje co druga smuga — naprzemiennie pierwsza i trzecia. */
+#chimneySmoke .smoke-puff:nth-child(2),
+#chimneySmoke .smoke-puff:nth-child(4){
+  display:none;
 }
 #chimneySmoke .smoke-puff:nth-child(3){
-  width:222px;height:178px;animation-delay:-2.9s;
-}
-#chimneySmoke .smoke-puff:nth-child(4){
-  width:180px;height:144px;animation-delay:-4.35s;
+  width:222px;height:178px;animation-delay:-1.5s;
 }
 @keyframes chimney-smoke-drift{
   0%{opacity:0;transform:translate3d(0,3px,0) scale(.58)}
