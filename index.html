@@ -312,6 +312,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
 }
 
+/* Liście pozostają w bezpiecznym obszarze obrazu — 90 px od każdej krawędzi. */
+.season-effects.leaf-safe-area{
+  clip-path:inset(90px);
+}
+
 .effect{
   position:absolute;
   top:-12%;
@@ -2538,6 +2543,7 @@ function updateSeason(){
   const effects=document.getElementById("seasonEffects");
   if(effects){
     effects.replaceChildren();
+    effects.classList.toggle("leaf-safe-area",name==="autumn");
     if(name==="autumn"){
       const leafFiles=[
         "lisc-klon-lot.png",
