@@ -118,6 +118,50 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   }
 }
 
+/* NATURALNE MRUGANIE KOTKA */
+#catBlink{
+  position:absolute;
+  z-index:7;
+  left:clamp(520px,40vw,700px);
+  bottom:31%;
+  width:clamp(55px,6vw,82px);
+  aspect-ratio:676 / 369;
+  pointer-events:none;
+  user-select:none;
+}
+#catBlink::before,
+#catBlink::after{
+  content:"";
+  position:absolute;
+  top:21.5%;
+  width:8.5%;
+  height:4.8%;
+  border-radius:50%;
+  background:#f2efe8;
+  transform:scaleY(0);
+  transform-origin:center;
+  animation:cat-natural-blink 6.2s infinite;
+}
+#catBlink::before{left:46.2%}
+#catBlink::after{left:51.7%}
+@keyframes cat-natural-blink{
+  0%,93%,96%,100%{transform:scaleY(0)}
+  94.2%,95%{transform:scaleY(1)}
+}
+@media(max-width:1050px){
+  #catBlink{
+    left:4vw;
+    width:clamp(115px,17vw,170px);
+  }
+}
+@media(max-width:700px){
+  #catBlink{
+    left:12px;
+    bottom:82px;
+    width:clamp(88px,25vw,125px);
+  }
+}
+
 /* ANIMOWANA CHMURA — JESIENNY DZIEŃ
    Chmurka pojawia się już w trakcie lotu, płynie przez niebo i rozpływa się przy 93% kadru. */
 #startCloud{
@@ -2031,6 +2075,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <img id="startCat" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy.png" alt="Biały kot na gospodarstwie">
+    <div id="catBlink" aria-hidden="true"></div>
     <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud3" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-3-jesien-dzien.png" alt="" aria-hidden="true">
