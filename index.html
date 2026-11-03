@@ -484,8 +484,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   position:absolute;
   z-index:2;
   /* Kałuża wyśrodkowana bezpośrednio nad świnką. */
-  left:calc(clamp(650px,62vw,1050px) - 32px + (clamp(125px,14vw,205px) + 10px)/2 - clamp(105px,13vw,190px)/2);
-  bottom:calc(19% + (clamp(125px,14vw,205px) + 10px)*369/676 - 18px);
+  left:calc(clamp(650px,62vw,1050px) - 27px + (clamp(125px,14vw,205px) + 10px)/2 - clamp(105px,13vw,190px)/2);
+  bottom:calc(19% + (clamp(125px,14vw,205px) + 10px)*369/676 - 13px);
   width:clamp(105px,13vw,190px);
   aspect-ratio:1.9 / 1;
   pointer-events:none;
@@ -523,15 +523,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 @media(max-width:1050px){
   .autumn-puddle{
-    left:calc(100% - (8vw + 32px) - (clamp(115px,22vw,175px) + 10px)/2 - clamp(105px,13vw,190px)/2);
-    bottom:calc(22% + (clamp(115px,22vw,175px) + 10px)*369/676 - 18px);
+    left:calc(100% - (8vw + 27px) - (clamp(115px,22vw,175px) + 10px)/2 - clamp(105px,13vw,190px)/2);
+    bottom:calc(22% + (clamp(115px,22vw,175px) + 10px)*369/676 - 13px);
   }
 }
 @media(max-width:700px){
   .autumn-puddle{
     left:auto;
-    right:calc(50px + (clamp(95px,28vw,140px) + 10px)/2 - clamp(95px,29vw,155px)/2);
-    bottom:calc(90px + (clamp(95px,28vw,140px) + 10px)*369/676 - 18px);
+    right:calc(45px + (clamp(95px,28vw,140px) + 10px)/2 - clamp(95px,29vw,155px)/2);
+    bottom:calc(90px + (clamp(95px,28vw,140px) + 10px)*369/676 - 13px);
     width:clamp(95px,29vw,155px);
   }
 }
