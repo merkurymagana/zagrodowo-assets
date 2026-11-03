@@ -2540,9 +2540,9 @@ function updateSeason(){
         leaf.setAttribute("aria-hidden","true");
         const vars={
           "--left":left,"--leaf-size":size,"--fall-time":duration,"--fall-delay":delay,
-          "--drift-a":a,"--drift-b":b,"--drift-c":c,"--drift-d":d,
+          "--drift-a":a,"--drift-b":b,"--drift-c":c,"--drift-d":d,"--drift-end":d,
           "--turn-start":start,"--turn-a":turnA,"--turn-b":turnB,"--turn-c":turnC,
-          "--turn-d":turnD,"--turn-end":end,"--leaf-opacity":opacity,
+          "--turn-d":turnD,"--turn-end":end,"--leaf-opacity":"1",
           "--leaf-flip":index%2===0?"1":"-1"
         };
         Object.entries(vars).forEach(([key,value])=>leaf.style.setProperty(key,value));
