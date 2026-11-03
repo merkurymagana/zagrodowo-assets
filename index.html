@@ -483,8 +483,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .autumn-puddle{
   position:absolute;
   z-index:2;
-  left:54%;
-  bottom:11%;
+  /* Kałuża wyśrodkowana bezpośrednio nad świnką. */
+  left:calc(clamp(650px,62vw,1050px) - 102px + (clamp(125px,14vw,205px) + 10px)/2 - clamp(150px,19vw,270px)/2);
+  bottom:calc(19% + (clamp(125px,14vw,205px) + 10px)*369/676 + 10px);
   width:clamp(150px,19vw,270px);
   aspect-ratio:1.9 / 1;
   pointer-events:none;
@@ -519,10 +520,17 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   72%{opacity:.16}
   100%{transform:translate(-50%,-50%) scale(5.2);opacity:0}
 }
+@media(max-width:1050px){
+  .autumn-puddle{
+    left:calc(100% - (8vw + 102px) - (clamp(115px,22vw,175px) + 10px)/2 - clamp(150px,19vw,270px)/2);
+    bottom:calc(22% + (clamp(115px,22vw,175px) + 10px)*369/676 + 10px);
+  }
+}
 @media(max-width:700px){
   .autumn-puddle{
-    left:48%;
-    bottom:13%;
+    left:auto;
+    right:calc(120px + (clamp(95px,28vw,140px) + 10px)/2 - clamp(125px,39vw,205px)/2);
+    bottom:calc(90px + (clamp(95px,28vw,140px) + 10px)*369/676 + 10px);
     width:clamp(125px,39vw,205px);
   }
 }
