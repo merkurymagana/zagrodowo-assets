@@ -2495,18 +2495,42 @@ const seasonImages={
   winter:"https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zima.png?v=2"
 };
 
+let lastSceneKey="";
+
+function getDayPeriod(hour){
+  if(hour>=5&&hour<10)return "morning";
+  if(hour>=10&&hour<17)return "afternoon";
+  return "night";
+}
+
 function updateSeason(){
-  const name=getSeasonName(new Date().getMonth());
+  const now=new Date();
+  const name=getSeasonName(now.getMonth());
+  const period=getDayPeriod(now.getHours());
+  const sceneKey=name+"-"+period;
+  if(sceneKey===lastSceneKey)return;
+  lastSceneKey=sceneKey;
+
   start.classList.remove("spring","summer","autumn","winter");
   start.classList.add(name);
 
   const seasonImage=document.getElementById("seasonImage");
   if(seasonImage){
-    seasonImage.src=seasonImages[name];
+    let imageUrl=seasonImages[name];
+    if(name==="autumn"){
+      if(period==="morning"){
+        imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jesien-rano.png";
+      }else{
+        // Jesien.png jest scenerią popołudniową (10:00–16:59).
+        // Do czasu dodania osobnego obrazu nocy pozostaje dotychczasowym tłem zastępczym.
+        imageUrl=seasonImages.autumn;
+      }
+    }
+    seasonImage.src=imageUrl;
     seasonImage.alt="Zagrodowo — "+({
       spring:"wiosna",
       summer:"lato",
-      autumn:"jesień",
+      autumn:period==="morning"?"jesień — poranek":period==="afternoon"?"jesień — popołudnie":"jesień — noc",
       winter:"zima"
     }[name]);
   }
@@ -2553,6 +2577,7 @@ function updateSeason(){
 }
 
 updateSeason();
+setInterval(updateSeason,60*1000);
  
 /* FORMULARZE */
 
