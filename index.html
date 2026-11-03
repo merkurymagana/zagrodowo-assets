@@ -218,10 +218,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation:lasso-smoke 4.8s ease-in-out infinite;
 }
 @keyframes lasso-smoke{
-  0%{opacity:0;transform:translateY(5px) scale(.88)}
-  18%{opacity:.9}
-  70%{opacity:.62}
-  100%{opacity:0;transform:translateY(-4px) scale(1.05)}
+  0%{opacity:0;transform:translate(0,5px) scale(.88)}
+  18%{opacity:.9;transform:translate(2px,2px) scale(.94)}
+  45%{opacity:.78;transform:translate(6px,-1px) scale(1)}
+  70%{opacity:.62;transform:translate(10px,-3px) scale(1.03)}
+  100%{opacity:0;transform:translate(15px,-4px) scale(1.05)}
 }
 #start:not(.autumn-morning) #chimneySmoke{visibility:hidden;opacity:0;animation:none}
 
