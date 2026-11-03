@@ -328,6 +328,30 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   100%{transform:translate(var(--sway-end),115vh) rotate(360deg)}
 }
 
+/* POWOLI OPADAJĄCE LIŚCIE JESIENI */
+.autumn-leaf{
+  position:absolute;
+  top:-9%;
+  left:var(--left);
+  color:var(--leaf-color);
+  font-size:var(--leaf-size);
+  opacity:0;
+  line-height:1;
+  text-shadow:0 1px 2px #3b241522;
+  animation:autumn-leaf-fall var(--fall-time) linear var(--fall-delay) infinite;
+  will-change:transform,opacity;
+}
+@keyframes autumn-leaf-fall{
+  0%{transform:translate3d(0,-4vh,0) rotate(0deg);opacity:0}
+  8%{opacity:var(--leaf-opacity)}
+  48%{transform:translate3d(var(--drift),48vh,0) rotate(150deg)}
+  92%{opacity:var(--leaf-opacity)}
+  100%{transform:translate3d(var(--drift-end),112vh,0) rotate(330deg);opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .autumn-leaf{animation:none;display:none}
+}
+
 .start-buttons{
   position:absolute;
   z-index:10;
@@ -2090,6 +2114,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
+    <div class="season-effects" id="seasonEffects" aria-hidden="true"></div>
     <div id="catGroup" aria-label="Biały kot">
       <img id="catBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-cialo.png" alt="Biały kot na gospodarstwie">
       <img id="catTail" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-ogon.png" alt="" aria-hidden="true">
@@ -2477,6 +2502,36 @@ function updateSeason(){
       autumn:"jesień",
       winter:"zima"
     }[name]);
+  }
+
+  const effects=document.getElementById("seasonEffects");
+  if(effects){
+    effects.replaceChildren();
+    if(name==="autumn"){
+      const leaves=[
+        ["🍂","8%","23px","22s","-3s","-24px","32px",".62"],
+        ["🍁","19%","19px","27s","-14s","28px","-18px",".55"],
+        ["🍂","34%","27px","25s","-8s","-32px","24px",".68"],
+        ["🍁","51%","21px","29s","-20s","24px","-30px",".58"],
+        ["🍂","67%","24px","24s","-11s","-20px","34px",".64"],
+        ["🍁","82%","18px","28s","-17s","30px","-22px",".52"],
+        ["🍂","94%","22px","26s","-5s","-28px","20px",".6"]
+      ];
+      leaves.forEach(([symbol,left,size,duration,delay,sway,end,opacity])=>{
+        const leaf=document.createElement("span");
+        leaf.className="autumn-leaf";
+        leaf.textContent=symbol;
+        leaf.style.setProperty("--left",left);
+        leaf.style.setProperty("--leaf-size",size);
+        leaf.style.setProperty("--fall-time",duration);
+        leaf.style.setProperty("--fall-delay",delay);
+        leaf.style.setProperty("--drift",sway);
+        leaf.style.setProperty("--drift-end",end);
+        leaf.style.setProperty("--leaf-opacity",opacity);
+        leaf.style.setProperty("--leaf-color",symbol==="🍁"?"#b96b37":"#a95a2d");
+        effects.appendChild(leaf);
+      });
+    }
   }
 }
 
