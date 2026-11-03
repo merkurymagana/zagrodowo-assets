@@ -2799,9 +2799,11 @@ function updateSeason(){
   const seasonImage=document.getElementById("seasonImage");
   if(seasonImage){
     let imageUrl=seasonImages[name];
-    // Wariant poranny jesieni już istnieje; brakujące warianty używają tymczasowo obecnych grafik.
+    // Osobne grafiki dla poranka i nocy jesiennej; dzień korzysta z grafiki bazowej.
     if(name==="autumn"&&period==="morning"){
       imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jesien-rano.png";
+    }else if(name==="autumn"&&period==="night"){
+      imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jesien-noc.png";
     }
     seasonImage.src=imageUrl;
     const periodLabel=period==="morning"?"świt, poranek i przedpołudnie":period==="day"?"dzień i popołudnie":"zmierzch i noc";
