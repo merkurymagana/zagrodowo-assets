@@ -239,7 +239,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:5;
   left:calc(clamp(650px,62vw,1050px) - 102px);
   bottom:19%;
-  width:calc(clamp(125px,14vw,205px) + 10px);
+  width:calc((clamp(125px,14vw,205px) + 10px) * 1.33);
   aspect-ratio:676 / 369;
   display:none;
   pointer-events:none;
@@ -261,14 +261,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     left:auto;
     right:calc(8vw + 102px);
     bottom:22%;
-    width:calc(clamp(115px,22vw,175px) + 10px);
+    width:calc((clamp(115px,22vw,175px) + 10px) * 1.33);
   }
 }
 @media(max-width:700px){
   #goatBodyGroup{
     right:120px;
     bottom:90px;
-    width:calc(clamp(95px,28vw,140px) + 10px);
+    width:calc((clamp(95px,28vw,140px) + 10px) * 1.33);
   }
 }
 
