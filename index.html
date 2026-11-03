@@ -2570,14 +2570,14 @@ function updateSeason(){
         [2,"-2%","19px","100s","-42s","16vw","38vw","60vw","80vw","94vw","-16deg","66deg","-40deg","82deg","-38deg","288deg",".95"],
         [0,"99%","22px","114s","-36s","-24vw","-48vw","-72vw","-94vw","-108vw","14deg","-78deg","54deg","-90deg","40deg","-258deg",".98"]
       ];
-      leaves.forEach(([type,left,size,duration,delay,a,b,c,d,endX,start,turnA,turnB,turnC,turnD,end,opacity],index)=>{
+      leaves.slice(0,15).forEach(([type,left,size,duration,delay,a,b,c,d,endX,start,turnA,turnB,turnC,turnD,end,opacity],index)=>{
         const leaf=document.createElement("img");
         leaf.className="autumn-leaf";
         leaf.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/"+leafFiles[type];
         leaf.alt="";
         leaf.setAttribute("aria-hidden","true");
         const vars={
-          "--left":left,"--leaf-size":size,"--fall-time":duration,"--fall-delay":delay,
+          "--left":left,"--leaf-size":size,"--fall-time":"90s","--fall-delay":(-index*6)+"s",
           "--drift-a":a,"--drift-b":b,"--drift-c":c,"--drift-d":d,"--drift-end":endX,
           "--turn-start":start,"--turn-a":turnA,"--turn-b":turnB,"--turn-c":turnC,
           "--turn-d":turnD,"--turn-end":end,"--leaf-opacity":opacity,
