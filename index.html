@@ -219,14 +219,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   height:calc(100% + 13px);
   margin-top:-1px;
   transform-origin:40% 55%;
-  animation:pig-eating 48s linear infinite;
+  animation:pig-eating 31s linear infinite;
   will-change:transform;
   filter:drop-shadow(0 3px 4px #24170b33);
 }
 @keyframes pig-eating{
   0%{transform:translateY(0) rotate(0deg);animation-timing-function:cubic-bezier(.4,0,.2,1)}
-  12.5%,33.33%{transform:translateY(3px) rotate(-8deg);animation-timing-function:linear}
-  37.5%,100%{transform:translateY(0) rotate(0deg)}
+  9.677%{transform:translateY(3px) rotate(-8deg);animation-timing-function:linear}
+  41.935%{transform:translateY(3px) rotate(-8deg);animation-timing-function:cubic-bezier(.4,0,.2,1)}
+  51.613%,100%{transform:translateY(0) rotate(0deg)}
 }
 #start:not(.autumn-morning) #pigGroup{
   visibility:hidden;
