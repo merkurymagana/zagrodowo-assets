@@ -233,6 +233,44 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation:none;
 }
 
+/* KOZA — na razie samo ciało, wyłącznie w jesiennej scenerii nocnej. */
+#goatBodyGroup{
+  position:absolute;
+  z-index:5;
+  left:calc(clamp(650px,62vw,1050px) - 102px);
+  bottom:19%;
+  width:calc(clamp(125px,14vw,205px) + 10px);
+  aspect-ratio:676 / 369;
+  display:none;
+  pointer-events:none;
+  user-select:none;
+}
+#goatBodyGroup img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:fill;
+  filter:drop-shadow(0 5px 7px #24170b44);
+  pointer-events:none;
+  user-select:none;
+}
+#start.autumn-night #goatBodyGroup{display:block}
+@media(max-width:1050px){
+  #goatBodyGroup{
+    left:auto;
+    right:calc(8vw + 102px);
+    bottom:22%;
+    width:calc(clamp(115px,22vw,175px) + 10px);
+  }
+}
+@media(max-width:700px){
+  #goatBodyGroup{
+    right:120px;
+    bottom:90px;
+    width:calc(clamp(95px,28vw,140px) + 10px);
+  }
+}
+
 /* ŚWINKA — ciało i głowa na wspólnej warstwie, by zachować dokładne dopasowanie. */
 #pigGroup{
   position:absolute;
@@ -2375,6 +2413,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
       <img id="pigHead" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/swinia-rozowa-glowa.png" alt="">
       <span id="pigBlink" aria-hidden="true"></span>
     </div>
+    <div id="goatBodyGroup" aria-label="Koza"><img id="goatBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/koza-cialo.png" alt=""></div>
     <div id="catGroup" aria-label="Biały kot">
       <img id="catBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-cialo.png" alt="Biały kot na gospodarstwie">
       <img id="catTail" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-ogon.png" alt="" aria-hidden="true">
@@ -2795,6 +2834,7 @@ function updateSeason(){
   start.classList.add(name);
   start.classList.toggle("autumn-day-animations",name==="autumn"&&period==="day");
   start.classList.toggle("autumn-morning",name==="autumn"&&period==="morning");
+  start.classList.toggle("autumn-night",name==="autumn"&&period==="night");
 
   const seasonImage=document.getElementById("seasonImage");
   if(seasonImage){
