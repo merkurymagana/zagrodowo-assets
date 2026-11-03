@@ -126,6 +126,32 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation:cat-head-move 9s ease-in-out infinite;
   filter:drop-shadow(0 3px 4px #24170b33);
 }
+#catBlink{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  transform:translateY(-13px) scale(.36);
+  transform-origin:50% 65%;
+  pointer-events:none;
+}
+#catBlink span{
+  position:absolute;
+  top:44%;
+  width:7%;
+  height:2%;
+  border-bottom:5px solid #77736b;
+  border-radius:50%;
+  opacity:0;
+  transform:scaleY(.15);
+  transform-origin:center;
+  animation:cat-blink 7.2s infinite;
+}
+#catBlink span:first-child{left:39%}
+#catBlink span:last-child{left:54%;animation-delay:.08s}
+@keyframes cat-blink{
+  0%,3%,6%,100%{opacity:0;transform:scaleY(.15)}
+  4.5%{opacity:1;transform:scaleY(1)}
+}
 @keyframes cat-head-move{
   0%,100%{transform:translateY(-13px) scale(.36) rotate(0deg)}
   35%{transform:translateY(-14px) scale(.36) rotate(-2deg)}
@@ -2064,6 +2090,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
       <img id="catBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-cialo.png" alt="Biały kot na gospodarstwie">
       <img id="catTail" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-ogon.png" alt="" aria-hidden="true">
       <img id="catHead" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-glowa.png" alt="" aria-hidden="true">
+      <div id="catBlink" aria-hidden="true"><span></span><span></span></div>
     </div>
 <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
