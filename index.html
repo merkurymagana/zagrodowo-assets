@@ -215,7 +215,17 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 #pigHead{
   z-index:2;
+  transform-origin:40% 55%;
+  animation:pig-eating 6.8s ease-in-out infinite;
+  will-change:transform;
   filter:drop-shadow(0 3px 4px #24170b33);
+}
+@keyframes pig-eating{
+  0%,14%,100%{transform:translateY(0) rotate(0deg)}
+  27%,39%{transform:translateY(2px) rotate(-6deg)}
+  51%{transform:translateY(3px) rotate(-8deg)}
+  65%{transform:translateY(0) rotate(0deg)}
+  78%{transform:translateY(-1px) rotate(2deg)}
 }
 #start:not(.autumn-morning) #pigGroup{
   visibility:hidden;
