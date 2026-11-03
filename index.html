@@ -105,6 +105,20 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   transform-origin:50% 100%;
   filter:drop-shadow(0 5px 7px #24170b55);
 }
+#catHead{
+  position:absolute;
+  z-index:8;
+  left:calc(clamp(520px,40vw,700px) + 8px);
+  bottom:31%;
+  width:clamp(55px,6vw,82px);
+  height:auto;
+  object-fit:contain;
+  display:block;
+  pointer-events:none;
+  user-select:none;
+  transform:translateY(1px);
+  filter:drop-shadow(0 3px 4px #24170b33);
+}
 #catTail{
   position:absolute;
   z-index:7;
@@ -132,6 +146,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     width:clamp(115px,17vw,170px);
     max-height:25vh;
   }
+  #catHead{
+    left:calc(4vw + 16px);
+    width:clamp(90px,13.2vw,132px);
+  }
   #catTail{
     left:calc(4vw - 1px);
     width:clamp(115px,17vw,170px);
@@ -143,6 +161,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     bottom:82px;
     width:clamp(88px,25vw,125px);
     max-height:25vh;
+  }
+  #catHead{
+    left:calc(12px + 13px);
+    bottom:82px;
+    width:clamp(69px,19.5vw,98px);
   }
   #catTail{
     left:11px;
@@ -2064,6 +2087,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <img id="catBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-cialo.png" alt="Biały kot na gospodarstwie">
+    <img id="catHead" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-glowa.png" alt="" aria-hidden="true">
     <img id="catTail" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-ogon.png" alt="" aria-hidden="true">
 <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
