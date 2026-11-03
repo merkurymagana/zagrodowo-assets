@@ -219,7 +219,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   height:calc(100% + 13px);
   margin-top:-1px;
   transform-origin:40% 55%;
-  animation:pig-eating 28s linear infinite;
+  animation:pig-ear-motion 28s linear infinite;
   will-change:transform;
   filter:drop-shadow(0 2px 3px #24170b22);
 }
@@ -238,6 +238,23 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   10.714%{transform:translateY(3px) rotate(-8deg);animation-timing-function:linear}
   46.429%{transform:translateY(3px) rotate(-8deg);animation-timing-function:cubic-bezier(.4,0,.2,1)}
   57.143%,100%{transform:translateY(0) rotate(0deg)}
+}
+
+/* Ucho podąża za głową, a drga dopiero podczas odpoczynku. */
+@keyframes pig-ear-motion{
+  0%{transform:translateY(0) rotate(0deg)}
+  10.714%{transform:translateY(3px) rotate(-8deg)}
+  46.429%{transform:translateY(3px) rotate(-8deg)}
+  57.143%,67.5%{transform:translateY(0) rotate(0deg)}
+  68.5%{transform:translateY(0) rotate(3deg)}
+  69.5%{transform:translateY(0) rotate(-2deg)}
+  70.5%,81.5%{transform:translateY(0) rotate(0deg)}
+  82.5%{transform:translateY(0) rotate(-3deg)}
+  83.5%{transform:translateY(0) rotate(2deg)}
+  84.5%,94.5%{transform:translateY(0) rotate(0deg)}
+  95.5%{transform:translateY(0) rotate(3deg)}
+  96.5%{transform:translateY(0) rotate(-1deg)}
+  97.5%,100%{transform:translateY(0) rotate(0deg)}
 }
 #start:not(.autumn-morning) #pigGroup{
   visibility:hidden;
