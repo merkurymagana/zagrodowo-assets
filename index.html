@@ -210,7 +210,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   opacity:0;
   transform-origin:12% 86%;
   filter:brightness(1.28) contrast(.94);
-  animation:chimney-smoke-drift 5.8s linear infinite;
+  animation:chimney-smoke-drift 4.8s linear infinite;
 }
 #chimneySmoke .smoke-puff:nth-child(2){
   width:194px;height:156px;animation-delay:-1.45s;
@@ -223,9 +223,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 @keyframes chimney-smoke-drift{
   0%{opacity:0;transform:translate3d(0,3px,0) scale(.58)}
-  10%{opacity:.66}
-  42%{opacity:.58;transform:translate3d(13px,-5px,0) scale(.92)}
-  72%{opacity:.34;transform:translate3d(28px,-11px,0) scale(1.2)}
+  10%{opacity:.50}
+  42%{opacity:.42;transform:translate3d(13px,-5px,0) scale(.92)}
+  72%{opacity:.22;transform:translate3d(28px,-11px,0) scale(1.2)}
   100%{opacity:0;transform:translate3d(43px,-17px,0) scale(1.42)}
 }
 #start:not(.autumn-morning) #chimneySmoke{
