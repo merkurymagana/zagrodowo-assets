@@ -178,6 +178,16 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     width:clamp(88px,25vw,125px);
   }
 }
+/* Kotek i chmury są widoczne wyłącznie w jesiennej scenerii dziennej. */
+#start:not(.autumn-day-animations) #catGroup,
+#start:not(.autumn-day-animations) #startCloud,
+#start:not(.autumn-day-animations) #startCloud2,
+#start:not(.autumn-day-animations) #startCloud3{
+  visibility:hidden!important;
+  opacity:0!important;
+  animation:none!important;
+}
+
 /* ANIMOWANA CHMURA — JESIENNY DZIEŃ
    Chmurka pojawia się już w trakcie lotu, płynie przez niebo i rozpływa się przy 93% kadru. */
 #startCloud{
@@ -2547,6 +2557,7 @@ function updateSeason(){
 
   start.classList.remove("spring","summer","autumn","winter");
   start.classList.add(name);
+  start.classList.toggle("autumn-day-animations",name==="autumn"&&period==="day");
 
   const seasonImage=document.getElementById("seasonImage");
   if(seasonImage){
