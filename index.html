@@ -166,13 +166,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   background:#f2efe8;
   transform:scaleY(0);
   transform-origin:center;
-  animation:cat-natural-blink 6.2s infinite;
+  animation:cat-natural-blink 9s ease-in-out infinite;
 }
 #catBlink::before{left:45%}
 #catBlink::after{left:50.9%}
 @keyframes cat-natural-blink{
-  0%,93%,96%,100%{transform:scaleY(0)}
-  94.2%,95%{transform:scaleY(1)}
+  0%,90%,100%{transform:scaleY(0)}
+  92%{transform:scaleY(.18)}
+  93.5%,95%{transform:scaleY(1)}
+  96.5%{transform:scaleY(0)}
 }
 @media(max-width:1050px){
   #catBlink{
