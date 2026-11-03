@@ -102,6 +102,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 #catBody{
   z-index:6;
+  transform:scale(1.55);
+  transform-origin:50% 100%;
   filter:drop-shadow(0 5px 7px #24170b55);
 }
 #catTail{
@@ -130,14 +132,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   50%{transform:rotate(4deg)}
 }
 @keyframes cat-head-idle{
-  0%,18%,100%{transform:rotate(0deg) translateY(0)}
-  22%{transform:rotate(-1.1deg) translateY(-1px)}
-  27%{transform:rotate(.7deg) translateY(0)}
-  32%{transform:rotate(0deg) translateY(0)}
-  68%{transform:rotate(0deg) translateY(0)}
-  72%{transform:rotate(.9deg) translateY(-1px)}
-  77%{transform:rotate(-.5deg) translateY(0)}
-  82%{transform:rotate(0deg) translateY(0)}
+  0%,18%,100%{transform:translateY(-22%) rotate(0deg)}
+  22%{transform:translateY(calc(-22% - 1px)) rotate(-1.1deg)}
+  27%{transform:translateY(-22%) rotate(.7deg)}
+  32%{transform:translateY(-22%) rotate(0deg)}
+  68%{transform:translateY(-22%) rotate(0deg)}
+  72%{transform:translateY(calc(-22% - 1px)) rotate(.9deg)}
+  77%{transform:translateY(-22%) rotate(-.5deg)}
+  82%{transform:translateY(-22%) rotate(0deg)}
 }
 @media(max-width:1050px){
   #catBody,#catHead{
