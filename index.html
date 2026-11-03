@@ -188,6 +188,39 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation:none!important;
 }
 
+/* ŚWINKA — na razie samo ciało, bez animacji głowy. */
+#pigBody{
+  position:absolute;
+  z-index:5;
+  left:clamp(650px,62vw,1050px);
+  bottom:23%;
+  width:clamp(125px,14vw,205px);
+  height:auto;
+  display:block;
+  pointer-events:none;
+  user-select:none;
+  filter:drop-shadow(0 5px 7px #24170b44);
+}
+#start:not(.autumn-morning) #pigBody{
+  visibility:hidden;
+  opacity:0;
+}
+@media(max-width:1050px){
+  #pigBody{
+    left:auto;
+    right:8vw;
+    bottom:22%;
+    width:clamp(115px,22vw,175px);
+  }
+}
+@media(max-width:700px){
+  #pigBody{
+    right:18px;
+    bottom:110px;
+    width:clamp(95px,28vw,140px);
+  }
+}
+
 /* ANIMOWANA CHMURA — JESIENNY DZIEŃ
    Chmurka pojawia się już w trakcie lotu, płynie przez niebo i rozpływa się przy 93% kadru. */
 #startCloud{
@@ -2139,6 +2172,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <div class="season-effects" id="seasonEffects" aria-hidden="true"></div>
+    <img id="pigBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/swinia-rozowa-cialo.png" alt="Różowa świnka pasąca się na łące">
     <div id="catGroup" aria-label="Biały kot">
       <img id="catBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-cialo.png" alt="Biały kot na gospodarstwie">
       <img id="catTail" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-ogon.png" alt="" aria-hidden="true">
@@ -2558,6 +2592,7 @@ function updateSeason(){
   start.classList.remove("spring","summer","autumn","winter");
   start.classList.add(name);
   start.classList.toggle("autumn-day-animations",name==="autumn"&&period==="day");
+  start.classList.toggle("autumn-morning",name==="autumn"&&period==="morning");
 
   const seasonImage=document.getElementById("seasonImage");
   if(seasonImage){
