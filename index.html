@@ -198,37 +198,31 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   height:52px;
   pointer-events:none;
   opacity:1;
-  filter:blur(1px) drop-shadow(0 0 2px rgba(92,88,78,.38));
+  filter:blur(.7px) drop-shadow(0 0 2px rgba(92,88,78,.38));
   transform:rotate(90deg);
   transform-origin:center center;
 }
-#chimneySmoke span{
-  position:absolute;
-  left:50%;
-  bottom:0;
-  width:5px;
-  height:31px;
-  border-radius:55% 45% 50% 50%;
-  background:linear-gradient(90deg,rgba(235,234,226,.12),rgba(255,253,246,.98) 42%,rgba(245,243,234,.88) 72%,rgba(235,234,226,.08));
-  box-shadow:0 0 3px rgba(255,253,246,.65);
-  transform:translateX(-50%) skewX(-9deg);
-  animation:chimney-smoke 4.8s ease-in-out infinite;
+#chimneySmoke svg{
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
 }
-#chimneySmoke span:nth-child(2){
-  width:5px;height:35px;left:44%;bottom:13px;
-  transform:translateX(-50%) skewX(11deg);
-  animation-delay:-1.6s;opacity:.82;
+#chimneySmoke path{
+  fill:none;
+  stroke:rgba(255,253,246,.94);
+  stroke-width:4.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  filter:drop-shadow(0 0 1.5px rgba(255,253,246,.7));
+  stroke-dasharray:1;
+  animation:lasso-smoke 4.8s ease-in-out infinite;
 }
-#chimneySmoke span:nth-child(3){
-  width:4px;height:34px;left:58%;bottom:26px;
-  transform:translateX(-50%) skewX(-13deg);
-  animation-delay:-3.2s;opacity:.68;
-}
-@keyframes chimney-smoke{
-  0%{transform:translate(-50%,8px) scale(.82,.78) skewX(-9deg);opacity:0}
-  18%{opacity:.82}
-  70%{opacity:.58}
-  100%{transform:translate(calc(-50% + 8px),-43px) scale(1.12,1.2) skewX(9deg);opacity:0}
+@keyframes lasso-smoke{
+  0%{opacity:0;stroke-dashoffset:.22;transform:translateY(5px) scale(.88)}
+  18%{opacity:.9}
+  70%{opacity:.62}
+  100%{opacity:0;stroke-dashoffset:0;transform:translateY(-4px) scale(1.05)}
 }
 #start:not(.autumn-morning) #chimneySmoke{visibility:hidden;opacity:0;animation:none}
 
@@ -2295,7 +2289,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <div class="season-effects" id="seasonEffects" aria-hidden="true"></div>
-    <div id="chimneySmoke" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div id="chimneySmoke" aria-hidden="true"><svg viewBox="0 0 60 100" preserveAspectRatio="none"><path d="M29 100 C27 82 14 73 14 53 C14 32 27 13 39 14 C52 15 55 30 48 42 C41 54 23 53 18 42 C13 31 19 19 29 12 C36 7 43 8 49 12" /></svg></div>
     <div id="pigGroup" aria-label="Różowa świnka">
       <img id="pigBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/swinia-rozowa-cialo.png" alt="">
       <img id="pigEar" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/swinia-rozowa-ucho.png" alt="">
