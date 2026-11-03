@@ -511,14 +511,17 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 .autumn-puddle .puddle-leaf{
   position:absolute;
-  z-index:2;
-  left:34%;
-  top:39%;
-  width:clamp(13px,1.35vw,19px);
+  z-index:5;
+  left:39%;
+  top:35%;
+  display:block;
+  width:clamp(27px,2.4vw,36px);
   height:auto;
-  opacity:.92;
+  max-width:none;
+  opacity:1;
+  visibility:visible;
   transform-origin:50% 50%;
-  filter:drop-shadow(0 1px 1px #26301d55);
+  filter:brightness(1.08) drop-shadow(0 2px 2px #26301d88);
   animation:puddle-leaf-drift 13s ease-in-out infinite;
   will-change:transform;
 }
