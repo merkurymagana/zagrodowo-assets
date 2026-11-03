@@ -2504,16 +2504,39 @@ const seasonImages={
 
 let lastSceneKey="";
 
-function getDayPeriod(hour){
-  if(hour>=5&&hour<10)return "morning";
-  if(hour>=10&&hour<17)return "afternoon";
-  return "night";
+// Pory dnia wyznaczane astronomicznie dla Polski; godziny przesuwają się wraz z porami roku.
+const DAYLIGHT_LATITUDE=52.1;
+const DAYLIGHT_LONGITUDE=19.4;
+
+function getSolarMinutes(date,zenith){
+  const day=Math.floor((date-new Date(date.getFullYear(),0,0))/86400000);
+  const rad=Math.PI/180;
+  const gamma=2*Math.PI/365*(day-1);
+  const equation=229.18*(0.000075+0.001868*Math.cos(gamma)-0.032077*Math.sin(gamma)-0.014615*Math.cos(2*gamma)-0.040849*Math.sin(2*gamma));
+  const declination=0.006918-0.399912*Math.cos(gamma)+0.070257*Math.sin(gamma)-0.006758*Math.cos(2*gamma)+0.000907*Math.sin(2*gamma)-0.002697*Math.cos(3*gamma)+0.00148*Math.sin(3*gamma);
+  const latitude=DAYLIGHT_LATITUDE*rad;
+  const cosHour=(Math.cos(zenith*rad)-Math.sin(latitude)*Math.sin(declination))/(Math.cos(latitude)*Math.cos(declination));
+  if(cosHour>1)return {rise:NaN,set:NaN,noon:720};
+  if(cosHour< -1)return {rise:0,set:1440,noon:720};
+  const angle=Math.acos(cosHour)/rad*4;
+  const noon=720-4*DAYLIGHT_LONGITUDE-equation-date.getTimezoneOffset();
+  return {rise:noon-angle,set:noon+angle,noon};
+}
+
+function getDayPeriod(date){
+  const minutes=date.getHours()*60+date.getMinutes();
+  const sun=getSolarMinutes(date,90.833);
+  const dawn=getSolarMinutes(date,96);
+  if(!Number.isFinite(sun.rise)||!Number.isFinite(dawn.rise))return "day";
+  if(minutes<dawn.rise||minutes>=sun.set)return "night";
+  if(minutes<sun.noon)return "morning";
+  return "day";
 }
 
 function updateSeason(){
   const now=new Date();
   const name=getSeasonName(now.getMonth());
-  const period=getDayPeriod(now.getHours());
+  const period=getDayPeriod(now);
   const sceneKey=name+"-"+period;
   if(sceneKey===lastSceneKey)return;
   lastSceneKey=sceneKey;
@@ -2524,22 +2547,13 @@ function updateSeason(){
   const seasonImage=document.getElementById("seasonImage");
   if(seasonImage){
     let imageUrl=seasonImages[name];
-    if(name==="autumn"){
-      if(period==="morning"){
-        imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jesien-rano.png";
-      }else{
-        // Jesien.png jest scenerią popołudniową (10:00–16:59).
-        // Do czasu dodania osobnego obrazu nocy pozostaje dotychczasowym tłem zastępczym.
-        imageUrl=seasonImages.autumn;
-      }
+    // Wariant poranny jesieni już istnieje; brakujące warianty używają tymczasowo obecnych grafik.
+    if(name==="autumn"&&period==="morning"){
+      imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jesien-rano.png";
     }
     seasonImage.src=imageUrl;
-    seasonImage.alt="Zagrodowo — "+({
-      spring:"wiosna",
-      summer:"lato",
-      autumn:period==="morning"?"jesień — poranek":period==="afternoon"?"jesień — popołudnie":"jesień — noc",
-      winter:"zima"
-    }[name]);
+    const periodLabel=period==="morning"?"świt, poranek i przedpołudnie":period==="day"?"dzień i popołudnie":"zmierzch i noc";
+    seasonImage.alt="Zagrodowo — "+({spring:"wiosna",summer:"lato",autumn:"jesień",winter:"zima"}[name])+" — "+periodLabel;
   }
 
   const effects=document.getElementById("seasonEffects");
