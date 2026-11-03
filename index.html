@@ -2779,9 +2779,9 @@ function getDayPeriod(date){
   return "day";
 }
 
-// TRYB ROBOCZY: wymusza podgląd jesiennego poranka podczas prac nad scenerią.
- // Aby wrócić do automatycznego cyklu całorocznego, ustaw SCENE_PREVIEW na null.
-const SCENE_PREVIEW={season:"autumn",period:"morning"};
+// Gotowa sceneria jesiennego poranka jest przypisana do porannego wariantu jesieni.
+// Automatyczny cykl dobiera sezon i porę dnia na podstawie aktualnej daty i godziny.
+const SCENE_PREVIEW=null;
 
 function updateSeason(){
   const now=new Date();
