@@ -188,43 +188,39 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation:none!important;
 }
 
-/* DELIKATNY, CIĄGŁY DYM Z KOMINA — widoczny tylko w jesienny poranek. */
+/* DYM Z KOMINA — grafika PNG, delikatnie rozpraszająca się w prawo. */
 #chimneySmoke{
   position:absolute;
   z-index:4;
   left:calc(39% - 207px);
   top:calc(13.5% + 134px);
-  width:23px;
-  height:52px;
+  width:64px;
+  height:48px;
   pointer-events:none;
-  opacity:1;
-  filter:blur(.7px) drop-shadow(0 0 2px rgba(92,88,78,.38));
-  transform:rotate(90deg);
-  transform-origin:center center;
+  opacity:0;
+  transform-origin:8% 82%;
+  filter:blur(.45px) drop-shadow(0 0 2px rgba(92,88,78,.18));
+  animation:chimney-smoke-drift 6.8s ease-out infinite;
 }
-#chimneySmoke svg{
+#chimneySmoke img{
   display:block;
   width:100%;
   height:100%;
-  overflow:visible;
+  object-fit:contain;
+  opacity:.68;
 }
-#chimneySmoke path{
-  fill:none;
-  stroke:rgba(255,253,246,.94);
-  stroke-width:5.2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  filter:drop-shadow(0 0 1.5px rgba(255,253,246,.7));
-  animation:lasso-smoke 4.8s ease-in-out infinite;
+@keyframes chimney-smoke-drift{
+  0%{opacity:0;transform:translate3d(0,3px,0) scale(.62)}
+  12%{opacity:.68}
+  48%{opacity:.52;transform:translate3d(17px,-7px,0) scale(1.02)}
+  78%{opacity:.28;transform:translate3d(31px,-13px,0) scale(1.32)}
+  100%{opacity:0;transform:translate3d(43px,-18px,0) scale(1.55)}
 }
-@keyframes lasso-smoke{
-  0%{opacity:0;transform:translate(0,0) scale(.88)}
-  18%{opacity:.9;transform:translate(-3px,-2px) scale(.94)}
-  45%{opacity:.78;transform:translate(-7px,-5px) scale(1)}
-  70%{opacity:.62;transform:translate(-11px,-8px) scale(1.03)}
-  100%{opacity:0;transform:translate(-15px,-12px) scale(1.05)}
+#start:not(.autumn-morning) #chimneySmoke{
+  visibility:hidden;
+  opacity:0;
+  animation:none;
 }
-#start:not(.autumn-morning) #chimneySmoke{visibility:hidden;opacity:0;animation:none}
 
 /* ŚWINKA — ciało i głowa na wspólnej warstwie, by zachować dokładne dopasowanie. */
 #pigGroup{
@@ -2289,7 +2285,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <div class="season-effects" id="seasonEffects" aria-hidden="true"></div>
-    <div id="chimneySmoke" aria-hidden="true"><svg viewBox="0 0 60 100" preserveAspectRatio="none"><path d="M30 100 C12 86 10 73 24 62 C38 51 51 57 47 68 C43 79 25 78 18 65 C10 50 20 34 37 29 C52 25 58 13 46 5" /></svg></div>
+    <div id="chimneySmoke" aria-hidden="true"><img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""></div>
     <div id="pigGroup" aria-label="Różowa świnka">
       <img id="pigBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/swinia-rozowa-cialo.png" alt="">
       <img id="pigEar" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/swinia-rozowa-ucho.png" alt="">
