@@ -328,25 +328,32 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   100%{transform:translate(var(--sway-end),115vh) rotate(360deg)}
 }
 
-/* POWOLI OPADAJĄCE LIŚCIE JESIENI */
+/* NATURALNIE OPADAJĄCE LIŚCIE — LEKKI JESIENNY WIATR */
 .autumn-leaf{
   position:absolute;
-  top:-9%;
+  top:-10%;
   left:var(--left);
-  color:var(--leaf-color);
-  font-size:var(--leaf-size);
+  display:block;
+  width:var(--leaf-size);
+  height:auto;
+  max-width:none;
   opacity:0;
-  line-height:1;
-  text-shadow:0 1px 2px #3b241522;
-  animation:autumn-leaf-fall var(--fall-time) linear var(--fall-delay) infinite;
+  filter:drop-shadow(0 2px 2px #38271935);
+  transform-origin:50% 50%;
+  animation:autumn-leaf-breeze var(--fall-time) ease-in-out var(--fall-delay) infinite;
   will-change:transform,opacity;
 }
-@keyframes autumn-leaf-fall{
-  0%{transform:translate3d(0,-4vh,0) rotate(0deg);opacity:0}
+@keyframes autumn-leaf-breeze{
+  0%{transform:translate3d(0,-5vh,0) rotate(var(--turn-start)) scale(.92);opacity:0}
   8%{opacity:var(--leaf-opacity)}
-  48%{transform:translate3d(var(--drift),48vh,0) rotate(150deg)}
-  92%{opacity:var(--leaf-opacity)}
-  100%{transform:translate3d(var(--drift-end),112vh,0) rotate(330deg);opacity:0}
+  23%{transform:translate3d(var(--drift-a),19vh,0) rotate(var(--turn-a)) scale(1)}
+  43%{transform:translate3d(var(--drift-b),42vh,0) rotate(var(--turn-b)) scale(.96)}
+  64%{transform:translate3d(var(--drift-c),66vh,0) rotate(var(--turn-c)) scale(1.02)}
+  84%{transform:translate3d(var(--drift-d),88vh,0) rotate(var(--turn-d)) scale(.94);opacity:var(--leaf-opacity)}
+  100%{transform:translate3d(var(--drift-end),112vh,0) rotate(var(--turn-end)) scale(.9);opacity:0}
+}
+@media(max-width:700px){
+  .autumn-leaf{width:calc(var(--leaf-size) * .78)}
 }
 @media(prefers-reduced-motion:reduce){
   .autumn-leaf{animation:none;display:none}
@@ -2508,27 +2515,36 @@ function updateSeason(){
   if(effects){
     effects.replaceChildren();
     if(name==="autumn"){
-      const leaves=[
-        ["🍂","8%","23px","22s","-3s","-24px","32px",".62"],
-        ["🍁","19%","19px","27s","-14s","28px","-18px",".55"],
-        ["🍂","34%","27px","25s","-8s","-32px","24px",".68"],
-        ["🍁","51%","21px","29s","-20s","24px","-30px",".58"],
-        ["🍂","67%","24px","24s","-11s","-20px","34px",".64"],
-        ["🍁","82%","18px","28s","-17s","30px","-22px",".52"],
-        ["🍂","94%","22px","26s","-5s","-28px","20px",".6"]
+      const leafFiles=[
+        "lisc-klon-lot.png",
+        "lisc-dab-lot.png",
+        "lisc-brzoza-lot.png"
       ];
-      leaves.forEach(([symbol,left,size,duration,delay,sway,end,opacity])=>{
-        const leaf=document.createElement("span");
+      const leaves=[
+        [0,"7%","25px","34s","-4s","22px","-12px","24px","-18px","-5deg","72deg","-38deg","96deg","-52deg","285deg",".72"],
+        [1,"17%","20px","39s","-19s","-18px","24px","-28px","18px","18deg","-62deg","42deg","-92deg","35deg","-245deg",".62"],
+        [2,"28%","16px","31s","-11s","28px","-20px","18px","-24px","-12deg","88deg","-55deg","70deg","-30deg","310deg",".68"],
+        [0,"39%","22px","42s","-28s","-24px","18px","30px","-16px","22deg","-75deg","58deg","-88deg","44deg","-270deg",".66"],
+        [1,"51%","27px","36s","-8s","20px","-28px","-16px","26px","-8deg","64deg","-48deg","105deg","-35deg","300deg",".7"],
+        [2,"62%","17px","40s","-23s","-22px","26px","24px","-20px","15deg","-82deg","48deg","-100deg","30deg","-260deg",".6"],
+        [0,"73%","23px","33s","-15s","26px","-18px","-24px","22px","-18deg","76deg","-44deg","92deg","-42deg","295deg",".7"],
+        [1,"84%","19px","43s","-32s","-20px","22px","26px","-18px","12deg","-68deg","52deg","-84deg","38deg","-250deg",".62"],
+        [2,"94%","15px","35s","-6s","18px","-22px","-18px","24px","-10deg","82deg","-50deg","96deg","-32deg","305deg",".64"],
+        [0,"56%","18px","46s","-38s","-26px","20px","22px","-24px","20deg","-72deg","46deg","-90deg","34deg","-255deg",".56"]
+      ];
+      leaves.forEach(([type,left,size,duration,delay,a,b,c,d,start,turnA,turnB,turnC,turnD,end,opacity])=>{
+        const leaf=document.createElement("img");
         leaf.className="autumn-leaf";
-        leaf.textContent=symbol;
-        leaf.style.setProperty("--left",left);
-        leaf.style.setProperty("--leaf-size",size);
-        leaf.style.setProperty("--fall-time",duration);
-        leaf.style.setProperty("--fall-delay",delay);
-        leaf.style.setProperty("--drift",sway);
-        leaf.style.setProperty("--drift-end",end);
-        leaf.style.setProperty("--leaf-opacity",opacity);
-        leaf.style.setProperty("--leaf-color",symbol==="🍁"?"#b96b37":"#a95a2d");
+        leaf.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/"+leafFiles[type];
+        leaf.alt="";
+        leaf.setAttribute("aria-hidden","true");
+        const vars={
+          "--left":left,"--leaf-size":size,"--fall-time":duration,"--fall-delay":delay,
+          "--drift-a":a,"--drift-b":b,"--drift-c":c,"--drift-d":d,
+          "--turn-start":start,"--turn-a":turnA,"--turn-b":turnB,"--turn-c":turnC,
+          "--turn-d":turnD,"--turn-end":end,"--leaf-opacity":opacity
+        };
+        Object.entries(vars).forEach(([key,value])=>leaf.style.setProperty(key,value));
         effects.appendChild(leaf);
       });
     }
