@@ -501,13 +501,32 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   mask-repeat:no-repeat;
   filter:drop-shadow(0 3px 5px #34271938);
 }
-.autumn-puddle img{
+.autumn-puddle > img{
   position:absolute;
   inset:0;
   z-index:0;
   width:100%;
   height:100%;
   object-fit:contain;
+}
+.autumn-puddle .puddle-leaf{
+  position:absolute;
+  z-index:2;
+  left:34%;
+  top:39%;
+  width:clamp(13px,1.35vw,19px);
+  height:auto;
+  opacity:.92;
+  transform-origin:50% 50%;
+  filter:drop-shadow(0 1px 1px #26301d55);
+  animation:puddle-leaf-drift 13s ease-in-out infinite;
+  will-change:transform;
+}
+@keyframes puddle-leaf-drift{
+  0%,100%{transform:translate(0,0) rotate(-12deg)}
+  24%{transform:translate(7px,3px) rotate(2deg)}
+  50%{transform:translate(13px,1px) rotate(15deg)}
+  76%{transform:translate(8px,-4px) rotate(5deg)}
 }
 .autumn-puddle .puddle-ripple{
   position:absolute;
@@ -2857,7 +2876,7 @@ function updateSeason(){
       const puddle=document.createElement("div");
       puddle.className="autumn-puddle";
       puddle.setAttribute("aria-hidden","true");
-      puddle.innerHTML='<span class="puddle-ripple"></span><span class="puddle-ripple"></span><img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kaluza-jesien.png" alt="">';
+      puddle.innerHTML='<span class="puddle-ripple"></span><span class="puddle-ripple"></span><img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kaluza-jesien.png" alt=""><img class="puddle-leaf" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lisc-brzoza-lot.png" alt="">';
       effects.appendChild(puddle);
     }
   }
