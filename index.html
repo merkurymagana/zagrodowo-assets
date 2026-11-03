@@ -2779,9 +2779,9 @@ function getDayPeriod(date){
   return "day";
 }
 
-// Gotowa sceneria jesiennego poranka jest przypisana do porannego wariantu jesieni.
-// Automatyczny cykl dobiera sezon i porę dnia na podstawie aktualnej daty i godziny.
-const SCENE_PREVIEW=null;
+// WERSJA ROBOCZA: podgląd jesiennej nocy podczas dopracowywania scenerii.
+// Poranny wariant jesieni pozostaje przypisany wyłącznie do poranka.
+const SCENE_PREVIEW={season:"autumn",period:"night"};
 
 function updateSeason(){
   const now=new Date();
