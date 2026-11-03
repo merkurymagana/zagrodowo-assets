@@ -87,8 +87,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 /* BIAŁY KOT — OSOBNE WARSTWY */
-#catBody,
-#catHead{
+#catBody{
   position:absolute;
   left:calc(clamp(520px,40vw,700px) - 1px);
   bottom:31%;
@@ -121,28 +120,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation:cat-tail-sway 3.8s ease-in-out infinite;
   will-change:transform;
 }
-#catHead{
-  z-index:8;
-  transform-origin:50% 78%;
-  animation:cat-head-idle 11.5s ease-in-out infinite;
-  will-change:transform;
-}
+
 @keyframes cat-tail-sway{
   0%,100%{transform:rotate(-3deg)}
   50%{transform:rotate(4deg)}
 }
-@keyframes cat-head-idle{
-  0%,18%,100%{transform:translateY(-22%) rotate(0deg)}
-  22%{transform:translateY(calc(-22% - 1px)) rotate(-1.1deg)}
-  27%{transform:translateY(-22%) rotate(.7deg)}
-  32%{transform:translateY(-22%) rotate(0deg)}
-  68%{transform:translateY(-22%) rotate(0deg)}
-  72%{transform:translateY(calc(-22% - 1px)) rotate(.9deg)}
-  77%{transform:translateY(-22%) rotate(-.5deg)}
-  82%{transform:translateY(-22%) rotate(0deg)}
-}
+
 @media(max-width:1050px){
-  #catBody,#catHead{
+  #catBody{
     left:calc(4vw - 1px);
     width:clamp(115px,17vw,170px);
     max-height:25vh;
@@ -153,7 +138,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   }
 }
 @media(max-width:700px){
-  #catBody,#catHead{
+  #catBody{
     left:12px;
     bottom:82px;
     width:clamp(88px,25vw,125px);
@@ -2080,8 +2065,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <img id="catBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-cialo.png" alt="Biały kot na gospodarstwie">
     <img id="catTail" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-ogon.png" alt="" aria-hidden="true">
-    <img id="catHead" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-glowa.png" alt="" aria-hidden="true">
-    <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
+<img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud3" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-3-jesien-dzien.png" alt="" aria-hidden="true">
 
