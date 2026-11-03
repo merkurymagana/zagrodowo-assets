@@ -119,6 +119,32 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 /* NATURALNE MRUGANIE KOTKA */
+#catTail{
+  position:absolute;
+  z-index:6;
+  left:clamp(520px,40vw,700px);
+  bottom:31%;
+  width:clamp(55px,6vw,82px);
+  height:auto;
+  object-fit:contain;
+  display:block;
+  pointer-events:none;
+  user-select:none;
+  transform-origin:63% 84%;
+  animation:cat-tail-sway 3.8s ease-in-out infinite;
+  will-change:transform;
+}
+@keyframes cat-tail-sway{
+  0%,100%{transform:rotate(-3deg)}
+  50%{transform:rotate(4deg)}
+}
+@media(max-width:1050px){
+  #catTail{left:4vw;width:clamp(115px,17vw,170px);}
+}
+@media(max-width:700px){
+  #catTail{left:12px;bottom:82px;width:clamp(88px,25vw,125px);}
+}
+
 #catBlink{
   position:absolute;
   z-index:7;
@@ -2075,6 +2101,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <img id="startCat" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy.png?v=2" alt="Biały kot na gospodarstwie">
+    <img id="catTail" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-ogon.png" alt="" aria-hidden="true">
     <div id="catBlink" aria-hidden="true"></div>
     <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
