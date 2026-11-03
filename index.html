@@ -2563,8 +2563,9 @@ function updateSeason(){
   const effects=document.getElementById("seasonEffects");
   if(effects){
     effects.replaceChildren();
-    effects.classList.toggle("leaf-safe-area",name==="autumn");
-    if(name==="autumn"){
+    const showAutumnLeaves=name==="autumn"&&period==="day";
+    effects.classList.toggle("leaf-safe-area",showAutumnLeaves);
+    if(showAutumnLeaves){
       const leafFiles=[
         "lisc-klon-lot.png",
         "lisc-dab-lot.png",
