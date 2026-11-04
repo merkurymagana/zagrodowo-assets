@@ -256,6 +256,19 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   user-select:none;
 }
 #goatBody{z-index:1;filter:drop-shadow(0 5px 7px #24170b44)}
+#goatTongue{
+  z-index:3;
+  opacity:0;
+  backface-visibility:hidden;
+  animation:goat-lick 11s ease-in-out infinite;
+  will-change:opacity;
+}
+@keyframes goat-lick{
+  0%,62%,100%{opacity:0}
+  68%{opacity:1}
+  78%{opacity:1}
+  84%{opacity:0}
+}
 #goatHead{
   z-index:2;
   transform-origin:56% 72%;
@@ -2432,7 +2445,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
       <img id="pigHead" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/swinia-rozowa-glowa.png" alt="">
       <span id="pigBlink" aria-hidden="true"></span>
     </div>
-    <div id="goatBodyGroup" aria-label="Koza"><img id="goatBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/koza-cialo.png" alt=""><img id="goatHead" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/koza-glowa.png" alt=""></div>
+    <div id="goatBodyGroup" aria-label="Koza"><img id="goatBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/koza-cialo.png" alt=""><img id="goatHead" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/koza-glowa.png" alt=""><img id="goatTongue" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/koza-jezyk.png" alt="" aria-hidden="true"></div>
     <div id="catGroup" aria-label="Biały kot">
       <img id="catBody" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-cialo.png" alt="Biały kot na gospodarstwie">
       <img id="catTail" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/kot-bialy-ogon.png" alt="" aria-hidden="true">
