@@ -582,16 +582,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .night-rain{
   position:absolute;
   z-index:5;
-  /* Deszcz tylko nad obrazem — poza drewnianymi belkami po bokach. */
-  top:0;
-  right:var(--panel-width);
-  bottom:0;
-  left:260px;
+  /* Deszcz rozłożony na całą scenę; drewniane belki przykrywają go warstwą wyżej. */
+  inset:0;
   overflow:hidden;
   pointer-events:none;
-}
-@media(max-width:1050px){
-  .night-rain{left:0}
 }
 .night-rain-drop{
   position:absolute;
