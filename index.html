@@ -2987,6 +2987,15 @@ function getSolarMinutes(date,zenith){
 
 function getDayPeriod(date){
   const minutes=date.getHours()*60+date.getMinutes();
+
+  // Jesienią pory scenerii mają stałe godziny.
+  if(getSeasonName(date.getMonth())==="autumn"){
+    if(minutes<390||minutes>=1080)return "night"; // przed 6:30 i od 18:00
+    if(minutes<750)return "morning"; // 6:30–12:29
+    return "day"; // 12:30–17:59
+  }
+
+  // Pozostałe pory roku korzystają z długości dnia w Polsce.
   const sun=getSolarMinutes(date,90.833);
   const dawn=getSolarMinutes(date,96);
   if(!Number.isFinite(sun.rise)||!Number.isFinite(dawn.rise))return "day";
@@ -2995,11 +3004,11 @@ function getDayPeriod(date){
   return "day";
 }
 
-// Sceneria dobierana automatycznie według pory roku i długości dnia w Polsce.
+// Sceneria dobierana automatycznie według pory roku i ustalonych godzin jesienią.
 function updateSeason(){
   const now=new Date();
-  const name=SCENE_PREVIEW?.season||getSeasonName(now.getMonth());
-  const period=SCENE_PREVIEW?.period||getDayPeriod(now);
+  const name=getSeasonName(now.getMonth());
+  const period=getDayPeriod(now);
   const sceneKey=name+"-"+period;
   if(sceneKey===lastSceneKey)return;
   lastSceneKey=sceneKey;
