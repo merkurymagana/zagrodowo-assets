@@ -732,9 +732,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   85%{opacity:var(--snow-opacity)}
   100%{transform:translate3d(var(--snow-drift),calc(100% + 24px),0);opacity:0}
 }
-@media(prefers-reduced-motion:reduce){
-  .winter-snow{display:none}
-}
+/* Śnieg pozostaje widoczny także przy ustawieniu ograniczenia animacji w systemie. */
 
 /* KAŁUŻA — tylko w jesiennym poranku. Delikatne, cykliczne kręgi na wodzie. */
 .autumn-puddle{
