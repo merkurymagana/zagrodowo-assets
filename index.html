@@ -582,8 +582,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .night-rain{
   position:absolute;
   z-index:5;
-  /* Deszcz rozłożony na całą scenę; drewniane belki przykrywają go warstwą wyżej. */
-  inset:0;
+  /* Niewidzialna bariera odsuwa deszcz od wszystkich czterech belek ramy. */
+  inset:3.5% 3% 4% 3%;
   overflow:hidden;
   pointer-events:none;
 }
