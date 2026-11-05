@@ -590,11 +590,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   position:absolute;
   top:-18%;
   left:var(--rain-left);
-  width:1.3px;
+  width:1.8px;
   height:var(--rain-length);
   border-radius:2px;
   opacity:0;
-  background:linear-gradient(to bottom,transparent 0%,rgba(202,218,225,.12) 18%,rgba(211,226,232,.58) 72%,rgba(220,232,236,.08) 100%);
+  background:linear-gradient(to bottom,transparent 0%,rgba(202,218,225,.2) 18%,rgba(211,226,232,.78) 72%,rgba(220,232,236,.14) 100%);
   box-shadow:0 0 2px rgba(192,211,220,.12);
   transform:rotate(12deg);
   animation:night-rain-fall var(--rain-duration) linear var(--rain-delay) infinite;
@@ -2979,16 +2979,16 @@ function updateSeason(){
       const rain=document.createElement("div");
       rain.className="night-rain";
       rain.setAttribute("aria-hidden","true");
-      for(let i=0;i<105;i++){
+      for(let i=0;i<180;i++){
         const drop=document.createElement("span");
         drop.className="night-rain-drop";
-        const near=i<28;
-        const duration=(near?0.72:0.95)+Math.random()*(near?0.42:0.65);
+        const near=i<60;
+        const duration=(near?0.58:0.72)+Math.random()*(near?0.32:0.42);
         drop.style.setProperty("--rain-left",(Math.random()*110-5)+"%");
-        drop.style.setProperty("--rain-length",(near?34:20)+Math.random()*(near?24:18)+"px");
+        drop.style.setProperty("--rain-length",(near?42:28)+Math.random()*(near?32:24)+"px");
         drop.style.setProperty("--rain-duration",duration.toFixed(2)+"s");
         drop.style.setProperty("--rain-delay",(-Math.random()*2.2)+"s");
-        drop.style.setProperty("--rain-opacity",(near?0.36:0.22)+Math.random()*(near?0.28:0.2));
+        drop.style.setProperty("--rain-opacity",(near?0.52:0.36)+Math.random()*(near?0.3:0.26));
         rain.appendChild(drop);
       }
       effects.appendChild(rain);
