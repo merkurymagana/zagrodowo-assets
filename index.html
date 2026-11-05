@@ -704,6 +704,38 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   .night-rain{display:none}
 }
 
+/* ŚNIEG — opada wyłącznie w zimowej scenerii porannej, wewnątrz ramy obrazu. */
+.winter-snow{
+  position:absolute;
+  z-index:5;
+  /* Ta sama bezpieczna granica co przy deszczu — płatki nie nachodzą na drewniane belki. */
+  inset:3.5% 3% 4% 3%;
+  overflow:hidden;
+  pointer-events:none;
+}
+.winter-snowflake{
+  position:absolute;
+  top:-12px;
+  left:var(--snow-left);
+  width:var(--snow-size);
+  height:var(--snow-size);
+  border-radius:50%;
+  background:rgba(255,255,255,.96);
+  opacity:0;
+  box-shadow:0 0 3px rgba(255,255,255,.5);
+  animation:winter-snow-fall var(--snow-duration) linear var(--snow-delay) infinite;
+  will-change:transform,opacity;
+}
+@keyframes winter-snow-fall{
+  0%{transform:translate3d(0,-12px,0);opacity:0}
+  8%{opacity:var(--snow-opacity)}
+  85%{opacity:var(--snow-opacity)}
+  100%{transform:translate3d(var(--snow-drift),calc(100% + 24px),0);opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .winter-snow{display:none}
+}
+
 /* KAŁUŻA — tylko w jesiennym poranku. Delikatne, cykliczne kręgi na wodzie. */
 .autumn-puddle{
   position:absolute;
@@ -3096,6 +3128,24 @@ function updateSeason(){
         rain.appendChild(drop);
       }
       effects.appendChild(rain);
+    }
+    const showWinterSnow=name==="winter"&&period==="morning";
+    if(showWinterSnow){
+      const snow=document.createElement("div");
+      snow.className="winter-snow";
+      snow.setAttribute("aria-hidden","true");
+      for(let i=0;i<150;i++){
+        const flake=document.createElement("span");
+        flake.className="winter-snowflake";
+        flake.style.setProperty("--snow-left",(Math.random()*100)+"%");
+        flake.style.setProperty("--snow-size",(2+Math.random()*4)+"px");
+        flake.style.setProperty("--snow-duration",(6+Math.random()*7).toFixed(2)+"s");
+        flake.style.setProperty("--snow-delay",(-Math.random()*13)+"s");
+        flake.style.setProperty("--snow-drift",(-24+Math.random()*48)+"px");
+        flake.style.setProperty("--snow-opacity",(0.38+Math.random()*0.52).toFixed(2));
+        snow.appendChild(flake);
+      }
+      effects.appendChild(snow);
     }
     const showAutumnPuddle=name==="autumn"&&period==="morning";
     if(showAutumnPuddle){
