@@ -578,6 +578,82 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 
+/* DYNIE HALLOWEENOWE — dekoracja wyłącznie w jesiennej nocy. */
+#autumnPumpkins{
+  position:absolute;
+  z-index:6;
+  left:clamp(480px,55vw,900px);
+  bottom:-3%;
+  width:clamp(250px,27vw,370px);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  gap:0;
+  pointer-events:none;
+  user-select:none;
+  isolation:isolate;
+}
+#start.autumn-night #autumnPumpkins{display:flex}
+#autumnPumpkins img{
+  position:relative;
+  z-index:1;
+  display:block;
+  width:33.333%;
+  height:auto;
+  flex:0 0 33.333%;
+  filter:drop-shadow(0 3px 5px #09060499);
+  transform-origin:50% 88%;
+  animation:pumpkin-candle 3.8s ease-in-out infinite;
+}
+#autumnPumpkins img:nth-of-type(2){animation-delay:-1.2s}
+#autumnPumpkins img:nth-of-type(3){animation-delay:-2.4s}
+.pumpkin-glow{
+  position:absolute;
+  z-index:0;
+  bottom:14%;
+  width:23%;
+  aspect-ratio:1;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,157,48,.25) 0%,rgba(255,139,32,.12) 38%,transparent 72%);
+  filter:blur(9px);
+  animation:pumpkin-glow 3.8s ease-in-out infinite;
+}
+.pumpkin-glow-one{left:5%}
+.pumpkin-glow-two{left:38%;animation-delay:-1.2s}
+.pumpkin-glow-three{right:5%;animation-delay:-2.4s}
+@keyframes pumpkin-candle{
+  0%,100%{filter:brightness(.98) drop-shadow(0 3px 5px #09060499)}
+  48%{filter:brightness(1.08) drop-shadow(0 3px 7px #ff9b3b55)}
+  63%{filter:brightness(1.01) drop-shadow(0 3px 5px #09060499)}
+  76%{filter:brightness(1.06) drop-shadow(0 3px 7px #ff9b3b44)}
+}
+@keyframes pumpkin-glow{
+  0%,100%{opacity:.62;transform:scale(.92)}
+  48%{opacity:1;transform:scale(1.12)}
+  63%{opacity:.7;transform:scale(.98)}
+  76%{opacity:.9;transform:scale(1.06)}
+}
+@media(max-width:1050px){
+  #autumnPumpkins{
+    left:auto;
+    right:calc(8vw + 105px);
+    bottom:-2%;
+    width:clamp(225px,32vw,310px);
+  }
+}
+@media(max-width:700px){
+  #autumnPumpkins{
+    left:50%;
+    right:auto;
+    bottom:70px;
+    width:min(260px,70vw);
+    transform:translateX(-50%);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  #autumnPumpkins img,.pumpkin-glow{animation:none}
+}
+
 /* DESZCZ — delikatne, ukośne smugi wyłącznie w jesiennej scenerii nocnej. */
 .night-rain{
   position:absolute;
@@ -2500,6 +2576,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <div class="season-effects" id="seasonEffects" aria-hidden="true"></div>
+    <div id="autumnPumpkins" aria-hidden="true">
+      <span class="pumpkin-glow pumpkin-glow-one"></span>
+      <span class="pumpkin-glow pumpkin-glow-two"></span>
+      <span class="pumpkin-glow pumpkin-glow-three"></span>
+      <img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dynia-halloween1.png" alt="">
+      <img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dynia-halloween2.png" alt="">
+      <img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dynia-halloween3.png" alt="">
+    </div>
     <div id="chimneySmoke" aria-hidden="true"><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""></div>
 <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
