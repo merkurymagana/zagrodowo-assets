@@ -3001,8 +3001,10 @@ function getDayPeriod(date){
 // Sceneria dobierana automatycznie według pory roku i ustalonych godzin jesienią.
 function updateSeason(){
   const now=new Date();
-  const name=getSeasonName(now.getMonth());
-  const period=getDayPeriod(now);
+  const previewScene=new URLSearchParams(window.location.search).get("preview");
+  const previewWinterMorning=previewScene==="winter-morning";
+  const name=previewWinterMorning?"winter":getSeasonName(now.getMonth());
+  const period=previewWinterMorning?"morning":getDayPeriod(now);
   const sceneKey=name+"-"+period;
   if(sceneKey===lastSceneKey)return;
   lastSceneKey=sceneKey;
@@ -3012,6 +3014,7 @@ function updateSeason(){
   start.classList.toggle("autumn-day-animations",name==="autumn"&&period==="day");
   start.classList.toggle("autumn-morning",name==="autumn"&&period==="morning");
   start.classList.toggle("autumn-night",name==="autumn"&&period==="night");
+  start.classList.toggle("winter-morning",name==="winter"&&period==="morning");
 
   const seasonImage=document.getElementById("seasonImage");
   if(seasonImage){
