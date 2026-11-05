@@ -644,11 +644,24 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 @media(max-width:700px){
   #autumnPumpkins{
-    left:50%;
+    left:calc(38vw + min(232px,62vw));
     right:auto;
     bottom:70px;
     width:min(260px,70vw);
-    transform:translateX(-50%);
+    transform:none;
+  }
+  #autumnPumpkins img:nth-of-type(1){
+    width:36%;flex-basis:36%;
+    transform:translate(-248%,-50px);
+  }
+  #autumnPumpkins img:nth-of-type(2){
+    width:24%;flex-basis:24%;
+    transform:translate(-371%,-75px);
+  }
+  #autumnPumpkins img:nth-of-type(3){
+    width:36%;flex-basis:36%;
+    transform-origin:left 88%;
+    transform:translate(-271%,-88px) scale(.444444);
   }
 }
 @media(prefers-reduced-motion:reduce){
@@ -2982,10 +2995,7 @@ function getDayPeriod(date){
   return "day";
 }
 
-// WERSJA ROBOCZA: podgląd jesiennej nocy podczas dopracowywania scenerii.
-// Poranny wariant jesieni pozostaje przypisany wyłącznie do poranka.
-const SCENE_PREVIEW={season:"autumn",period:"night"};
-
+// Sceneria dobierana automatycznie według pory roku i długości dnia w Polsce.
 function updateSeason(){
   const now=new Date();
   const name=SCENE_PREVIEW?.season||getSeasonName(now.getMonth());
