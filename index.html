@@ -3020,7 +3020,9 @@ function updateSeason(){
   if(seasonImage){
     let imageUrl=seasonImages[name];
     // Osobne grafiki dla poranka i nocy jesiennej; dzień korzysta z grafiki bazowej.
-    if(name==="autumn"&&period==="morning"){
+    if(name==="winter"&&period==="morning"){
+      imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zima-rano.png";
+    }else if(name==="autumn"&&period==="morning"){
       imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jesien-rano.png";
     }else if(name==="autumn"&&period==="night"){
       imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jesien-noc.png";
