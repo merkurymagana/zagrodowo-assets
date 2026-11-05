@@ -98,6 +98,18 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
   user-select:none;
   filter:drop-shadow(0 4px 5px #24170b44);
+  transform-origin:50% 88%;
+  animation:chicken-natural-motion 3.2s ease-in-out infinite;
+  will-change:transform;
+}
+@keyframes chicken-natural-motion{
+  0%,100%{transform:translate3d(0,0,0) rotate(0deg)}
+  22%{transform:translate3d(0,-1px,0) rotate(-.25deg)}
+  48%{transform:translate3d(0,0,0) rotate(.12deg)}
+  73%{transform:translate3d(0,-.65px,0) rotate(.28deg)}
+}
+@media(prefers-reduced-motion:reduce){
+  #chickenGroup{animation:none}
 }
 #chickenGroup img{
   display:block;
