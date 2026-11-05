@@ -577,6 +577,39 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
 }
 
+
+/* DESZCZ — delikatne, ukośne smugi wyłącznie w jesiennej scenerii nocnej. */
+.night-rain{
+  position:absolute;
+  z-index:5;
+  inset:-12% -5% 0;
+  overflow:hidden;
+  pointer-events:none;
+}
+.night-rain-drop{
+  position:absolute;
+  top:-18%;
+  left:var(--rain-left);
+  width:1.3px;
+  height:var(--rain-length);
+  border-radius:2px;
+  opacity:0;
+  background:linear-gradient(to bottom,transparent 0%,rgba(202,218,225,.12) 18%,rgba(211,226,232,.58) 72%,rgba(220,232,236,.08) 100%);
+  box-shadow:0 0 2px rgba(192,211,220,.12);
+  transform:rotate(12deg);
+  animation:night-rain-fall var(--rain-duration) linear var(--rain-delay) infinite;
+  will-change:transform,opacity;
+}
+@keyframes night-rain-fall{
+  0%{transform:translate3d(0,-8vh,0) rotate(12deg);opacity:0}
+  8%{opacity:var(--rain-opacity)}
+  88%{opacity:var(--rain-opacity)}
+  100%{transform:translate3d(-9vw,118vh,0) rotate(12deg);opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .night-rain{display:none}
+}
+
 /* KAŁUŻA — tylko w jesiennym poranku. Delikatne, cykliczne kręgi na wodzie. */
 .autumn-puddle{
   position:absolute;
@@ -2940,6 +2973,25 @@ function updateSeason(){
         Object.entries(vars).forEach(([key,value])=>leaf.style.setProperty(key,value));
         effects.appendChild(leaf);
       });
+    }
+    const showAutumnRain=name==="autumn"&&period==="night";
+    if(showAutumnRain){
+      const rain=document.createElement("div");
+      rain.className="night-rain";
+      rain.setAttribute("aria-hidden","true");
+      for(let i=0;i<105;i++){
+        const drop=document.createElement("span");
+        drop.className="night-rain-drop";
+        const near=i<28;
+        const duration=(near?0.72:0.95)+Math.random()*(near?0.42:0.65);
+        drop.style.setProperty("--rain-left",(Math.random()*110-5)+"%");
+        drop.style.setProperty("--rain-length",(near?34:20)+Math.random()*(near?24:18)+"px");
+        drop.style.setProperty("--rain-duration",duration.toFixed(2)+"s");
+        drop.style.setProperty("--rain-delay",(-Math.random()*2.2)+"s");
+        drop.style.setProperty("--rain-opacity",(near?0.36:0.22)+Math.random()*(near?0.28:0.2));
+        rain.appendChild(drop);
+      }
+      effects.appendChild(rain);
     }
     const showAutumnPuddle=name==="autumn"&&period==="morning";
     if(showAutumnPuddle){
