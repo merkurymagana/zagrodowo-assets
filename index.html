@@ -589,7 +589,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 .night-rain-drop{
   position:absolute;
-  top:8%;
+  top:0;
   left:var(--rain-left);
   width:1.8px;
   height:var(--rain-length);
@@ -2985,7 +2985,7 @@ function updateSeason(){
         drop.className="night-rain-drop";
         const near=i<60;
         const duration=(near?0.58:0.72)+Math.random()*(near?0.32:0.42);
-        drop.style.setProperty("--rain-left",(8+Math.random()*90)+"%");
+        drop.style.setProperty("--rain-left",((i+Math.random())/180*100)+"%");
         drop.style.setProperty("--rain-length",(near?42:28)+Math.random()*(near?32:24)+"px");
         drop.style.setProperty("--rain-duration",duration.toFixed(2)+"s");
         drop.style.setProperty("--rain-delay",(-Math.random()*2.2)+"s");
