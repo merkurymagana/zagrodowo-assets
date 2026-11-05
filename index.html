@@ -715,22 +715,22 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 .winter-snowflake{
   position:absolute;
-  top:-12px;
+  top:-22px;
   left:var(--snow-left);
   width:var(--snow-size);
   height:var(--snow-size);
   border-radius:50%;
-  background:rgba(255,255,255,.96);
+  background:rgba(255,255,255,.98);
   opacity:0;
-  box-shadow:0 0 3px rgba(255,255,255,.5);
+  box-shadow:0 0 5px rgba(255,255,255,.75),0 0 10px rgba(225,240,255,.3);
   animation:winter-snow-fall var(--snow-duration) linear var(--snow-delay) infinite;
   will-change:transform,opacity;
 }
 @keyframes winter-snow-fall{
-  0%{transform:translate3d(0,-12px,0);opacity:0}
-  8%{opacity:var(--snow-opacity)}
-  85%{opacity:var(--snow-opacity)}
-  100%{transform:translate3d(var(--snow-drift),calc(100% + 24px),0);opacity:0}
+  0%{transform:translate3d(0,-22px,0);opacity:0}
+  5%{opacity:var(--snow-opacity)}
+  92%{opacity:var(--snow-opacity)}
+  100%{transform:translate3d(var(--snow-drift),calc(100% + 44px),0);opacity:0}
 }
 /* Śnieg pozostaje widoczny także przy ustawieniu ograniczenia animacji w systemie. */
 
@@ -3132,15 +3132,15 @@ function updateSeason(){
       const snow=document.createElement("div");
       snow.className="winter-snow";
       snow.setAttribute("aria-hidden","true");
-      for(let i=0;i<150;i++){
+      for(let i=0;i<240;i++){
         const flake=document.createElement("span");
         flake.className="winter-snowflake";
         flake.style.setProperty("--snow-left",(Math.random()*100)+"%");
-        flake.style.setProperty("--snow-size",(2+Math.random()*4)+"px");
-        flake.style.setProperty("--snow-duration",(6+Math.random()*7).toFixed(2)+"s");
-        flake.style.setProperty("--snow-delay",(-Math.random()*13)+"s");
-        flake.style.setProperty("--snow-drift",(-24+Math.random()*48)+"px");
-        flake.style.setProperty("--snow-opacity",(0.38+Math.random()*0.52).toFixed(2));
+        flake.style.setProperty("--snow-size",(i<55?3.5+Math.random()*3.5:2.5+Math.random()*3.5)+"px");
+        flake.style.setProperty("--snow-duration",(3.2+Math.random()*3.8).toFixed(2)+"s");
+        flake.style.setProperty("--snow-delay",(-Math.random()*7)+"s");
+        flake.style.setProperty("--snow-drift",(-42+Math.random()*84)+"px");
+        flake.style.setProperty("--snow-opacity",(0.72+Math.random()*0.28).toFixed(2));
         snow.appendChild(flake);
       }
       effects.appendChild(snow);
