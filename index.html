@@ -643,8 +643,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   }
 }
 @media(max-width:700px){
+  /* Na telefonie cała grupa jest kotwiczona bezpośrednio do kadru.
+     Nie używamy dużych ujemnych przesunięć w px/% — zależały od szerokości
+     obrazków i powodowały rozjazd dekoracji między urządzeniami. */
   #autumnPumpkins{
-    left:calc(38vw + min(232px,62vw));
+    left:24vw;
     right:auto;
     bottom:70px;
     width:min(260px,70vw);
@@ -652,16 +655,16 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   }
   #autumnPumpkins img:nth-of-type(1){
     width:36%;flex-basis:36%;
-    transform:translate(-248%,-50px);
+    transform:translateY(-50px);
   }
   #autumnPumpkins img:nth-of-type(2){
     width:24%;flex-basis:24%;
-    transform:translate(-371%,-75px);
+    transform:translateY(-75px);
   }
   #autumnPumpkins img:nth-of-type(3){
     width:36%;flex-basis:36%;
     transform-origin:left 88%;
-    transform:translate(-271%,-88px) scale(.444444);
+    transform:translateY(-88px) scale(.444444);
   }
 }
 @media(prefers-reduced-motion:reduce){
