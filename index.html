@@ -309,7 +309,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   text-shadow:0 0 2px rgba(255,255,255,.8),0 1px 2px rgba(80,104,126,.22);
   filter:drop-shadow(0 1px 1px rgba(75,96,113,.16));
   transform-origin:58% 0;
-  animation:shed-snowflake-slide 10.5s linear 1 normal forwards;
+  animation:shed-snowflake-slide 10.5s linear infinite;
 }
 #winterShedSnow .shed-snow-layer span{
   display:block;
@@ -318,7 +318,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   line-height:.85;
 }
 #winterShedSnow .shed-snow-layer span:nth-child(n+23){
-  animation:shed-snow-right-shorter 10.5s linear 1 normal forwards;
+  animation:shed-snow-right-shorter 10.5s linear infinite;
 }
 @keyframes shed-snow-right-shorter{
   0%,69.67%{translate:0 0}
