@@ -278,6 +278,74 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   top:calc(13.5% + 110px);
 }
 
+/* ZIMOWY DZIEŃ — próbna zsuwająca się czapa śniegu ze stodoły po prawej. */
+#winterShedSnow{
+  position:absolute;
+  z-index:7;
+  top:27%;
+  right:23%;
+  width:64px;
+  height:34px;
+  pointer-events:none;
+  opacity:0;
+  visibility:hidden;
+}
+#start.winter-day #winterShedSnow{
+  visibility:visible;
+}
+#winterShedSnow .shed-snow-pack{
+  position:absolute;
+  top:0;
+  left:0;
+  width:38px;
+  height:12px;
+  border-radius:55% 45% 48% 42%;
+  background:linear-gradient(180deg,#fff 0%,#edf4f7 72%,#d5e1e8 100%);
+  filter:drop-shadow(0 1px 1px rgba(66,83,96,.25));
+  transform-origin:20% 50%;
+  animation:shed-snow-slide 8s ease-in-out infinite;
+}
+#winterShedSnow .shed-snow-pack:before,
+#winterShedSnow .shed-snow-pack:after{
+  content:"";
+  position:absolute;
+  bottom:1px;
+  background:#f8fcff;
+  border-radius:50%;
+}
+#winterShedSnow .shed-snow-pack:before{left:7px;width:13px;height:9px}
+#winterShedSnow .shed-snow-pack:after{left:19px;width:12px;height:8px}
+#winterShedSnow .shed-snow-fragment{
+  position:absolute;
+  top:5px;
+  left:17px;
+  width:6px;
+  height:5px;
+  border-radius:50%;
+  background:#f5fbff;
+  opacity:0;
+  animation:shed-snow-fragment 8s ease-out infinite;
+}
+#winterShedSnow .shed-snow-fragment:nth-child(3){animation-delay:.08s}
+#winterShedSnow .shed-snow-fragment:nth-child(4){animation-delay:.16s}
+@keyframes shed-snow-slide{
+  0%,68%,100%{opacity:0;transform:translate(0,0) rotate(0)}
+  70%{opacity:1}
+  82%{opacity:1;transform:translate(23px,17px) rotate(12deg)}
+  88%{opacity:0;transform:translate(31px,25px) rotate(19deg)}
+}
+@keyframes shed-snow-fragment{
+  0%,79%,100%{opacity:0;transform:translate(0,0) scale(.6)}
+  82%{opacity:.9}
+  91%{opacity:0;transform:translate(15px,18px) scale(.35)}
+}
+@media(max-width:700px){
+  #winterShedSnow{top:25%;right:15%;transform:scale(.78);transform-origin:top right}
+}
+@media(prefers-reduced-motion:reduce){
+  #winterShedSnow{display:none}
+}
+
 /* KOZA — na razie samo ciało, wyłącznie w jesiennej scenerii nocnej. */
 #goatBodyGroup{
   position:absolute;
@@ -2643,6 +2711,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
       <img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dynia-halloween3.png" alt="">
     </div>
     <div id="chimneySmoke" aria-hidden="true"><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""></div>
+    <div id="winterShedSnow" aria-hidden="true"><span class="shed-snow-pack"></span><span class="shed-snow-fragment"></span><span class="shed-snow-fragment"></span><span class="shed-snow-fragment"></span></div>
 <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud3" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-3-jesien-dzien.png" alt="" aria-hidden="true">
