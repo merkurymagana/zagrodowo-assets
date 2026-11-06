@@ -3136,9 +3136,8 @@ function getSolarMinutes(date,zenith){
 function getDayPeriod(date){
   const minutes=date.getHours()*60+date.getMinutes();
   const sun=getSolarMinutes(date,90.833);
-  const dawn=getSolarMinutes(date,96);
-  if(!Number.isFinite(sun.rise)||!Number.isFinite(dawn.rise))return "day";
-  if(minutes<dawn.rise||minutes>=sun.set)return "night";
+  if(!Number.isFinite(sun.rise))return "day";
+  if(minutes<sun.rise||minutes>=sun.set)return "night";
   if(minutes<sun.noon)return "morning";
   return "day";
 }
@@ -3146,10 +3145,8 @@ function getDayPeriod(date){
 // Sceneria dobierana automatycznie według pory roku i ustalonych godzin jesienią.
 function updateSeason(){
   const now=new Date();
-  // Tymczasowo ustawiona sceneria zimowego dnia jako domyślna na stronie.
-  const previewWinterDay=true;
-  const name=previewWinterDay?"winter":getSeasonName(now.getMonth());
-  const period=previewWinterDay?"day":getDayPeriod(now);
+  const name=getSeasonName(now.getMonth());
+  const period=getDayPeriod(now);
   const sceneKey=name+"-"+period;
   if(sceneKey===lastSceneKey)return;
   lastSceneKey=sceneKey;
