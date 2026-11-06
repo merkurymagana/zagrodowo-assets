@@ -3031,8 +3031,8 @@ function getDayPeriod(date){
 // Sceneria dobierana automatycznie według pory roku i ustalonych godzin jesienią.
 function updateSeason(){
   const now=new Date();
-  const previewScene=new URLSearchParams(window.location.search).get("preview");
-  const previewWinterMorning=previewScene==="winter-morning";
+  // Tymczasowo ustawiona sceneria zimowego poranka jako domyślna na stronie.
+  const previewWinterMorning=true;
   const name=previewWinterMorning?"winter":getSeasonName(now.getMonth());
   const period=previewWinterMorning?"morning":getDayPeriod(now);
   const sceneKey=name+"-"+period;
