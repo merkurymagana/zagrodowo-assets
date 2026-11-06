@@ -3144,10 +3144,10 @@ function updateSeason(){
       const snow=document.createElement("div");
       snow.className="winter-snow";
       snow.setAttribute("aria-hidden","true");
-      for(let i=0;i<110;i++){
+      for(let i=0;i<135;i++){
         const flake=document.createElement("span");
-        const large=i<14;
-        const medium=i>=14&&i<60;
+        const large=i<17;
+        const medium=i>=17&&i<72;
         flake.className="winter-snowflake";
         flake.textContent="❄";
         const randomBetween=(min,max)=>min+Math.random()*(max-min);
