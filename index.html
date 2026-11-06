@@ -3091,14 +3091,20 @@ function updateSeason(){
         [2,"-2%","19px","100s","-42s","16vw","38vw","60vw","80vw","94vw","-16deg","66deg","-40deg","82deg","-38deg","288deg",".95"],
         [0,"99%","22px","114s","-36s","-24vw","-48vw","-72vw","-94vw","-108vw","14deg","-78deg","54deg","-90deg","40deg","-258deg",".98"]
       ];
-      leaves.slice(0,15).forEach(([type,left,size,duration,delay,a,b,c,d,endX,start,turnA,turnB,turnC,turnD,end,opacity],index)=>{
+      // Dwie fale liści na bazie różnych torów lotu: gęściej, ale nadal nieregularnie.
+      Array.from({length:30},(_,index)=>{
+        const [type,left,size,duration,delay,a,b,c,d,endX,start,turnA,turnB,turnC,turnD,end,opacity]=leaves[index%leaves.length];
         const leaf=document.createElement("img");
         leaf.className="autumn-leaf";
         leaf.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/"+leafFiles[type];
         leaf.alt="";
         leaf.setAttribute("aria-hidden","true");
+        const leafSize=parseFloat(size)*(index>=leaves.length?0.82:1);
+        const fallTime=46+(index%5)*2.5;
+        // Co trzy liście krótka przerwa, po której nadlatuje kolejna mała seria.
+        const stagger=index*1.55+Math.floor(index/3)*2.2;
         const vars={
-          "--left":left,"--leaf-size":size,"--fall-time":"90s","--fall-delay":(-index*6)+"s",
+          "--left":left,"--leaf-size":leafSize+"px","--fall-time":fallTime+"s","--fall-delay":(-stagger)+"s",
           "--drift-a":a,"--drift-b":b,"--drift-c":c,"--drift-d":d,"--drift-end":endX,
           "--turn-start":start,"--turn-a":turnA,"--turn-b":turnB,"--turn-c":turnC,
           "--turn-d":turnD,"--turn-end":end,"--leaf-opacity":opacity,
