@@ -282,7 +282,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #winterShedSnow{
   position:absolute;
   z-index:7;
-  top:27%;
+  top:calc(27% + 50px);
   right:calc(21% - 180px);
   width:174px;
   height:92px;
@@ -360,7 +360,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   91%{opacity:0;transform:translate(8px,19px) scale(.4)}
 }
 @media(max-width:700px){
-  #winterShedSnow{top:25%;right:calc(13% - 180px);transform:scale(.78);transform-origin:top right}
+  #winterShedSnow{top:calc(25% + 50px);right:calc(13% - 180px);transform:scale(.78);transform-origin:top right}
 }
 @media(prefers-reduced-motion:reduce){
   #winterShedSnow{display:none}
