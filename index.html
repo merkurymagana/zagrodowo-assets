@@ -309,7 +309,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   text-shadow:0 0 2px rgba(255,255,255,.8),0 1px 2px rgba(80,104,126,.22);
   filter:drop-shadow(0 1px 1px rgba(75,96,113,.16));
   transform-origin:58% 0;
-  animation:shed-snowflake-slide 9.5s linear infinite;
+  animation:shed-snowflake-slide 10.5s linear infinite;
 }
 #winterShedSnow .shed-snow-layer span{
   display:block;
@@ -340,12 +340,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #winterShedSnow .shed-snow-layer span:nth-child(n+31):nth-child(-n+33){position:relative;top:31.8px}
 #winterShedSnow .shed-snow-layer span:nth-child(n+34):nth-child(-n+36){position:relative;top:37px}
 @keyframes shed-snowflake-slide{
-  0%,67%,100%{opacity:0;transform:translate(0,-2px) scaleY(1)}
-  69%{opacity:1;transform:translate(0,0) scaleY(1)}
-  72%{opacity:1;transform:translate(0,2px) scaleY(1.15)}
-  75%{opacity:1;transform:translate(0,7px) scaleY(1.32)}
-  77%{opacity:1;transform:translate(0,13px) scaleY(1.5)}
-  100%{opacity:.96;transform:translate(0,108px) scaleY(.8)}
+  0%,60.62%,100%{opacity:0;transform:translate(0,-2px) scaleY(1)}
+  62.43%{opacity:1;transform:translate(0,0) scaleY(1)}
+  65.14%{opacity:1;transform:translate(0,2px) scaleY(1.15)}
+  67.86%{opacity:1;transform:translate(0,7px) scaleY(1.32)}
+  69.67%{opacity:1;transform:translate(0,13px) scaleY(1.5)}
+  86.22%{opacity:.96;transform:translate(0,108px) scaleY(.8)}
+  95.75%{opacity:.96;transform:translate(0,108px) scaleY(.8)}
+  100%{opacity:0;transform:translate(0,122px) scaleY(.65)}
 }
 @keyframes shed-snowflake-break{
   0%,82%,100%{opacity:0;transform:translate(0,0) scale(.45)}
