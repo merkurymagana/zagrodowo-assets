@@ -278,67 +278,74 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   top:calc(13.5% + 110px);
 }
 
-/* ZIMOWY DZIEŃ — próbna zsuwająca się czapa śniegu ze stodoły po prawej. */
+/* ZIMOWY DZIEŃ — ciasno ułożone płatki tworzące zsuwającą się warstwę śniegu. */
 #winterShedSnow{
   position:absolute;
   z-index:7;
   top:27%;
   right:23%;
-  width:64px;
-  height:34px;
+  width:74px;
+  height:54px;
   pointer-events:none;
-  opacity:0;
   visibility:hidden;
+  opacity:0;
 }
 #start.winter-day #winterShedSnow{
   visibility:visible;
   opacity:1;
 }
-#winterShedSnow .shed-snow-pack{
+#winterShedSnow .shed-snow-layer{
   position:absolute;
   top:0;
   left:0;
-  width:38px;
-  height:12px;
-  border-radius:55% 45% 48% 42%;
-  background:linear-gradient(180deg,#fff 0%,#edf4f7 72%,#d5e1e8 100%);
-  filter:drop-shadow(0 1px 1px rgba(66,83,96,.25));
-  transform-origin:20% 50%;
-  animation:shed-snow-slide 8s ease-in-out infinite;
+  width:58px;
+  height:18px;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:0;
+  white-space:nowrap;
+  color:rgba(248,252,255,.98);
+  text-shadow:0 0 2px rgba(255,255,255,.8),0 1px 2px rgba(80,104,126,.22);
+  filter:drop-shadow(0 1px 1px rgba(75,96,113,.16));
+  transform-origin:58% 0;
+  animation:shed-snowflake-slide 9.5s cubic-bezier(.42,.02,.72,.32) infinite;
 }
-#winterShedSnow .shed-snow-pack:before,
-#winterShedSnow .shed-snow-pack:after{
-  content:"";
-  position:absolute;
-  bottom:1px;
-  background:#f8fcff;
-  border-radius:50%;
+#winterShedSnow .shed-snow-layer span{
+  display:block;
+  flex:0 0 auto;
+  margin-left:-2px;
+  line-height:1;
 }
-#winterShedSnow .shed-snow-pack:before{left:7px;width:13px;height:9px}
-#winterShedSnow .shed-snow-pack:after{left:19px;width:12px;height:8px}
+#winterShedSnow .shed-snow-layer span:nth-child(3n){font-size:13px;transform:translateY(1px)}
+#winterShedSnow .shed-snow-layer span:nth-child(3n + 1){font-size:11px}
+#winterShedSnow .shed-snow-layer span:nth-child(3n + 2){font-size:15px;transform:translateY(-1px)}
+#winterShedSnow .shed-snow-layer span:nth-child(4n){opacity:.88}
+#winterShedSnow .shed-snow-layer span:nth-child(5n){font-size:9px}
 #winterShedSnow .shed-snow-fragment{
   position:absolute;
-  top:5px;
-  left:17px;
-  width:6px;
-  height:5px;
-  border-radius:50%;
-  background:#f5fbff;
+  top:12px;
+  left:29px;
+  color:rgba(248,252,255,.95);
+  font-size:8px;
+  line-height:1;
   opacity:0;
-  animation:shed-snow-fragment 8s ease-out infinite;
+  text-shadow:0 0 2px #fff;
+  animation:shed-snowflake-break 9.5s ease-out infinite;
 }
-#winterShedSnow .shed-snow-fragment:nth-child(3){animation-delay:.08s}
-#winterShedSnow .shed-snow-fragment:nth-child(4){animation-delay:.16s}
-@keyframes shed-snow-slide{
-  0%,68%,100%{opacity:0;transform:translate(0,0) rotate(0)}
-  70%{opacity:1}
-  82%{opacity:1;transform:translate(23px,17px) rotate(12deg)}
-  88%{opacity:0;transform:translate(31px,25px) rotate(19deg)}
+#winterShedSnow .shed-snow-fragment:nth-child(3){left:37px;top:9px;animation-delay:.08s}
+#winterShedSnow .shed-snow-fragment:nth-child(4){left:23px;top:15px;animation-delay:.15s}
+@keyframes shed-snowflake-slide{
+  0%,67%,100%{opacity:0;transform:translate(0,-2px) rotate(-2deg)}
+  69%{opacity:1;transform:translate(0,0) rotate(-2deg)}
+  76%{opacity:1;transform:translate(3px,10px) rotate(2deg)}
+  82%{opacity:.98;transform:translate(8px,25px) rotate(7deg)}
+  86%{opacity:0;transform:translate(12px,35px) rotate(12deg)}
 }
-@keyframes shed-snow-fragment{
-  0%,79%,100%{opacity:0;transform:translate(0,0) scale(.6)}
+@keyframes shed-snowflake-break{
+  0%,79%,100%{opacity:0;transform:translate(0,0) scale(.7)}
   82%{opacity:.9}
-  91%{opacity:0;transform:translate(15px,18px) scale(.35)}
+  91%{opacity:0;transform:translate(8px,19px) scale(.4)}
 }
 @media(max-width:700px){
   #winterShedSnow{top:25%;right:15%;transform:scale(.78);transform-origin:top right}
@@ -2712,7 +2719,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
       <img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dynia-halloween3.png" alt="">
     </div>
     <div id="chimneySmoke" aria-hidden="true"><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""></div>
-    <div id="winterShedSnow" aria-hidden="true"><span class="shed-snow-pack"></span><span class="shed-snow-fragment"></span><span class="shed-snow-fragment"></span><span class="shed-snow-fragment"></span></div>
+    <div id="winterShedSnow" aria-hidden="true"><span class="shed-snow-layer"><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span></span><span class="shed-snow-fragment">❄</span><span class="shed-snow-fragment">❄</span><span class="shed-snow-fragment">❄</span></div>
 <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud3" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-3-jesien-dzien.png" alt="" aria-hidden="true">
