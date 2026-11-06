@@ -578,6 +578,42 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 
+/* ŚNIEG — umiarkowany, warstwowy opad wyłącznie w zimowym poranku. */
+.winter-snow{
+  position:absolute;
+  z-index:5;
+  inset:3.5% 3% 4% 3%;
+  overflow:hidden;
+  pointer-events:none;
+}
+.winter-snowflake{
+  position:absolute;
+  top:-28px;
+  left:var(--snow-left);
+  display:block;
+  color:rgba(255,255,255,.96);
+  font-family:Arial,sans-serif;
+  font-size:var(--snow-size);
+  line-height:1;
+  opacity:0;
+  text-shadow:0 0 4px rgba(255,255,255,.72),0 1px 3px rgba(91,116,139,.22);
+  filter:blur(var(--snow-blur,0));
+  animation:winter-snow-drift var(--snow-duration) linear var(--snow-delay) infinite;
+  will-change:transform,opacity;
+}
+@keyframes winter-snow-drift{
+  0%{transform:translate3d(0,-28px,0) rotate(0deg);opacity:0}
+  7%{opacity:var(--snow-opacity)}
+  22%{transform:translate3d(var(--snow-x1),20vh,0) rotate(72deg);opacity:var(--snow-opacity)}
+  43%{transform:translate3d(var(--snow-x2),42vh,0) rotate(154deg);opacity:var(--snow-opacity)}
+  64%{transform:translate3d(var(--snow-x3),64vh,0) rotate(236deg);opacity:var(--snow-opacity)}
+  84%{transform:translate3d(var(--snow-x4),84vh,0) rotate(310deg);opacity:var(--snow-opacity)}
+  100%{transform:translate3d(var(--snow-drift),calc(100vh + 55px),0) rotate(390deg);opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .winter-snow{display:none}
+}
+
 /* DYNIE HALLOWEENOWE — dekoracja wyłącznie w jesiennej nocy. */
 #autumnPumpkins{
   position:absolute;
@@ -3102,6 +3138,35 @@ function updateSeason(){
         rain.appendChild(drop);
       }
       effects.appendChild(rain);
+    }
+    const showWinterSnow=name==="winter"&&period==="morning";
+    if(showWinterSnow){
+      const snow=document.createElement("div");
+      snow.className="winter-snow";
+      snow.setAttribute("aria-hidden","true");
+      for(let i=0;i<110;i++){
+        const flake=document.createElement("span");
+        const large=i<14;
+        const medium=i>=14&&i<60;
+        flake.className="winter-snowflake";
+        flake.textContent="❄";
+        const randomBetween=(min,max)=>min+Math.random()*(max-min);
+        const duration=large?randomBetween(15,22):medium?randomBetween(10,16):randomBetween(7,12);
+        const drift=randomBetween(18,62);
+        flake.style.setProperty("--snow-left",randomBetween(0,100)+"%");
+        flake.style.setProperty("--snow-size",(large?randomBetween(9,13):medium?randomBetween(5,8):randomBetween(2.5,4.2))+"px");
+        flake.style.setProperty("--snow-duration",duration.toFixed(2)+"s");
+        flake.style.setProperty("--snow-delay",(-Math.random()*duration).toFixed(2)+"s");
+        flake.style.setProperty("--snow-opacity",(large?randomBetween(.72,.96):medium?randomBetween(.52,.82):randomBetween(.28,.52)).toFixed(2));
+        flake.style.setProperty("--snow-blur",large?"0":medium?"0.15px":"0.35px");
+        flake.style.setProperty("--snow-x1",randomBetween(-8,drift*.22).toFixed(1)+"px");
+        flake.style.setProperty("--snow-x2",randomBetween(-12,drift*.58).toFixed(1)+"px");
+        flake.style.setProperty("--snow-x3",randomBetween(-8,drift*.82).toFixed(1)+"px");
+        flake.style.setProperty("--snow-x4",randomBetween(-14,drift*1.12).toFixed(1)+"px");
+        flake.style.setProperty("--snow-drift",drift.toFixed(1)+"px");
+        snow.appendChild(flake);
+      }
+      effects.appendChild(snow);
     }
     const showAutumnPuddle=name==="autumn"&&period==="morning";
     if(showAutumnPuddle){
