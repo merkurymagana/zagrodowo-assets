@@ -322,6 +322,18 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #winterShedSnow .shed-snow-layer span:nth-child(3n + 2){font-size:8px;transform:translateY(-1px)}
 #winterShedSnow .shed-snow-layer span:nth-child(4n){opacity:.96}
 #winterShedSnow .shed-snow-layer span:nth-child(5n){font-size:5px}
+/* Delikatny łuk śnieżnej linii — prawa strona stopniowo opada. */
+#winterShedSnow .shed-snow-layer span:nth-child(n+4):nth-child(-n+6){position:relative;top:.5px}
+#winterShedSnow .shed-snow-layer span:nth-child(n+7):nth-child(-n+9){position:relative;top:1px}
+#winterShedSnow .shed-snow-layer span:nth-child(n+10):nth-child(-n+12){position:relative;top:1.5px}
+#winterShedSnow .shed-snow-layer span:nth-child(n+13):nth-child(-n+15){position:relative;top:2px}
+#winterShedSnow .shed-snow-layer span:nth-child(n+16):nth-child(-n+18){position:relative;top:2.5px}
+#winterShedSnow .shed-snow-layer span:nth-child(n+19):nth-child(-n+21){position:relative;top:3px}
+#winterShedSnow .shed-snow-layer span:nth-child(n+22):nth-child(-n+24){position:relative;top:3.5px}
+#winterShedSnow .shed-snow-layer span:nth-child(n+25):nth-child(-n+27){position:relative;top:4px}
+#winterShedSnow .shed-snow-layer span:nth-child(n+28):nth-child(-n+30){position:relative;top:4.5px}
+#winterShedSnow .shed-snow-layer span:nth-child(n+31):nth-child(-n+33){position:relative;top:5px}
+#winterShedSnow .shed-snow-layer span:nth-child(n+34):nth-child(-n+36){position:relative;top:5.5px}
 #winterShedSnow .shed-snow-fragment{
   position:absolute;
   top:12px;
