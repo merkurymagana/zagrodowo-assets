@@ -267,13 +267,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   72%{opacity:.22;transform:translate3d(28px,-11px,0) scale(1.2)}
   100%{opacity:0;transform:translate3d(43px,-17px,0) scale(1.42)}
 }
-#start:not(.autumn-morning):not(.winter-morning) #chimneySmoke{
+#start:not(.autumn-morning):not(.winter-morning):not(.winter-day) #chimneySmoke{
   visibility:hidden;
   opacity:0;
   animation:none;
 }
 /* Zimą komin jest nieco niżej na tle — przesuwamy tylko zimowy dym o 8 px. */
-#start.winter-morning #chimneySmoke{
+#start.winter-morning #chimneySmoke,
+#start.winter-day #chimneySmoke{
   top:calc(13.5% + 110px);
 }
 
@@ -3041,10 +3042,10 @@ function getDayPeriod(date){
 // Sceneria dobierana automatycznie według pory roku i ustalonych godzin jesienią.
 function updateSeason(){
   const now=new Date();
-  // Tymczasowo ustawiona sceneria zimowego poranka jako domyślna na stronie.
-  const previewWinterMorning=true;
-  const name=previewWinterMorning?"winter":getSeasonName(now.getMonth());
-  const period=previewWinterMorning?"morning":getDayPeriod(now);
+  // Tymczasowo ustawiona sceneria zimowego dnia jako domyślna na stronie.
+  const previewWinterDay=true;
+  const name=previewWinterDay?"winter":getSeasonName(now.getMonth());
+  const period=previewWinterDay?"day":getDayPeriod(now);
   const sceneKey=name+"-"+period;
   if(sceneKey===lastSceneKey)return;
   lastSceneKey=sceneKey;
@@ -3055,6 +3056,7 @@ function updateSeason(){
   start.classList.toggle("autumn-morning",name==="autumn"&&period==="morning");
   start.classList.toggle("autumn-night",name==="autumn"&&period==="night");
   start.classList.toggle("winter-morning",name==="winter"&&period==="morning");
+  start.classList.toggle("winter-day",name==="winter"&&period==="day");
 
   const seasonImage=document.getElementById("seasonImage");
   if(seasonImage){
