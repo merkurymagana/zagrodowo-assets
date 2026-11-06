@@ -376,9 +376,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 @keyframes shed-snowflake-break{
   0%,82%,100%{opacity:0;transform:translate(0,0) scale(.45)}
-  85%{opacity:.98;transform:translate(var(--dx),var(--dy)) scale(1.15)}
-  90%{opacity:.85;transform:translate(var(--dx),calc(var(--dy) + 3px)) scale(1)}
-  96%{opacity:0;transform:translate(var(--dx),calc(var(--dy) + 8px)) scale(.65)}
+  85%{opacity:.98;transform:translate(var(--dx),calc(var(--dy) * .35)) scale(1.15)}
+  90%{opacity:.85;transform:translate(var(--dx),calc(var(--dy) * .35 + 2px)) scale(1)}
+  96%{opacity:0;transform:translate(var(--dx),calc(var(--dy) * .35 + 5px)) scale(.65)}
 }
 @media(max-width:700px){
   #winterShedSnow{top:calc(25% + 109px);right:calc(13% - 200px);transform:scale(.78);transform-origin:top right}
