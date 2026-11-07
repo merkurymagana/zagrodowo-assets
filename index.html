@@ -279,11 +279,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 /* ZIMOWY DZIEŃ — zsuwająca się bryła śniegu z oryginalnej grafiki lawiny. */
-#winterAvalanche{
+#winterAvalanche,
+#winterAvalancheLeft{
   position:absolute;
   z-index:7;
   top:calc(27% + 125px);
-  right:calc(21% - 205px);
   width:112px;
   height:auto;
   display:block;
@@ -292,7 +292,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   opacity:0;
   transform-origin:55% 8%;
 }
-#start.winter-day #winterAvalanche{
+#winterAvalanche{right:calc(21% - 205px)}
+#winterAvalancheLeft{
+  left:calc(21% - 205px);
+  width:448px;
+}
+#start.winter-day #winterAvalanche,
+#start.winter-day #winterAvalancheLeft{
   visibility:visible;
   animation:winter-avalanche-slide 18s linear infinite;
 }
@@ -310,7 +316,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 @media(max-width:700px){
   #winterAvalanche{top:calc(25% + 125px);right:calc(13% - 200px);transform:scale(.78);transform-origin:top right}
-  #start.winter-day #winterAvalanche{animation-name:winter-avalanche-slide-mobile}
+  #winterAvalancheLeft{top:calc(25% + 125px);left:calc(13% - 200px);width:448px;transform:scale(.78);transform-origin:top left}
+  #start.winter-day #winterAvalanche,
+  #start.winter-day #winterAvalancheLeft{animation-name:winter-avalanche-slide-mobile}
 }
 @keyframes winter-avalanche-slide-mobile{
   0%,71.2%{opacity:0;filter:blur(0);transform:scale(.78) translate3d(0,0,0) rotate(0) scaleX(-1)}
@@ -2694,6 +2702,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     </div>
     <div id="chimneySmoke" aria-hidden="true"><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""></div>
     <img id="winterAvalanche" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lawina.png" alt="" aria-hidden="true">
+    <img id="winterAvalancheLeft" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lawina.png" alt="" aria-hidden="true">
 <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud3" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-3-jesien-dzien.png" alt="" aria-hidden="true">
