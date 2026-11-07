@@ -278,6 +278,48 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   top:calc(13.5% + 110px);
 }
 
+/* ZIMOWY DZIEŃ — zsuwająca się bryła śniegu z oryginalnej grafiki lawiny. */
+#winterAvalanche{
+  position:absolute;
+  z-index:7;
+  top:calc(27% + 109px);
+  right:calc(21% - 205px);
+  width:174px;
+  height:auto;
+  display:block;
+  pointer-events:none;
+  visibility:hidden;
+  opacity:0;
+  transform-origin:55% 8%;
+}
+#start.winter-day #winterAvalanche{
+  visibility:visible;
+  animation:winter-avalanche-slide 18s linear infinite;
+}
+@keyframes winter-avalanche-slide{
+  0%,83.2%{opacity:0;transform:translate3d(0,0,0) rotate(0) scale(1)}
+  84%{opacity:1;transform:translate3d(0,0,0) rotate(0) scale(1)}
+  90%{opacity:1;transform:translate3d(5px,32px,0) rotate(2deg) scale(1.04);animation-timing-function:cubic-bezier(.48,0,.78,.35)}
+  95%{opacity:.98;transform:translate3d(13px,91px,0) rotate(5deg) scale(1.12);animation-timing-function:cubic-bezier(.62,0,.92,.48)}
+  98.5%{opacity:.78;transform:translate3d(20px,148px,0) rotate(8deg) scale(1.2)}
+  100%{opacity:0;transform:translate3d(25px,175px,0) rotate(10deg) scale(1.24)}
+}
+@media(max-width:700px){
+  #winterAvalanche{top:calc(25% + 109px);right:calc(13% - 200px);transform:scale(.78);transform-origin:top right}
+  #start.winter-day #winterAvalanche{animation-name:winter-avalanche-slide-mobile}
+}
+@keyframes winter-avalanche-slide-mobile{
+  0%,83.2%{opacity:0;transform:scale(.78) translate3d(0,0,0) rotate(0)}
+  84%{opacity:1;transform:scale(.78) translate3d(0,0,0) rotate(0)}
+  90%{opacity:1;transform:scale(.81) translate3d(5px,32px,0) rotate(2deg);animation-timing-function:cubic-bezier(.48,0,.78,.35)}
+  95%{opacity:.98;transform:scale(.87) translate3d(13px,91px,0) rotate(5deg);animation-timing-function:cubic-bezier(.62,0,.92,.48)}
+  98.5%{opacity:.78;transform:scale(.94) translate3d(20px,148px,0) rotate(8deg)}
+  100%{opacity:0;transform:scale(.97) translate3d(25px,175px,0) rotate(10deg)}
+}
+@media(prefers-reduced-motion:reduce){
+  #winterAvalanche{display:none}
+}
+
 /* KOZA — na razie samo ciało, wyłącznie w jesiennej scenerii nocnej. */
 #goatBodyGroup{
   position:absolute;
@@ -2643,6 +2685,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
       <img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dynia-halloween3.png" alt="">
     </div>
     <div id="chimneySmoke" aria-hidden="true"><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""></div>
+    <img id="winterAvalanche" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lawina.png" alt="" aria-hidden="true">
 <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud3" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-3-jesien-dzien.png" alt="" aria-hidden="true">
