@@ -3114,6 +3114,10 @@ const seasonImages={
 
 let lastSceneKey="";
 
+// TRYB PODGLĄDU: tymczasowo pokazuje zimowy dzień podczas dopracowywania animacji.
+// Po zakończeniu prac ustaw wartość na null, aby wrócić do automatycznych pór roku i dnia.
+const SCENE_PREVIEW="winter-day";
+
 // Pory dnia wyznaczane astronomicznie dla Polski; godziny przesuwają się wraz z porami roku.
 const DAYLIGHT_LATITUDE=52.1;
 const DAYLIGHT_LONGITUDE=19.4;
@@ -3145,8 +3149,11 @@ function getDayPeriod(date){
 // Sceneria dobierana automatycznie według pory roku i ustalonych godzin jesienią.
 function updateSeason(){
   const now=new Date();
-  const name=getSeasonName(now.getMonth());
-  const period=getDayPeriod(now);
+  const automaticName=getSeasonName(now.getMonth());
+  const automaticPeriod=getDayPeriod(now);
+  const preview=SCENE_PREVIEW?SCENE_PREVIEW.split("-"):null;
+  const name=preview?preview[0]:automaticName;
+  const period=preview?preview.slice(1).join("-"):automaticPeriod;
   const sceneKey=name+"-"+period;
   if(sceneKey===lastSceneKey)return;
   lastSceneKey=sceneKey;
