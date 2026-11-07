@@ -312,6 +312,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   visibility:visible;
   animation:winter-avalanche-slide 18s linear infinite;
 }
+/* Dwie lewe kopie lawiny opadają odrobinę szybciej niż oryginał. */
+#start.winter-day #winterAvalancheLeft,
+#start.winter-day #winterAvalancheLeft2{
+  animation-duration:17s;
+}
 @keyframes winter-avalanche-slide{
   0%,71.2%{opacity:0;filter:brightness(0) invert(1) blur(0);transform:translate3d(0,0,0) rotate(0) scale(1) scaleX(-1)}
   72%{opacity:.18;filter:brightness(0) invert(1) blur(7px);clip-path:inset(0 0 78% 0);transform:translate3d(0,0,0) rotate(0) scale(1) scaleX(-1);animation-timing-function:linear}
