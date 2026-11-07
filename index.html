@@ -278,105 +278,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   top:calc(13.5% + 110px);
 }
 
-/* ZIMOWY DZIEŃ — ciasno ułożone płatki tworzące zsuwającą się warstwę śniegu. */
-#winterShedSnow{
-  position:absolute;
-  z-index:7;
-  top:calc(27% + 109px);
-  right:calc(21% - 205px);
-  width:174px;
-  height:92px;
-  pointer-events:none;
-  visibility:hidden;
-  opacity:0;
-}
-#start.winter-day #winterShedSnow{
-  visibility:visible;
-  opacity:1;
-}
-#winterShedSnow .shed-snow-layer{
-  position:absolute;
-  top:0;
-  left:0;
-  width:154px;
-  height:30px;
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-  gap:0;
-  white-space:nowrap;
-  color:rgba(248,252,255,.98);
-  text-shadow:0 0 2px rgba(255,255,255,.8),0 1px 2px rgba(80,104,126,.22);
-  filter:drop-shadow(0 1px 1px rgba(75,96,113,.16));
-  transform-origin:58% 0;
-  animation:shed-snowflake-slide 20.5s linear infinite;
-}
-#winterShedSnow .shed-snow-layer span{
-  display:block;
-  flex:0 0 auto;
-  margin-left:-4.5px;
-  line-height:.85;
-}
-#winterShedSnow .shed-snow-layer-2{
-  top:3px;
-  left:-4px;
-  filter:drop-shadow(0 1px 1px rgba(75,96,113,.16)) opacity(.82);
-  animation-delay:-.16s;
-}
-#winterShedSnow .shed-snow-layer-3{
-  top:6px;
-  left:3px;
-  filter:drop-shadow(0 1px 1px rgba(75,96,113,.16)) opacity(.68);
-  animation-delay:-.32s;
-}
-#winterShedSnow .shed-snow-layer span:nth-child(n+23){
-  animation:shed-snow-right-shorter 20.5s linear infinite;
-}
-@keyframes shed-snow-right-shorter{
-  0%,73.17%{translate:0 0}
-  87.8%,100%{translate:0 -4px}
-}
-#winterShedSnow .shed-snow-layer span:nth-child(3n){font-size:7px;transform:translateY(1px)}
-#winterShedSnow .shed-snow-layer span:nth-child(3n + 1){font-size:6px}
-#winterShedSnow .shed-snow-layer span:nth-child(3n + 2){font-size:8px;transform:translateY(-1px)}
-#winterShedSnow .shed-snow-layer span:nth-child(4n){opacity:.96}
-#winterShedSnow .shed-snow-layer span:nth-child(5n){font-size:5px}
-/* Całe pierwsze 3/5 linii mocniej przekrzywione, z narastającym opadaniem. */
-#winterShedSnow .shed-snow-layer span:nth-child(n+1):nth-child(-n+3){position:relative;top:1px}
-#winterShedSnow .shed-snow-layer span:nth-child(n+4):nth-child(-n+6){position:relative;top:3.2px}
-#winterShedSnow .shed-snow-layer span:nth-child(n+7):nth-child(-n+9){position:relative;top:5.4px}
-#winterShedSnow .shed-snow-layer span:nth-child(n+10):nth-child(-n+12){position:relative;top:7.6px}
-#winterShedSnow .shed-snow-layer span:nth-child(n+13):nth-child(-n+15){position:relative;top:9.8px}
-#winterShedSnow .shed-snow-layer span:nth-child(n+16):nth-child(-n+18){position:relative;top:12px}
-#winterShedSnow .shed-snow-layer span:nth-child(n+19):nth-child(-n+21){position:relative;top:14.2px}
-#winterShedSnow .shed-snow-layer span:nth-child(22){position:relative;top:16.5px}
-/* Drugi odcinek jest lekko wydłużony przez nieco większy odstęp między płatkami. */
-#winterShedSnow .shed-snow-layer span:nth-child(n+23){margin-left:-2.5px}
-/* Druga część mocniej wygięta w dół, zachowując płynne połączenie z pierwszą. */
-#winterShedSnow .shed-snow-layer span:nth-child(n+23):nth-child(-n+24){position:relative;top:19.8px}
-#winterShedSnow .shed-snow-layer span:nth-child(n+25):nth-child(-n+27){position:relative;top:23.8px}
-#winterShedSnow .shed-snow-layer span:nth-child(n+28):nth-child(-n+30){position:relative;top:27.8px}
-#winterShedSnow .shed-snow-layer span:nth-child(n+31):nth-child(-n+33){position:relative;top:31.8px}
-#winterShedSnow .shed-snow-layer span:nth-child(n+34):nth-child(-n+36){position:relative;top:37px}
-@keyframes shed-snowflake-slide{
-  0%,73.17%{opacity:0;transform:translate(0,-2px) scaleY(1)}
-  73.18%{opacity:1;transform:translate(0,0) scaleY(1)}
-  87.8%{opacity:.96;transform:translate(0,127px) scaleY(.8)}
-  100%{opacity:0;transform:translate(0,127px) scaleY(.8)}
-}
-@keyframes shed-snowflake-break{
-  0%,82%,100%{opacity:0;transform:translate(0,0) scale(.45)}
-  85%{opacity:.98;transform:translate(var(--dx),calc(var(--dy) * .35)) scale(1.15)}
-  90%{opacity:.85;transform:translate(var(--dx),calc(var(--dy) * .35 + 2px)) scale(1)}
-  96%{opacity:0;transform:translate(var(--dx),calc(var(--dy) * .35 + 5px)) scale(.65)}
-}
-@media(max-width:700px){
-  #winterShedSnow{top:calc(25% + 109px);right:calc(13% - 200px);transform:scale(.78);transform-origin:top right}
-}
-@media(prefers-reduced-motion:reduce){
-  #winterShedSnow{display:none}
-}
-
 /* KOZA — na razie samo ciało, wyłącznie w jesiennej scenerii nocnej. */
 #goatBodyGroup{
   position:absolute;
@@ -2742,11 +2643,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
       <img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dynia-halloween3.png" alt="">
     </div>
     <div id="chimneySmoke" aria-hidden="true"><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""><img class="smoke-puff" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/dym-komin.png" alt=""></div>
-    <div id="winterShedSnow" aria-hidden="true">
-      <span class="shed-snow-layer shed-snow-layer-2"><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span></span>
-      <span class="shed-snow-layer shed-snow-layer-3"><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span></span>
-      <span class="shed-snow-layer"><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span><span>❄</span></span>
-    </div>
 <img id="startCloud" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-1-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-2-jesien-dzien.png" alt="" aria-hidden="true">
     <img id="startCloud3" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/chmura-3-jesien-dzien.png" alt="" aria-hidden="true">
