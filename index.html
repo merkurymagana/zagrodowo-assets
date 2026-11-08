@@ -233,7 +233,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #auroraNorthern{
   position:absolute;
   z-index:2;
-  top:calc(2.5% + 135px);
+  top:calc(2.5% + 165px);
   right:calc(2.5% + 170px);
   width:clamp(70px, 9.5vw, 155px);
   height:auto;
@@ -251,9 +251,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   display:none;
 }
 @keyframes auroraGlow{
-  0%{opacity:.58;transform:skewX(-2deg) scaleY(.97)}
-  50%{opacity:.98;transform:skewX(1.5deg) scaleY(1.04)}
-  100%{opacity:.7;transform:skewX(-1deg) scaleY(1)}
+  0%{opacity:.58;transform:skewX(-2deg) scaleX(2) scaleY(.97)}
+  50%{opacity:.98;transform:skewX(1.5deg) scaleX(2) scaleY(1.04)}
+  100%{opacity:.7;transform:skewX(-1deg) scaleX(2) scaleY(1)}
 }
 @media(prefers-reduced-motion:reduce){
   #auroraNorthern{animation:none;opacity:.75}
