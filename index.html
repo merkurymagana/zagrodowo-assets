@@ -262,11 +262,51 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 @media(prefers-reduced-motion:reduce){
   #auroraNorthern{animation:none;opacity:.75}
 }
-#start.winter-night #auroraNorthern{display:block}
+#auroraNorthern,
+#auroraNorthern2{
+  /* Obie warstwy korzystają z tego samego wyglądu i filtrów. */
+}
+#auroraNorthern2{
+  position:absolute;
+  z-index:2;
+  top:calc(2.5% + 165px);
+  right:calc(2.5% + 170px);
+  width:clamp(70px, 9.5vw, 155px);
+  height:auto;
+  max-height:12%;
+  object-fit:contain;
+  object-position:top right;
+  pointer-events:none;
+  user-select:none;
+  opacity:.9;
+  filter:url(#auroraFlow) blur(2.6px) saturate(1.16) drop-shadow(0 0 14px rgba(73,235,174,.28));
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.12) 7%, rgba(0,0,0,.62) 17%, #000 29%);
+  mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.12) 7%, rgba(0,0,0,.62) 17%, #000 29%);
+  animation:auroraGlowSecond 48s ease-in-out infinite;
+  transform-origin:center;
+  display:none;
+}
+@keyframes auroraGlowSecond{
+  0%{opacity:0;transform:rotate(90deg) skewX(-2deg) scaleX(2) scaleY(.97)}
+  12%{opacity:.22;transform:rotate(90deg) skewX(-1deg) scaleX(2) scaleY(.99)}
+  28%{opacity:.82;transform:rotate(90deg) skewX(1deg) scaleX(2) scaleY(1.02)}
+  48%{opacity:.94;transform:rotate(90deg) skewX(1.5deg) scaleX(2) scaleY(1.04)}
+  64%{opacity:.78;transform:rotate(90deg) skewX(.5deg) scaleX(2) scaleY(1.02)}
+  82%{opacity:.3;transform:rotate(90deg) skewX(-1deg) scaleX(2) scaleY(.99)}
+  100%{opacity:0;transform:rotate(90deg) skewX(-2deg) scaleX(2) scaleY(.97)}
+}
+#start.winter-night #auroraNorthern,
+#start.winter-night #auroraNorthern2{display:block}
 @media(max-width:700px){
   #auroraNorthern{
     top:3%;
     right:1%;
+    width:14vw;
+    max-height:9.5%;
+  }
+  #auroraNorthern2{
+    top:calc(3% + 30px);
+    right:calc(1% + 25px);
     width:14vw;
     max-height:9.5%;
   }
@@ -2792,6 +2832,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
       </filter>
     </svg>
     <img id="auroraNorthern" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zorza-polarna1.png" alt="" aria-hidden="true">
+    <img id="auroraNorthern2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zorza-polarna2.png" alt="" aria-hidden="true">
     <div class="season-effects" id="seasonEffects" aria-hidden="true"></div>
     <div id="autumnPumpkins" aria-hidden="true">
       <span class="pumpkin-glow pumpkin-glow-one"></span>
