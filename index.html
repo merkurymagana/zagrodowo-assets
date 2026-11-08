@@ -228,6 +228,34 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation:none!important;
 }
 
+
+/* ZORZA POLARNA — widoczna wyłącznie w zimowej nocy. */
+#auroraNorthern{
+  position:absolute;
+  z-index:2;
+  top:2.5%;
+  right:2.5%;
+  width:clamp(280px, 38vw, 620px);
+  height:auto;
+  max-height:48%;
+  object-fit:contain;
+  object-position:top right;
+  pointer-events:none;
+  user-select:none;
+  opacity:.88;
+  filter:blur(.25px) saturate(1.06);
+  display:none;
+}
+#start.winter-night #auroraNorthern{display:block}
+@media(max-width:700px){
+  #auroraNorthern{
+    top:3%;
+    right:1%;
+    width:56vw;
+    max-height:38%;
+  }
+}
+
 /* DYM Z KOMINA — grafika PNG, delikatnie rozpraszająca się w prawo. */
 #chimneySmoke{
   position:absolute;
@@ -2737,6 +2765,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
+    <img id="auroraNorthern" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zorza-polarna1.png" alt="" aria-hidden="true">
     <div class="season-effects" id="seasonEffects" aria-hidden="true"></div>
     <div id="autumnPumpkins" aria-hidden="true">
       <span class="pumpkin-glow pumpkin-glow-one"></span>
