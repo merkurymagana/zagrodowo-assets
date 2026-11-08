@@ -316,6 +316,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #start.winter-day #winterAvalancheLeft,
 #start.winter-day #winterAvalancheLeft2{
   animation-duration:15s;
+  /* Lewe lawiny mają przesuniętą fazę, więc nie zsuwają się równocześnie z prawą. */
+  animation-delay:-5s;
 }
 @keyframes winter-avalanche-slide{
   0%,71.2%{opacity:0;filter:brightness(0) invert(1) blur(0);transform:translate3d(0,0,0) rotate(0) scale(1) scaleX(-1)}
