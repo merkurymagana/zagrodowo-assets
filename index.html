@@ -247,17 +247,17 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   -webkit-mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.12) 7%, rgba(0,0,0,.62) 17%, #000 29%);
   mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.12) 7%, rgba(0,0,0,.62) 17%, #000 29%);
   animation:auroraGlow 48s ease-in-out infinite;
-  transform-origin:center;
+  transform-origin:top center;
   display:none;
 }
 @keyframes auroraGlow{
-  0%{opacity:0;transform:skewX(-2deg) scaleX(2) scaleY(.97)}
-  12%{opacity:.22;transform:skewX(-1deg) scaleX(2) scaleY(.99)}
-  28%{opacity:.82;transform:skewX(1deg) scaleX(2) scaleY(1.02)}
-  48%{opacity:.94;transform:skewX(1.5deg) scaleX(2) scaleY(1.04)}
-  64%{opacity:.78;transform:skewX(.5deg) scaleX(2) scaleY(1.02)}
-  82%{opacity:.3;transform:skewX(-1deg) scaleX(2) scaleY(.99)}
-  100%{opacity:0;transform:skewX(-2deg) scaleX(2) scaleY(.97)}
+  0%{opacity:0;transform:skewX(-2deg) scaleX(2) scaleY(.91)}
+  12%{opacity:.22;transform:skewX(-1deg) scaleX(2) scaleY(.93)}
+  28%{opacity:.82;transform:skewX(1deg) scaleX(2) scaleY(.96)}
+  48%{opacity:.94;transform:skewX(1.5deg) scaleX(2) scaleY(.98)}
+  64%{opacity:.78;transform:skewX(.5deg) scaleX(2) scaleY(.96)}
+  82%{opacity:.3;transform:skewX(-1deg) scaleX(2) scaleY(.93)}
+  100%{opacity:0;transform:skewX(-2deg) scaleX(2) scaleY(.91)}
 }
 @media(prefers-reduced-motion:reduce){
   #auroraNorthern{animation:none;opacity:.75}
