@@ -246,14 +246,18 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   filter:url(#auroraFlow) blur(2.6px) saturate(1.16) drop-shadow(0 0 14px rgba(73,235,174,.28));
   -webkit-mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.12) 7%, rgba(0,0,0,.62) 17%, #000 29%);
   mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.12) 7%, rgba(0,0,0,.62) 17%, #000 29%);
-  animation:auroraGlow 12s ease-in-out infinite alternate;
+  animation:auroraGlow 48s ease-in-out infinite;
   transform-origin:center;
   display:none;
 }
 @keyframes auroraGlow{
-  0%{opacity:.58;transform:skewX(-2deg) scaleX(2) scaleY(.97)}
-  50%{opacity:.98;transform:skewX(1.5deg) scaleX(2) scaleY(1.04)}
-  100%{opacity:.7;transform:skewX(-1deg) scaleX(2) scaleY(1)}
+  0%{opacity:0;transform:skewX(-2deg) scaleX(2) scaleY(.97)}
+  12%{opacity:.22;transform:skewX(-1deg) scaleX(2) scaleY(.99)}
+  28%{opacity:.82;transform:skewX(1deg) scaleX(2) scaleY(1.02)}
+  48%{opacity:.94;transform:skewX(1.5deg) scaleX(2) scaleY(1.04)}
+  64%{opacity:.78;transform:skewX(.5deg) scaleX(2) scaleY(1.02)}
+  82%{opacity:.3;transform:skewX(-1deg) scaleX(2) scaleY(.99)}
+  100%{opacity:0;transform:skewX(-2deg) scaleX(2) scaleY(.97)}
 }
 @media(prefers-reduced-motion:reduce){
   #auroraNorthern{animation:none;opacity:.75}
