@@ -242,16 +242,16 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   object-position:top right;
   pointer-events:none;
   user-select:none;
-  opacity:.78;
-  filter:url(#auroraFlow) blur(.25px) saturate(1.12) drop-shadow(0 0 7px rgba(73,235,174,.24));
-  animation:auroraGlow 16s ease-in-out infinite alternate;
+  opacity:.9;
+  filter:url(#auroraFlow) blur(.3px) saturate(1.28) drop-shadow(0 0 11px rgba(73,235,174,.38));
+  animation:auroraGlow 12s ease-in-out infinite alternate;
   transform-origin:center;
   display:none;
 }
 @keyframes auroraGlow{
-  0%{opacity:.62}
-  45%{opacity:.84}
-  100%{opacity:.72}
+  0%{opacity:.58;transform:skewX(-2deg) scaleY(.97)}
+  50%{opacity:.98;transform:skewX(1.5deg) scaleY(1.04)}
+  100%{opacity:.7;transform:skewX(-1deg) scaleY(1)}
 }
 @media(prefers-reduced-motion:reduce){
   #auroraNorthern{animation:none;opacity:.75}
@@ -2778,10 +2778,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     <svg aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden">
       <filter id="auroraFlow" x="-18%" y="-18%" width="136%" height="136%">
         <feTurbulence type="fractalNoise" baseFrequency=".012 .028" numOctaves="2" seed="8" result="auroraNoise">
-          <animate attributeName="baseFrequency" values=".012 .028;.018 .022;.01 .034;.012 .028" dur="19s" repeatCount="indefinite"/>
+          <animate attributeName="baseFrequency" values=".008 .018;.025 .038;.012 .045;.02 .02;.008 .018" dur="14s" repeatCount="indefinite"/>
         </feTurbulence>
-        <feDisplacementMap in="SourceGraphic" in2="auroraNoise" scale="6" xChannelSelector="R" yChannelSelector="G">
-          <animate attributeName="scale" values="4;8;5;7;4" dur="17s" repeatCount="indefinite"/>
+        <feDisplacementMap in="SourceGraphic" in2="auroraNoise" scale="18" xChannelSelector="R" yChannelSelector="G">
+          <animate attributeName="scale" values="10;22;13;20;10" dur="13s" repeatCount="indefinite"/>
         </feDisplacementMap>
       </filter>
     </svg>
