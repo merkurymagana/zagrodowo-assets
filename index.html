@@ -3424,7 +3424,7 @@ function drawSpringBreeze(now){
   if(!ctx||!springBreezeBase||!springBreezeWork||!springBreezeMask||!document.getElementById('start').classList.contains('spring-morning'))return;
   const w=canvas.width,h=canvas.height,src=springBreezeBase.data,dst=springBreezeWork.data,mask=springBreezeMask,t=now*.001;
   dst.set(src);
-  const phase=t*.62;
+  const phase=t*.78;
   for(let y=330;y<455;y++)for(let x=750;x<1545;x++){
     const di=(y*w+x)*4;if(mask[di+3]<128)continue;
     // Wyraźniejsze, ale nadal miękkie ugięcie: mocniejsze przy górnej krawędzi korony.
