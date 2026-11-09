@@ -75,6 +75,47 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   background:#70482f;
 }
 
+/* DELIKATNE KRĘGI WODY POD LIŚCIEM LILII. */
+#springLilyWater{
+  position:absolute;
+  z-index:7;
+  right:calc(12% - 52px);
+  bottom:calc(19% + 8px);
+  width:72px;
+  height:30px;
+  display:none;
+  border-radius:50%;
+  pointer-events:none;
+  transform:rotate(-12deg);
+  background:radial-gradient(ellipse at center, #193f3a30 0%, #193f3a18 34%, transparent 72%);
+}
+#springLilyWater::before,
+#springLilyWater::after{
+  content:"";
+  position:absolute;
+  inset:2px 1px;
+  border:1px solid #d8eee0a8;
+  border-radius:50%;
+  box-shadow:0 0 3px #d8eee044, inset 0 0 3px #d8eee033;
+  animation:springLilyRipple 4.8s ease-out infinite;
+}
+#springLilyWater::after{
+  animation-delay:-2.4s;
+}
+@keyframes springLilyRipple{
+  0%{transform:scale(.72,.72);opacity:0}
+  18%{opacity:.48}
+  75%{opacity:.2}
+  100%{transform:scale(1.18,1.12);opacity:0}
+}
+#start.spring-morning #springLilyWater{display:block}
+@media(max-width:1050px){
+  #springLilyWater{right:calc(8% - 52px);bottom:calc(20% + 8px);width:66px;height:28px}
+}
+@media(max-width:700px){
+  #springLilyWater{right:calc(7% - 48px);bottom:calc(20% + 8px);width:58px;height:25px}
+}
+
 /* LIŚĆ LILII WODNEJ — osobna warstwa na wiosennym stawie. */
 #springLily{
   position:absolute;
@@ -2878,7 +2919,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
-    <img id="springLily" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lilia-wodna.png?v=1" alt="" aria-hidden="true">
+    <div id="springLilyWater" aria-hidden="true"></div>
+<img id="springLily" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lilia-wodna.png?v=1" alt="" aria-hidden="true">
     <canvas id="springBreezeCanvas" aria-hidden="true"></canvas>
     <svg id="springBreezeOverlay" viewBox="0 0 1686 950" preserveAspectRatio="none" aria-hidden="true">
       <defs>
