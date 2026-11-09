@@ -2871,7 +2871,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
           <feTurbulence type="fractalNoise" baseFrequency=".008 .035" numOctaves="1" seed="17" result="windNoise">
             <animate attributeName="baseFrequency" values=".006 .028;.009 .042" dur="36s" repeatCount="indefinite"/>
           </feTurbulence>
-          <feDisplacementMap in="SourceGraphic" in2="windNoise" scale="11" xChannelSelector="R" yChannelSelector="G">
+          <feOffset in="windNoise" dx="0" dy="0" result="movingWindNoise">
+            <animate attributeName="dx" values="0;140" dur="28s" repeatCount="indefinite"/>
+          </feOffset>
+          <feDisplacementMap in="SourceGraphic" in2="movingWindNoise" scale="11" xChannelSelector="R" yChannelSelector="G">
             <animate attributeName="scale" values="7;13" dur="28s" repeatCount="indefinite"/>
           </feDisplacementMap>
         </filter>
