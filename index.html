@@ -104,7 +104,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:4;display:none;pointer-events:none;overflow:hidden;
 }
 #start.spring-morning #springBreezeOverlay{display:block}
-#springBreezeOverlay image{mask:url(#springBreezeMask);filter:url(#springBreezeWarp)}
+#springBreezeOverlay image{pointer-events:none}
 @media(prefers-reduced-motion:reduce){
   #start.spring-morning #springBreezeOverlay{display:none}
 }
@@ -2855,7 +2855,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
           <g fill="none" stroke="white" stroke-width="58" stroke-linecap="round" stroke-linejoin="round">
             <path d="M 95,245 C 155,210 195,285 255,245 S 325,215 365,245"/>
             <path d="M 120,195 C 165,175 205,135 250,115 S 315,85 345,65"/>
-            <path d="M 760,390 C 900,345 1010,430 1145,380 S 1370,360 1520,395"/>
+
             <path d="M 630,420 C 655,395 680,370 705,345"/>
             <path d="M 630,345 C 655,370 680,395 705,420"/>
             <path d="M 70,690 C 95,665 120,715 145,690 S 175,665 190,690"/>
@@ -2867,6 +2867,21 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
             <path d="M 1605,325 C 1580,345 1630,365 1605,385 S 1580,425 1605,445"/>
           </g>
         </mask>
+        <mask id="springBreezeMaskB" maskUnits="userSpaceOnUse" x="0" y="0" width="1686" height="950">
+          <rect width="1686" height="950" fill="black"/>
+          <path d="M 760,390 C 900,345 1010,430 1145,380 S 1370,360 1520,395" fill="none" stroke="white" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/>
+        </mask>
+        <filter id="springBreezeWarpB" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency=".009 .038" numOctaves="1" seed="21" result="windNoiseB">
+            <animate attributeName="baseFrequency" values=".007 .03;.011 .045" dur="27s" repeatCount="indefinite"/>
+          </feTurbulence>
+          <feOffset in="windNoiseB" dx="0" dy="0" result="movingWindNoiseB">
+            <animate attributeName="dx" values="0;140" dur="21s" repeatCount="indefinite"/>
+          </feOffset>
+          <feDisplacementMap in="SourceGraphic" in2="movingWindNoiseB" scale="11" xChannelSelector="R" yChannelSelector="G">
+            <animate attributeName="scale" values="7;13" dur="21s" repeatCount="indefinite"/>
+          </feDisplacementMap>
+        </filter>
         <filter id="springBreezeWarp" x="-5%" y="-5%" width="110%" height="110%">
           <feTurbulence type="fractalNoise" baseFrequency=".008 .035" numOctaves="1" seed="17" result="windNoise">
             <animate attributeName="baseFrequency" values=".006 .028;.009 .042" dur="36s" repeatCount="indefinite"/>
@@ -2879,7 +2894,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
           </feDisplacementMap>
         </filter>
       </defs>
-      <image id="springBreezeImage" x="0" y="0" width="1686" height="950" preserveAspectRatio="none"/>
+      <image id="springBreezeImage" x="0" y="0" width="1686" height="950" preserveAspectRatio="none" style="mask:url(#springBreezeMask);filter:url(#springBreezeWarp)"/>
+      <image id="springBreezeImageB" x="0" y="0" width="1686" height="950" preserveAspectRatio="none" style="mask:url(#springBreezeMaskB);filter:url(#springBreezeWarpB)"/>
     </svg>
     <canvas id="springDewShimmer" aria-hidden="true"></canvas>
     <svg id="springWaveGuides" viewBox="0 0 1686 950" preserveAspectRatio="none" aria-hidden="true">
@@ -3398,6 +3414,8 @@ function updateSeason(){
     const syncSpringBreezeImage=()=>{
       const breezeImage=document.getElementById("springBreezeImage");
       if(breezeImage)breezeImage.setAttribute("href",seasonImage.currentSrc||seasonImage.src);
+      const breezeImageB=document.getElementById("springBreezeImageB");
+      if(breezeImageB)breezeImageB.setAttribute("href",seasonImage.currentSrc||seasonImage.src);
       setupSpringDewShimmer();
     };
     seasonImage.onload=syncSpringBreezeImage;
