@@ -129,8 +129,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
   user-select:none;
   transform:rotate(-12deg);
-  transform-origin:center;
+  transform-origin:50% 58%;
   filter:drop-shadow(0 3px 4px #18351f55);
+  animation:springLilyFloat 5.6s ease-in-out infinite;
+}
+@keyframes springLilyFloat{
+  0%,100%{transform:rotate(-12deg) translate3d(0,0,0)}
+  25%{transform:rotate(-10.8deg) translate3d(0,-1px,0)}
+  50%{transform:rotate(-12deg) translate3d(0,0,0)}
+  75%{transform:rotate(-13.2deg) translate3d(0,1px,0)}
 }
 #start.spring-morning #springLily{
   display:block;
