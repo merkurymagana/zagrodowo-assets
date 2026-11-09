@@ -106,25 +106,28 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   inset:-12% -35%;
   z-index:4;
   pointer-events:none;
-  opacity:.16;
+  opacity:.62;
   background:
-    linear-gradient(112deg,
-      transparent 22%,
-      rgba(255,255,220,.10) 34%,
-      rgba(255,255,255,.22) 43%,
-      rgba(226,244,204,.12) 50%,
-      transparent 63%);
-  transform:translateX(-18%) skewX(-7deg);
-  animation:spring-breeze-drift 19s ease-in-out infinite alternate;
-  mix-blend-mode:soft-light;
+    linear-gradient(108deg,
+      transparent 8%,
+      rgba(255,255,220,.00) 22%,
+      rgba(255,255,225,.34) 34%,
+      rgba(255,255,255,.58) 42%,
+      rgba(226,244,204,.34) 49%,
+      rgba(255,255,255,.08) 57%,
+      transparent 70%);
+  transform:translate3d(-24%,0,0) skewX(-7deg);
+  animation:spring-breeze-drift 11s ease-in-out infinite alternate;
+  mix-blend-mode:screen;
+  filter:blur(7px);
 }
 @keyframes spring-breeze-drift{
-  0%{transform:translate3d(-8%,0,0) skewX(-7deg);opacity:.09}
-  45%{transform:translate3d(3%,.5%,0) skewX(-4deg);opacity:.17}
-  100%{transform:translate3d(12%,-.3%,0) skewX(-8deg);opacity:.11}
+  0%{transform:translate3d(-24%,0,0) skewX(-7deg);opacity:.28}
+  45%{transform:translate3d(0,.5%,0) skewX(-4deg);opacity:.72}
+  100%{transform:translate3d(24%,-.3%,0) skewX(-8deg);opacity:.38}
 }
 @media(prefers-reduced-motion:reduce){
-  #start.spring-morning::after{animation:none;opacity:.08}
+  #start.spring-morning::after{animation:none;opacity:.25}
 }
 
 
