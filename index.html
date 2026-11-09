@@ -2855,12 +2855,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
           <rect width="1686" height="950" fill="black"/>
           <path d="M 760,390 C 900,345 1010,430 1145,380 S 1370,360 1520,395" fill="none" stroke="white" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/>
         </mask>
-        <filter id="springBreezeWarpB" filterUnits="userSpaceOnUse" x="0" y="0" width="1686" height="950">
+        <filter id="springBreezeWarpB" filterUnits="userSpaceOnUse" x="730" y="315" width="850" height="150">
           <feTurbulence type="fractalNoise" baseFrequency=".009 .038" numOctaves="1" seed="21" stitchTiles="stitch" result="windNoiseB"/>
           <feOffset in="windNoiseB" dx="0" dy="0" result="movingWindNoiseB">
-            <animate attributeName="dx" values="0;1686" dur="58s" calcMode="linear" repeatCount="indefinite"/>
+            <animate attributeName="dx" values="0;850" dur="58s" calcMode="linear" repeatCount="indefinite"/>
           </feOffset>
-          <feDisplacementMap in="SourceGraphic" in2="movingWindNoiseB" scale="20" xChannelSelector="R" yChannelSelector="G"/>
+          <feDisplacementMap in="SourceGraphic" in2="movingWindNoiseB" scale="15" xChannelSelector="R" yChannelSelector="G"/>
         </filter>
 
       </defs>
