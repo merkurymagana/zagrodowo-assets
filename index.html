@@ -104,7 +104,16 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   position:absolute;inset:0;z-index:7;width:100%;height:100%;
   display:none;pointer-events:none;
 }
+
 #start.spring-morning #springBreezeCanvas{display:block}
+#springTreeSelectCanvas{position:absolute;inset:0;z-index:30;width:100%;height:100%;display:none;touch-action:none;cursor:crosshair}
+#start.spring-morning.tree-selecting #springTreeSelectCanvas{display:block}
+#springTreeSelectPanel{position:absolute;z-index:31;top:14px;left:14px;display:none;max-width:min(390px,calc(100% - 28px));padding:12px;background:#243629ee;color:#fff;border:1px solid #ffffff66;border-radius:10px;font:14px/1.35 Arial,sans-serif;box-shadow:0 3px 14px #0006}
+#start.spring-morning.tree-selecting #springTreeSelectPanel{display:block}
+#springTreeSelectPanel button{margin:5px 5px 0 0;padding:7px 10px;border:0;border-radius:6px;background:#e8d6a8;color:#2b2418;font-weight:700;cursor:pointer}
+#springTreeSelectPanel textarea{display:none;width:100%;height:90px;margin-top:8px;color:#222;font:11px monospace}
+#springTreeSelectPanel .hint{font-size:12px;opacity:.9}
+
 @media(prefers-reduced-motion:reduce){
   #start.spring-morning #springBreezeOverlay{display:none}
 }
@@ -2850,6 +2859,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <canvas id="springBreezeCanvas" aria-hidden="true"></canvas>
+    <canvas id="springTreeSelectCanvas" aria-label="Zaznacz dodatkowe korony drzew"></canvas>
+    <div id="springTreeSelectPanel">
+      <strong>Dodaj korony do animacji wiatru</strong>
+      <div class="hint">Przeciągaj myszką po brakujących koronach. Zaznaczenia nie zmienią obecnej animacji, dopóki nie zakończysz.</div>
+      <button type="button" id="springTreeSelectStart">Zacznij zaznaczać</button>
+      <button type="button" id="springTreeSelectUndo">Cofnij</button>
+      <button type="button" id="springTreeSelectFinish">Zakończ i skopiuj</button>
+      <textarea id="springTreeSelectOutput" readonly></textarea>
+    </div>
     <svg id="springBreezeOverlay" viewBox="0 0 1686 950" preserveAspectRatio="none" aria-hidden="true">
       <defs>
 
@@ -3439,6 +3457,56 @@ function drawSpringBreeze(now){
   }
   ctx.putImageData(springBreezeWork,0,0);
 }
+
+
+// Tymczasowe narzędzie do dodawania kolejnych obszarów koron drzew do wspólnej animacji.
+(function initSpringTreeSelector(){
+  const start=document.getElementById('start');
+  const canvas=document.getElementById('springTreeSelectCanvas');
+  const panel=document.getElementById('springTreeSelectPanel');
+  if(!start||!canvas||!panel)return;
+  const ctx=canvas.getContext('2d');
+  const extraStrokes=[];
+  let drawing=false,current=null,active=false;
+  function fit(){canvas.width=1686;canvas.height=950;render();}
+  function point(e){
+    const r=canvas.getBoundingClientRect();
+    return [Math.round((e.clientX-r.left)/r.width*1686),Math.round((e.clientY-r.top)/r.height*950)];
+  }
+  function render(){
+    ctx.clearRect(0,0,1686,950);
+    ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=38;ctx.strokeStyle='rgba(40,170,255,.62)';
+    for(const stroke of extraStrokes)paint(stroke);
+    if(current)paint(current);
+  }
+  function paint(stroke){
+    if(!stroke.length)return;
+    ctx.beginPath();ctx.moveTo(stroke[0][0],stroke[0][1]);
+    for(let i=1;i<stroke.length;i++)ctx.lineTo(stroke[i][0],stroke[i][1]);
+    if(stroke.length===1){ctx.lineTo(stroke[0][0]+1,stroke[0][1]);}
+    ctx.stroke();
+  }
+  function setActive(v){
+    active=v;start.classList.toggle('tree-selecting',v);
+    canvas.style.pointerEvents=v?'auto':'none';
+    if(v){fit();}else{render();}
+  }
+  document.getElementById('springTreeSelectStart').addEventListener('click',()=>{setActive(true);document.getElementById('springTreeSelectOutput').style.display='none';});
+  document.getElementById('springTreeSelectUndo').addEventListener('click',()=>{if(current){current=null;}else{extraStrokes.pop();}render();});
+  canvas.addEventListener('pointerdown',e=>{if(!active)return;drawing=true;canvas.setPointerCapture(e.pointerId);current=[point(e)];render();});
+  canvas.addEventListener('pointermove',e=>{if(!drawing||!current)return;const p=point(e),last=current[current.length-1];if(Math.hypot(p[0]-last[0],p[1]-last[1])>=3){current.push(p);render();}});
+  function stop(e){if(!drawing)return;drawing=false;if(current&&current.length)extraStrokes.push(current);current=null;render();}
+  canvas.addEventListener('pointerup',stop);canvas.addEventListener('pointercancel',stop);
+  document.getElementById('springTreeSelectFinish').addEventListener('click',()=>{
+    if(drawing)stop({});
+    setActive(false);
+    const payload=JSON.stringify({width:1686,height:950,brush:38,strokes:extraStrokes});
+    const out=document.getElementById('springTreeSelectOutput');out.value=payload;out.style.display='block';out.focus();out.select();
+    try{navigator.clipboard&&navigator.clipboard.writeText(payload).then(()=>{document.getElementById('springTreeSelectFinish').textContent='Skopiowano — wklej tutaj';}).catch(()=>{});}catch(_){}
+  });
+  window.addEventListener('resize',fit);
+  fit();
+})();
 
 // Sceneria dobierana automatycznie według pory roku oraz astronomicznych godzin świtu, dnia i nocy.
 function updateSeason(){
