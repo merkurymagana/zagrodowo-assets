@@ -2838,18 +2838,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #start.spring-morning #springWaveGuides{display:block}
 #springWaveGuides{display:none!important}
 
-/* Tymczasowe narzędzie do wskazywania koron drzew dla animacji wiatru. */
-#windSelectCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:90;display:none;pointer-events:none;touch-action:none}
-#start.wind-select-mode #windSelectCanvas{display:block;pointer-events:auto;cursor:crosshair}
-#windSelectPanel{position:absolute;z-index:100;top:14px;left:14px;display:none;gap:7px;align-items:center;flex-wrap:wrap;max-width:min(560px,calc(100% - 28px));padding:10px 12px;border-radius:10px;background:#342719ed;color:#fff;font:600 13px/1.35 Arial,sans-serif;box-shadow:0 3px 14px #0007}
-#start.spring-morning #windSelectPanel{display:flex}
-#windSelectPanel button{border:1px solid #ffffff66;border-radius:7px;padding:7px 10px;background:#765536;color:white;font:600 12px Arial,sans-serif;cursor:pointer}
-#windSelectPanel button.primary{background:#527b43}
-#windSelectPanel button:disabled{opacity:.45;cursor:default}
-#windSelectOutput{display:none;width:min(100%,520px);height:70px;resize:vertical;border-radius:6px;padding:6px;font:11px monospace;color:#222}
-#windSelectPanel.output-open{align-items:flex-start}
-#windSelectPanel.output-open #windSelectOutput{display:block}
-
 </style>
 </head>
 
@@ -2862,15 +2850,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <canvas id="springBreezeCanvas" aria-hidden="true"></canvas>
-    <canvas id="windSelectCanvas" aria-label="Zaznacz obszary koron drzew"></canvas>
-    <div id="windSelectPanel">
-      <span>Tryb zaznaczania koron drzew:</span>
-      <button id="windSelectToggle" class="primary" type="button">Zacznij zaznaczać</button>
-      <button id="windSelectUndo" type="button" disabled>Cofnij</button>
-      <button id="windSelectClear" type="button">Wyczyść</button>
-      <button id="windSelectExport" type="button">Zakończ i skopiuj mapę</button>
-      <textarea id="windSelectOutput" readonly aria-label="Dane zaznaczenia do skopiowania"></textarea>
-    </div>
     <svg id="springBreezeOverlay" viewBox="0 0 1686 950" preserveAspectRatio="none" aria-hidden="true">
       <defs>
 
@@ -3413,53 +3392,47 @@ function drawSpringBreeze(now){
   ctx.putImageData(springBreezeWork,0,0);
 }
 
-/* Ręczne zaznaczanie koron drzew — dane można skopiować do dalszego przygotowania maski wiatru. */
-(function initWindSelectionTool(){
-  const start=document.getElementById('start');
-  const canvas=document.getElementById('windSelectCanvas');
-  const panel=document.getElementById('windSelectPanel');
-  const toggle=document.getElementById('windSelectToggle');
-  const undo=document.getElementById('windSelectUndo');
-  const clear=document.getElementById('windSelectClear');
-  const exportBtn=document.getElementById('windSelectExport');
-  const output=document.getElementById('windSelectOutput');
-  if(!start||!canvas||!panel)return;
-  const ctx=canvas.getContext('2d');
-  const W=1686,H=950,BRUSH=38;
-  canvas.width=W;canvas.height=H;
-  let drawing=false,active=false,strokes=[],current=null;
-  function redraw(){
-    ctx.clearRect(0,0,W,H);
-    ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='rgba(30,220,255,.58)';ctx.fillStyle='rgba(30,220,255,.58)';ctx.lineWidth=BRUSH;
-    for(const stroke of strokes){
-      if(!stroke.length)continue;
-      if(stroke.length===1){ctx.beginPath();ctx.arc(stroke[0][0],stroke[0][1],BRUSH/2,0,Math.PI*2);ctx.fill();continue;}
-      ctx.beginPath();ctx.moveTo(stroke[0][0],stroke[0][1]);
-      for(let i=1;i<stroke.length;i++)ctx.lineTo(stroke[i][0],stroke[i][1]);
-      ctx.stroke();
-    }
+/* Ręcznie wskazana maska koron drzew z zaznaczenia użytkownika. */
+const springTreeMaskStrokes=[[
+[778,390],[806,400],[826,398],[846,388],[871,380],[898,374],[930,368],[963,366],[990,360],[1018,355],[1054,357],[1083,357],[1127,351],[1159,351],[1197,354],[1227,357],[1269,363],[1302,366],[1336,375],[1375,377],[1403,371],[1433,364],[1466,364],[1494,370],[1519,380],[1529,391],[1528,404],[1521,422],[1510,424],[1499,409],[1491,396],[1477,390],[1460,388],[1444,393],[1431,401],[1412,401],[1389,399],[1364,394],[1340,402],[1316,418],[1305,434],[1310,413],[1310,398],[1287,391],[1282,405],[1282,415],[1268,419],[1256,413],[1254,396],[1241,387],[1219,384],[1217,402],[1227,409],[1213,417],[1198,412],[1198,404],[1198,392],[1175,378],[1154,377],[1136,378],[1150,387],[1168,397],[1171,411],[1157,405],[1141,403],[1127,400],[1112,395],[1108,386],[1091,382],[1065,383],[1035,386],[998,381],[978,382],[953,382],[922,386],[895,390],[865,391],[848,394],[853,400],[878,403],[907,403],[940,407],[970,408],[998,404],[1027,404],[1053,402],[1075,397],[1097,399],[1110,407],[1125,395],[1145,391],[1165,405],[1167,417],[1174,411],[1182,407],[1201,406],[1223,406],[1229,413],[1220,419],[1203,410],[1181,405],[1165,399],[1136,394],[1100,394],[1077,394],[1057,394],[1033,394],[1015,394],[988,394],[952,394],[920,398],[896,403],[878,403],[859,406],[843,407],[822,406],[803,401],[796,401],[807,397],[823,394],[840,390],[849,389]
+]];
+function setupSpringBreeze(){
+  const canvas=document.getElementById('springBreezeCanvas'),img=document.getElementById('seasonImage');
+  if(!canvas||!img||!img.complete||!img.naturalWidth)return;
+  const w=1686,h=950;canvas.width=w;canvas.height=h;
+  const ctx=canvas.getContext('2d',{willReadFrequently:true});
+  const scale=Math.max(w/img.naturalWidth,h/img.naturalHeight),dw=img.naturalWidth*scale,dh=img.naturalHeight*scale;
+  ctx.clearRect(0,0,w,h);ctx.drawImage(img,(w-dw)/2,(h-dh)/2,dw,dh);
+  springBreezeBase=ctx.getImageData(0,0,w,h);springBreezeWork=ctx.createImageData(w,h);
+  const mask=document.createElement('canvas');mask.width=w;mask.height=h;
+  const mctx=mask.getContext('2d',{willReadFrequently:true});
+  mctx.lineCap='round';mctx.lineJoin='round';mctx.lineWidth=38;mctx.strokeStyle='#fff';mctx.fillStyle='#fff';
+  for(const stroke of springTreeMaskStrokes){
+    if(!stroke.length)continue;
+    mctx.beginPath();mctx.moveTo(stroke[0][0],stroke[0][1]);
+    for(let i=1;i<stroke.length;i++)mctx.lineTo(stroke[i][0],stroke[i][1]);
+    mctx.stroke();
   }
-  function point(e){const r=canvas.getBoundingClientRect();return [Math.round((e.clientX-r.left)/r.width*W),Math.round((e.clientY-r.top)/r.height*H)];}
-  toggle.addEventListener('click',()=>{
-    active=!active;start.classList.toggle('wind-select-mode',active);
-    toggle.textContent=active?'Zakończ zaznaczanie':'Kontynuuj zaznaczanie';
-    if(active){panel.classList.remove('output-open');output.value='';}
-  });
-  canvas.addEventListener('pointerdown',e=>{if(!active)return;drawing=true;current=[point(e)];strokes.push(current);canvas.setPointerCapture(e.pointerId);redraw();});
-  canvas.addEventListener('pointermove',e=>{if(!drawing||!current)return;const p=point(e),last=current[current.length-1];if(Math.hypot(p[0]-last[0],p[1]-last[1])>=3){current.push(p);redraw();}});
-  function stop(){drawing=false;current=null;undo.disabled=!strokes.length;}
-  canvas.addEventListener('pointerup',stop);canvas.addEventListener('pointercancel',stop);canvas.addEventListener('lostpointercapture',stop);
-  undo.addEventListener('click',()=>{strokes.pop();undo.disabled=!strokes.length;redraw();});
-  clear.addEventListener('click',()=>{strokes=[];undo.disabled=true;redraw();output.value='';panel.classList.remove('output-open');});
-  exportBtn.addEventListener('click',async()=>{
-    active=false;drawing=false;start.classList.remove('wind-select-mode');toggle.textContent='Kontynuuj zaznaczanie';
-    const data=JSON.stringify({width:W,height:H,brush:BRUSH,strokes});
-    output.value=data;panel.classList.add('output-open');output.focus();output.select();
-    try{await navigator.clipboard.writeText(data);exportBtn.textContent='Skopiowano — wklej tutaj w czacie';}
-    catch(_){exportBtn.textContent='Zaznaczenie gotowe — skopiuj tekst poniżej';}
-  });
-  output.addEventListener('click',()=>output.select());
-})();
+  springBreezeMask=mctx.getImageData(0,0,w,h).data;
+  if(springBreezeFrame)cancelAnimationFrame(springBreezeFrame);springBreezeLast=0;
+  springBreezeFrame=requestAnimationFrame(drawSpringBreeze);
+}
+function drawSpringBreeze(now){
+  springBreezeFrame=requestAnimationFrame(drawSpringBreeze);
+  if(now-springBreezeLast<50)return;springBreezeLast=now;
+  const canvas=document.getElementById('springBreezeCanvas'),ctx=canvas&&canvas.getContext('2d');
+  if(!ctx||!springBreezeBase||!springBreezeWork||!springBreezeMask||!document.getElementById('start').classList.contains('spring-morning'))return;
+  const w=canvas.width,h=canvas.height,src=springBreezeBase.data,dst=springBreezeWork.data,mask=springBreezeMask,t=now*.001;
+  dst.set(src);
+  for(let y=330;y<455;y++)for(let x=750;x<1545;x++){
+    const di=(y*w+x)*4;if(mask[di+3]<128)continue;
+    const shift=Math.sin(x*.018-t*.9)*2.6;
+    const sy=Math.max(0,Math.min(h-1,Math.round(y+shift))),si=(sy*w+x)*4;
+    if(mask[si+3]<128)continue;
+    dst[di]=src[si];dst[di+1]=src[si+1];dst[di+2]=src[si+2];dst[di+3]=src[si+3];
+  }
+  ctx.putImageData(springBreezeWork,0,0);
+}
 
 // Sceneria dobierana automatycznie według pory roku oraz astronomicznych godzin świtu, dnia i nocy.
 function updateSeason(){
