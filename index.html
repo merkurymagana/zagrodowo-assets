@@ -3372,14 +3372,9 @@ function drawSpringBreeze(now){
     const di=(y*w+x)*4;
     const greenHere=src[di+1]>58&&src[di+1]>src[di]*1.08&&src[di+1]>src[di+2]*1.04;
     if(greenHere&&envelope>.035){
-      const shift=Math.sin(x*.032-t*1.15)*1.7*envelope;
+      const shift=Math.sin(x*.032-t*1.15)*4.2*envelope;
       const sy=Math.max(0,Math.min(h-1,Math.round(y+shift))),si=(sy*w+x)*4;
-      const greenThere=src[si+1]>58&&src[si+1]>src[si]*1.08&&src[si+1]>src[si+2]*1.04;
-      if(greenThere){
-        dst[di]=src[si];dst[di+1]=src[si+1];dst[di+2]=src[si+2];dst[di+3]=src[si+3];
-      }else{
-        dst[di]=src[di];dst[di+1]=src[di+1];dst[di+2]=src[di+2];dst[di+3]=src[di+3];
-      }
+      dst[di]=src[si];dst[di+1]=src[si+1];dst[di+2]=src[si+2];dst[di+3]=src[si+3];
     }else{
       dst[di]=src[di];dst[di+1]=src[di+1];dst[di+2]=src[di+2];dst[di+3]=src[di+3];
     }
