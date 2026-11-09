@@ -75,6 +75,28 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   background:#70482f;
 }
 
+/* LIŚĆ LILII WODNEJ — osobna warstwa na wiosennym stawie. */
+#springLily{
+  position:absolute;
+  z-index:4;
+  right:23%;
+  bottom:16%;
+  width:clamp(76px,7.2vw,124px);
+  height:auto;
+  display:none;
+  object-fit:contain;
+  pointer-events:none;
+  user-select:none;
+  filter:drop-shadow(0 3px 4px #18351f55);
+}
+#start.spring #springLily{display:block}
+@media(max-width:1050px){
+  #springLily{right:21%;bottom:17%;width:clamp(72px,10vw,112px)}
+}
+@media(max-width:700px){
+  #springLily{right:18%;bottom:17%;width:clamp(66px,17vw,96px)}
+}
+
 #seasonImage{
   position:absolute;
   inset:0;
@@ -2851,6 +2873,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
+    <img id="springLily" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lilia-wodna.png?v=1" alt="" aria-hidden="true">
     <canvas id="springBreezeCanvas" aria-hidden="true"></canvas>
     <svg id="springBreezeOverlay" viewBox="0 0 1686 950" preserveAspectRatio="none" aria-hidden="true">
       <defs>
