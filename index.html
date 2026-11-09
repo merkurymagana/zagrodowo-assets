@@ -2884,12 +2884,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
             <path d="M 1605,325 C 1580,345 1630,365 1605,385 S 1580,425 1605,445"/>
           </g>
         </mask>
-        <filter id="springBreezeWarp" x="-2%" y="-2%" width="104%" height="104%">
-          <feTurbulence type="fractalNoise" baseFrequency=".012 .022" numOctaves="1" seed="17" result="windNoise">
-            <animate attributeName="baseFrequency" values=".009 .018;.014 .024;.01 .02;.009 .018" dur="11s" repeatCount="indefinite"/>
+        <filter id="springBreezeWarp" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency=".008 .035" numOctaves="1" seed="17" result="windNoise">
+            <animate attributeName="baseFrequency" values=".006 .028;.009 .042;.007 .032;.006 .028" dur="9s" repeatCount="indefinite"/>
           </feTurbulence>
-          <feDisplacementMap in="SourceGraphic" in2="windNoise" scale="2.8" xChannelSelector="R" yChannelSelector="G">
-            <animate attributeName="scale" values="1.5;3.2;2;1.5" dur="8s" repeatCount="indefinite"/>
+          <feDisplacementMap in="SourceGraphic" in2="windNoise" scale="11" xChannelSelector="R" yChannelSelector="G">
+            <animate attributeName="scale" values="7;13;9;7" dur="7s" repeatCount="indefinite"/>
           </feDisplacementMap>
         </filter>
       </defs>
