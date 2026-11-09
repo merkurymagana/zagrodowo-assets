@@ -3348,7 +3348,7 @@ window.addEventListener("resize",()=>{
 });
 
 // Lokalny, bezpasowy podmuch: przelicza całą scenerię i przesuwa piksele tylko przy przebiegu dawnej fali B.
-let springBreezeFrame=0, springBreezeLast=0, springBreezeBase=null, springBreezeWork=null;
+let springBreezeFrame=0, springBreezeLast=0, springBreezeBase=null, springBreezeWork=null, springBreezeMask=null;
 function setupSpringBreeze(){
   const canvas=document.getElementById('springBreezeCanvas'),img=document.getElementById('seasonImage');
   if(!canvas||!img||!img.complete||!img.naturalWidth)return;
@@ -3426,7 +3426,7 @@ function drawSpringBreeze(now){
   dst.set(src);
   for(let y=330;y<455;y++)for(let x=750;x<1545;x++){
     const di=(y*w+x)*4;if(mask[di+3]<128)continue;
-    const shift=Math.sin(x*.018-t*.9)*2.6;
+    const shift=Math.sin(x*.018-t*.9)*5.5;
     const sy=Math.max(0,Math.min(h-1,Math.round(y+shift))),si=(sy*w+x)*4;
     if(mask[si+3]<128)continue;
     dst[di]=src[si];dst[di+1]=src[si+1];dst[di+2]=src[si+2];dst[di+3]=src[si+3];
