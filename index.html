@@ -3282,11 +3282,11 @@ function setupSpringDewShimmer(){
   // Ręcznie wyznaczone fragmenty trawnika na podstawie scenerii wiosennego poranka.
   // Współrzędne są proporcjonalne do całego obszaru tła; poza wielokątami rosa jest zabroniona.
   const allowedLawnPolygons=[
-    // Wąskie, ręcznie ograniczone plamy trawy przy dolnej krawędzi.
-    // Celowo pomijamy pasy przy płotach, rabatach, kole, drodze i stawie.
-    [[.405,.925],[.435,.925],[.445,.955],[.438,.995],[.405,.995]],
-    [[.475,.925],[.505,.925],[.515,.955],[.508,.995],[.475,.995]],
-    [[.615,.925],[.645,.925],[.65,.955],[.642,.995],[.615,.995]]
+    // Wyłącznie małe, odsłonięte plamy trawnika w środkowej dolnej części.
+    // Zostawiamy duży margines od kwiatów, płotów, koła, drogi i stawu.
+    [[.425,.835],[.442,.832],[.451,.852],[.445,.875],[.427,.872]],
+    [[.455,.875],[.474,.872],[.482,.894],[.474,.914],[.457,.91]],
+    [[.49,.84],[.505,.842],[.511,.862],[.502,.879],[.488,.87]]
   ];
   maskCtx.fillStyle="#fff";
   for(const polygon of allowedLawnPolygons){
