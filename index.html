@@ -2825,6 +2825,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 
 
+/* Falowanie wyłącznie na koronach drzew i pasie lasu w tle. */
+#springBreezeTrees{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center;pointer-events:none;
+  clip-path:url(#springTreeAreas);filter:url(#springBreezeFilter);
+  display:none;z-index:2;
+}
+#start.spring-morning #springBreezeTrees{display:block}
 </style>
 </head>
 
@@ -2836,8 +2844,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
+    <img id="springBreezeTrees" alt="" aria-hidden="true">
     <canvas id="springDewShimmer" aria-hidden="true"></canvas>
     <svg aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden">
+      <clipPath id="springTreeAreas" clipPathUnits="objectBoundingBox">
+        <path d="M0 .02 C.08 .02 .14 .10 .19 .18 C.25 .22 .25 .36 .22 .47 C.20 .59 .15 .66 .08 .69 L0 .69 Z"/>
+        <path d="M.30 .28 C.33 .24 .37 .25 .40 .29 C.44 .28 .48 .34 .48 .42 C.50 .49 .47 .59 .43 .65 C.39 .70 .33 .68 .30 .62 C.27 .56 .28 .47 .29 .40 Z"/>
+        <path d="M.38 .43 C.43 .37 .49 .38 .54 .41 C.60 .35 .67 .38 .72 .40 C.79 .37 .84 .41 .86 .46 C.82 .51 .76 .52 .70 .50 C.63 .54 .57 .51 .51 .53 C.45 .51 .40 .49 .38 .43 Z"/>
+        <path d="M.78 .36 C.82 .31 .87 .30 .90 .34 C.94 .29 .98 .31 1 .34 L1 .69 C.95 .67 .91 .63 .88 .59 C.82 .58 .79 .52 .78 .46 Z"/>
+      </clipPath>
       <filter id="springBreezeFilter" x="-2%" y="-2%" width="104%" height="104%">
         <feTurbulence type="fractalNoise" baseFrequency=".009 .018" numOctaves="1" seed="12" result="breezeNoise">
           <animate attributeName="baseFrequency" values=".008 .016;.012 .021;.007 .014;.01 .019;.008 .016" dur="16s" repeatCount="indefinite"/>
@@ -3322,6 +3337,8 @@ function updateSeason(){
       imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jesien-noc.png";
     }
     seasonImage.crossOrigin="anonymous";
+    const breezeLayer=document.getElementById("springBreezeTrees");
+    if(breezeLayer){breezeLayer.crossOrigin="anonymous";breezeLayer.src=imageUrl;}
     seasonImage.onload=()=>setupSpringDewShimmer();
     seasonImage.src=imageUrl;
     if(seasonImage.complete)setupSpringDewShimmer();
