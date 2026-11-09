@@ -2869,10 +2869,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
         </mask>
         <filter id="springBreezeWarp" x="-5%" y="-5%" width="110%" height="110%">
           <feTurbulence type="fractalNoise" baseFrequency=".008 .035" numOctaves="1" seed="17" result="windNoise">
-            <animate attributeName="baseFrequency" values=".006 .028;.009 .042;.007 .032;.006 .028" dur="18s" repeatCount="indefinite"/>
+            <animate attributeName="baseFrequency" values=".006 .028;.009 .042" dur="36s" repeatCount="indefinite"/>
           </feTurbulence>
           <feDisplacementMap in="SourceGraphic" in2="windNoise" scale="11" xChannelSelector="R" yChannelSelector="G">
-            <animate attributeName="scale" values="7;13;9;7" dur="14s" repeatCount="indefinite"/>
+            <animate attributeName="scale" values="7;13" dur="28s" repeatCount="indefinite"/>
           </feDisplacementMap>
         </filter>
       </defs>
