@@ -98,36 +98,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 #start.spring-morning #springDewShimmer{display:block}
 
-/* LEKKI WIOSENNY WIETRZYK — subtelna, przesuwająca się fala światła nad scenerią. */
-#start.spring-morning #springDewShimmer{display:none}
-#start.spring-morning::after{
-  content:"";
-  position:absolute;
-  inset:-12% -35%;
-  z-index:4;
-  pointer-events:none;
-  opacity:.62;
-  background:
-    linear-gradient(108deg,
-      transparent 8%,
-      rgba(255,255,220,.00) 22%,
-      rgba(255,255,225,.34) 34%,
-      rgba(255,255,255,.58) 42%,
-      rgba(226,244,204,.34) 49%,
-      rgba(255,255,255,.08) 57%,
-      transparent 70%);
-  transform:translate3d(-24%,0,0) skewX(-7deg);
-  animation:spring-breeze-drift 11s ease-in-out infinite alternate;
-  mix-blend-mode:screen;
-  filter:blur(7px);
-}
-@keyframes spring-breeze-drift{
-  0%{transform:translate3d(-24%,0,0) skewX(-7deg);opacity:.28}
-  45%{transform:translate3d(0,.5%,0) skewX(-4deg);opacity:.72}
-  100%{transform:translate3d(24%,-.3%,0) skewX(-8deg);opacity:.38}
+/* LEKKI WIETRZYK — bardzo subtelne, organiczne falowanie obrazu. */
+#start.spring-morning #seasonImage{
+  filter:url(#springBreezeFilter);
 }
 @media(prefers-reduced-motion:reduce){
-  #start.spring-morning::after{animation:none;opacity:.25}
+  #start.spring-morning #seasonImage{filter:none}
 }
 
 
@@ -2864,6 +2840,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <canvas id="springDewShimmer" aria-hidden="true"></canvas>
     <svg aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden">
+      <filter id="springBreezeFilter" x="-2%" y="-2%" width="104%" height="104%">
+        <feTurbulence type="fractalNoise" baseFrequency=".009 .018" numOctaves="1" seed="12" result="breezeNoise">
+          <animate attributeName="baseFrequency" values=".008 .016;.012 .021;.007 .014;.01 .019;.008 .016" dur="16s" repeatCount="indefinite"/>
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="breezeNoise" scale="1.8" xChannelSelector="R" yChannelSelector="G">
+          <animate attributeName="scale" values="1.2;2.2;1.4;2;1.2" dur="13s" repeatCount="indefinite"/>
+        </feDisplacementMap>
+      </filter>
       <filter id="auroraFlow" x="-18%" y="-18%" width="136%" height="136%">
         <feTurbulence type="fractalNoise" baseFrequency=".012 .028" numOctaves="2" seed="8" result="auroraNoise">
           <animate attributeName="baseFrequency" values=".008 .018;.025 .038;.012 .045;.02 .02;.008 .018" dur="14s" repeatCount="indefinite"/>
