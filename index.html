@@ -3276,7 +3276,6 @@ function setupSpringDewShimmer(){
   let pixels;
   try{pixels=ox.getImageData(0,0,w,h).data}catch(e){return}
   const candidates=[];
-  const mask=ox.createImageData(w,h);
   const maskCanvas=document.createElement("canvas");
   maskCanvas.width=w;maskCanvas.height=h;
   const maskCtx=maskCanvas.getContext("2d");
@@ -3307,16 +3306,13 @@ function setupSpringDewShimmer(){
     for(let x=0;x<w;x+=2){
       const i=(y*w+x)*4;
       if(maskPixels[i+3]>0){
-        mask.data[i]=255;mask.data[i+1]=255;mask.data[i+2]=255;mask.data[i+3]=255;
         candidates.push({x:x+.5,y:y+.5});
       }
     }
   }
-  maskCtx.clearRect(0,0,w,h);
-  maskCtx.putImageData(mask,0,0);
   const points=[];
-  // Równomierny rozkład punktów na wszystkich dozwolonych fragmentach trawy.
-  for(let i=0;i<Math.min(128,candidates.length);i++){
+  // Gęsta rosa, ale tylko wewnątrz ciągłej maski dozwolonych fragmentów trawy.
+  for(let i=0;i<Math.min(650,candidates.length);i++){
     const pick=Math.floor(Math.random()*candidates.length);
     points.push({...candidates.splice(pick,1)[0],size:3,phase:Math.random()*Math.PI*2,speed:.00035});
   }
@@ -3328,9 +3324,9 @@ function setupSpringDewShimmer(){
       // Wszystkie punkty rozjaśniają się i rozmywają równomiernie, bez nagłego włączania i gaszenia.
       const wave=(Math.sin(time*.00035-Math.PI/2)+1)/2;
       const fade=wave*wave*(3-2*wave);
-      const alpha=.72*fade;
+      const alpha=.42+.58*fade;
       ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle="#ffffff";
-      ctx.shadowColor="rgba(255,255,255,.8)";ctx.shadowBlur=2+4*fade;
+      ctx.shadowColor="rgba(255,255,255,.95)";ctx.shadowBlur=3+5*fade;
       ctx.beginPath();ctx.arc(p.x,p.y,p.size/2,0,Math.PI*2);ctx.fill();
       ctx.restore();
     }
