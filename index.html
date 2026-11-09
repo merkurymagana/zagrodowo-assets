@@ -3297,7 +3297,7 @@ function setupSpringDewShimmer(){
   maskCanvas.width=w;maskCanvas.height=h;
   maskCanvas.getContext("2d").putImageData(mask,0,0);
   const points=[];
-  const count=Math.min(56,candidates.length);
+  const count=Math.min(128,candidates.length);
   for(let i=0;i<count;i++){
     const pick=Math.floor(Math.random()*candidates.length);
     points.push({...candidates.splice(pick,1)[0],size:3,
