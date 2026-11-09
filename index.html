@@ -3369,9 +3369,20 @@ function drawSpringBreeze(now){
     const u=Math.max(0,Math.min(1,(x-760)/760));
     const cy=Math.pow(1-u,3)*390+3*Math.pow(1-u,2)*u*345+3*(1-u)*u*u*360+Math.pow(u,3)*395;
     const dist=y-cy,envelope=Math.exp(-(dist*dist)/(2*17*17));
-    const shift=Math.sin(x*.032-t*1.15)*1.7*envelope;
-    const sy=Math.max(0,Math.min(h-1,Math.round(y+shift))),di=(y*w+x)*4,si=(sy*w+x)*4;
-    dst[di]=src[si];dst[di+1]=src[si+1];dst[di+2]=src[si+2];dst[di+3]=src[si+3];
+    const di=(y*w+x)*4;
+    const greenHere=src[di+1]>58&&src[di+1]>src[di]*1.08&&src[di+1]>src[di+2]*1.04;
+    if(greenHere&&envelope>.035){
+      const shift=Math.sin(x*.032-t*1.15)*1.7*envelope;
+      const sy=Math.max(0,Math.min(h-1,Math.round(y+shift))),si=(sy*w+x)*4;
+      const greenThere=src[si+1]>58&&src[si+1]>src[si]*1.08&&src[si+1]>src[si+2]*1.04;
+      if(greenThere){
+        dst[di]=src[si];dst[di+1]=src[si+1];dst[di+2]=src[si+2];dst[di+3]=src[si+3];
+      }else{
+        dst[di]=src[di];dst[di+1]=src[di+1];dst[di+2]=src[di+2];dst[di+3]=src[di+3];
+      }
+    }else{
+      dst[di]=src[di];dst[di+1]=src[di+1];dst[di+2]=src[di+2];dst[di+3]=src[di+3];
+    }
   }}
   ctx.putImageData(springBreezeWork,0,0);
 }
