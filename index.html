@@ -157,12 +157,27 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:clamp(34px,2.8vw,46px);
   height:auto;
   display:none;
-  object-fit:contain;
   pointer-events:none;
   user-select:none;
   transform-origin:50% 62%;
-  filter:drop-shadow(0 2px 2px #18351f66);
   animation:springLilyFloat 5.6s linear infinite;
+}
+#springFrog img{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  transform-origin:50% 85%;
+  filter:drop-shadow(0 2px 2px #18351f66);
+  animation:springFrogHop 5.2s ease-in-out infinite;
+}
+@keyframes springFrogHop{
+  0%,70%,100%{transform:translateY(0) scale(1,1)}
+  73%{transform:translateY(1px) scale(1.06,.91)}
+  78%{transform:translateY(-9px) scale(.96,1.05)}
+  82%{transform:translateY(-10px) scale(1,1)}
+  86%{transform:translateY(0) scale(1.08,.88)}
+  90%{transform:translateY(0) scale(1,1)}
 }
 #start.spring-morning #springFrog{display:block}
 @media(max-width:1050px){
@@ -2956,7 +2971,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <div id="springLilyWater" aria-hidden="true"></div>
 <img id="springLily" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lilia-wodna.png?v=1" alt="" aria-hidden="true">
-    <img id="springFrog" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zaba.png?v=1" alt="" aria-hidden="true">
+    <div id="springFrog" aria-hidden="true"><img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zaba.png?v=1" alt=""></div>
     <canvas id="springBreezeCanvas" aria-hidden="true"></canvas>
     <svg id="springBreezeOverlay" viewBox="0 0 1686 950" preserveAspectRatio="none" aria-hidden="true">
       <defs>
