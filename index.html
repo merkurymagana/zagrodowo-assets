@@ -98,6 +98,36 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 #start.spring-morning #springDewShimmer{display:block}
 
+/* LEKKI WIOSENNY WIETRZYK — subtelna, przesuwająca się fala światła nad scenerią. */
+#start.spring-morning #springDewShimmer{display:none}
+#start.spring-morning::after{
+  content:"";
+  position:absolute;
+  inset:-12% -35%;
+  z-index:4;
+  pointer-events:none;
+  opacity:.16;
+  background:
+    linear-gradient(112deg,
+      transparent 22%,
+      rgba(255,255,220,.10) 34%,
+      rgba(255,255,255,.22) 43%,
+      rgba(226,244,204,.12) 50%,
+      transparent 63%);
+  transform:translateX(-18%) skewX(-7deg);
+  animation:spring-breeze-drift 19s ease-in-out infinite alternate;
+  mix-blend-mode:soft-light;
+}
+@keyframes spring-breeze-drift{
+  0%{transform:translate3d(-8%,0,0) skewX(-7deg);opacity:.09}
+  45%{transform:translate3d(3%,.5%,0) skewX(-4deg);opacity:.17}
+  100%{transform:translate3d(12%,-.3%,0) skewX(-8deg);opacity:.11}
+}
+@media(prefers-reduced-motion:reduce){
+  #start.spring-morning::after{animation:none;opacity:.08}
+}
+
+
 /* KURA — animowany GIF, wersja próbna w scenerii gospodarstwa. */
 #chickenGroup{
   position:absolute;
