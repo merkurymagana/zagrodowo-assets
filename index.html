@@ -2837,6 +2837,19 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 #start.spring-morning #springWaveGuides{display:block}
 #springWaveGuides{display:none!important}
+
+/* Tymczasowe narzędzie do wskazywania koron drzew dla animacji wiatru. */
+#windSelectCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:90;display:none;pointer-events:none;touch-action:none}
+#start.wind-select-mode #windSelectCanvas{display:block;pointer-events:auto;cursor:crosshair}
+#windSelectPanel{position:absolute;z-index:100;top:14px;left:14px;display:none;gap:7px;align-items:center;flex-wrap:wrap;max-width:min(560px,calc(100% - 28px));padding:10px 12px;border-radius:10px;background:#342719ed;color:#fff;font:600 13px/1.35 Arial,sans-serif;box-shadow:0 3px 14px #0007}
+#start.spring-morning #windSelectPanel{display:flex}
+#windSelectPanel button{border:1px solid #ffffff66;border-radius:7px;padding:7px 10px;background:#765536;color:white;font:600 12px Arial,sans-serif;cursor:pointer}
+#windSelectPanel button.primary{background:#527b43}
+#windSelectPanel button:disabled{opacity:.45;cursor:default}
+#windSelectOutput{display:none;width:min(100%,520px);height:70px;resize:vertical;border-radius:6px;padding:6px;font:11px monospace;color:#222}
+#windSelectPanel.output-open{align-items:flex-start}
+#windSelectPanel.output-open #windSelectOutput{display:block}
+
 </style>
 </head>
 
@@ -2849,6 +2862,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <canvas id="springBreezeCanvas" aria-hidden="true"></canvas>
+    <canvas id="windSelectCanvas" aria-label="Zaznacz obszary koron drzew"></canvas>
+    <div id="windSelectPanel">
+      <span>Tryb zaznaczania koron drzew:</span>
+      <button id="windSelectToggle" class="primary" type="button">Zacznij zaznaczać</button>
+      <button id="windSelectUndo" type="button" disabled>Cofnij</button>
+      <button id="windSelectClear" type="button">Wyczyść</button>
+      <button id="windSelectExport" type="button">Zakończ i skopiuj mapę</button>
+      <textarea id="windSelectOutput" readonly aria-label="Dane zaznaczenia do skopiowania"></textarea>
+    </div>
     <svg id="springBreezeOverlay" viewBox="0 0 1686 950" preserveAspectRatio="none" aria-hidden="true">
       <defs>
 
@@ -3390,6 +3412,55 @@ function drawSpringBreeze(now){
   }}
   ctx.putImageData(springBreezeWork,0,0);
 }
+
+/* Ręczne zaznaczanie koron drzew — dane można skopiować do dalszego przygotowania maski wiatru. */
+(function initWindSelectionTool(){
+  const start=document.getElementById('start');
+  const canvas=document.getElementById('windSelectCanvas');
+  const panel=document.getElementById('windSelectPanel');
+  const toggle=document.getElementById('windSelectToggle');
+  const undo=document.getElementById('windSelectUndo');
+  const clear=document.getElementById('windSelectClear');
+  const exportBtn=document.getElementById('windSelectExport');
+  const output=document.getElementById('windSelectOutput');
+  if(!start||!canvas||!panel)return;
+  const ctx=canvas.getContext('2d');
+  const W=1686,H=950,BRUSH=38;
+  canvas.width=W;canvas.height=H;
+  let drawing=false,active=false,strokes=[],current=null;
+  function redraw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='rgba(30,220,255,.58)';ctx.fillStyle='rgba(30,220,255,.58)';ctx.lineWidth=BRUSH;
+    for(const stroke of strokes){
+      if(!stroke.length)continue;
+      if(stroke.length===1){ctx.beginPath();ctx.arc(stroke[0][0],stroke[0][1],BRUSH/2,0,Math.PI*2);ctx.fill();continue;}
+      ctx.beginPath();ctx.moveTo(stroke[0][0],stroke[0][1]);
+      for(let i=1;i<stroke.length;i++)ctx.lineTo(stroke[i][0],stroke[i][1]);
+      ctx.stroke();
+    }
+  }
+  function point(e){const r=canvas.getBoundingClientRect();return [Math.round((e.clientX-r.left)/r.width*W),Math.round((e.clientY-r.top)/r.height*H)];}
+  toggle.addEventListener('click',()=>{
+    active=!active;start.classList.toggle('wind-select-mode',active);
+    toggle.textContent=active?'Zakończ zaznaczanie':'Kontynuuj zaznaczanie';
+    if(active){panel.classList.remove('output-open');output.value='';}
+  });
+  canvas.addEventListener('pointerdown',e=>{if(!active)return;drawing=true;current=[point(e)];strokes.push(current);canvas.setPointerCapture(e.pointerId);redraw();});
+  canvas.addEventListener('pointermove',e=>{if(!drawing||!current)return;const p=point(e),last=current[current.length-1];if(Math.hypot(p[0]-last[0],p[1]-last[1])>=3){current.push(p);redraw();}});
+  function stop(){drawing=false;current=null;undo.disabled=!strokes.length;}
+  canvas.addEventListener('pointerup',stop);canvas.addEventListener('pointercancel',stop);canvas.addEventListener('lostpointercapture',stop);
+  undo.addEventListener('click',()=>{strokes.pop();undo.disabled=!strokes.length;redraw();});
+  clear.addEventListener('click',()=>{strokes=[];undo.disabled=true;redraw();output.value='';panel.classList.remove('output-open');});
+  exportBtn.addEventListener('click',async()=>{
+    active=false;drawing=false;start.classList.remove('wind-select-mode');toggle.textContent='Kontynuuj zaznaczanie';
+    const data=JSON.stringify({width:W,height:H,brush:BRUSH,strokes});
+    output.value=data;panel.classList.add('output-open');output.focus();output.select();
+    try{await navigator.clipboard.writeText(data);exportBtn.textContent='Skopiowano — wklej tutaj w czacie';}
+    catch(_){exportBtn.textContent='Zaznaczenie gotowe — skopiuj tekst poniżej';}
+  });
+  output.addEventListener('click',()=>output.select());
+})();
+
 // Sceneria dobierana automatycznie według pory roku oraz astronomicznych godzin świtu, dnia i nocy.
 function updateSeason(){
   const now=new Date();
