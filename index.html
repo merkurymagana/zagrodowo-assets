@@ -2874,14 +2874,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
         <filter id="springBreezeWarpB" x="-5%" y="-5%" width="110%" height="110%">
           <feTurbulence type="fractalNoise" baseFrequency=".009 .038" numOctaves="1" seed="21" stitchTiles="stitch" result="windNoiseB"/>
           <feOffset in="windNoiseB" dx="0" dy="0" result="movingWindNoiseB">
-            <animate attributeName="dx" values="0;111.11" dur="21s" calcMode="linear" repeatCount="indefinite"/>
+            <animate attributeName="dx" values="0;111.11" dur="17s" calcMode="linear" repeatCount="indefinite"/>
           </feOffset>
           <feDisplacementMap in="SourceGraphic" in2="movingWindNoiseB" scale="20" xChannelSelector="R" yChannelSelector="G"/>
         </filter>
         <filter id="springBreezeWarp" x="-5%" y="-5%" width="110%" height="110%">
           <feTurbulence type="fractalNoise" baseFrequency=".008 .035" numOctaves="1" seed="17" stitchTiles="stitch" result="windNoise"/>
           <feOffset in="windNoise" dx="0" dy="0" result="movingWindNoise">
-            <animate attributeName="dx" values="0;125" dur="28s" calcMode="linear" repeatCount="indefinite"/>
+            <animate attributeName="dx" values="0;125" dur="22s" calcMode="linear" repeatCount="indefinite"/>
           </feOffset>
           <feDisplacementMap in="SourceGraphic" in2="movingWindNoise" scale="20" xChannelSelector="R" yChannelSelector="G"/>
         </filter>
