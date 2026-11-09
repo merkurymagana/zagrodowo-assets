@@ -3277,7 +3277,7 @@ function setupSpringDewShimmer(){
   try{pixels=ox.getImageData(0,0,w,h).data}catch(e){return}
   const candidates=[];
   const step=Math.max(3,Math.floor(Math.min(w,h)/180));
-  for(let y=Math.floor(h*.5);y<h-step;y+=step){
+  for(let y=Math.floor(h*2/3);y<h-step;y+=step){
     for(let x=0;x<w-step;x+=step){
       const i=(y*w+x)*4,red=pixels[i],green=pixels[i+1],blue=pixels[i+2];
       if(green>48&&green<205&&green>red*1.10&&green>blue*1.06){
@@ -3286,7 +3286,7 @@ function setupSpringDewShimmer(){
     }
   }
   const points=[];
-  const count=Math.min(28,candidates.length);
+  const count=Math.min(56,candidates.length);
   for(let i=0;i<count;i++){
     const pick=Math.floor(Math.random()*candidates.length);
     points.push({...candidates.splice(pick,1)[0],size:.65+Math.random()*.65,
