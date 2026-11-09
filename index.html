@@ -3424,13 +3424,13 @@ function drawSpringBreeze(now){
   if(!ctx||!springBreezeBase||!springBreezeWork||!springBreezeMask||!document.getElementById('start').classList.contains('spring-morning'))return;
   const w=canvas.width,h=canvas.height,src=springBreezeBase.data,dst=springBreezeWork.data,mask=springBreezeMask,t=now*.001;
   dst.set(src);
-  const phase=t*.42;
+  const phase=t*.62;
   for(let y=330;y<455;y++)for(let x=750;x<1545;x++){
     const di=(y*w+x)*4;if(mask[di+3]<128)continue;
-    // Płynne, podpikselowe próbkowanie usuwa skokowe przeskoki pikseli.
+    // Wyraźniejsze, ale nadal miękkie ugięcie: mocniejsze przy górnej krawędzi korony.
     const u=Math.max(0,Math.min(1,(438-y)/108));
     const flex=u*u*(3-2*u);
-    const shift=(Math.sin(phase)*2.4+Math.sin(phase+(x-750)*.012)*.55)*flex;
+    const shift=(Math.sin(phase)*4.2+Math.sin(phase+(x-750)*.008)*.35)*flex;
     const sampleX=Math.max(0,Math.min(w-1,x+shift));
     const x0=Math.floor(sampleX),x1=Math.min(w-1,x0+1),blend=sampleX-x0;
     const i0=(y*w+x0)*4,i1=(y*w+x1)*4;
