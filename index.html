@@ -3289,7 +3289,7 @@ function setupSpringDewShimmer(){
   const count=Math.min(56,candidates.length);
   for(let i=0;i<count;i++){
     const pick=Math.floor(Math.random()*candidates.length);
-    points.push({...candidates.splice(pick,1)[0],size:.65+Math.random()*.65,
+    points.push({...candidates.splice(pick,1)[0],size:2.2+Math.random()*1.4,
       phase:Math.random()*Math.PI*2,speed:.0008+Math.random()*.0006});
   }
   if(dewAnimationFrame)cancelAnimationFrame(dewAnimationFrame);
@@ -3298,11 +3298,11 @@ function setupSpringDewShimmer(){
     ctx.clearRect(0,0,w,h);
     for(const p of points){
       const wave=(Math.sin(time*p.speed+p.phase)+1)/2;
-      const alpha=Math.pow(Math.max(0,(wave-.62)/.38),1.5)*.48;
+      const alpha=Math.pow(Math.max(0,(wave-.58)/.42),1.35)*.72;
       if(alpha<.025)continue;
       const radius=p.size*(.65+wave*.45);
       ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle="#fffbe0";
-      ctx.shadowColor="rgba(255,255,220,.58)";ctx.shadowBlur=2.5;
+      ctx.shadowColor="rgba(255,255,220,.85)";ctx.shadowBlur=5;
       ctx.beginPath();ctx.arc(p.x,p.y,radius,0,Math.PI*2);ctx.fill();
       ctx.globalAlpha=alpha*.22;ctx.fillRect(p.x-.3,p.y-radius*1.4,.6,radius*2.8);
       ctx.fillRect(p.x-radius*1.4,p.y-.3,radius*2.8,.6);
