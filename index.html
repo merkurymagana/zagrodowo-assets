@@ -79,8 +79,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #springLily{
   position:absolute;
   z-index:4;
-  right:12%;
-  bottom:19%;
+  right:calc(12% - 15px);
+  bottom:calc(19% + 10px);
   width:clamp(32px,3vw,49px);
   height:auto;
   display:none;
@@ -94,10 +94,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:8;
 }
 @media(max-width:1050px){
-  #springLily{right:8%;bottom:20%;width:clamp(30px,4.17vw,43px)}
+  #springLily{right:calc(8% - 15px);bottom:calc(20% + 10px);width:clamp(30px,4.17vw,43px)}
 }
 @media(max-width:700px){
-  #springLily{right:7%;bottom:20%;width:clamp(27px,6.8vw,37px)}
+  #springLily{right:calc(7% - 15px);bottom:calc(20% + 10px);width:clamp(27px,6.8vw,37px)}
 }
 
 #seasonImage{
