@@ -2872,26 +2872,18 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
           <path d="M 760,390 C 900,345 1010,430 1145,380 S 1370,360 1520,395" fill="none" stroke="white" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/>
         </mask>
         <filter id="springBreezeWarpB" x="-5%" y="-5%" width="110%" height="110%">
-          <feTurbulence type="fractalNoise" baseFrequency=".009 .038" numOctaves="1" seed="21" result="windNoiseB">
-            <animate attributeName="baseFrequency" values=".007 .03;.011 .045" dur="27s" repeatCount="indefinite"/>
-          </feTurbulence>
+          <feTurbulence type="fractalNoise" baseFrequency=".009 .038" numOctaves="1" seed="21" stitchTiles="stitch" result="windNoiseB"/>
           <feOffset in="windNoiseB" dx="0" dy="0" result="movingWindNoiseB">
-            <animate attributeName="dx" values="0;140" dur="21s" repeatCount="indefinite"/>
+            <animate attributeName="dx" values="0;111.11" dur="21s" calcMode="linear" repeatCount="indefinite"/>
           </feOffset>
-          <feDisplacementMap in="SourceGraphic" in2="movingWindNoiseB" scale="11" xChannelSelector="R" yChannelSelector="G">
-            <animate attributeName="scale" values="7;13" dur="21s" repeatCount="indefinite"/>
-          </feDisplacementMap>
+          <feDisplacementMap in="SourceGraphic" in2="movingWindNoiseB" scale="10" xChannelSelector="R" yChannelSelector="G"/>
         </filter>
         <filter id="springBreezeWarp" x="-5%" y="-5%" width="110%" height="110%">
-          <feTurbulence type="fractalNoise" baseFrequency=".008 .035" numOctaves="1" seed="17" result="windNoise">
-            <animate attributeName="baseFrequency" values=".006 .028;.009 .042" dur="36s" repeatCount="indefinite"/>
-          </feTurbulence>
+          <feTurbulence type="fractalNoise" baseFrequency=".008 .035" numOctaves="1" seed="17" stitchTiles="stitch" result="windNoise"/>
           <feOffset in="windNoise" dx="0" dy="0" result="movingWindNoise">
-            <animate attributeName="dx" values="0;140" dur="28s" repeatCount="indefinite"/>
+            <animate attributeName="dx" values="0;125" dur="28s" calcMode="linear" repeatCount="indefinite"/>
           </feOffset>
-          <feDisplacementMap in="SourceGraphic" in2="movingWindNoise" scale="11" xChannelSelector="R" yChannelSelector="G">
-            <animate attributeName="scale" values="7;13" dur="28s" repeatCount="indefinite"/>
-          </feDisplacementMap>
+          <feDisplacementMap in="SourceGraphic" in2="movingWindNoise" scale="10" xChannelSelector="R" yChannelSelector="G"/>
         </filter>
       </defs>
       <image id="springBreezeImage" x="0" y="0" width="1686" height="950" preserveAspectRatio="none" style="mask:url(#springBreezeMask);filter:url(#springBreezeWarp)"/>
