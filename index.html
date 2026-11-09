@@ -3419,24 +3419,23 @@ function setupSpringBreeze(){
 }
 function drawSpringBreeze(now){
   springBreezeFrame=requestAnimationFrame(drawSpringBreeze);
-  if(now-springBreezeLast<50)return;springBreezeLast=now;
+  if(now-springBreezeLast<25)return;springBreezeLast=now;
   const canvas=document.getElementById('springBreezeCanvas'),ctx=canvas&&canvas.getContext('2d');
   if(!ctx||!springBreezeBase||!springBreezeWork||!springBreezeMask||!document.getElementById('start').classList.contains('spring-morning'))return;
   const w=canvas.width,h=canvas.height,src=springBreezeBase.data,dst=springBreezeWork.data,mask=springBreezeMask,t=now*.001;
   dst.set(src);
+  const phase=t*.42;
   for(let y=330;y<455;y++)for(let x=750;x<1545;x++){
     const di=(y*w+x)*4;if(mask[di+3]<128)continue;
-    // Sprężyste ugięcie korony: dół stopniowo pozostaje zakotwiczony,
-    // a przesunięcie narasta płynnie ku górze; bez sztywnego przesuwania całej góry.
-    const phase=t*.42;
+    // Płynne, podpikselowe próbkowanie usuwa skokowe przeskoki pikseli.
     const u=Math.max(0,Math.min(1,(438-y)/108));
     const flex=u*u*(3-2*u);
-    const bend=Math.sin(phase)*2.4*flex;
-    const localBend=Math.sin(phase+(x-750)*.012)*.55*flex;
-    const shift=bend+localBend;
-    const sx=Math.max(0,Math.min(w-1,Math.round(x+shift))),si=(y*w+sx)*4;
-    if(mask[si+3]<128)continue;
-    dst[di]=src[si];dst[di+1]=src[si+1];dst[di+2]=src[si+2];dst[di+3]=src[si+3];
+    const shift=(Math.sin(phase)*2.4+Math.sin(phase+(x-750)*.012)*.55)*flex;
+    const sampleX=Math.max(0,Math.min(w-1,x+shift));
+    const x0=Math.floor(sampleX),x1=Math.min(w-1,x0+1),blend=sampleX-x0;
+    const i0=(y*w+x0)*4,i1=(y*w+x1)*4;
+    if(mask[i0+3]<128||mask[i1+3]<128)continue;
+    for(let c=0;c<4;c++)dst[di+c]=Math.round(src[i0+c]*(1-blend)+src[i1+c]*blend);
   }
   ctx.putImageData(springBreezeWork,0,0);
 }
