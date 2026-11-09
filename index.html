@@ -3210,7 +3210,7 @@ const seasonImages={
 let lastSceneKey="";
 
 // Automatyczna sceneria: pory roku oraz pory dnia wyznaczane astronomicznie.
-const SCENE_PREVIEW="winter-night";
+const SCENE_PREVIEW="spring-morning";
 
 // Pory dnia wyznaczane astronomicznie dla Polski; godziny przesuwają się wraz z porami roku.
 const DAYLIGHT_LATITUDE=52.1;
@@ -3264,8 +3264,10 @@ function updateSeason(){
   const seasonImage=document.getElementById("seasonImage");
   if(seasonImage){
     let imageUrl=seasonImages[name];
-    // Osobne grafiki dla poranka i nocy jesiennej; dzień korzysta z grafiki bazowej.
-    if(name==="winter"&&period==="morning"){
+    // Osobne grafiki poranne i nocne dla poszczególnych pór roku.
+    if(name==="spring"&&period==="morning"){
+      imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wiosna-rano.png?v=1";
+    }else if(name==="winter"&&period==="morning"){
       imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zima-rano.png";
     }else if(name==="winter"&&period==="night"){
       imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zima-noc.png";
