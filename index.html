@@ -4127,13 +4127,13 @@ function updateSeason(){
           const reverse=Math.random()<.5;
           const pair=Math.random()<.4;
           if(pair){
-            // Druga sarna rusza tą samą trasą 1,2 s po pierwszej.
+            // Druga sarna rusza tą samą trasą 0,7 s po pierwszej.
             launchDeer(reverse,null);
             setTimeout(()=>{
               if(lastSceneKey==="spring-night"&&document.getElementById("seasonEffects")){
                 launchDeer(reverse,scheduleDeer);
               }
-            },1200);
+            },700);
           }else{
             launchDeer(reverse,scheduleDeer);
           }
