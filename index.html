@@ -1293,9 +1293,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:100%;
   height:auto;
   object-fit:contain;
-  /* Ta sama proporcja obrazu co tułów — głowa nie może być rozciągana przez wysokość kontenera. */
-  clip-path:inset(0 39% 38% 5%);
-  transform-origin:40% 47%;
+  z-index:2;
+  /* Wycinek obejmuje głowę i dziób po prawej stronie oryginalnego rysunku. */
+  clip-path:inset(0 5% 38% 35%);
+  transform-origin:67% 34%;
   animation:sparrow-head-look 4.8s ease-in-out infinite;
 }
 .spring-sparrow .sparrow-body{
