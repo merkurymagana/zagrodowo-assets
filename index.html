@@ -3677,7 +3677,7 @@ function updateSeason(){
         petal.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/"+petalFiles[type];
         petal.alt="";
         petal.setAttribute("aria-hidden","true");
-        const petalSize=parseFloat(size)*(index>=petalPaths.length?0.82:1);
+        const petalSize=parseFloat(size)*(index>=petalPaths.length?0.82:1)*1.25;
         const fallTime=46+(index%5)*2.5;
         const stagger=index*1.55+Math.floor(index/3)*2.2;
         const vars={
