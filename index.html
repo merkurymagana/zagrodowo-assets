@@ -1317,15 +1317,23 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   filter:inherit;
 }
 .spring-sparrow-flight-route .sparrow-flight-wings{
-  /* Górna część grafiki zawierająca skrzydła — szybki ruch niezależny od tułowia. */
+  /* Dwa skrzydła są animowane osobno: rozkładają się i szybko składają ku tułowiowi. */
   clip-path:inset(0 8% 48% 8%);
   transform-origin:50% 78%;
-  animation:sparrow-fast-wingbeats .11s ease-in-out infinite alternate;
+  animation:sparrow-fast-wingbeats .13s ease-in-out infinite alternate;
   will-change:transform;
 }
+.spring-sparrow-flight-route .sparrow-wing-left{
+  clip-path:inset(0 50% 48% 8%);
+  transform-origin:88% 78%;
+}
+.spring-sparrow-flight-route .sparrow-wing-right{
+  clip-path:inset(0 8% 48% 50%);
+  transform-origin:12% 78%;
+}
 @keyframes sparrow-fast-wingbeats{
-  0%{transform:rotate(-24deg) scaleY(.82) skewX(-5deg)}
-  100%{transform:rotate(24deg) scaleY(1.12) skewX(5deg)}
+  0%{transform:scaleY(.18) rotate(-8deg)}
+  100%{transform:scaleY(1) rotate(8deg)}
 }
 
 /* 30 s na płocie; przelot do zaznaczonego punktu; dopiero potem opuszcza cały kadr;
@@ -1342,12 +1350,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     left:3.1%;top:54.5%;opacity:1;
     animation-timing-function:linear;
   }
-  /* Punkt wskazany przez użytkownika zostaje osiągnięty przed opuszczeniem kadru. */
-  28.5%{
-    left:-8%;top:54.5%;opacity:1;
+  /* Wróbel pozostaje widoczny aż do dokładnie wskazanego punktu przy lewej krawędzi. */
+  28.333%{
+    left:3.1%;top:54.5%;opacity:1;
   }
-  28.51%,77.49%{
-    left:-8%;top:54.5%;opacity:0;
+  28.334%,77.49%{
+    left:3.1%;top:54.5%;opacity:0;
   }
   /* Wróbel pojawia się dokładnie w oznaczonym punkcie po prawej. */
   77.5%{
@@ -3935,13 +3943,19 @@ function updateSeason(){
       flyingBody.className="sparrow-flight-body";
       flyingBody.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wrobel-leci.png";
       flyingBody.alt="";
-      const flyingWings=document.createElement("img");
-      flyingWings.className="sparrow-flight-wings";
-      flyingWings.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wrobel-leci.png";
-      flyingWings.alt="";
+      const flyingWingLeft=document.createElement("img");
+      flyingWingLeft.className="sparrow-flight-wings sparrow-wing-left";
+      flyingWingLeft.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wrobel-leci.png";
+      flyingWingLeft.alt="";
+      const flyingWingRight=document.createElement("img");
+      flyingWingRight.className="sparrow-flight-wings sparrow-wing-right";
+      flyingWingRight.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wrobel-leci.png";
+      flyingWingRight.alt="";
       flying.appendChild(flyingBody);
-      flying.appendChild(flyingWings);
-      effects.appendChild(flying);
+      flying.appendChild(flyingWingLeft);
+      flying.appendChild(flyingWingRight);
+      /* Lot jest poza kontenerem liści, który ma margines bezpieczeństwa 90 px. */
+      start.appendChild(flying);
     }
     if(showAutumnLeaves){
       const leafFiles=[
