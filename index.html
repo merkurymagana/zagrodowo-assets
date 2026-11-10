@@ -4043,8 +4043,8 @@ function updateSeason(){
         effects.appendChild(star);
       });
       const area={x:28.88755980861244,y:26.34989200863931,w:8.791866028708132,h:8.639308855291574};
-      // Mały Wóz odbity lustrzanie w poziomie; bez linii łączących.
-      [[55,80],[85,70],[80,40],[50,50],[35,35],[20,18],[5,10]].forEach(([x,y],i)=>{
+      // Odbicie lustrzane misy Małego Wozu; uchwyt pozostaje bez zmian.
+      [[80,80],[50,70],[55,40],[85,50],[35,35],[20,18],[5,10]].forEach(([x,y],i)=>{
         const star=document.createElement("span");
         star.className="spring-night-star star-bright";
         star.style.setProperty("--star-x",(area.x+area.w*x/100)+"%");
@@ -4964,8 +4964,8 @@ function showNotice(message){
   function renderPreview(){
     clearPreview();addArea(dipperArea,"Mały Wóz");addArea(starsArea,"Drobne gwiazdy");
     if(dipperArea&&dipperArea.w>0&&dipperArea.h>0){
-      // Lustrzane odbicie Małego Wozu, bez linii łączących.
-      [[55,80],[85,70],[80,40],[50,50],[35,35],[20,18],[5,10]].forEach(([x,y],i)=>{
+      // Odbicie lustrzane samej misy; uchwyt pozostaje bez zmian.
+      [[80,80],[50,70],[55,40],[85,50],[35,35],[20,18],[5,10]].forEach(([x,y],i)=>{
         const star=document.createElement("span");star.className="spring-night-star star-bright";
         star.style.setProperty("--star-x",(dipperArea.x+dipperArea.w*x/100)+"%");
         star.style.setProperty("--star-y",(dipperArea.y+dipperArea.h*y/100)+"%");
