@@ -1292,6 +1292,16 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation:sparrow-head-look 4.8s ease-in-out infinite;
 }
 .spring-sparrow .sparrow-flight{display:none}
+/* Stała granica zasłonięcia przy punkcie wskazanym po lewej stronie.
+   Ptak leci przez tę linię: dziób/głowa znikają pierwsze, potem tułów i ogon. */
+.spring-sparrow-flight-clipper{
+  position:absolute;
+  inset:0;
+  z-index:12;
+  overflow:visible;
+  clip-path:inset(0 0 0 3.1%);
+  pointer-events:none;
+}
 /* WRÓBEL W LOCIE — jedna ciągła trasa z rzeczywistym wyjściem poza kadr. */
 .spring-sparrow-flight-route{
   position:absolute;
@@ -1361,15 +1371,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     clip-path:inset(0 0 0 0);
     animation-timing-function:linear;
   }
-  /* Nie ma animacji maski ani zanikania w miejscu: ptak leci dalej,
-     mija zaznaczony punkt i naturalnie opuszcza kadr głową do przodu. */
+  /* Ptak bez zatrzymania przelatuje przez stałą granicę 3,1%:
+     clipper zasłania go kolejno od głowy do ogona. */
   28.333%{
-    left:0%;top:54.5%;opacity:1;
-    clip-path:inset(0 0 0 0);
+    left:-8%;top:54.5%;opacity:1;
   }
   28.334%,77.49%{
-    left:0%;top:54.5%;opacity:0;
-    clip-path:inset(0 0 0 0);
+    left:-8%;top:54.5%;opacity:0;
   }
   /* Przy przylocie z prawej pełny obraz jest od początku odsłonięty. */
   77.5%{
@@ -3953,9 +3961,11 @@ function updateSeason(){
       sparrow.appendChild(sitting);
       sparrow.appendChild(movingHead);
       effects.appendChild(sparrow);
+      const flightClipper=document.createElement("div");
+      flightClipper.className="spring-sparrow-flight-clipper";
+      flightClipper.setAttribute("aria-hidden","true");
       const flying=document.createElement("div");
       flying.className="spring-sparrow-flight-route";
-      flying.setAttribute("aria-hidden","true");
       const flyingBody=document.createElement("img");
       flyingBody.className="sparrow-flight-body";
       flyingBody.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wrobel-leci.png";
@@ -3971,8 +3981,9 @@ function updateSeason(){
       flying.appendChild(flyingBody);
       flying.appendChild(flyingWingLeft);
       flying.appendChild(flyingWingRight);
-      /* Lot jest poza kontenerem liści, który ma margines bezpieczeństwa 90 px. */
-      start.appendChild(flying);
+      /* Lot jest poza kontenerem liści; stała granica po lewej zasłania ptaka od dzioba. */
+      flightClipper.appendChild(flying);
+      start.appendChild(flightClipper);
     }
     if(showAutumnLeaves){
       const leafFiles=[
