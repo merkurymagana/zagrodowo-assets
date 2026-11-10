@@ -1281,27 +1281,16 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     drop-shadow(0 1px 0 rgba(72,55,40,.42))
     drop-shadow(0 3px 3px rgba(54,42,31,.32));
 }
+/* Siedzący wróbel korzysta z pełnego źródłowego rysunku.
+   Nie rozcinamy go na osobną głowę i tułów — zapobiega to znikaniu głowy
+   przy skalowaniu obrazu na wąskich ekranach. */
 .spring-sparrow .sparrow-body{
-  clip-path:polygon(39% 28%,51% 32%,66% 47%,82% 67%,100% 88%,94% 100%,75% 88%,57% 81%,39% 75%,28% 64%,29% 49%);
-}
-.spring-sparrow .sparrow-head{
-  position:absolute;
-  top:0;
-  left:0;
-  right:auto;
-  bottom:auto;
-  width:100%;
-  height:auto;
-  object-fit:contain;
-  z-index:2;
-  /* Wycinek obejmuje głowę i dziób po prawej stronie oryginalnego rysunku. */
-  clip-path:inset(0 5% 38% 35%);
-  transform-origin:67% 34%;
-  animation:sparrow-head-look 4.8s ease-in-out infinite;
-}
-.spring-sparrow .sparrow-body{
+  clip-path:none;
   transform-origin:58% 66%;
   animation:sparrow-tail-wiggle 3.6s ease-in-out infinite;
+}
+.spring-sparrow .sparrow-head{
+  display:none;
 }
 .spring-sparrow .sparrow-flight{display:none}
 /* Stała granica zasłonięcia przy punkcie wskazanym po lewej stronie.
