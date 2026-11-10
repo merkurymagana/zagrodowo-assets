@@ -1277,7 +1277,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:100%;
   height:auto;
   object-fit:contain;
-  filter:sepia(.58) saturate(.72) hue-rotate(326deg) contrast(.96) brightness(1.04)
+  filter:sepia(.52) saturate(1.18) hue-rotate(350deg) contrast(1.04) brightness(1.02)
     drop-shadow(0 1px 0 rgba(105,72,43,.48))
     drop-shadow(0 3px 3px rgba(73,52,34,.38));
 }
@@ -1322,7 +1322,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
   translate:-50% -50%;
   /* Wyblakły, lekko czerwono-rdzawy filtr na czas lotu. */
-  filter:sepia(.62) saturate(.68) hue-rotate(326deg) contrast(.94) brightness(1.08)
+  filter:sepia(.52) saturate(1.18) hue-rotate(350deg) contrast(1.04) brightness(1.02)
     drop-shadow(0 1px 0 rgba(105,72,43,.48))
     drop-shadow(0 3px 3px rgba(73,52,34,.38));
   animation:sparrow-two-way-flight 120s linear infinite;
@@ -1380,12 +1380,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     animation-timing-function:linear;
   }
   25.66%{
-    left:3.1%;top:calc(54.5% + 2.5vh);opacity:1;
+    left:3.1%;top:54.5%;opacity:1;
     animation-timing-function:linear;
   }
-  /* Obniżony tor przed zniknięciem — wyrównuje go z widocznym kierunkiem lotu ptaka. */
+  /* Prosty tor bezpośrednio do punktu zniknięcia — bez dodatkowego opadania. */
   26.116%{
-    left:-8%;top:calc(54.5% + 2.5vh);opacity:1;
+    left:-8%;top:54.5%;opacity:1;
     animation-timing-function:linear;
   }
   26.117%,77.49%{
