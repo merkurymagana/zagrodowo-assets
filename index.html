@@ -1359,38 +1359,47 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 /* 30 s na płocie; przelot do zaznaczonego punktu; dopiero potem opuszcza cały kadr;
    około 60 s poza ekranem; następnie wraca z prawej i ląduje na płocie. */
 @keyframes sparrow-two-way-flight{
+  /* W pozycji na płocie współrzędne CSS .spring-sparrow wskazują lewy górny róg.
+     Lotnik jest kotwiczony środkiem, dlatego dodajemy połowę jego rozmiaru. */
   0%,24.99%{
-    left:16%;top:calc(56% + 101px);opacity:0;
+    left:calc(16% + clamp(70px,7.6vw,108px) / 2);
+    top:calc(56% + 101px + clamp(70px,7.6vw,108px) / 2);
+    opacity:0;
   }
-  /* Wylot: ta sama liniowa prędkość co przylot z prawej.
-     Od 16% do punktu 3,1%, a następnie płynne przecięcie granicy zasłonięcia. */
+  /* Wylot i przylot mają liniowy ruch w poziomie z tą samą prędkością. */
   25%{
-    left:16%;top:calc(56% + 101px);opacity:1;
+    left:calc(16% + clamp(70px,7.6vw,108px) / 2);
+    top:calc(56% + 101px + clamp(70px,7.6vw,108px) / 2);
+    opacity:1;
     animation-timing-function:linear;
   }
-  25.533%{
+  25.66%{
     left:3.1%;top:54.5%;opacity:1;
     animation-timing-function:linear;
   }
-  25.991%{
+  26.116%{
     left:-8%;top:54.5%;opacity:1;
   }
-  25.992%,77.49%{
+  26.117%,77.49%{
     left:-8%;top:54.5%;opacity:0;
   }
-  /* Przylot z prawej: start dokładnie w zaznaczonym punkcie, bez zmiany prędkości. */
+  /* Przylot z prawej zaczyna się dokładnie w zaznaczonym punkcie. */
   77.5%{
     left:97.3%;top:62.3%;opacity:1;
     clip-path:inset(0 0 0 0);
     animation-timing-function:linear;
   }
-  /* Lot kończy się dokładnie w punkcie siedzącego wróbla; siedzący obraz przejmuje go w tej samej chwili. */
+  /* Środek lecącego wróbla pokrywa się ze środkiem siedzącego obrazka. */
   80.833%{
-    left:16%;top:calc(56% + 101px);opacity:0;
+    left:calc(16% + clamp(70px,7.6vw,108px) / 2);
+    top:calc(56% + 101px + clamp(70px,7.6vw,108px) / 2);
+    opacity:0;
     clip-path:inset(0 0 0 0);
   }
   80.834%,100%{
-    left:16%;top:calc(56% + 101px);opacity:0;
+    left:calc(16% + clamp(70px,7.6vw,108px) / 2);
+    top:calc(56% + 101px + clamp(70px,7.6vw,108px) / 2);
+    opacity:0;
     clip-path:inset(0 0 0 0);
   }
 }
