@@ -3237,22 +3237,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #springWaveGuides{display:none!important}
 
 
-/* EDYTOR TRASY SARNY — narzędzie pomocnicze do ustawiania dwóch punktów. */
-#deerRouteEditorButton{position:fixed;z-index:10020;left:16px;top:16px;padding:10px 14px;border:1px solid #d7c29b;border-radius:9px;background:#34271feF;color:#fff4dc;font:600 14px Nunito,Arial,sans-serif;box-shadow:0 3px 14px #0007;cursor:pointer}
-#deerRouteEditor{position:fixed;z-index:10021;left:16px;top:62px;width:min(330px,calc(100vw - 32px));padding:13px;border:1px solid #cbb58e;border-radius:10px;background:#30251fee;color:#fff4dc;font:13px Nunito,Arial,sans-serif;box-shadow:0 5px 22px #0008;display:none}
-#deerRouteEditor strong{display:block;font-size:15px;margin-bottom:6px}
-#deerRouteEditor p{margin:5px 0 10px;line-height:1.4}
-#deerRouteEditor .deer-editor-actions{display:flex;gap:7px;flex-wrap:wrap}
-#deerRouteEditor button{padding:7px 10px;border:1px solid #cbb58e;border-radius:7px;background:#806345;color:white;font:600 12px Nunito,Arial,sans-serif;cursor:pointer}
-#deerRouteEditor button.secondary{background:#51463c}
-#deerRouteEditor textarea{display:block;width:100%;height:74px;margin-top:9px;resize:vertical;border:1px solid #a99576;border-radius:6px;background:#191612;color:#f8edda;padding:7px;font:11px monospace}
-#start.deer-route-picking{cursor:crosshair}
-.deer-route-marker{position:absolute;z-index:10010;width:22px;height:22px;margin:-11px 0 0 -11px;border:3px solid #fff4cf;border-radius:50%;background:#c45b35;box-shadow:0 0 0 3px #20170dbb,0 0 14px #fff7;pointer-events:none}
-.deer-route-marker::after{content:attr(data-label);position:absolute;left:18px;top:-8px;padding:3px 6px;border-radius:4px;background:#20170de8;color:#fff4dc;font:700 12px Nunito,Arial,sans-serif;white-space:nowrap}
-#deerRouteLine{position:absolute;z-index:10009;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
-#deerRouteLine line{stroke:#ffe7a4;stroke-width:2.5;stroke-dasharray:8 6;vector-effect:non-scaling-stroke;filter:drop-shadow(0 1px 3px #000)}
-@media(max-width:600px){#deerRouteEditorButton{left:8px;top:8px}#deerRouteEditor{left:8px;top:52px}}
-
 
 </style>
 </head>
@@ -3706,58 +3690,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 const start=document.getElementById("start");
 const authOverlay=document.getElementById("authOverlay");
 
-const deerRouteEditorButton=document.createElement("button");
-deerRouteEditorButton.id="deerRouteEditorButton";
-deerRouteEditorButton.type="button";
-deerRouteEditorButton.textContent="Edytuj trasę sarny";
-const deerRouteEditor=document.createElement("section");
-deerRouteEditor.id="deerRouteEditor";
-deerRouteEditor.innerHTML='<strong>Wyznacz trasę sarny</strong><p id="deerRouteHint">Kliknij „Zaznacz punkty”, a następnie wskaż na scenerii początek i koniec biegu. Sarna będzie poruszać się po tej trasie w obu kierunkach.</p><div class="deer-editor-actions"><button type="button" id="deerRoutePick">Zaznacz punkty</button><button type="button" class="secondary" id="deerRouteReset">Wyczyść</button><button type="button" class="secondary" id="deerRouteCopy">Kopiuj współrzędne</button></div><textarea id="deerRouteCoords" readonly placeholder="Tutaj pojawią się współrzędne dwóch punktów"></textarea>';
-document.body.append(deerRouteEditorButton,deerRouteEditor);
-let deerRoutePoints=[];
-let deerRoutePicking=false;
-let deerRouteSvg=null;
-function renderDeerRoutePoints(){
-  start.querySelectorAll(".deer-route-marker,#deerRouteLine").forEach(el=>el.remove());
-  if(deerRoutePoints.length===2){
-    const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
-    svg.id="deerRouteLine";svg.setAttribute("viewBox","0 0 100 100");svg.setAttribute("preserveAspectRatio","none");
-    const line=document.createElementNS("http://www.w3.org/2000/svg","line");
-    line.setAttribute("x1",deerRoutePoints[0].x);line.setAttribute("y1",deerRoutePoints[0].y);
-    line.setAttribute("x2",deerRoutePoints[1].x);line.setAttribute("y2",deerRoutePoints[1].y);
-    svg.appendChild(line);start.appendChild(svg);
-  }
-  deerRoutePoints.forEach((point,index)=>{
-    const marker=document.createElement("div");marker.className="deer-route-marker";marker.dataset.label=index===0?"START":"META";
-    marker.style.left=point.x+"%";marker.style.top=point.y+"%";start.appendChild(marker);
-  });
-  const coords=document.getElementById("deerRouteCoords");
-  coords.value=deerRoutePoints.length?JSON.stringify({start:deerRoutePoints[0]||null,end:deerRoutePoints[1]||null},null,2):"";
-  document.getElementById("deerRouteHint").textContent=deerRoutePoints.length===0?"Wskaż pierwszy punkt — miejsce, z którego sarna ma rozpocząć bieg.":deerRoutePoints.length===1?"Teraz wskaż drugi punkt — miejsce, w którym sarna ma zakończyć bieg.":"Gotowe! Trasa jest zaznaczona. Skopiuj współrzędne i prześlij je w rozmowie. Kierunek będzie losowany w obie strony.";
-  document.getElementById("deerRoutePick").textContent=deerRoutePoints.length===2?"Zaznacz ponownie":"Zaznacz punkty";
-}
-deerRouteEditorButton.addEventListener("click",()=>{deerRouteEditor.style.display=deerRouteEditor.style.display==="block"?"none":"block";});
-document.getElementById("deerRoutePick").addEventListener("click",()=>{
-  deerRoutePoints=[];renderDeerRoutePoints();deerRoutePicking=true;start.classList.add("deer-route-picking");
-  document.getElementById("deerRouteHint").textContent="Kliknij pierwszy punkt na scenerii.";
-});
-document.getElementById("deerRouteReset").addEventListener("click",()=>{
-  deerRoutePicking=false;start.classList.remove("deer-route-picking");deerRoutePoints=[];renderDeerRoutePoints();
-});
-document.getElementById("deerRouteCopy").addEventListener("click",()=>{
-  const value=document.getElementById("deerRouteCoords").value;
-  if(value&&navigator.clipboard?.writeText)navigator.clipboard.writeText(value).then(()=>{document.getElementById("deerRouteHint").textContent="Współrzędne skopiowane. Wklej je w rozmowie.";});
-});
-start.addEventListener("click",event=>{
-  if(!deerRoutePicking||event.target.closest("#deerRouteEditor"))return;
-  const rect=start.getBoundingClientRect();
-  deerRoutePoints.push({x:+((event.clientX-rect.left)/rect.width*100).toFixed(3),y:+((event.clientY-rect.top)/rect.height*100).toFixed(3)});
-  if(deerRoutePoints.length===2){deerRoutePicking=false;start.classList.remove("deer-route-picking");}
-  renderDeerRoutePoints();
-});
-
-
-
 /* Zaznaczanie trasy wróbla usunięte — współrzędne lotu są ustawione na stałe. */
 
 
@@ -4125,18 +4057,17 @@ function updateSeason(){
         springDeerTimer=setTimeout(()=>{
           if(lastSceneKey!=="spring-night"||!document.getElementById("seasonEffects"))return;
           const reverse=Math.random()<.5;
-          const pair=Math.random()<.4;
-          if(pair){
-            // Druga sarna rusza tą samą trasą 0,7 s po pierwszej.
-            launchDeer(reverse,null);
-            setTimeout(()=>{
-              if(lastSceneKey==="spring-night"&&document.getElementById("seasonEffects")){
-                launchDeer(reverse,scheduleDeer);
-              }
-            },700);
-          }else{
-            launchDeer(reverse,scheduleDeer);
-          }
+          // Losujemy wielkość grupy: najczęściej jedna sarna, czasem dwie, rzadziej trzy.
+          const roll=Math.random();
+          const groupSize=roll<.5?1:roll<.85?2:3;
+          const launchNext=(index)=>{
+            if(lastSceneKey!=="spring-night"||!document.getElementById("seasonEffects"))return;
+            launchDeer(reverse,index===groupSize-1?scheduleDeer:null);
+            if(index<groupSize-1){
+              setTimeout(()=>launchNext(index+1),500);
+            }
+          };
+          launchNext(0);
         },10000);
       };
       scheduleDeer();
