@@ -3336,6 +3336,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
       <div class="sky-actions">
         <button id="skyPlaceDipper" type="button">Zaznacz obszar Wielkiego Wozu</button>
         <button id="skyPlaceStars" type="button">Zaznacz obszar gwiazd</button>
+        <button id="skyPlaceStarPoints" type="button">Dodawaj pojedyncze gwiazdy</button>
         <button id="skySave" type="button">Zapisz układ</button>
         <button id="skyReset" type="button">Wyczyść</button>
       </div>
@@ -4884,32 +4885,28 @@ function showNotice(message){
 }
 
 
-/* EDYTOR POŁOŻENIA GWIAZD — dwa niezależne obszary do zaznaczenia. */
+/* EDYTOR POŁOŻENIA GWIAZD — obszary i dowolna liczba punktów. */
 (function initSkyEditor(){
   if(SCENE_PREVIEW!=="spring-night")return;
   const panel=document.getElementById("skyEditor"),hint=document.getElementById("skyEditorHint");
   const output=document.getElementById("skyEditorOutput"),effects=document.getElementById("seasonEffects");
-  const dipperBtn=document.getElementById("skyPlaceDipper"),starsBtn=document.getElementById("skyPlaceStars");
+  const dipperBtn=document.getElementById("skyPlaceDipper"),starsBtn=document.getElementById("skyPlaceStars"),starPointsBtn=document.getElementById("skyPlaceStarPoints");
   const key="zagrodowo-spring-night-sky-layout";
-  let mode="",dipperArea=null,starsArea=null,dragStart=null,saved=null;
+  let mode="",dipperArea=null,starsArea=null,starPoints=[],dragStart=null,saved=null;
   try{saved=JSON.parse(localStorage.getItem(key)||"null")}catch(e){}
-  if(saved){dipperArea=saved.dipperArea||null;starsArea=saved.starsArea||null}
+  if(saved){dipperArea=saved.dipperArea||null;starsArea=saved.starsArea||null;starPoints=saved.starPoints||[]}
   const button=document.createElement("button");
   button.type="button";button.textContent="Ustaw gwiazdy";
   button.style.cssText="position:absolute;z-index:31;left:50%;transform:translateX(-50%);bottom:14px;padding:8px 12px;border:1px solid #e6d3ae;border-radius:7px;background:#2c2b38ef;color:#fff8e8;font:600 12px Nunito;cursor:pointer";
   start.appendChild(button);
   const pos=e=>{const r=start.getBoundingClientRect();return [Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100)),Math.max(0,Math.min(100,(e.clientY-r.top)/r.height*100))]};
-  function clearPreview(){
-    start.querySelectorAll(".sky-editor-area,.sky-editor-label").forEach(n=>n.remove());
-    effects.querySelectorAll(".spring-night-star,.spring-night-constellation").forEach(n=>n.remove());
-  }
+  function clearPreview(){start.querySelectorAll(".sky-editor-area,.sky-editor-label").forEach(n=>n.remove());effects.querySelectorAll(".spring-night-star,.spring-night-constellation").forEach(n=>n.remove())}
   function addArea(area,label){
     if(!area)return;
     const box=document.createElement("div");box.className="sky-editor-area";
     box.style.left=area.x+"%";box.style.top=area.y+"%";box.style.width=area.w+"%";box.style.height=area.h+"%";start.appendChild(box);
     const tag=document.createElement("span");tag.className="sky-editor-label";tag.textContent=label;
-    tag.style.cssText="position:absolute;z-index:29;left:"+area.x+"%;top:"+area.y+"%;padding:2px 5px;background:#292637dd;color:#fff;border-radius:4px;font:10px Nunito;pointer-events:none";
-    start.appendChild(tag);
+    tag.style.cssText="position:absolute;z-index:29;left:"+area.x+"%;top:"+area.y+"%;padding:2px 5px;background:#292637dd;color:#fff;border-radius:4px;font:10px Nunito;pointer-events:none";start.appendChild(tag);
   }
   function renderPreview(){
     clearPreview();addArea(dipperArea,"Wielki Wóz");addArea(starsArea,"Drobne gwiazdy");
@@ -4919,54 +4916,34 @@ function showNotice(message){
       svg.style.cssText="left:"+dipperArea.x+"%;top:"+dipperArea.y+"%;width:"+dipperArea.w+"%;height:"+dipperArea.h+"%;inset:auto";
       const path=document.createElementNS("http://www.w3.org/2000/svg","path");
       path.setAttribute("d","M 12 24 L 27 39 L 42 54 L 57 69 L 82 55 L 77 25 L 52 15 L 42 54");svg.appendChild(path);
-      [[12,24],[27,39],[42,54],[57,69],[82,55],[77,25],[52,15]].forEach(([x,y])=>{
-        const c=document.createElementNS("http://www.w3.org/2000/svg","circle");c.setAttribute("cx",x);c.setAttribute("cy",y);c.setAttribute("r","1.7");c.setAttribute("fill","#fff8df");svg.appendChild(c);
-      });
+      [[12,24],[27,39],[42,54],[57,69],[82,55],[77,25],[52,15]].forEach(([x,y])=>{const c=document.createElementNS("http://www.w3.org/2000/svg","circle");c.setAttribute("cx",x);c.setAttribute("cy",y);c.setAttribute("r","1.7");c.setAttribute("fill","#fff8df");svg.appendChild(c)});
       effects.appendChild(svg);
     }
+    starPoints.forEach(([x,y])=>{const star=document.createElement("span");star.className="spring-night-star";star.style.cssText="left:"+x+"%;top:"+y+"%;--star-size:2px;--star-duration:3.6s;--star-delay:-1.2s";effects.appendChild(star)});
     if(starsArea&&starsArea.w>0&&starsArea.h>0){
-      for(let i=0;i<30;i++){
-        const x=starsArea.x+Math.random()*starsArea.w,y=starsArea.y+Math.random()*starsArea.h;
-        const star=document.createElement("span");star.className="spring-night-star";
-        star.style.cssText="left:"+x+"%;top:"+y+"%;--star-size:"+(1.3+Math.random()*1.2)+"px;--star-duration:"+(3+Math.random()*3)+"s;--star-delay:"+(-Math.random()*5)+"s";
-        effects.appendChild(star);
-      }
+      for(let i=0;i<30;i++){const x=starsArea.x+Math.random()*starsArea.w,y=starsArea.y+Math.random()*starsArea.h;const star=document.createElement("span");star.className="spring-night-star";star.style.cssText="left:"+x+"%;top:"+y+"%;--star-size:"+(1.3+Math.random()*1.2)+"px;--star-duration:"+(3+Math.random()*3)+"s;--star-delay:"+(-Math.random()*5)+"s";effects.appendChild(star)}
     }
   }
   function activate(which){
     mode=which;start.classList.add("sky-editing");
-    dipperBtn.classList.toggle("active",which==="dipper");starsBtn.classList.toggle("active",which==="stars");
-    hint.textContent=which==="dipper"?"Przeciągnij, aby wyznaczyć obszar, w którym umieścimy Wielki Wóz.":"Przeciągnij, aby wyznaczyć obszar drobnych migoczących gwiazd.";
+    dipperBtn.classList.toggle("active",which==="dipper");starsBtn.classList.toggle("active",which==="stars");starPointsBtn.classList.toggle("active",which==="points");
+    hint.textContent=which==="dipper"?"Przeciągnij, aby wyznaczyć obszar Wielkiego Wozu.":which==="stars"?"Przeciągnij, aby wyznaczyć obszar drobnych gwiazd.":"Klikaj na niebie, aby dodawać kolejne pojedyncze gwiazdy. Kliknij przycisk ponownie, aby zakończyć.";
   }
   button.addEventListener("click",()=>{panel.classList.toggle("open");if(panel.classList.contains("open"))renderPreview()});
   document.getElementById("skyEditorClose").addEventListener("click",()=>{panel.classList.remove("open");mode="";start.classList.remove("sky-editing")});
   dipperBtn.addEventListener("click",()=>activate("dipper"));starsBtn.addEventListener("click",()=>activate("stars"));
+  starPointsBtn.addEventListener("click",()=>{if(mode==="points"){mode="";start.classList.remove("sky-editing");starPointsBtn.classList.remove("active");hint.textContent="Zakończono dodawanie pojedynczych gwiazd."}else activate("points")});
   start.addEventListener("pointerdown",e=>{
     if(!mode||e.target.closest("#skyEditor")||e.target===button)return;
-    e.preventDefault();dragStart=pos(e);
-    if(mode==="dipper")dipperArea={x:dragStart[0],y:dragStart[1],w:0,h:0};
-    else starsArea={x:dragStart[0],y:dragStart[1],w:0,h:0};
+    e.preventDefault();
+    if(mode==="points"){starPoints.push(pos(e));renderPreview();hint.textContent="Dodano "+starPoints.length+" pojedynczych gwiazd. Klikaj dalej albo ponownie wybierz przycisk, aby zakończyć.";return}
+    dragStart=pos(e);if(mode==="dipper")dipperArea={x:dragStart[0],y:dragStart[1],w:0,h:0};else starsArea={x:dragStart[0],y:dragStart[1],w:0,h:0};
     start.setPointerCapture(e.pointerId);renderPreview();
   });
-  start.addEventListener("pointermove",e=>{
-    if(!mode||!dragStart)return;
-    const p=pos(e),rect={x:Math.min(dragStart[0],p[0]),y:Math.min(dragStart[1],p[1]),w:Math.abs(p[0]-dragStart[0]),h:Math.abs(p[1]-dragStart[1])};
-    if(mode==="dipper")dipperArea=rect;else starsArea=rect;renderPreview();
-  });
-  start.addEventListener("pointerup",()=>{
-    if(!mode||!dragStart)return;
-    const finished=mode;dragStart=null;mode="";start.classList.remove("sky-editing");
-    dipperBtn.classList.remove("active");starsBtn.classList.remove("active");
-    hint.textContent=finished==="dipper"?"Obszar Wielkiego Wozu zaznaczony. Teraz zaznacz obszar drobnych gwiazd.":"Obszar drobnych gwiazd zaznaczony. Możesz zapisać oba obszary.";
-  });
-  document.getElementById("skyReset").addEventListener("click",()=>{
-    dipperArea=null;starsArea=null;saved=null;localStorage.removeItem(key);output.style.display="none";renderPreview();
-    hint.textContent="Wyczyszczono oba obszary. Zaznacz je ponownie.";
-  });
-  document.getElementById("skySave").addEventListener("click",()=>{
-    saved={dipperArea,starsArea};localStorage.setItem(key,JSON.stringify(saved));output.value=JSON.stringify(saved);output.style.display="block";
-    hint.textContent="Oba obszary zapisane w tej przeglądarce. Skopiuj współrzędne i prześlij je, a przeniosę układ do gry.";
-  });
+  start.addEventListener("pointermove",e=>{if((mode!=="dipper"&&mode!=="stars")||!dragStart)return;const p=pos(e),rect={x:Math.min(dragStart[0],p[0]),y:Math.min(dragStart[1],p[1]),w:Math.abs(dragStart[0]-p[0]),h:Math.abs(dragStart[1]-p[1])};if(mode==="dipper")dipperArea=rect;else starsArea=rect;renderPreview()});
+  start.addEventListener("pointerup",()=>{if((mode!=="dipper"&&mode!=="stars")||!dragStart)return;const finished=mode;dragStart=null;mode="";start.classList.remove("sky-editing");dipperBtn.classList.remove("active");starsBtn.classList.remove("active");hint.textContent=finished==="dipper"?"Obszar Wielkiego Wozu zaznaczony. Teraz zaznacz obszar drobnych gwiazd.":"Obszar drobnych gwiazd zaznaczony. Możesz też dodawać pojedyncze gwiazdy."});
+  document.getElementById("skyReset").addEventListener("click",()=>{dipperArea=null;starsArea=null;starPoints=[];saved=null;localStorage.removeItem(key);output.style.display="none";renderPreview();hint.textContent="Wyczyszczono wszystkie ustawienia gwiazd."});
+  document.getElementById("skySave").addEventListener("click",()=>{saved={dipperArea,starsArea,starPoints};localStorage.setItem(key,JSON.stringify(saved));output.value=JSON.stringify(saved);output.style.display="block";hint.textContent="Układ zapisany w tej przeglądarce. Skopiuj współrzędne i prześlij je, a przeniosę je do gry."});
   if(saved)renderPreview();
 })();
 /* START */
