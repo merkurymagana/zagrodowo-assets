@@ -1295,7 +1295,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 /* Osobny przelot wróbla: od prawej krawędzi do lewej, według punktów wskazanych na scenie. */
 .spring-sparrow-flight-route{
   position:absolute;
-  z-index:6;
+  z-index:12;
   left:16%;
   top:calc(56% + 101px);
   width:clamp(70px,7.6vw,108px);
@@ -1303,26 +1303,27 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   opacity:0;
   pointer-events:none;
   transform:translate(-50%,-50%);
+  transform-origin:50% 50%;
   animation:sparrow-two-way-flight 120s linear infinite;
   filter:sepia(.42) saturate(.92) contrast(1.09) brightness(.99)
     drop-shadow(0 1px 0 rgba(105,72,43,.46))
     drop-shadow(0 3px 3px rgba(73,52,34,.38));
+  will-change:left,top,opacity,transform;
 }
-/* 8 s: z płotu w lewo; 60 s przerwy; następnie z prawej strony z powrotem na płot. */
+/* 30 s na płocie, szybki odlot, 60 s poza kadrem, szybki powrót i płynne lądowanie. */
 @keyframes sparrow-two-way-flight{
-  0%,1%{left:16%;top:calc(56% + 101px);opacity:0}
-  2%{left:16%;top:calc(56% + 101px);opacity:1}
-  8%{left:3.1%;top:54.5%;opacity:1}
-  8.01%,59.99%{left:3.1%;top:54.5%;opacity:0}
-  60%{left:97.3%;top:62.3%;opacity:0}
-  61%{left:97.3%;top:62.3%;opacity:1}
-  68%{left:16%;top:calc(56% + 101px);opacity:1}
-  69%,100%{left:16%;top:calc(56% + 101px);opacity:0}
+  0%,24.9%{left:16%;top:calc(56% + 101px);opacity:0;transform:translate(-50%,-50%) scale(.96)}
+  25%{left:16%;top:calc(56% + 101px);opacity:1;transform:translate(-50%,-50%) scale(1)}
+  26.25%{left:3.1%;top:54.5%;opacity:1;transform:translate(-50%,-50%) scale(.94)}
+  26.26%,76.24%{left:3.1%;top:54.5%;opacity:0;transform:translate(-50%,-50%) scale(.94)}
+  76.25%{left:97.3%;top:62.3%;opacity:0;transform:translate(-50%,-50%) scale(.94)}
+  77.5%{left:16%;top:calc(56% + 101px);opacity:1;transform:translate(-50%,-50%) scale(1)}
+  78.75%,100%{left:16%;top:calc(56% + 101px);opacity:0;transform:translate(-50%,-50%) scale(1)}
 }
 @keyframes sparrow-perch-visibility{
-  0%,1.5%{opacity:1}
-  2%,69%{opacity:0}
-  70%,100%{opacity:1}
+  0%,24.99%{opacity:1}
+  25.01%,77.49%{opacity:0}
+  77.5%,100%{opacity:1}
 }
 @keyframes sparrow-head-look{
   0%,12%,100%{transform:rotate(0deg)}
