@@ -1234,8 +1234,37 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   91%{opacity:.28;filter:blur(7px) drop-shadow(0 2px 2px #38271910)}
   100%{transform:translate3d(var(--drift-end),calc(110vh - 10px),0) rotate(var(--turn-end)) scale(.9) scaleX(var(--leaf-flip,1));opacity:0;filter:blur(10px)}
 }
+/* WIOSENNE PŁATKI — ten sam naturalny, wietrzny tor lotu co jesienne liście. */
+.spring-petal{
+  position:absolute;
+  top:10px;
+  left:var(--left);
+  display:block;
+  width:var(--leaf-size);
+  height:auto;
+  max-width:none;
+  opacity:0;
+  filter:drop-shadow(0 1px 2px #8f526333);
+  transform-origin:50% 50%;
+  animation:spring-petal-breeze var(--fall-time) linear var(--fall-delay) infinite;
+  will-change:transform,opacity;
+}
+@keyframes spring-petal-breeze{
+  0%{transform:translate3d(0,0,0) rotate(var(--turn-start)) scale(.92) scaleX(var(--leaf-flip,1));opacity:0;filter:blur(0) drop-shadow(0 1px 2px #8f526333)}
+  5%{opacity:var(--leaf-opacity,1)}
+  20%{transform:translate3d(var(--drift-a),19vh,0) rotate(var(--turn-a)) scale(1) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1)}
+  42%{transform:translate3d(var(--drift-b),42vh,0) rotate(var(--turn-b)) scale(.96) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1)}
+  60%{transform:translate3d(var(--drift-c),61vh,0) rotate(var(--turn-c)) scale(1.02) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1);filter:blur(0) drop-shadow(0 1px 2px #8f526333)}
+  72%{opacity:var(--leaf-opacity,1);filter:blur(2px) drop-shadow(0 1px 2px #8f526322)}
+  82%{transform:translate3d(var(--drift-d),86vh,0) rotate(var(--turn-d)) scale(.94);opacity:.72;filter:blur(4px) drop-shadow(0 1px 2px #8f526318)}
+  91%{opacity:.28;filter:blur(7px) drop-shadow(0 1px 2px #8f526310)}
+  100%{transform:translate3d(var(--drift-end),calc(110vh - 10px),0) rotate(var(--turn-end)) scale(.9) scaleX(var(--leaf-flip,1));opacity:0;filter:blur(10px)}
+}
 @media(max-width:700px){
-  .autumn-leaf{width:calc(var(--leaf-size) * .78)}
+  .autumn-leaf,.spring-petal{width:calc(var(--leaf-size) * .78)}
+}
+@media(prefers-reduced-motion:reduce){
+  .spring-petal{animation:none;display:none}
 }
 @media(prefers-reduced-motion:reduce){
   .autumn-leaf{animation:none;display:none}
@@ -3618,7 +3647,50 @@ function updateSeason(){
   if(effects){
     effects.replaceChildren();
     const showAutumnLeaves=name==="autumn"&&period==="day";
-    effects.classList.toggle("leaf-safe-area",showAutumnLeaves);
+    const showSpringPetals=name==="spring"&&period==="day";
+    effects.classList.toggle("leaf-safe-area",showAutumnLeaves||showSpringPetals);
+    if(showSpringPetals){
+      const petalFiles=["platek-wiosna1.png","platek-wiosna2.png","platek-wiosna3.png"];
+      // Zróżnicowane, zakrzywione trasy z obu stron kadru — jak w jesiennym opadzie liści.
+      const petalPaths=[
+        [0,"-2%","13px","22vw","44vw","68vw","88vw","102vw","-5deg","72deg","-38deg","96deg","-52deg","285deg",".94"],
+        [1,"-1%","11px","-24vw","-48vw","-72vw","-92vw","-106vw","18deg","-62deg","42deg","-92deg","35deg","-245deg",".91"],
+        [2,"-3%","10px","30vw","58vw","82vw","104vw","118vw","-12deg","88deg","-55deg","70deg","-30deg","310deg",".93"],
+        [0,"-2%","12px","-18vw","-42vw","-66vw","-88vw","-102vw","22deg","-75deg","58deg","-88deg","44deg","-270deg",".95"],
+        [1,"96%","14px","-22vw","-46vw","-70vw","-94vw","-108vw","-8deg","64deg","-48deg","105deg","-35deg","300deg",".94"],
+        [2,"97%","10px","24vw","50vw","76vw","98vw","112vw","15deg","-82deg","48deg","-100deg","30deg","-260deg",".90"],
+        [0,"98%","13px","-28vw","-54vw","-78vw","-102vw","-116vw","-18deg","76deg","-44deg","92deg","-42deg","295deg",".95"],
+        [1,"99%","11px","20vw","46vw","70vw","94vw","108vw","12deg","-68deg","52deg","-84deg","38deg","-250deg",".92"],
+        [2,"97%","10px","-24vw","-50vw","-74vw","-96vw","-110vw","-10deg","82deg","-50deg","96deg","-32deg","305deg",".92"],
+        [0,"-1%","11px","28vw","56vw","82vw","106vw","120vw","20deg","-72deg","46deg","-90deg","34deg","-255deg",".90"],
+        [1,"-2%","14px","18vw","40vw","64vw","84vw","98vw","-14deg","68deg","-42deg","88deg","-40deg","292deg",".96"],
+        [2,"98%","12px","-20vw","-44vw","-68vw","-90vw","-104vw","16deg","-70deg","50deg","-86deg","36deg","-248deg",".93"],
+        [0,"-1%","10px","26vw","52vw","78vw","100vw","114vw","-8deg","84deg","-52deg","98deg","-34deg","308deg",".91"],
+        [1,"97%","13px","-26vw","-52vw","-76vw","-98vw","-112vw","20deg","-74deg","56deg","-94deg","42deg","-262deg",".95"],
+        [2,"-2%","11px","16vw","38vw","60vw","80vw","94vw","-16deg","66deg","-40deg","82deg","-38deg","288deg",".92"],
+        [0,"99%","12px","-24vw","-48vw","-72vw","-94vw","-108vw","14deg","-78deg","54deg","-90deg","40deg","-258deg",".96"]
+      ];
+      Array.from({length:30},(_,index)=>{
+        const [type,left,size,a,b,c,d,endX,start,turnA,turnB,turnC,turnD,end,opacity]=petalPaths[index%petalPaths.length];
+        const petal=document.createElement("img");
+        petal.className="spring-petal";
+        petal.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/"+petalFiles[type];
+        petal.alt="";
+        petal.setAttribute("aria-hidden","true");
+        const petalSize=parseFloat(size)*(index>=petalPaths.length?0.82:1);
+        const fallTime=46+(index%5)*2.5;
+        const stagger=index*1.55+Math.floor(index/3)*2.2;
+        const vars={
+          "--left":left,"--leaf-size":petalSize+"px","--fall-time":fallTime+"s","--fall-delay":(-stagger)+"s",
+          "--drift-a":a,"--drift-b":b,"--drift-c":c,"--drift-d":d,"--drift-end":endX,
+          "--turn-start":start,"--turn-a":turnA,"--turn-b":turnB,"--turn-c":turnC,
+          "--turn-d":turnD,"--turn-end":end,"--leaf-opacity":opacity,
+          "--leaf-flip":index%2===0?"1":"-1"
+        };
+        Object.entries(vars).forEach(([key,value])=>petal.style.setProperty(key,value));
+        effects.appendChild(petal);
+      });
+    }
     if(showAutumnLeaves){
       const leafFiles=[
         "lisc-klon-lot.png",
