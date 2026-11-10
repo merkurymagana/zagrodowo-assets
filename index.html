@@ -952,6 +952,22 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
 }
 
+/* GWIAZDY WIOSENNEJ NOCY */
+.spring-night-star{
+ position:absolute;width:var(--star-size,2px);height:var(--star-size,2px);
+ left:var(--star-x);top:var(--star-y);border-radius:50%;
+ background:#fff8df;opacity:.25;
+ box-shadow:0 0 3px 1px #fff3c6a8,0 0 8px 2px #dce9ff55;
+ transform:scale(.72);
+ animation:spring-night-twinkle var(--star-duration,4s) ease-in-out var(--star-delay,0s) infinite;
+ pointer-events:none;
+}
+.spring-night-star.star-bright{background:#fffdf0;box-shadow:0 0 4px 1px #fff8d8d9,0 0 11px 3px #dce9ff77}
+.spring-night-constellation{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.spring-night-constellation path{fill:none;stroke:rgba(232,238,255,.3);stroke-width:.65;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+@keyframes spring-night-twinkle{0%,100%{opacity:.18;transform:scale(.7)}40%{opacity:.48;transform:scale(.9)}58%{opacity:.95;transform:scale(1.18)}74%{opacity:.55;transform:scale(.95)}}
+@media(prefers-reduced-motion:reduce){.spring-night-star{animation:none;opacity:.65;transform:none}}
+
 /* EDYTOR NOCNEGO NIEBA — narzędzie podglądu położenia gwiazd. */
 #skyEditor{position:absolute;z-index:30;top:12px;left:50%;transform:translateX(-50%);width:min(290px,calc(100% - 24px));padding:10px;border:1px solid #e6d3ae;border-radius:10px;background:#2c2b38ed;color:#fff8e8;font:12px Nunito,Arial,sans-serif;box-shadow:0 4px 18px #0008;display:none}
 #skyEditor.open{display:block}
@@ -4010,6 +4026,37 @@ function updateSeason(){
         Object.entries(vars).forEach(([key,value])=>leaf.style.setProperty(key,value));
         effects.appendChild(leaf);
       });
+    }
+    // Docelowe położenie gwiazd przekazane z edytora przez użytkownika.
+    const showSpringNight=name==="spring"&&period==="night";
+    if(showSpringNight){
+      const starPoints=[[78.2895,29.6976],[80.4426,32.2894],[87.2608,23.6501],[88.5167,34.8812],[95.933,31.2095],[77.4522,18.0346],[46.5909,29.4816],[49.0431,35.6371],[38.0383,27.6458],[32.6555,30.8855],[31.3995,34.2333],[25.7177,26.6739],[31.0407,7.1274],[15.1316,29.8056],[19.3182,17.8186],[40.3708,5.6156],[37.7392,26.4579],[38.0981,39.9568]];
+      starPoints.forEach(([x,y],i)=>{
+        const star=document.createElement("span");
+        star.className="spring-night-star"+(i%5===0?" star-bright":"");
+        star.style.setProperty("--star-x",x+"%");
+        star.style.setProperty("--star-y",y+"%");
+        star.style.setProperty("--star-size",(i%4===0?2.4:1.7)+"px");
+        star.style.setProperty("--star-duration",(3.4+(i%6)*.55)+"s");
+        star.style.setProperty("--star-delay",(-((i*1.17)%5))+"s");
+        effects.appendChild(star);
+      });
+      const area={x:53.2297,y:25.378,w:10.6459,h:10.0432};
+      const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
+      svg.setAttribute("viewBox","0 0 100 100");
+      svg.setAttribute("preserveAspectRatio","none");
+      svg.classList.add("spring-night-constellation");
+      svg.style.cssText="left:"+area.x+"%;top:"+area.y+"%;width:"+area.w+"%;height:"+area.h+"%;inset:auto";
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d","M 12 24 L 27 39 L 42 54 L 57 69 L 82 55 L 77 25 L 52 15 L 42 54");
+      svg.appendChild(path);
+      [[12,24],[27,39],[42,54],[57,69],[82,55],[77,25],[52,15]].forEach(([x,y],i)=>{
+        const star=document.createElementNS("http://www.w3.org/2000/svg","circle");
+        star.setAttribute("cx",x);star.setAttribute("cy",y);star.setAttribute("r",i===3?"2.3":"1.9");
+        star.setAttribute("fill","#fff8df");star.setAttribute("filter","drop-shadow(0 0 2px #fff)");
+        svg.appendChild(star);
+      });
+      effects.appendChild(svg);
     }
     // Gwiazdy wiosennej nocy są teraz ustawiane w edytorze położenia.
     const showAutumnRain=name==="autumn"&&period==="night";
