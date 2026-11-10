@@ -1270,7 +1270,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   height:auto;
   opacity:1;
   pointer-events:none;
-  animation:sparrow-takeoff 26s linear infinite;
+  animation:sparrow-perch-visibility 120s linear infinite;
 }
 .spring-sparrow img{
   display:block;
@@ -1296,23 +1296,33 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .spring-sparrow-flight-route{
   position:absolute;
   z-index:6;
-  left:97.3%;
-  top:62.3%;
+  left:16%;
+  top:calc(56% + 101px);
   width:clamp(70px,7.6vw,108px);
   height:auto;
   opacity:0;
   pointer-events:none;
   transform:translate(-50%,-50%);
-  animation:sparrow-route-flight 26s linear infinite;
+  animation:sparrow-two-way-flight 120s linear infinite;
   filter:sepia(.42) saturate(.92) contrast(1.09) brightness(.99)
     drop-shadow(0 1px 0 rgba(105,72,43,.46))
     drop-shadow(0 3px 3px rgba(73,52,34,.38));
 }
-@keyframes sparrow-route-flight{
-  0%,68%{opacity:0;transform:translate(-50%,-50%)}
-  69%{opacity:1;transform:translate(-50%,-50%)}
-  97%{opacity:1;transform:translate(calc(-50% - 94.2vw),calc(-50% - 7.8vh))}
-  100%{opacity:0;transform:translate(calc(-50% - 94.2vw),calc(-50% - 7.8vh))}
+/* 8 s: z płotu w lewo; 60 s przerwy; następnie z prawej strony z powrotem na płot. */
+@keyframes sparrow-two-way-flight{
+  0%,1%{left:16%;top:calc(56% + 101px);opacity:0}
+  2%{left:16%;top:calc(56% + 101px);opacity:1}
+  8%{left:3.1%;top:54.5%;opacity:1}
+  8.01%,59.99%{left:3.1%;top:54.5%;opacity:0}
+  60%{left:97.3%;top:62.3%;opacity:0}
+  61%{left:97.3%;top:62.3%;opacity:1}
+  68%{left:16%;top:calc(56% + 101px);opacity:1}
+  69%,100%{left:16%;top:calc(56% + 101px);opacity:0}
+}
+@keyframes sparrow-perch-visibility{
+  0%,1.5%{opacity:1}
+  2%,69%{opacity:0}
+  70%,100%{opacity:1}
 }
 @keyframes sparrow-head-look{
   0%,12%,100%{transform:rotate(0deg)}
@@ -1321,10 +1331,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   62%,72%{transform:rotate(-1deg)}
   82%,91%{transform:rotate(1deg)}
 }
-@keyframes sparrow-takeoff{
-  0%,66%{transform:translate(0,0);opacity:1}
-  68%,100%{transform:translate(0,0);opacity:0}
-}
+
 @media(max-width:700px){
   .autumn-leaf,.spring-petal{width:calc(var(--leaf-size) * .78)}
 }
