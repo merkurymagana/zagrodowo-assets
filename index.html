@@ -1362,32 +1362,31 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   0%,24.99%{
     left:16%;top:calc(56% + 101px);opacity:0;
   }
+  /* Wylot: ta sama liniowa prędkość co przylot z prawej.
+     Od 16% do punktu 3,1%, a następnie płynne przecięcie granicy zasłonięcia. */
   25%{
     left:16%;top:calc(56% + 101px);opacity:1;
-    /* Stała prędkość przez cały wylot — bez wyhamowania na punkcie pośrednim. */
     animation-timing-function:linear;
   }
-  27.5%{
+  25.533%{
     left:3.1%;top:54.5%;opacity:1;
-    clip-path:inset(0 0 0 0);
     animation-timing-function:linear;
   }
-  /* Ptak bez zatrzymania przelatuje przez stałą granicę 3,1%:
-     clipper zasłania go kolejno od głowy do ogona. */
-  28.333%{
+  25.991%{
     left:-8%;top:54.5%;opacity:1;
   }
-  28.334%,77.49%{
+  25.992%,77.49%{
     left:-8%;top:54.5%;opacity:0;
   }
-  /* Przy przylocie z prawej pełny obraz jest od początku odsłonięty. */
+  /* Przylot z prawej: start dokładnie w zaznaczonym punkcie, bez zmiany prędkości. */
   77.5%{
     left:97.3%;top:62.3%;opacity:1;
     clip-path:inset(0 0 0 0);
-    animation-timing-function:cubic-bezier(.12,.08,.28,1);
+    animation-timing-function:linear;
   }
+  /* Lot kończy się dokładnie w punkcie siedzącego wróbla; siedzący obraz przejmuje go w tej samej chwili. */
   80.833%{
-    left:16%;top:calc(56% + 101px);opacity:1;
+    left:16%;top:calc(56% + 101px);opacity:0;
     clip-path:inset(0 0 0 0);
   }
   80.834%,100%{
@@ -3178,38 +3177,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #springWaveGuides{display:none!important}
 
 
-/* NARZĘDZIE DO ZAZNACZANIA TRASY WRÓBLA — tylko wiosenny dzień. */
-#sparrowRouteTool{
-  position:absolute;z-index:10020;top:14px;left:14px;
-  display:none;max-width:min(340px,calc(100vw - 28px));
-  padding:11px 13px;border:2px solid #70482f;border-radius:9px;
-  background:#fff4dfed;color:#493d2c;box-shadow:0 3px 12px #24170b55;
-  font:700 13px/1.35 'Nunito',Arial,sans-serif;
-}
-#start.spring-day-animations #sparrowRouteTool{display:block}
-#sparrowRouteTool button{
-  border:1px solid #70482f;border-radius:6px;padding:6px 9px;
-  background:#789553;color:white;font-weight:800;margin:6px 5px 0 0;
-}
-#sparrowRouteTool button.secondary{background:#a66c3d}
-#sparrowRouteStatus{display:block;margin-top:6px;font-weight:600}
-#sparrowRouteCoords{display:block;margin-top:5px;white-space:pre-line;font:700 12px/1.4 monospace}
-#sparrowRouteOverlay{
-  position:absolute;inset:0;z-index:10010;display:none;
-  cursor:crosshair;touch-action:pan-y;
-}
-#sparrowRouteOverlay.active{display:block}
-.sparrow-route-marker{
-  position:absolute;width:22px;height:22px;border:3px solid white;
-  border-radius:50%;background:#c34d35;box-shadow:0 1px 7px #000b;
-  transform:translate(-50%,-50%);pointer-events:none;
-}
-.sparrow-route-marker.end{background:#39834c}
-#sparrowRouteLine{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
-#sparrowRouteLine line{stroke:#fff4df;stroke-width:4;stroke-dasharray:10 8;filter:drop-shadow(0 1px 3px #382719)}
-@media(max-width:700px){
-  #sparrowRouteTool{top:8px;left:8px;font-size:12px}
-}
+/* Narzędzie pomocnicze do zaznaczania trasy zostało usunięte z ekranu startowego. */
 
 </style>
 </head>
@@ -3298,20 +3266,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     <img id="auroraNorthern" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zorza-polarna1.png" alt="" aria-hidden="true">
     <img id="auroraNorthern2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zorza-polarna2.png" alt="" aria-hidden="true">
     <div class="season-effects" id="seasonEffects" aria-hidden="true"></div>
-
-    <div id="sparrowRouteTool" aria-label="Zaznaczanie trasy wróbla">
-      <strong>🐦 Ustaw trasę lotu wróbla</strong>
-      <div>Włącz zaznaczanie, a potem kliknij na scenerii: najpierw miejsce pojawienia się, następnie miejsce zniknięcia.</div>
-      <button type="button" id="sparrowRouteStart">Zaznacz trasę</button>
-      <button type="button" class="secondary" id="sparrowRouteReset">Wyczyść</button>
-      <span id="sparrowRouteStatus">Trasa nie została jeszcze zaznaczona.</span>
-      <output id="sparrowRouteCoords"></output>
-    </div>
-    <div id="sparrowRouteOverlay" aria-hidden="true">
-      <svg id="sparrowRouteLine" preserveAspectRatio="none"><line id="sparrowRouteLineSegment" x1="0" y1="0" x2="0" y2="0"/></svg>
-      <span id="sparrowRouteMarkerStart" class="sparrow-route-marker" hidden></span>
-      <span id="sparrowRouteMarkerEnd" class="sparrow-route-marker end" hidden></span>
-    </div>
 
     <div id="autumnPumpkins" aria-hidden="true">
       <span class="pumpkin-glow pumpkin-glow-one"></span>
@@ -3677,61 +3631,7 @@ const start=document.getElementById("start");
 const authOverlay=document.getElementById("authOverlay");
 
 
-/* Interaktywne zaznaczanie punktu startu i końca lotu wróbla. */
-(function setupSparrowRouteTool(){
-  const stage=document.getElementById("start");
-  const overlay=document.getElementById("sparrowRouteOverlay");
-  const startButton=document.getElementById("sparrowRouteStart");
-  const resetButton=document.getElementById("sparrowRouteReset");
-  const status=document.getElementById("sparrowRouteStatus");
-  const coords=document.getElementById("sparrowRouteCoords");
-  const markerA=document.getElementById("sparrowRouteMarkerStart");
-  const markerB=document.getElementById("sparrowRouteMarkerEnd");
-  const line=document.getElementById("sparrowRouteLineSegment");
-  if(!stage||!overlay||!startButton)return;
-  let selecting=false,points=[];
-  const render=()=>{
-    markerA.hidden=!points[0];markerB.hidden=!points[1];
-    if(points[0]){
-      markerA.style.left=points[0].x+"%";markerA.style.top=points[0].y+"%";
-    }
-    if(points[1]){
-      markerB.style.left=points[1].x+"%";markerB.style.top=points[1].y+"%";
-    }
-    if(points.length===2){
-      line.setAttribute("x1",points[0].x+"%");line.setAttribute("y1",points[0].y+"%");
-      line.setAttribute("x2",points[1].x+"%");line.setAttribute("y2",points[1].y+"%");
-      coords.textContent="Pojawia się: "+points[0].x.toFixed(1)+"% od lewej, "+points[0].y.toFixed(1)+"% od góry\n"+
-        "Znika: "+points[1].x.toFixed(1)+"% od lewej, "+points[1].y.toFixed(1)+"% od góry";
-      status.textContent="Gotowe! Przepisz mi te współrzędne.";
-    }else if(points.length===1){
-      coords.textContent="";status.textContent="Punkt pojawienia zaznaczony. Teraz kliknij miejsce zniknięcia.";
-    }else{
-      coords.textContent="";status.textContent="Kliknij miejsce, w którym wróbel ma się pojawić.";
-    }
-  };
-  startButton.addEventListener("click",()=>{
-    selecting=!selecting;overlay.classList.toggle("active",selecting);
-    startButton.textContent=selecting?"Zakończ zaznaczanie":"Zaznacz trasę";
-    if(selecting){points=[];render();status.textContent="Kliknij miejsce pojawienia się wróbla.";}
-  });
-  resetButton.addEventListener("click",()=>{
-    points=[];selecting=false;overlay.classList.remove("active");
-    startButton.textContent="Zaznacz trasę";render();
-  });
-  overlay.addEventListener("click",event=>{
-    if(!selecting)return;
-    const rect=stage.getBoundingClientRect();
-    const x=Math.max(0,Math.min(100,(event.clientX-rect.left)/rect.width*100));
-    const y=Math.max(0,Math.min(100,(event.clientY-rect.top)/rect.height*100));
-    if(points.length>=2)points=[];
-    points.push({x,y});render();
-    if(points.length===2){
-      selecting=false;overlay.classList.remove("active");
-      startButton.textContent="Zaznacz ponownie";
-    }
-  });
-})();
+/* Zaznaczanie trasy wróbla usunięte — współrzędne lotu są ustawione na stałe. */
 
 
 function getSeasonName(month){
