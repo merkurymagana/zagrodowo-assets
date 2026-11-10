@@ -4108,7 +4108,7 @@ function updateSeason(){
           deer.setAttribute("aria-hidden","true");
           deer.addEventListener("animationend",()=>{deer.remove();scheduleDeer();},{once:true});
           effects.appendChild(deer);
-        },120000+Math.random()*180000);
+        },10000);
       };
       scheduleDeer();
     }
