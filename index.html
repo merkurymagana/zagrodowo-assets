@@ -1293,6 +1293,17 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 .spring-sparrow .sparrow-flight{display:none}
 /* Osobny przelot wróbla: od prawej krawędzi do lewej, według punktów wskazanych na scenie. */
+/* Szybkie trzepotanie skrzydłami podczas lotu — subtelne ugięcie i ruch całej sylwetki. */
+.spring-sparrow-flight-route{
+  animation: sparrow-wingbeat .13s ease-in-out infinite alternate,
+             sparrow-two-way-flight 120s linear infinite;
+  transform-origin:50% 54%;
+  will-change:transform;
+}
+@keyframes sparrow-wingbeat{
+  from{scale:1 .94;rotate:-1deg}
+  to{scale:1 1.045;rotate:1deg}
+}
 .spring-sparrow-flight-route{
   position:absolute;
   z-index:12;
