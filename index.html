@@ -1359,15 +1359,16 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   27.5%{
     left:3.1%;top:54.5%;opacity:1;
     clip-path:inset(0 0 0 0);
-    animation-timing-function:cubic-bezier(.35,.1,.65,1);
+    animation-timing-function:linear;
   }
-  /* Wylatując za lewą przeszkodę, chowa się od dzioba i głowy ku ogonowi. */
+  /* W tym samym, zaznaczonym punkcie znika za niewidzialną krawędzią:
+     najpierw głowa, potem tułów i na końcu ogon — bez dalszego przesuwania. */
   28.333%{
-    left:-2.5%;top:54.5%;opacity:0;
+    left:3.1%;top:54.5%;opacity:1;
     clip-path:inset(0 0 0 100%);
   }
   28.334%,77.49%{
-    left:-2.5%;top:54.5%;opacity:0;
+    left:3.1%;top:54.5%;opacity:0;
     clip-path:inset(0 0 0 100%);
   }
   /* Wróbel pojawia się dokładnie w oznaczonym punkcie po prawej. */
