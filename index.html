@@ -125,23 +125,23 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   content:"";
   position:absolute;
   inset:2px 1px;
-  border:1.7px solid #effff4;
+  border:1px solid #e5f5e9a8;
   border-radius:50%;
-  box-shadow:0 0 6px #e4fff0bb, inset 0 0 4px #e4fff088;
+  box-shadow:0 0 3px #d8eee066, inset 0 0 2px #d8eee044;
   opacity:0;
-  transform:scale(.28,.28);
+  transform:scale(.5,.5);
   animation:springFrogSplash 5.2s linear infinite;
 }
 #springFrogSplash::after{
   inset:5px 4px;
-  animation-delay:.10s;
+  animation-delay:.16s;
 }
 @keyframes springFrogSplash{
-  0%,85.5%{opacity:0;transform:scale(.28,.28)}
-  86.5%{opacity:1;transform:scale(.58,.58)}
-  90%{opacity:.82;transform:scale(1.05,1.02)}
-  96%{opacity:.36;transform:scale(1.48,1.32)}
-  100%{opacity:0;transform:scale(1.7,1.48)}
+  0%,85.5%{opacity:0;transform:scale(.5,.5)}
+  87%{opacity:.42;transform:scale(.66,.64)}
+  92%{opacity:.30;transform:scale(.88,.84)}
+  97%{opacity:.12;transform:scale(1.08,1.02)}
+  100%{opacity:0;transform:scale(1.16,1.08)}
 }
 #start.spring-morning #springFrogSplash{display:block}
 @media(max-width:1050px){
