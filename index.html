@@ -1347,13 +1347,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .spring-sparrow-flight-route .sparrow-wing-left{
   clip-path:polygon(49% 30%,52% 17%,59% 8%,66% 9%,73% 14%,77% 22%,75% 37%,70% 49%,64% 54%,56% 48%);
   transform-origin:56% 48%;
-  animation:sparrow-fast-wingbeats .13s ease-in-out infinite alternate;
+  animation:sparrow-fast-wingbeats .13s ease-in-out 0s infinite alternate;
+  animation-play-state:running;
   will-change:transform;
 }
 .spring-sparrow-flight-route .sparrow-wing-right{
   clip-path:polygon(8% 56%,17% 51%,29% 45%,40% 44%,51% 49%,60% 58%,67% 69%,66% 83%,60% 96%,49% 100%,35% 97%,22% 90%,13% 79%);
   transform-origin:48% 53%;
-  animation:sparrow-fast-wingbeats .13s ease-in-out infinite alternate;
+  animation:sparrow-fast-wingbeats .13s ease-in-out 0s infinite alternate;
+  animation-play-state:running;
   will-change:transform;
 }
 @keyframes sparrow-fast-wingbeats{
