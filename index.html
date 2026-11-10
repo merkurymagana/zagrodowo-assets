@@ -3092,7 +3092,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   background:#fff4dfed;color:#493d2c;box-shadow:0 3px 12px #24170b55;
   font:700 13px/1.35 'Nunito',Arial,sans-serif;
 }
-#start.spring-day #sparrowRouteTool{display:block}
+#start.spring-day-animations #sparrowRouteTool{display:block}
 #sparrowRouteTool button{
   border:1px solid #70482f;border-radius:6px;padding:6px 9px;
   background:#789553;color:white;font-weight:800;margin:6px 5px 0 0;
@@ -3776,6 +3776,7 @@ function updateSeason(){
   start.classList.toggle("winter-day",name==="winter"&&period==="day");
   start.classList.toggle("winter-night",name==="winter"&&period==="night");
   start.classList.toggle("spring-morning",name==="spring"&&period==="morning");
+  start.classList.toggle("spring-day-animations",name==="spring"&&period==="day");
 
   const seasonImage=document.getElementById("seasonImage");
   if(seasonImage){
