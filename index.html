@@ -952,38 +952,21 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
 }
 
-/* MIGOCZĄCE GWIAZDY — wiosenna noc. */
-.spring-night-star{
-  position:absolute;width:var(--star-size);height:var(--star-size);
-  left:var(--star-x);top:var(--star-y);border-radius:50%;
-  background:#fff8df;opacity:.2;
-  box-shadow:0 0 3px 1px #fff3c6a8,0 0 8px 2px #dce9ff55;
-  transform:scale(.72);
-  animation:spring-night-twinkle var(--star-duration) ease-in-out var(--star-delay) infinite;
-  will-change:opacity,transform;
-}
-.spring-night-star.star-bright{
-  background:#fffdf0;
-  box-shadow:0 0 4px 1px #fff8d8d9,0 0 11px 3px #dce9ff77;
-}
-.spring-night-constellation{
-  position:absolute;inset:0;width:100%;height:100%;
-}
-.spring-night-constellation path{
-  fill:none;stroke:rgba(232,238,255,.32);stroke-width:1.05;
-  stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;
-}
-@keyframes spring-night-twinkle{
-  0%,100%{opacity:.16;transform:scale(.68)}
-  38%{opacity:.42;transform:scale(.88)}
-  57%{opacity:.95;transform:scale(1.18)}
-  72%{opacity:.58;transform:scale(.96)}
-}
-@media(prefers-reduced-motion:reduce){
-  .spring-night-star{animation:none;opacity:.62;transform:none}
-}
-
-
+/* EDYTOR NOCNEGO NIEBA — narzędzie podglądu położenia gwiazd. */
+#skyEditor{position:absolute;z-index:30;top:12px;right:12px;width:min(290px,calc(100% - 24px));padding:10px;border:1px solid #e6d3ae;border-radius:10px;background:#2c2b38ed;color:#fff8e8;font:12px Nunito,Arial,sans-serif;box-shadow:0 4px 18px #0008;display:none}
+#skyEditor.open{display:block}
+#skyEditor strong{display:block;font:16px 'Bree Serif',Georgia,serif;margin-bottom:5px}
+#skyEditor p{margin:4px 0 8px;line-height:1.35}
+#skyEditor .sky-actions{display:flex;flex-wrap:wrap;gap:5px}
+#skyEditor button{border:1px solid #d9c49f;border-radius:6px;padding:6px 8px;background:#f3e5c9;color:#493326;font:600 11px Nunito;cursor:pointer}
+#skyEditor button.active{background:#91a96e;color:#172313;border-color:#c4d6a4}
+#skyEditor .sky-close{float:right;background:#76564a;color:white}
+#skyEditorOutput{width:100%;height:54px;margin-top:7px;padding:5px;border-radius:5px;border:1px solid #b9a27d;background:#fffaf0;color:#33271e;font:10px monospace;display:none}
+.sky-editor-marker{position:absolute;z-index:28;width:11px;height:11px;margin:-5px 0 0 -5px;border:2px solid #fff4c9;border-radius:50%;background:#f4d77b;box-shadow:0 0 7px #fff}
+.sky-editor-line{position:absolute;z-index:27;height:1px;background:#fff4c9a8;transform-origin:0 50%;pointer-events:none}
+.sky-editor-area{position:absolute;z-index:26;border:1px dashed #fff2a8;background:#fff2a822;pointer-events:none}
+#start.sky-editing{cursor:crosshair}
+#start.sky-editing #seasonImage{pointer-events:none}
 /* ŚNIEG — umiarkowany, warstwowy opad wyłącznie w zimowym poranku. */
 .winter-snow{
   position:absolute;
@@ -3346,6 +3329,18 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     <img id="auroraNorthern" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zorza-polarna1.png" alt="" aria-hidden="true">
     <img id="auroraNorthern2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zorza-polarna2.png" alt="" aria-hidden="true">
     <div class="season-effects" id="seasonEffects" aria-hidden="true"></div>
+    <div id="skyEditor" aria-label="Edytor nocnego nieba">
+      <button class="sky-close" id="skyEditorClose" type="button">Zamknij</button>
+      <strong>Ustaw nocne niebo</strong>
+      <p id="skyEditorHint">Wybierz, co chcesz ustawić. Zmiany zobaczysz od razu.</p>
+      <div class="sky-actions">
+        <button id="skyPlaceDipper" type="button">Zaznacz Wielki Wóz</button>
+        <button id="skyPlaceStars" type="button">Zaznacz obszar gwiazd</button>
+        <button id="skySave" type="button">Zapisz układ</button>
+        <button id="skyReset" type="button">Wyczyść</button>
+      </div>
+      <textarea id="skyEditorOutput" readonly aria-label="Współrzędne ustawienia"></textarea>
+    </div>
 
     <div id="autumnPumpkins" aria-hidden="true">
       <span class="pumpkin-glow pumpkin-glow-one"></span>
@@ -4015,41 +4010,7 @@ function updateSeason(){
         effects.appendChild(leaf);
       });
     }
-    const showSpringNight=name==="spring"&&period==="night";
-    if(showSpringNight){
-      const sky=document.createDocumentFragment();
-      const constellation=document.createElementNS("http://www.w3.org/2000/svg","svg");
-      constellation.setAttribute("viewBox","0 0 100 100");
-      constellation.setAttribute("preserveAspectRatio","none");
-      constellation.setAttribute("class","spring-night-constellation");
-      constellation.setAttribute("aria-hidden","true");
-      const line=document.createElementNS("http://www.w3.org/2000/svg","path");
-      // Wielki Wóz: siedem gwiazd połączonych bardzo subtelnymi liniami.
-      // Gwiazdozbiór umieszczony niżej, z dala od logo.
-      line.setAttribute("d","M 34 42 L 40 47 L 46 52 L 53 58 L 58 51 L 55 43 L 49 41 L 46 52");
-      constellation.appendChild(line);
-      sky.appendChild(constellation);
-      const stars=[
-        [6,9,1.8],[13,17,1.5],[20,12,2.1],[24,31,1.6],[5,29,1.7],
-        [16,36,2],[73,34,1.7],[80,17,2.1],[88,11,1.6],[94,29,2.2],
-        [97,13,1.5],[70,12,1.5],[84,37,1.8],[91,39,1.5],[66,36,1.6],
-        [9,22,1.4],[89,7,2.5],
-        // Siedem jaśniejszych punktów Wielkiego Wozu — poniżej logo.
-        [34,42,2.5],[40,47,2.2],[46,52,2.3],[53,58,2.6],
-        [58,51,2.5],[55,43,2.4],[49,41,2.3]
-      ];
-      stars.forEach(([x,y,size],index)=>{
-        const star=document.createElement("span");
-        star.className="spring-night-star"+(index>=17||index%7===0?" star-bright":"");
-        star.style.setProperty("--star-x",x+"%");
-        star.style.setProperty("--star-y",y+"%");
-        star.style.setProperty("--star-size",size+"px");
-        star.style.setProperty("--star-duration",(3.2+(index%5)*.67)+"s");
-        star.style.setProperty("--star-delay",(-((index*1.31)%6))+"s");
-        sky.appendChild(star);
-      });
-      effects.appendChild(sky);
-    }
+    // Gwiazdy wiosennej nocy są teraz ustawiane w edytorze położenia.
     const showAutumnRain=name==="autumn"&&period==="night";
     if(showAutumnRain){
       const rain=document.createElement("div");
@@ -4921,6 +4882,82 @@ function backToStart(){
 function showNotice(message){
   document.getElementById("gameNotice").textContent=message;
 }
+
+/* EDYTOR POŁOŻENIA GWIAZD — ustawienia lokalne do zatwierdzenia. */
+(function initSkyEditor(){
+  if(SCENE_PREVIEW!=="spring-night")return;
+  const panel=document.getElementById("skyEditor");
+  const hint=document.getElementById("skyEditorHint");
+  const output=document.getElementById("skyEditorOutput");
+  const effects=document.getElementById("seasonEffects");
+  const dipperBtn=document.getElementById("skyPlaceDipper");
+  const starsBtn=document.getElementById("skyPlaceStars");
+  const key="zagrodowo-spring-night-sky-layout";
+  let mode="",points=[],area=null,dragStart=null;
+  let saved=null;
+  try{saved=JSON.parse(localStorage.getItem(key)||"null")}catch(e){}
+  const button=document.createElement("button");
+  button.type="button";button.textContent="Ustaw gwiazdy";
+  button.style.cssText="position:absolute;z-index:31;right:14px;bottom:14px;padding:8px 12px;border:1px solid #e6d3ae;border-radius:7px;background:#2c2b38eF;color:#fff8e8;font:600 12px Nunito;cursor:pointer";
+  start.appendChild(button);
+  const pos=e=>{const r=start.getBoundingClientRect();return [Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100)),Math.max(0,Math.min(100,(e.clientY-r.top)/r.height*100))]};
+  function clearPreview(){start.querySelectorAll(".sky-editor-marker,.sky-editor-line,.sky-editor-area").forEach(n=>n.remove());effects.querySelectorAll(".spring-night-star,.spring-night-constellation").forEach(n=>n.remove())}
+  function renderPreview(){
+    clearPreview();
+    if(area){
+      const a=document.createElement("div");a.className="sky-editor-area";
+      a.style.left=area.x+"%";a.style.top=area.y+"%";a.style.width=area.w+"%";a.style.height=area.h+"%";start.appendChild(a);
+      for(let i=0;i<26;i++){
+        const x=area.x+Math.random()*area.w,y=area.y+Math.random()*area.h;
+        const star=document.createElement("span");star.className="spring-night-star";
+        star.style.cssText="left:"+x+"%;top:"+y+"%;--star-size:"+(1.3+Math.random()*1.2)+"px;--star-duration:"+(3+Math.random()*3)+"s;--star-delay:"+(-Math.random()*5)+"s";
+        effects.appendChild(star);
+      }
+    }
+    points.forEach((p,i)=>{
+      const m=document.createElement("i");m.className="sky-editor-marker";m.style.left=p[0]+"%";m.style.top=p[1]+"%";start.appendChild(m);
+      if(i){const prev=points[i-1],dx=(p[0]-prev[0])*start.clientWidth/100,dy=(p[1]-prev[1])*start.clientHeight/100;
+        const line=document.createElement("i");line.className="sky-editor-line";line.style.left=prev[0]+"%";line.style.top=prev[1]+"%";line.style.width=Math.hypot(dx,dy)+"px";line.style.transform="rotate("+Math.atan2(dy,dx)+"rad)";start.appendChild(line)}
+    });
+    if(points.length===7){
+      const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");svg.setAttribute("viewBox","0 0 100 100");svg.setAttribute("preserveAspectRatio","none");svg.classList.add("spring-night-constellation");
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",points.map((p,i)=>(i?"L ":"M ")+p[0]+" "+p[1]).join(" "));
+      svg.appendChild(path);effects.appendChild(svg);
+      points.forEach(p=>{const st=document.createElement("span");st.className="spring-night-star star-bright";st.style.cssText="left:"+p[0]+"%;top:"+p[1]+"%;--star-size:2.5px;--star-duration:3.8s;--star-delay:-1s";effects.appendChild(st)});
+    }
+  }
+  function activate(m){
+    mode=m;start.classList.add("sky-editing");dipperBtn.classList.toggle("active",m==="dipper");starsBtn.classList.toggle("active",m==="area");
+    hint.textContent=m==="dipper"?"Kliknij kolejno siedem punktów: cztery gwiazdy misy, potem trzy dyszla.":"Przeciągnij palcem lub myszą, aby zaznaczyć prostokątny obszar drobnych gwiazd.";
+  }
+  button.addEventListener("click",()=>{panel.classList.toggle("open");if(panel.classList.contains("open")){if(saved){points=saved.points||[];area=saved.area||null;renderPreview()}}});
+  document.getElementById("skyEditorClose").addEventListener("click",()=>{panel.classList.remove("open");mode="";start.classList.remove("sky-editing")});
+  dipperBtn.addEventListener("click",()=>{points=[];activate("dipper");renderPreview()});
+  starsBtn.addEventListener("click",()=>{area=null;activate("area");renderPreview()});
+  start.addEventListener("pointerdown",e=>{
+    if(!mode||e.target.closest("#skyEditor")||e.target===button)return;
+    e.preventDefault();
+    if(mode==="dipper"){
+      points.push(pos(e));renderPreview();
+      hint.textContent=points.length<7?"Zaznaczono "+points.length+"/7 punktów Wielkiego Wozu.":"Wielki Wóz zaznaczony. Możesz zapisać układ.";
+      if(points.length>=7){mode="";start.classList.remove("sky-editing");dipperBtn.classList.remove("active")}
+    }else if(mode==="area"){dragStart=pos(e);area={x:dragStart[0],y:dragStart[1],w:0,h:0};start.setPointerCapture(e.pointerId);renderPreview()}
+  });
+  start.addEventListener("pointermove",e=>{
+    if(mode!=="area"||!dragStart)return;
+    const p=pos(e);area={x:Math.min(dragStart[0],p[0]),y:Math.min(dragStart[1],p[1]),w:Math.abs(p[0]-dragStart[0]),h:Math.abs(p[1]-dragStart[1])};renderPreview();
+  });
+  start.addEventListener("pointerup",()=>{
+    if(mode==="area"&&dragStart){dragStart=null;mode="";start.classList.remove("sky-editing");starsBtn.classList.remove("active");hint.textContent="Obszar gwiazd zaznaczony. Możesz zapisać układ."}
+  });
+  document.getElementById("skyReset").addEventListener("click",()=>{points=[];area=null;saved=null;localStorage.removeItem(key);output.style.display="none";renderPreview();hint.textContent="Wyczyszczono ustawienia. Wybierz obszary od nowa."});
+  document.getElementById("skySave").addEventListener("click",()=>{
+    saved={points,area};localStorage.setItem(key,JSON.stringify(saved));output.value=JSON.stringify(saved);output.style.display="block";
+    hint.textContent="Układ zapisany w tej przeglądarce. Skopiuj współrzędne i prześlij je, a przeniosę je do gry.";
+  });
+  if(saved){points=saved.points||[];area=saved.area||null;renderPreview()}
+})();
 
 /* START */
 
