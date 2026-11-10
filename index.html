@@ -1317,9 +1317,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   opacity:0;
   pointer-events:none;
   translate:-50% -50%;
-  filter:sepia(.42) saturate(.92) contrast(1.09) brightness(.99)
-    drop-shadow(0 1px 0 rgba(105,72,43,.46))
-    drop-shadow(0 3px 3px rgba(73,52,34,.38));
+  /* Ciepły, złocisto-brązowy odcień wróbla. */
+  filter:sepia(.78) saturate(1.32) hue-rotate(-7deg) contrast(1.12) brightness(1.06)
+    drop-shadow(0 1px 0 rgba(105,72,43,.5))
+    drop-shadow(0 3px 3px rgba(73,52,34,.4));
   animation:sparrow-two-way-flight 120s linear infinite;
   will-change:left,top,opacity;
 }
@@ -1378,8 +1379,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     left:3.1%;top:54.5%;opacity:1;
     animation-timing-function:linear;
   }
+  /* Ostatni odcinek za przesłonę biegnie idealnie poziomo — bez opadania. */
   26.116%{
     left:-8%;top:54.5%;opacity:1;
+    animation-timing-function:linear;
   }
   26.117%,77.49%{
     left:-8%;top:54.5%;opacity:0;
