@@ -1277,9 +1277,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:100%;
   height:auto;
   object-fit:contain;
-  filter:sepia(.28) saturate(1.08) contrast(1.18) brightness(1.08)
-    drop-shadow(0 1px 0 rgba(105,72,43,.52))
-    drop-shadow(0 3px 3px rgba(73,52,34,.42));
+  filter:sepia(.58) saturate(.72) hue-rotate(326deg) contrast(.96) brightness(1.04)
+    drop-shadow(0 1px 0 rgba(105,72,43,.48))
+    drop-shadow(0 3px 3px rgba(73,52,34,.38));
 }
 .spring-sparrow .sparrow-body{
   clip-path:polygon(39% 28%,51% 32%,66% 47%,82% 67%,100% 88%,94% 100%,75% 88%,57% 81%,39% 75%,28% 64%,29% 49%);
@@ -1290,6 +1290,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   clip-path:inset(0 48% 48% 10%);
   transform-origin:40% 47%;
   animation:sparrow-head-look 4.8s ease-in-out infinite;
+}
+.spring-sparrow .sparrow-body{
+  transform-origin:58% 66%;
+  animation:sparrow-tail-wiggle 3.6s ease-in-out infinite;
 }
 .spring-sparrow .sparrow-flight{display:none}
 /* Stała granica zasłonięcia przy punkcie wskazanym po lewej stronie.
@@ -1317,10 +1321,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   opacity:0;
   pointer-events:none;
   translate:-50% -50%;
-  /* Ciepły, złocisto-brązowy odcień wróbla. */
-  filter:sepia(.78) saturate(1.32) hue-rotate(-7deg) contrast(1.12) brightness(1.06)
-    drop-shadow(0 1px 0 rgba(105,72,43,.5))
-    drop-shadow(0 3px 3px rgba(73,52,34,.4));
+  /* Wyblakły, lekko czerwono-rdzawy filtr na czas lotu. */
+  filter:sepia(.62) saturate(.68) hue-rotate(326deg) contrast(.94) brightness(1.08)
+    drop-shadow(0 1px 0 rgba(105,72,43,.48))
+    drop-shadow(0 3px 3px rgba(73,52,34,.38));
   animation:sparrow-two-way-flight 120s linear infinite;
   will-change:left,top,opacity;
 }
@@ -1376,12 +1380,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     animation-timing-function:linear;
   }
   25.66%{
-    left:3.1%;top:54.5%;opacity:1;
+    left:3.1%;top:calc(54.5% + 2.5vh);opacity:1;
     animation-timing-function:linear;
   }
-  /* Ostatni odcinek za przesłonę biegnie idealnie poziomo — bez opadania. */
+  /* Obniżony tor przed zniknięciem — wyrównuje go z widocznym kierunkiem lotu ptaka. */
   26.116%{
-    left:-8%;top:54.5%;opacity:1;
+    left:-8%;top:calc(54.5% + 2.5vh);opacity:1;
     animation-timing-function:linear;
   }
   26.117%,77.49%{
@@ -1418,6 +1422,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   42%,51%{transform:rotate(1.5deg)}
   62%,72%{transform:rotate(-1deg)}
   82%,91%{transform:rotate(1deg)}
+}
+@keyframes sparrow-tail-wiggle{
+  0%,100%{transform:rotate(0deg) translateY(0)}
+  22%{transform:rotate(-1.4deg) translateY(-.5px)}
+  48%{transform:rotate(1.2deg) translateY(.4px)}
+  72%{transform:rotate(-.8deg) translateY(-.25px)}
 }
 
 @media(max-width:700px){
