@@ -1361,26 +1361,29 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     clip-path:inset(0 0 0 0);
     animation-timing-function:linear;
   }
-  /* W tym samym, zaznaczonym punkcie znika za niewidzialną krawędzią:
-     najpierw głowa, potem tułów i na końcu ogon — bez dalszego przesuwania. */
+  /* Nie ma animacji maski ani zanikania w miejscu: ptak leci dalej,
+     mija zaznaczony punkt i naturalnie opuszcza kadr głową do przodu. */
   28.333%{
-    left:3.1%;top:54.5%;opacity:1;
-    clip-path:inset(0 0 0 100%);
+    left:-8%;top:54.5%;opacity:1;
+    clip-path:inset(0 0 0 0);
   }
   28.334%,77.49%{
-    left:3.1%;top:54.5%;opacity:0;
-    clip-path:inset(0 0 0 100%);
+    left:-8%;top:54.5%;opacity:0;
+    clip-path:inset(0 0 0 0);
   }
-  /* Wróbel pojawia się dokładnie w oznaczonym punkcie po prawej. */
+  /* Przy przylocie z prawej pełny obraz jest od początku odsłonięty. */
   77.5%{
     left:97.3%;top:62.3%;opacity:1;
+    clip-path:inset(0 0 0 0);
     animation-timing-function:cubic-bezier(.12,.08,.28,1);
   }
   80.833%{
     left:16%;top:calc(56% + 101px);opacity:1;
+    clip-path:inset(0 0 0 0);
   }
   80.834%,100%{
     left:16%;top:calc(56% + 101px);opacity:0;
+    clip-path:inset(0 0 0 0);
   }
 }
 @keyframes sparrow-perch-visibility{
