@@ -1277,9 +1277,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:100%;
   height:auto;
   object-fit:contain;
-  filter:sepia(.42) saturate(.92) contrast(1.09) brightness(.99)
-    drop-shadow(0 1px 0 rgba(105,72,43,.46))
-    drop-shadow(0 3px 3px rgba(73,52,34,.38));
+  filter:sepia(.28) saturate(1.08) contrast(1.18) brightness(1.08)
+    drop-shadow(0 1px 0 rgba(105,72,43,.52))
+    drop-shadow(0 3px 3px rgba(73,52,34,.42));
 }
 .spring-sparrow .sparrow-body{
   clip-path:polygon(39% 28%,51% 32%,66% 47%,82% 67%,100% 88%,94% 100%,75% 88%,57% 81%,39% 75%,28% 64%,29% 49%);
@@ -1352,8 +1352,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   will-change:transform;
 }
 @keyframes sparrow-fast-wingbeats{
-  0%{transform:scaleY(.18) rotate(-8deg)}
-  100%{transform:scaleY(1) rotate(8deg)}
+  /* Skrzydła nie składają się już prawie do zera — ptak pozostaje czytelny i pełny podczas przylotu. */
+  0%{transform:scaleY(.72) rotate(-5deg)}
+  100%{transform:scaleY(1) rotate(5deg)}
 }
 
 /* 30 s na płocie; przelot do zaznaczonego punktu; dopiero potem opuszcza cały kadr;
