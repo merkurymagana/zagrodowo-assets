@@ -108,6 +108,35 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   75%{opacity:.2}
   100%{transform:scale(1.18,1.12);opacity:0}
 }
+/* Dodatkowe kręgi pojawiają się dokładnie w chwili lądowania żaby. */
+#springFrogSplash{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:50%;
+}
+#springFrogSplash::before,
+#springFrogSplash::after{
+  content:"";
+  position:absolute;
+  inset:2px 1px;
+  border:1.5px solid #e5f6e9e8;
+  border-radius:50%;
+  box-shadow:0 0 5px #d8eee099, inset 0 0 4px #d8eee066;
+  opacity:0;
+  transform:scale(.3,.3);
+  animation:springFrogSplash 5.2s ease-out infinite;
+}
+#springFrogSplash::after{
+  inset:5px 4px;
+  animation-delay:.12s;
+}
+@keyframes springFrogSplash{
+  0%,84%{opacity:0;transform:scale(.3,.3)}
+  86%{opacity:.88;transform:scale(.62,.62)}
+  91%{opacity:.62;transform:scale(1.08,1.02)}
+  100%{opacity:0;transform:scale(1.62,1.42)}
+}
 #start.spring-morning #springLilyWater{display:block}
 @media(max-width:1050px){
   #springLilyWater{right:calc(8% - 52px);bottom:calc(20% + 8px);width:66px;height:28px}
@@ -2969,7 +2998,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
-    <div id="springLilyWater" aria-hidden="true"></div>
+    <div id="springLilyWater" aria-hidden="true"><div id="springFrogSplash"></div></div>
 <img id="springLily" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lilia-wodna.png?v=1" alt="" aria-hidden="true">
     <div id="springFrog" aria-hidden="true"><img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zaba.png?v=1" alt=""></div>
     <canvas id="springBreezeCanvas" aria-hidden="true"></canvas>
