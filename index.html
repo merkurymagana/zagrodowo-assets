@@ -1364,7 +1364,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   }
   25%{
     left:16%;top:calc(56% + 101px);opacity:1;
-    animation-timing-function:cubic-bezier(.18,.72,.32,1);
+    /* Stała prędkość przez cały wylot — bez wyhamowania na punkcie pośrednim. */
+    animation-timing-function:linear;
   }
   27.5%{
     left:3.1%;top:54.5%;opacity:1;
