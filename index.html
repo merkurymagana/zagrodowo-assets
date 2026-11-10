@@ -1277,17 +1277,24 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:100%;
   height:auto;
   object-fit:contain;
-  filter:sepia(1) saturate(1.18) hue-rotate(0deg) contrast(1.14) brightness(.78)
-    drop-shadow(0 1px 0 rgba(105,72,43,.48))
-    drop-shadow(0 3px 3px rgba(73,52,34,.38));
+  filter:contrast(1.04) saturate(.98) brightness(1.01)
+    drop-shadow(0 1px 0 rgba(72,55,40,.42))
+    drop-shadow(0 3px 3px rgba(54,42,31,.32));
 }
 .spring-sparrow .sparrow-body{
   clip-path:polygon(39% 28%,51% 32%,66% 47%,82% 67%,100% 88%,94% 100%,75% 88%,57% 81%,39% 75%,28% 64%,29% 49%);
 }
 .spring-sparrow .sparrow-head{
   position:absolute;
-  inset:0;
-  clip-path:inset(0 48% 48% 10%);
+  top:0;
+  left:0;
+  right:auto;
+  bottom:auto;
+  width:100%;
+  height:100%;
+  object-fit:fill;
+  /* Szerszy wycinek obejmuje całą głowę również po zmniejszeniu ptaszka na telefonie. */
+  clip-path:inset(0 39% 38% 5%);
   transform-origin:40% 47%;
   animation:sparrow-head-look 4.8s ease-in-out infinite;
 }
@@ -1322,9 +1329,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
   translate:-50% -50%;
   /* Wyblakły, lekko czerwono-rdzawy filtr na czas lotu. */
-  filter:sepia(1) saturate(1.18) hue-rotate(0deg) contrast(1.14) brightness(.78)
-    drop-shadow(0 1px 0 rgba(105,72,43,.48))
-    drop-shadow(0 3px 3px rgba(73,52,34,.38));
+  filter:contrast(1.04) saturate(.98) brightness(1.01)
+    drop-shadow(0 1px 0 rgba(72,55,40,.42))
+    drop-shadow(0 3px 3px rgba(54,42,31,.32));
   animation:sparrow-two-way-flight 120s linear infinite;
   will-change:left,top,opacity;
 }
