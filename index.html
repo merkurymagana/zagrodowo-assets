@@ -953,7 +953,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 /* EDYTOR NOCNEGO NIEBA — narzędzie podglądu położenia gwiazd. */
-#skyEditor{position:absolute;z-index:30;top:12px;right:12px;width:min(290px,calc(100% - 24px));padding:10px;border:1px solid #e6d3ae;border-radius:10px;background:#2c2b38ed;color:#fff8e8;font:12px Nunito,Arial,sans-serif;box-shadow:0 4px 18px #0008;display:none}
+#skyEditor{position:absolute;z-index:30;top:12px;left:50%;transform:translateX(-50%);width:min(290px,calc(100% - 24px));padding:10px;border:1px solid #e6d3ae;border-radius:10px;background:#2c2b38ed;color:#fff8e8;font:12px Nunito,Arial,sans-serif;box-shadow:0 4px 18px #0008;display:none}
 #skyEditor.open{display:block}
 #skyEditor strong{display:block;font:16px 'Bree Serif',Georgia,serif;margin-bottom:5px}
 #skyEditor p{margin:4px 0 8px;line-height:1.35}
@@ -4896,7 +4896,7 @@ function showNotice(message){
   if(saved){dipperArea=saved.dipperArea||null;starsArea=saved.starsArea||null}
   const button=document.createElement("button");
   button.type="button";button.textContent="Ustaw gwiazdy";
-  button.style.cssText="position:absolute;z-index:31;right:14px;bottom:14px;padding:8px 12px;border:1px solid #e6d3ae;border-radius:7px;background:#2c2b38ef;color:#fff8e8;font:600 12px Nunito;cursor:pointer";
+  button.style.cssText="position:absolute;z-index:31;left:50%;transform:translateX(-50%);bottom:14px;padding:8px 12px;border:1px solid #e6d3ae;border-radius:7px;background:#2c2b38ef;color:#fff8e8;font:600 12px Nunito;cursor:pointer";
   start.appendChild(button);
   const pos=e=>{const r=start.getBoundingClientRect();return [Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100)),Math.max(0,Math.min(100,(e.clientY-r.top)/r.height*100))]};
   function clearPreview(){
