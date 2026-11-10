@@ -1292,16 +1292,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation:sparrow-head-look 4.8s ease-in-out infinite;
 }
 .spring-sparrow .sparrow-flight{display:none}
-/* Osobny przelot wróbla: od prawej krawędzi do lewej, według punktów wskazanych na scenie. */
-/* Szybkie trzepotanie skrzydłami podczas lotu — subtelne ugięcie i ruch całej sylwetki. */
-/* WRÓBEL W LOCIE — osobna warstwa, zsynchronizowana z ptakiem siedzącym. */
+/* WRÓBEL W LOCIE — jedna ciągła trasa z rzeczywistym wyjściem poza kadr. */
 .spring-sparrow-flight-route{
   position:absolute;
   z-index:12;
   left:16%;
   top:calc(56% + 101px);
   width:clamp(70px,7.6vw,108px);
-  height:auto;
+  height:clamp(70px,7.6vw,108px);
+  aspect-ratio:1/1;
   opacity:0;
   pointer-events:none;
   translate:-50% -50%;
@@ -1318,34 +1317,42 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   filter:inherit;
 }
 .spring-sparrow-flight-route .sparrow-flight-wings{
+  /* Górna część grafiki zawierająca skrzydła — szybki ruch niezależny od tułowia. */
   clip-path:inset(0 8% 48% 8%);
   transform-origin:50% 78%;
-  animation:sparrow-fast-wingbeats .16s ease-in-out infinite alternate;
+  animation:sparrow-fast-wingbeats .11s ease-in-out infinite alternate;
   will-change:transform;
 }
 @keyframes sparrow-fast-wingbeats{
-  0%{transform:rotate(-17deg) scaleY(.91) skewX(-3deg)}
-  100%{transform:rotate(17deg) scaleY(1.08) skewX(3deg)}
+  0%{transform:rotate(-24deg) scaleY(.82) skewX(-5deg)}
+  100%{transform:rotate(24deg) scaleY(1.12) skewX(5deg)}
 }
 
-/* 30 s na płocie, 3 s odlotu, 60 s poza kadrem, 4 s powrotu. */
+/* 30 s na płocie; przelot do zaznaczonego punktu; dopiero potem opuszcza cały kadr;
+   około 60 s poza ekranem; następnie wraca z prawej i ląduje na płocie. */
 @keyframes sparrow-two-way-flight{
   0%,24.99%{
     left:16%;top:calc(56% + 101px);opacity:0;
   }
   25%{
     left:16%;top:calc(56% + 101px);opacity:1;
-    animation-timing-function:cubic-bezier(.35,0,.7,.25);
+    animation-timing-function:cubic-bezier(.18,.72,.32,1);
   }
   27.5%{
     left:3.1%;top:54.5%;opacity:1;
+    animation-timing-function:linear;
   }
-  27.51%,77.49%{
-    left:3.1%;top:54.5%;opacity:0;
+  /* Punkt wskazany przez użytkownika zostaje osiągnięty przed opuszczeniem kadru. */
+  28.5%{
+    left:-8%;top:54.5%;opacity:1;
   }
+  28.51%,77.49%{
+    left:-8%;top:54.5%;opacity:0;
+  }
+  /* Wróbel pojawia się dokładnie w oznaczonym punkcie po prawej. */
   77.5%{
     left:97.3%;top:62.3%;opacity:1;
-    animation-timing-function:cubic-bezier(.2,.7,.35,1);
+    animation-timing-function:cubic-bezier(.12,.08,.28,1);
   }
   80.833%{
     left:16%;top:calc(56% + 101px);opacity:1;
