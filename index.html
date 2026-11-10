@@ -968,20 +968,20 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 @keyframes spring-night-twinkle-bright{0%,100%{opacity:.72;transform:scale(.9)}48%{opacity:1;transform:scale(1.2)}72%{opacity:.88;transform:scale(1.04)}}
 .spring-night-deer{
  position:absolute;left:var(--deer-start-x);top:var(--deer-start-y);
- width:clamp(76px,10vw,142px);height:auto;
- opacity:.66;filter:brightness(.16) saturate(0) contrast(1.2);
+ width:clamp(42px,5vw,76px);height:auto;
+ opacity:.94;filter:brightness(.24) saturate(0) contrast(1.25);
  pointer-events:none;will-change:transform;
  transform:translate(-50%,-50%);
 }
 .spring-night-deer.deer-forward{animation:spring-deer-forward 3.4s linear forwards}
 .spring-night-deer.deer-reverse{animation:spring-deer-reverse 3.4s linear forwards}
 @keyframes spring-deer-forward{
- from{transform:translate(-50%,-50%)}
- to{transform:translate(calc(-50% + var(--deer-dx)),calc(-50% + var(--deer-dy)))}
-}
-@keyframes spring-deer-reverse{
  from{transform:translate(-50%,-50%) scaleX(-1)}
  to{transform:translate(calc(-50% + var(--deer-dx)),calc(-50% + var(--deer-dy))) scaleX(-1)}
+}
+@keyframes spring-deer-reverse{
+ from{transform:translate(-50%,-50%)}
+ to{transform:translate(calc(-50% + var(--deer-dx)),calc(-50% + var(--deer-dy)))}
 }
 @keyframes spring-night-twinkle{0%,100%{opacity:.18;transform:scale(.7)}40%{opacity:.48;transform:scale(.9)}58%{opacity:.95;transform:scale(1.18)}74%{opacity:.55;transform:scale(.95)}}
 @media(prefers-reduced-motion:reduce){.spring-night-star{animation:none;opacity:.65;transform:none}}
