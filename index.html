@@ -1406,26 +1406,26 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     clip-path:inset(0 0 0 0);
     animation-timing-function:cubic-bezier(.22,.75,.35,1);
   }
-  /* Lekkie ugięcie tułowia zaraz po dotknięciu płotu. */
-  81.02%{
+  /* Krótkie ugięcie tułowia — bez długiego zawisu nad płotem. */
+  80.94%{
     left:calc(16% + clamp(70px,7.6vw,108px) / 2);
     top:calc(56% + 103px + clamp(70px,7.6vw,108px) / 2);
-    opacity:1;
+    opacity:.78;
     transform:rotate(2deg) scale(.97);
     clip-path:inset(0 0 0 0);
     animation-timing-function:ease-out;
   }
-  /* Delikatne odbicie — przywrócony płynniejszy ruch poprzedniej wersji. */
-  81.24%{
+  /* Lekkie odbicie, już w trakcie płynnego przejścia do siedzącej pozycji. */
+  81.08%{
     left:calc(16% + clamp(70px,7.6vw,108px) / 2);
     top:calc(56% + 100px + clamp(70px,7.6vw,108px) / 2);
-    opacity:1;
+    opacity:.42;
     transform:rotate(-.7deg) scale(1.015);
     clip-path:inset(0 0 0 0);
     animation-timing-function:ease-in-out;
   }
-  /* Lotnik znika po krótkim, naturalnym siadaniu. */
-  81.55%,100%{
+  /* Lecący rysunek znika całkowicie, gdy siedzący jest już widoczny. */
+  81.38%,100%{
     left:calc(16% + clamp(70px,7.6vw,108px) / 2);
     top:calc(56% + 101px + clamp(70px,7.6vw,108px) / 2);
     opacity:0;
@@ -1435,11 +1435,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 @keyframes sparrow-perch-visibility{
   0%,24.99%{opacity:1}
-  25%,81.23%{opacity:0}
-  /* Siedzący obrazek przejmuje ptaka zaraz po odbiciu. */
-  81.24%{opacity:0}
-  81.4%{opacity:.65}
-  81.55%,100%{opacity:1}
+  25%,80.832%{opacity:0}
+  /* Siedzący rysunek pojawia się już w chwili lądowania. */
+  80.833%{opacity:0}
+  80.94%{opacity:.38}
+  81.08%{opacity:.78}
+  81.38%,100%{opacity:1}
 }
 @keyframes sparrow-head-look{
   0%,12%,100%{transform:rotate(0deg)}
