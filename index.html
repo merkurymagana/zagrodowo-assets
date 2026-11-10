@@ -1276,6 +1276,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:100%;
   height:auto;
   object-fit:contain;
+  /* Ciepłe, lekko przygaszone barwy dopasowane do malarskiej scenerii Zagrodowa. */
+  filter:sepia(.13) saturate(.91) contrast(1.045) brightness(1.015)
+    drop-shadow(0 2px 1px rgba(65,43,27,.38));
 }
 @media(max-width:700px){
   .autumn-leaf,.spring-petal{width:calc(var(--leaf-size) * .78)}
