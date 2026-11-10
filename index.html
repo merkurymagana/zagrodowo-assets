@@ -4049,7 +4049,7 @@ function updateSeason(){
         star.className="spring-night-star star-bright";
         star.style.setProperty("--star-x",(area.x+area.w*x/100)+"%");
         star.style.setProperty("--star-y",(area.y+area.h*y/100)+"%");
-        star.style.setProperty("--star-size",(i===3?3.9:3.5)+"px");
+        star.style.setProperty("--star-size",(i===3?3.3:3)+"px");
         star.style.setProperty("--star-delay",(-i*.47)+"s");
         effects.appendChild(star);
       });
@@ -4968,7 +4968,7 @@ function showNotice(message){
         const star=document.createElement("span");star.className="spring-night-star star-bright";
         star.style.setProperty("--star-x",(dipperArea.x+dipperArea.w*x/100)+"%");
         star.style.setProperty("--star-y",(dipperArea.y+dipperArea.h*y/100)+"%");
-        star.style.setProperty("--star-size",(i===3?3.9:3.5)+"px");
+        star.style.setProperty("--star-size",(i===3?3.3:3)+"px");
         star.style.setProperty("--star-delay",(-i*.47)+"s");effects.appendChild(star);
       });
     }
