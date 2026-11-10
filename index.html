@@ -1276,10 +1276,25 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:100%;
   height:auto;
   object-fit:contain;
-  /* Mocniej stylizowany, cieplejszy wygląd — spójny z ilustracyjną scenerią Zagrodowa. */
+  /* Ciepła stylizacja wspólna dla obu warstw wróbla. */
   filter:sepia(.27) saturate(.84) contrast(1.15) brightness(.98)
     drop-shadow(0 1px 0 rgba(83,55,31,.48))
     drop-shadow(0 3px 3px rgba(55,39,25,.42));
+}
+.spring-sparrow .sparrow-body{
+  clip-path:polygon(39% 28%,51% 32%,66% 47%,82% 67%,100% 88%,94% 100%,75% 88%,57% 81%,39% 75%,28% 64%,29% 49%);
+}
+.spring-sparrow .sparrow-head{
+  position:absolute;
+  inset:0;
+  clip-path:inset(0 48% 48% 10%);
+  transform-origin:40% 47%;
+  animation:sparrow-head-look 7.5s ease-in-out infinite;
+}
+@keyframes sparrow-head-look{
+  0%,18%,100%{transform:rotate(0deg)}
+  32%,43%{transform:rotate(-2deg)}
+  58%,70%{transform:rotate(1.5deg)}
 }
 @media(max-width:700px){
   .autumn-leaf,.spring-petal{width:calc(var(--leaf-size) * .78)}
@@ -3717,9 +3732,15 @@ function updateSeason(){
       sparrow.className="spring-sparrow";
       sparrow.setAttribute("aria-hidden","true");
       const sitting=document.createElement("img");
+      sitting.className="sparrow-body";
       sitting.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wrobel-siedzi.png";
       sitting.alt="";
+      const movingHead=document.createElement("img");
+      movingHead.className="sparrow-head";
+      movingHead.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wrobel-siedzi.png";
+      movingHead.alt="";
       sparrow.appendChild(sitting);
+      sparrow.appendChild(movingHead);
       effects.appendChild(sparrow);
     }
     if(showAutumnLeaves){
