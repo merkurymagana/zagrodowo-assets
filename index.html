@@ -966,6 +966,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .spring-night-constellation{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .spring-night-constellation{z-index:2}.spring-night-constellation path{fill:none;stroke:rgba(245,247,255,.82);stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 @keyframes spring-night-twinkle-bright{0%,100%{opacity:.72;transform:scale(.9)}48%{opacity:1;transform:scale(1.2)}72%{opacity:.88;transform:scale(1.04)}}
+.spring-night-deer{
+ position:absolute;bottom:22%;width:clamp(76px,10vw,142px);height:auto;
+ opacity:.66;filter:brightness(.16) saturate(0) contrast(1.2);
+ pointer-events:none;will-change:transform;
+}
+.spring-night-deer.deer-ltr{left:0;animation:spring-deer-ltr 4.2s linear forwards}
+.spring-night-deer.deer-rtl{right:0;transform:scaleX(-1);animation:spring-deer-rtl 4.2s linear forwards}
+@keyframes spring-deer-ltr{from{transform:translateX(-180px)}to{transform:translateX(calc(100vw + 180px))}}
+@keyframes spring-deer-rtl{from{transform:scaleX(-1) translateX(-180px)}to{transform:scaleX(-1) translateX(calc(100vw + 180px))}}
 @keyframes spring-night-twinkle{0%,100%{opacity:.18;transform:scale(.7)}40%{opacity:.48;transform:scale(.9)}58%{opacity:.95;transform:scale(1.18)}74%{opacity:.55;transform:scale(.95)}}
 @media(prefers-reduced-motion:reduce){.spring-night-star{animation:none;opacity:.65;transform:none}}
 
@@ -3679,6 +3688,7 @@ const seasonImages={
 };
 
 let lastSceneKey="";
+let springDeerTimer=null;
 
 // Automatyczna sceneria: pory roku oraz pory dnia wyznaczane astronomicznie.
 const SCENE_PREVIEW="spring-night";
@@ -4002,6 +4012,22 @@ function updateSeason(){
       });
     }
     // Gwiazdy wiosennej nocy są teraz ustawiane w edytorze położenia.
+    if(springDeerTimer){clearTimeout(springDeerTimer);springDeerTimer=null;}
+    if(name==="spring"&&period==="night"){
+      const scheduleDeer=()=>{
+        springDeerTimer=setTimeout(()=>{
+          if(lastSceneKey!=="spring-night"||!document.getElementById("seasonEffects"))return;
+          const deer=document.createElement("img");
+          deer.className="spring-night-deer "+(Math.random()<.5?"deer-ltr":"deer-rtl");
+          deer.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/sarna-noc.gif?v=1";
+          deer.alt="";
+          deer.setAttribute("aria-hidden","true");
+          deer.addEventListener("animationend",()=>{deer.remove();scheduleDeer();},{once:true});
+          effects.appendChild(deer);
+        },120000+Math.random()*180000);
+      };
+      scheduleDeer();
+    }
     const showAutumnRain=name==="autumn"&&period==="night";
     if(showAutumnRain){
       const rain=document.createElement("div");
