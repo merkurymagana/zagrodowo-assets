@@ -4025,17 +4025,18 @@ function updateSeason(){
       constellation.setAttribute("aria-hidden","true");
       const line=document.createElementNS("http://www.w3.org/2000/svg","path");
       // Wielki Wóz: siedem gwiazd połączonych bardzo subtelnymi liniami.
-      line.setAttribute("d","M 27 11 L 33 16 L 39 21 L 46 27 L 51 20 L 48 12 L 42 10 L 39 21");
+      // Gwiazdozbiór umieszczony niżej, z dala od logo.
+      line.setAttribute("d","M 34 42 L 40 47 L 46 52 L 53 58 L 58 51 L 55 43 L 49 41 L 46 52");
       constellation.appendChild(line);
       sky.appendChild(constellation);
       const stars=[
-        [6,9,1.8],[13,17,1.5],[20,12,2.1],[24,28,1.6],[5,29,1.7],
-        [16,32,2],[73,28,1.7],[80,17,2.1],[88,11,1.6],[94,24,2.2],
-        [97,13,1.5],[70,12,1.5],[84,32,1.8],[91,35,1.5],[66,33,1.6],
+        [6,9,1.8],[13,17,1.5],[20,12,2.1],[24,31,1.6],[5,29,1.7],
+        [16,36,2],[73,34,1.7],[80,17,2.1],[88,11,1.6],[94,29,2.2],
+        [97,13,1.5],[70,12,1.5],[84,37,1.8],[91,39,1.5],[66,36,1.6],
         [9,22,1.4],[89,7,2.5],
-        // Siedem jaśniejszych punktów Wielkiego Wozu.
-        [27,11,2.5],[33,16,2.2],[39,21,2.3],[46,27,2.6],
-        [51,20,2.5],[48,12,2.4],[42,10,2.3]
+        // Siedem jaśniejszych punktów Wielkiego Wozu — poniżej logo.
+        [34,42,2.5],[40,47,2.2],[46,52,2.3],[53,58,2.6],
+        [58,51,2.5],[55,43,2.4],[49,41,2.3]
       ];
       stars.forEach(([x,y,size],index)=>{
         const star=document.createElement("span");
