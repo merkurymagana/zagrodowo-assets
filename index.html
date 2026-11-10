@@ -4102,26 +4102,41 @@ function updateSeason(){
     // Gwiazdy wiosennej nocy są teraz ustawiane w edytorze położenia.
     if(springDeerTimer){clearTimeout(springDeerTimer);springDeerTimer=null;}
     if(name==="spring"&&period==="night"){
+      const launchDeer=(reverse,onDone)=>{
+        if(lastSceneKey!=="spring-night"||!document.getElementById("seasonEffects"))return;
+        const deer=document.createElement("img");
+        const routeStart={x:73.026,y:54.428};
+        const routeEnd={x:47.428,y:48.272};
+        const from=reverse?routeEnd:routeStart;
+        const to=reverse?routeStart:routeEnd;
+        const bounds=effects.getBoundingClientRect();
+        deer.className="spring-night-deer "+(reverse?"deer-reverse":"deer-forward");
+        deer.style.setProperty("--deer-start-x",from.x+"%");
+        deer.style.setProperty("--deer-start-y",from.y+"%");
+        deer.style.setProperty("--deer-dx",((to.x-from.x)/100*bounds.width)+"px");
+        deer.style.setProperty("--deer-dy",((to.y-from.y)/100*bounds.height)+"px");
+        deer.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/sarna-noc.gif?v=1";
+        deer.alt="";
+        deer.setAttribute("aria-hidden","true");
+        deer.addEventListener("animationend",()=>{deer.remove();if(onDone)onDone();},{once:true});
+        effects.appendChild(deer);
+      };
       const scheduleDeer=()=>{
         springDeerTimer=setTimeout(()=>{
           if(lastSceneKey!=="spring-night"||!document.getElementById("seasonEffects"))return;
-          const deer=document.createElement("img");
-          const routeStart={x:73.026,y:54.428};
-          const routeEnd={x:47.428,y:48.272};
           const reverse=Math.random()<.5;
-          const from=reverse?routeEnd:routeStart;
-          const to=reverse?routeStart:routeEnd;
-          const bounds=effects.getBoundingClientRect();
-          deer.className="spring-night-deer "+(reverse?"deer-reverse":"deer-forward");
-          deer.style.setProperty("--deer-start-x",from.x+"%");
-          deer.style.setProperty("--deer-start-y",from.y+"%");
-          deer.style.setProperty("--deer-dx",((to.x-from.x)/100*bounds.width)+"px");
-          deer.style.setProperty("--deer-dy",((to.y-from.y)/100*bounds.height)+"px");
-          deer.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/sarna-noc.gif?v=1";
-          deer.alt="";
-          deer.setAttribute("aria-hidden","true");
-          deer.addEventListener("animationend",()=>{deer.remove();scheduleDeer();},{once:true});
-          effects.appendChild(deer);
+          const pair=Math.random()<.4;
+          if(pair){
+            // Druga sarna rusza tą samą trasą 1,2 s po pierwszej.
+            launchDeer(reverse,null);
+            setTimeout(()=>{
+              if(lastSceneKey==="spring-night"&&document.getElementById("seasonEffects")){
+                launchDeer(reverse,scheduleDeer);
+              }
+            },1200);
+          }else{
+            launchDeer(reverse,scheduleDeer);
+          }
         },10000);
       };
       scheduleDeer();
