@@ -1277,7 +1277,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:100%;
   height:auto;
   object-fit:contain;
-  filter:sepia(.82) saturate(1.48) hue-rotate(342deg) contrast(1.08) brightness(.98)
+  filter:sepia(1) saturate(1.18) hue-rotate(0deg) contrast(1.14) brightness(.78)
     drop-shadow(0 1px 0 rgba(105,72,43,.48))
     drop-shadow(0 3px 3px rgba(73,52,34,.38));
 }
@@ -1322,7 +1322,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
   translate:-50% -50%;
   /* Wyblakły, lekko czerwono-rdzawy filtr na czas lotu. */
-  filter:sepia(.82) saturate(1.48) hue-rotate(342deg) contrast(1.08) brightness(.98)
+  filter:sepia(1) saturate(1.18) hue-rotate(0deg) contrast(1.14) brightness(.78)
     drop-shadow(0 1px 0 rgba(105,72,43,.48))
     drop-shadow(0 3px 3px rgba(73,52,34,.38));
   animation:sparrow-two-way-flight 120s linear infinite;
@@ -1406,7 +1406,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     opacity:1;
     clip-path:inset(0 0 0 0);
   }
-  80.834%,100%{
+  /* Ostatnie chwile lotu: płynne przejście w pozycję siedzącą, bez teleportacji. */
+  81.25%,100%{
     left:calc(16% + clamp(70px,7.6vw,108px) / 2);
     top:calc(56% + 101px + clamp(70px,7.6vw,108px) / 2);
     opacity:0;
@@ -1416,7 +1417,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 @keyframes sparrow-perch-visibility{
   0%,24.99%{opacity:1}
   25%,80.832%{opacity:0}
-  80.833%,100%{opacity:1}
+  /* Przy lądowaniu siedzący wróbelek płynnie przejmuje miejsce lecącego. */
+  80.833%{opacity:0}
+  81.25%,100%{opacity:1}
 }
 @keyframes sparrow-head-look{
   0%,12%,100%{transform:rotate(0deg)}
