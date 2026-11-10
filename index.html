@@ -4031,7 +4031,7 @@ function updateSeason(){
     // Docelowe położenie gwiazd przekazane z edytora przez użytkownika.
     const showSpringNight=name==="spring"&&period==="night";
     if(showSpringNight){
-      const starPoints=[[77.4522,30.3456],[96.5311,31.2095],[90.4306,23.9741],[90.6100,12.7430],[84.3301,18.5745],[79.7249,13.1749],[6.2201,34.2333],[8.0144,25.5940],[15.7895,12.0950],[19.7368,17.4946],[16.2679,27.3218],[26.6746,6.3715],[25.8373,26.5659],[40.7895,26.7819],[39.8923,5.3996],[59.0909,6.6955],[45.5742,36.8251],[49.7608,31.4255],[59.9282,26.4579],[61.4234,33.1533],[68.4211,6.2635],[78.9474,6.6955],[76.1364,23.1102],[69.1388,31.2095],[89.2344,35.7451]];
+      const starPoints=[[77.4522,30.3456],[96.5311,31.2095],[52.4,23.9741],[54.6,12.7430],[84.3301,18.5745],[79.7249,13.1749],[6.2201,34.2333],[8.0144,25.5940],[15.7895,12.0950],[19.7368,17.4946],[16.2679,27.3218],[26.6746,6.3715],[25.8373,26.5659],[40.7895,26.7819],[39.8923,5.3996],[59.0909,6.6955],[45.5742,36.8251],[49.7608,31.4255],[59.9282,26.4579],[61.4234,33.1533],[68.4211,6.2635],[78.9474,6.6955],[76.1364,23.1102],[69.1388,31.2095],[56.8,35.7451]];
       starPoints.forEach(([x,y],i)=>{
         const star=document.createElement("span");
         star.className="spring-night-star"+(i%5===0?" star-bright":"");
@@ -4043,15 +4043,8 @@ function updateSeason(){
         effects.appendChild(star);
       });
       const area={x:28.88755980861244,y:26.34989200863931,w:8.791866028708132,h:8.639308855291574};
-      // Delikatne linie pokazujące układ siedmiu gwiazd Małego Wozu.
-      const constellation=document.createElementNS("http://www.w3.org/2000/svg","svg");
-      constellation.setAttribute("viewBox","0 0 100 100");constellation.setAttribute("preserveAspectRatio","none");
-      constellation.classList.add("spring-night-constellation");
-      constellation.style.cssText="left:"+area.x+"%;top:"+area.y+"%;width:"+area.w+"%;height:"+area.h+"%;inset:auto";
-      const constellationPath=document.createElementNS("http://www.w3.org/2000/svg","path");
-      constellationPath.setAttribute("d","M55 20 L85 30 L80 60 L50 50 Z M50 50 L35 65 L20 82 L5 90");
-      constellation.appendChild(constellationPath);effects.appendChild(constellation);
-      [[55,20],[85,30],[80,60],[50,50],[35,65],[20,82],[5,90]].forEach(([x,y],i)=>{
+      // Mały Wóz odbity lustrzanie w poziomie; bez linii łączących.
+      [[45,20],[15,30],[20,60],[50,50],[65,65],[80,82],[95,90]].forEach(([x,y],i)=>{
         const star=document.createElement("span");
         star.className="spring-night-star star-bright";
         star.style.setProperty("--star-x",(area.x+area.w*x/100)+"%");
@@ -4971,13 +4964,8 @@ function showNotice(message){
   function renderPreview(){
     clearPreview();addArea(dipperArea,"Mały Wóz");addArea(starsArea,"Drobne gwiazdy");
     if(dipperArea&&dipperArea.w>0&&dipperArea.h>0){
-      const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
-      svg.setAttribute("viewBox","0 0 100 100");svg.setAttribute("preserveAspectRatio","none");svg.classList.add("spring-night-constellation");
-      svg.style.cssText="left:"+dipperArea.x+"%;top:"+dipperArea.y+"%;width:"+dipperArea.w+"%;height:"+dipperArea.h+"%;inset:auto";
-      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
-      path.setAttribute("d","M55 20 L85 30 L80 60 L50 50 Z M50 50 L35 65 L20 82 L5 90");
-      svg.appendChild(path);effects.appendChild(svg);
-      [[55,20],[85,30],[80,60],[50,50],[35,65],[20,82],[5,90]].forEach(([x,y],i)=>{
+      // Lustrzane odbicie Małego Wozu, bez linii łączących.
+      [[45,20],[15,30],[20,60],[50,50],[65,65],[80,82],[95,90]].forEach(([x,y],i)=>{
         const star=document.createElement("span");star.className="spring-night-star star-bright";
         star.style.setProperty("--star-x",(dipperArea.x+dipperArea.w*x/100)+"%");
         star.style.setProperty("--star-y",(dipperArea.y+dipperArea.h*y/100)+"%");
