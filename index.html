@@ -962,7 +962,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
  animation:spring-night-twinkle var(--star-duration,4s) ease-in-out var(--star-delay,0s) infinite;
  pointer-events:none;
 }
-.spring-night-star.star-bright{background:#ffffff;opacity:.98;box-shadow:0 0 5px 2px #fffbdfff,0 0 13px 5px #e5edffcc,0 0 22px 7px #dce9ff66;transform:scale(1);animation:spring-night-twinkle-bright 3.8s ease-in-out var(--star-delay,0s) infinite}
+.spring-night-star.star-bright{background:#fffefa;opacity:.9;box-shadow:0 0 3px 1px #fffbdfcc,0 0 8px 3px #e5edff99,0 0 14px 4px #dce9ff44;transform:scale(1);animation:spring-night-twinkle-bright 3.8s ease-in-out var(--star-delay,0s) infinite}
 .spring-night-constellation{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .spring-night-constellation path{fill:none;stroke:rgba(232,238,255,.3);stroke-width:.65;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 @keyframes spring-night-twinkle-bright{0%,100%{opacity:.72;transform:scale(.9)}48%{opacity:1;transform:scale(1.2)}72%{opacity:.88;transform:scale(1.04)}}
@@ -4043,13 +4043,13 @@ function updateSeason(){
         effects.appendChild(star);
       });
       const area={x:53.2297,y:25.378,w:10.6459,h:10.0432};
-      // Siedem wyraźnych gwiazd Wielkiego Wozu — bez linii łączących.
-      [[12,24],[27,39],[42,54],[57,69],[82,55],[77,25],[52,15]].forEach(([x,y],i)=>{
+      // Wielki Wóz: szerzej rozstawione gwiazdy, z wyraźnym czworokątem misy i uchwytem.
+      [[28,18],[53,8],[58,39],[32,52],[58,39],[80,57],[96,35]].forEach(([x,y],i)=>{
         const star=document.createElement("span");
         star.className="spring-night-star star-bright";
         star.style.setProperty("--star-x",(area.x+area.w*x/100)+"%");
         star.style.setProperty("--star-y",(area.y+area.h*y/100)+"%");
-        star.style.setProperty("--star-size",(i===3?4.8:4.2)+"px");
+        star.style.setProperty("--star-size",(i===3?3.9:3.5)+"px");
         star.style.setProperty("--star-delay",(-i*.47)+"s");
         effects.appendChild(star);
       });
@@ -4954,13 +4954,13 @@ function showNotice(message){
   function renderPreview(){
     clearPreview();addArea(dipperArea,"Wielki Wóz");addArea(starsArea,"Drobne gwiazdy");
     if(dipperArea&&dipperArea.w>0&&dipperArea.h>0){
-      const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
-      svg.setAttribute("viewBox","0 0 100 100");svg.setAttribute("preserveAspectRatio","none");svg.classList.add("spring-night-constellation");
-      svg.style.cssText="left:"+dipperArea.x+"%;top:"+dipperArea.y+"%;width:"+dipperArea.w+"%;height:"+dipperArea.h+"%;inset:auto";
-      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
-      path.setAttribute("d","M 12 24 L 27 39 L 42 54 L 57 69 L 82 55 L 77 25 L 52 15 L 42 54");svg.appendChild(path);
-      [[12,24],[27,39],[42,54],[57,69],[82,55],[77,25],[52,15]].forEach(([x,y])=>{const c=document.createElementNS("http://www.w3.org/2000/svg","circle");c.setAttribute("cx",x);c.setAttribute("cy",y);c.setAttribute("r","1.7");c.setAttribute("fill","#fff8df");svg.appendChild(c)});
-      effects.appendChild(svg);
+      [[28,18],[53,8],[58,39],[32,52],[58,39],[80,57],[96,35]].forEach(([x,y],i)=>{
+        const star=document.createElement("span");star.className="spring-night-star star-bright";
+        star.style.setProperty("--star-x",(dipperArea.x+dipperArea.w*x/100)+"%");
+        star.style.setProperty("--star-y",(dipperArea.y+dipperArea.h*y/100)+"%");
+        star.style.setProperty("--star-size",(i===3?3.9:3.5)+"px");
+        star.style.setProperty("--star-delay",(-i*.47)+"s");effects.appendChild(star);
+      });
     }
     starPoints.forEach(([x,y])=>{const star=document.createElement("span");star.className="spring-night-star";star.style.cssText="left:"+x+"%;top:"+y+"%;--star-size:2px;--star-duration:3.6s;--star-delay:-1.2s";effects.appendChild(star)});
     if(starsArea&&starsArea.w>0&&starsArea.h>0){
