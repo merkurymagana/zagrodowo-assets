@@ -967,14 +967,22 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .spring-night-constellation{z-index:2}.spring-night-constellation path{fill:none;stroke:rgba(245,247,255,.82);stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 @keyframes spring-night-twinkle-bright{0%,100%{opacity:.72;transform:scale(.9)}48%{opacity:1;transform:scale(1.2)}72%{opacity:.88;transform:scale(1.04)}}
 .spring-night-deer{
- position:absolute;bottom:22%;width:clamp(76px,10vw,142px);height:auto;
+ position:absolute;left:var(--deer-start-x);top:var(--deer-start-y);
+ width:clamp(76px,10vw,142px);height:auto;
  opacity:.66;filter:brightness(.16) saturate(0) contrast(1.2);
  pointer-events:none;will-change:transform;
+ transform:translate(-50%,-50%);
 }
-.spring-night-deer.deer-ltr{left:0;animation:spring-deer-ltr 4.2s linear forwards}
-.spring-night-deer.deer-rtl{right:0;transform:scaleX(-1);animation:spring-deer-rtl 4.2s linear forwards}
-@keyframes spring-deer-ltr{from{transform:translateX(-180px)}to{transform:translateX(calc(100vw + 180px))}}
-@keyframes spring-deer-rtl{from{transform:scaleX(-1) translateX(-180px)}to{transform:scaleX(-1) translateX(calc(100vw + 180px))}}
+.spring-night-deer.deer-forward{animation:spring-deer-forward 3.4s linear forwards}
+.spring-night-deer.deer-reverse{animation:spring-deer-reverse 3.4s linear forwards}
+@keyframes spring-deer-forward{
+ from{transform:translate(-50%,-50%)}
+ to{transform:translate(calc(-50% + var(--deer-dx)),calc(-50% + var(--deer-dy)))}
+}
+@keyframes spring-deer-reverse{
+ from{transform:translate(-50%,-50%) scaleX(-1)}
+ to{transform:translate(calc(-50% + var(--deer-dx)),calc(-50% + var(--deer-dy))) scaleX(-1)}
+}
 @keyframes spring-night-twinkle{0%,100%{opacity:.18;transform:scale(.7)}40%{opacity:.48;transform:scale(.9)}58%{opacity:.95;transform:scale(1.18)}74%{opacity:.55;transform:scale(.95)}}
 @media(prefers-reduced-motion:reduce){.spring-night-star{animation:none;opacity:.65;transform:none}}
 
@@ -4084,7 +4092,17 @@ function updateSeason(){
         springDeerTimer=setTimeout(()=>{
           if(lastSceneKey!=="spring-night"||!document.getElementById("seasonEffects"))return;
           const deer=document.createElement("img");
-          deer.className="spring-night-deer "+(Math.random()<.5?"deer-ltr":"deer-rtl");
+          const routeStart={x:73.026,y:54.428};
+          const routeEnd={x:47.428,y:48.272};
+          const reverse=Math.random()<.5;
+          const from=reverse?routeEnd:routeStart;
+          const to=reverse?routeStart:routeEnd;
+          const bounds=effects.getBoundingClientRect();
+          deer.className="spring-night-deer "+(reverse?"deer-reverse":"deer-forward");
+          deer.style.setProperty("--deer-start-x",from.x+"%");
+          deer.style.setProperty("--deer-start-y",from.y+"%");
+          deer.style.setProperty("--deer-dx",((to.x-from.x)/100*bounds.width)+"px");
+          deer.style.setProperty("--deer-dy",((to.y-from.y)/100*bounds.height)+"px");
           deer.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/sarna-noc.gif?v=1";
           deer.alt="";
           deer.setAttribute("aria-hidden","true");
