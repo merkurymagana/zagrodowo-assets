@@ -4049,7 +4049,7 @@ function updateSeason(){
       constellation.classList.add("spring-night-constellation");
       constellation.style.cssText="left:"+area.x+"%;top:"+area.y+"%;width:"+area.w+"%;height:"+area.h+"%;inset:auto";
       const constellationPath=document.createElementNS("http://www.w3.org/2000/svg","path");
-      constellationPath.setAttribute("d","M25 18 L55 8 L67 39 L36 55 Z M67 39 L78 58 L89 78 L99 48");
+      constellationPath.setAttribute("d","M25 18 L55 8 L67 39 L36 55 Z M36 55 L78 58 L89 78 L99 48");
       constellation.appendChild(constellationPath);effects.appendChild(constellation);
       [[25,18],[55,8],[67,39],[36,55],[78,58],[89,78],[99,48]].forEach(([x,y],i)=>{
         const star=document.createElement("span");
@@ -4975,7 +4975,7 @@ function showNotice(message){
       svg.setAttribute("viewBox","0 0 100 100");svg.setAttribute("preserveAspectRatio","none");svg.classList.add("spring-night-constellation");
       svg.style.cssText="left:"+dipperArea.x+"%;top:"+dipperArea.y+"%;width:"+dipperArea.w+"%;height:"+dipperArea.h+"%;inset:auto";
       const path=document.createElementNS("http://www.w3.org/2000/svg","path");
-      path.setAttribute("d","M25 18 L55 8 L67 39 L36 55 Z M67 39 L78 58 L89 78 L99 48");
+      path.setAttribute("d","M25 18 L55 8 L67 39 L36 55 Z M36 55 L78 58 L89 78 L99 48");
       svg.appendChild(path);effects.appendChild(svg);
       [[25,18],[55,8],[67,39],[36,55],[78,58],[89,78],[99,48]].forEach(([x,y],i)=>{
         const star=document.createElement("span");star.className="spring-night-star star-bright";
