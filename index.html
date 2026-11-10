@@ -1311,6 +1311,23 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation:sparrow-two-way-flight 120s linear infinite;
   will-change:left,top,opacity;
 }
+.spring-sparrow-flight-route .sparrow-flight-body,
+.spring-sparrow-flight-route .sparrow-flight-wings{
+  position:absolute;inset:0;display:block;width:100%;height:100%;
+  object-fit:contain;pointer-events:none;
+  filter:inherit;
+}
+.spring-sparrow-flight-route .sparrow-flight-wings{
+  clip-path:inset(0 8% 48% 8%);
+  transform-origin:50% 78%;
+  animation:sparrow-fast-wingbeats .16s ease-in-out infinite alternate;
+  will-change:transform;
+}
+@keyframes sparrow-fast-wingbeats{
+  0%{transform:rotate(-17deg) scaleY(.91) skewX(-3deg)}
+  100%{transform:rotate(17deg) scaleY(1.08) skewX(3deg)}
+}
+
 /* 30 s na płocie, 3 s odlotu, 60 s poza kadrem, 4 s powrotu. */
 @keyframes sparrow-two-way-flight{
   0%,24.99%{
@@ -3904,11 +3921,19 @@ function updateSeason(){
       sparrow.appendChild(sitting);
       sparrow.appendChild(movingHead);
       effects.appendChild(sparrow);
-      const flying=document.createElement("img");
+      const flying=document.createElement("div");
       flying.className="spring-sparrow-flight-route";
-      flying.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wrobel-leci.png";
-      flying.alt="";
       flying.setAttribute("aria-hidden","true");
+      const flyingBody=document.createElement("img");
+      flyingBody.className="sparrow-flight-body";
+      flyingBody.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wrobel-leci.png";
+      flyingBody.alt="";
+      const flyingWings=document.createElement("img");
+      flyingWings.className="sparrow-flight-wings";
+      flyingWings.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wrobel-leci.png";
+      flyingWings.alt="";
+      flying.appendChild(flyingBody);
+      flying.appendChild(flyingWings);
       effects.appendChild(flying);
     }
     if(showAutumnLeaves){
