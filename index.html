@@ -291,6 +291,20 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   filter:drop-shadow(0 1px 1px #24170b55);
 }
 #start.summer-morning #summerNestEgg2{display:block}
+
+#summerNestEgg.egg-rocking,
+#summerNestEgg2.egg-rocking{
+  animation:summerEggRock 1.15s ease-in-out;
+  transform-origin:50% 100%;
+}
+@keyframes summerEggRock{
+  0%{transform:rotate(0deg)}
+  22%{transform:rotate(-5deg)}
+  48%{transform:rotate(4deg)}
+  72%{transform:rotate(-2.5deg)}
+  100%{transform:rotate(0deg)}
+}
+
 @media(max-width:1050px){
   #summerNestEgg2{
     left:calc(39% - 83px);
@@ -5046,6 +5060,18 @@ function showNotice(message){
   document.getElementById("gameNotice").textContent=message;
 }
 
+
+/* DELIKATNE KOŁYSANIE JAJEK W GNIEŹDZIE — pojedynczo, co 15 sekund. */
+setInterval(()=>{
+  if(!start.classList.contains("summer-morning"))return;
+  const eggs=[document.getElementById("summerNestEgg"),document.getElementById("summerNestEgg2")];
+  const egg=eggs[Math.floor(Math.random()*eggs.length)];
+  if(!egg)return;
+  egg.classList.remove("egg-rocking");
+  void egg.offsetWidth;
+  egg.classList.add("egg-rocking");
+  egg.addEventListener("animationend",()=>egg.classList.remove("egg-rocking"),{once:true});
+},15000);
 
 /* START */
 
