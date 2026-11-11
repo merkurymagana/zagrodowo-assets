@@ -969,7 +969,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .spring-night-deer{
  position:absolute;left:var(--deer-start-x);top:var(--deer-start-y);
  width:clamp(18px,1.9vw,29px);height:auto;
- opacity:0;filter:brightness(.42) saturate(0) contrast(1.08);
+ opacity:0;filter:brightness(.78) sepia(.24) saturate(.82) hue-rotate(350deg) contrast(1.04);
  pointer-events:none;will-change:transform;
  transform:translate(-50%,-50%);
 }
@@ -4055,7 +4055,7 @@ function updateSeason(){
         deer.addEventListener("animationend",()=>{deer.remove();if(onDone)onDone();},{once:true});
         effects.appendChild(deer);
       };
-      const scheduleDeer=()=>{
+      const scheduleDeer=(delay=60000)=>{
         springDeerTimer=setTimeout(()=>{
           if(lastSceneKey!=="spring-night"||!document.getElementById("seasonEffects"))return;
           const reverse=Math.random()<.5;
@@ -4072,7 +4072,7 @@ function updateSeason(){
           launchNext(0);
         },90000);
       };
-      scheduleDeer();
+      scheduleDeer(0); // Pierwsze stado pojawia się od razu po wejściu w wiosenną noc.
     }
     const showAutumnRain=name==="autumn"&&period==="night";
     if(showAutumnRain){
