@@ -246,6 +246,36 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
 }
 
+/* JAJKO JASKÓŁKI W GNIEŹDZIE — tylko letni poranek. */
+#summerNestEgg{
+  position:absolute;
+  z-index:9;
+  left:calc(39% - 510px);
+  top:calc(13.5% + 82px);
+  width:clamp(16px,1.45vw,24px);
+  height:auto;
+  display:none;
+  object-fit:contain;
+  pointer-events:none;
+  user-select:none;
+  filter:drop-shadow(0 1px 1px #24170b55);
+}
+#start.summer-morning #summerNestEgg{display:block}
+@media(max-width:1050px){
+  #summerNestEgg{
+    left:calc(39% - 92px);
+    top:calc(13.5% + 173px);
+    width:clamp(15px,2.2vw,21px);
+  }
+}
+@media(max-width:700px){
+  #summerNestEgg{
+    left:calc(39% - 68px);
+    top:calc(13.5% + 129px);
+    width:clamp(13px,3.1vw,18px);
+  }
+}
+
 /* GNIAZDO JASKÓŁEK POD OKAPEM OBORY — tylko letni poranek. */
 #summerNest{
   position:absolute;
@@ -3280,6 +3310,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <img id="summerNest" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/gniazdo.png?v=1" alt="" aria-hidden="true">
+    <img id="summerNestEgg" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jaskolka-jajko.png?v=1" alt="" aria-hidden="true">
     <div id="springLilyWater" aria-hidden="true"></div>
 <div id="springFrogSplash" aria-hidden="true"></div>
     <img id="springLily" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lilia-wodna.png?v=1" alt="" aria-hidden="true">
