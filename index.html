@@ -4045,14 +4045,18 @@ function updateSeason(){
         const to=reverse?routeStart:routeEnd;
         const bounds=effects.getBoundingClientRect();
         deer.className="spring-night-deer "+(reverse?"deer-reverse":"deer-forward");
+        // Nie rozpoczynaj biegu, dopóki GIF nie zostanie pobrany.
+        deer.style.animationPlayState="paused";
         deer.style.setProperty("--deer-start-x",from.x+"%");
         deer.style.setProperty("--deer-start-y",from.y+"%");
         deer.style.setProperty("--deer-dx",((to.x-from.x)/100*bounds.width)+"px");
         deer.style.setProperty("--deer-dy",((to.y-from.y)/100*bounds.height)+"px");
-        deer.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/sarna-noc.gif?v=1";
         deer.alt="";
         deer.setAttribute("aria-hidden","true");
+        deer.addEventListener("load",()=>{deer.style.animationPlayState="running";},{once:true});
+        deer.addEventListener("error",()=>{deer.remove();if(onDone)onDone();},{once:true});
         deer.addEventListener("animationend",()=>{deer.remove();if(onDone)onDone();},{once:true});
+        deer.src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/sarna-noc.gif?v=1";
         effects.appendChild(deer);
       };
       const scheduleDeer=(delay=60000)=>{
