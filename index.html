@@ -4074,9 +4074,9 @@ function updateSeason(){
             }
           };
           launchNext(0);
-        },90000);
+        },delay);
       };
-      scheduleDeer(0); // Pierwsze stado pojawia się od razu po wejściu w wiosenną noc.
+      scheduleDeer(5000); // Pierwsze stado pojawia się 5 sekund po załadowaniu scenerii.
     }
     const showAutumnRain=name==="autumn"&&period==="night";
     if(showAutumnRain){
