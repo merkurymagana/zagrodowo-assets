@@ -292,6 +292,45 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 #start.summer-morning #summerNestEgg2{display:block}
 
+#summerNestStick{
+  position:absolute;
+  z-index:10;
+  left:calc(39% - 520px);
+  top:calc(13.5% + 73px);
+  width:clamp(9px,0.85vw,14px);
+  height:auto;
+  display:none;
+  opacity:0;
+  pointer-events:none;
+  user-select:none;
+  transform-origin:50% 50%;
+}
+#start.summer-morning #summerNestStick{display:block}
+#summerNestStick.stick-flying{
+  animation:summerNestStickFly 1s ease-out forwards;
+}
+@keyframes summerNestStickFly{
+  0%{opacity:1;transform:translate(0,0) rotate(0deg)}
+  35%{opacity:1;transform:translate(9px,5px) rotate(95deg)}
+  75%{opacity:.85;transform:translate(23px,23px) rotate(205deg)}
+  100%{opacity:0;transform:translate(32px,39px) rotate(285deg)}
+}
+@media(max-width:1050px){
+  #summerNestStick{
+    left:calc(39% - 102px);
+    top:calc(13.5% + 177px);
+    width:clamp(8px,1.25vw,12px);
+  }
+}
+@media(max-width:700px){
+  #summerNestStick{
+    left:calc(39% - 77px);
+    top:calc(13.5% + 133px);
+    width:clamp(7px,1.8vw,11px);
+  }
+}
+
+
 #summerNestEgg.egg-rocking,
 #summerNestEgg2.egg-rocking{
   animation:summerEggRock 1.15s ease-in-out;
@@ -3356,6 +3395,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     <img id="summerNest" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/gniazdo.png?v=1" alt="" aria-hidden="true">
     <img id="summerNestEgg" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jaskolka-jajko.png?v=1" alt="" aria-hidden="true">
     <img id="summerNestEgg2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jaskolka-jajko.png?v=1" alt="" aria-hidden="true">
+    <img id="summerNestStick" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/patyk-gniazdo.png?v=1" alt="" aria-hidden="true">
     <div id="springLilyWater" aria-hidden="true"></div>
 <div id="springFrogSplash" aria-hidden="true"></div>
     <img id="springLily" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lilia-wodna.png?v=1" alt="" aria-hidden="true">
@@ -5071,6 +5111,13 @@ setInterval(()=>{
   void egg.offsetWidth;
   egg.classList.add("egg-rocking");
   egg.addEventListener("animationend",()=>egg.classList.remove("egg-rocking"),{once:true});
+  const stick=document.getElementById("summerNestStick");
+  if(stick){
+    stick.classList.remove("stick-flying");
+    void stick.offsetWidth;
+    stick.classList.add("stick-flying");
+    stick.addEventListener("animationend",()=>stick.classList.remove("stick-flying"),{once:true});
+  }
 },15000);
 
 /* START */
