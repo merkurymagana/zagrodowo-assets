@@ -352,6 +352,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   transform:translate(-50%,-50%);
   filter:drop-shadow(0 2px 2px #26351d66);
 }
+/* Wszystkie elementy nawadniania są widoczne wyłącznie w letniej scenerii dziennej. */
+.summerSprinklerWater,.summerRoadWet{display:none}
+#start.summer-day .summerSprinklerWater,#start.summer-day .summerRoadWet{display:block}
+
 /* Delikatne strumienie wody wokół każdego zraszacza. */
 .summerSprinklerWater{
   position:absolute;z-index:7;left:0;top:0;width:clamp(76px,10vw,142px);height:auto;
