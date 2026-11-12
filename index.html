@@ -270,7 +270,34 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   transform:translate(-50%,-50%);
   filter:drop-shadow(0 2px 2px #26351d66);
 }
-#start.summer-day .summerSprinkler{display:block;animation:summerSprinklerSpin 3.8s linear infinite;transform-origin:50% 50%}
+/* Delikatne strumienie wody wokół każdego zraszacza. */
+.summerSprinklerWater{
+  position:absolute;z-index:7;left:0;top:0;width:clamp(76px,10vw,142px);height:auto;
+  overflow:visible;pointer-events:none;transform:translate(-50%,-82%);
+  filter:drop-shadow(0 1px 1px #d8f7ff88);opacity:.9;
+}
+.summerSprinklerWater .waterFan{
+  transform-box:fill-box;transform-origin:50% 100%;
+  animation:summerWaterSweep 3.8s ease-in-out infinite;
+}
+.summerSprinklerWater .waterJet{
+  fill:none;stroke:#c9f5ff;stroke-width:1.7;stroke-linecap:round;
+  stroke-dasharray:3 3;animation:summerWaterFlow .75s linear infinite;
+}
+.summerSprinklerWater .waterDrop{
+  fill:#e5fbff;opacity:.9;animation:summerWaterDrop 1.15s ease-in-out infinite;
+}
+@keyframes summerWaterSweep{
+  0%,100%{transform:rotate(-13deg) scaleX(.88)}
+  50%{transform:rotate(13deg) scaleX(1)}
+}
+@keyframes summerWaterFlow{to{stroke-dashoffset:-12}}
+@keyframes summerWaterDrop{
+  0%{opacity:0;transform:translateY(-2px)}
+  25%{opacity:.95}
+  100%{opacity:0;transform:translateY(9px)}
+}
+#start.summer-day .summerSprinkler{display:block;animation:summerSprinklerSpin 3.8s ease-in-out infinite;transform-origin:50% 50%}
 #start.summer-day .summerSprinkler[data-sprinkler="2"]{animation-delay:-0.9s}
 #start.summer-day .summerSprinkler[data-sprinkler="3"]{animation-delay:-1.8s}
 #start.summer-day .summerSprinkler[data-sprinkler="4"]{animation-delay:-2.7s}
@@ -5516,6 +5543,18 @@ renderNeighbors();
   first.style.left=positions[0].x+"%";
   first.style.top=positions[0].y+"%";
   first.style.zIndex=String(8+Math.round(positions[0].y/10));
+  function addWater(p,index){
+    const water=document.createElement("div");
+    water.className="summerSprinklerWater";
+    water.dataset.sprinklerWater=String(index);
+    water.style.left=p.x+"%";
+    water.style.top=p.y+"%";
+    water.style.zIndex=String(7+Math.round(p.y/10));
+    water.style.animationDelay=(-index*.9)+"s";
+    water.innerHTML='<svg viewBox="0 0 120 76" width="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="waterFan"><path class="waterJet" d="M60 70 Q44 31 8 8"/><path class="waterJet" d="M60 70 Q49 24 34 3"/><path class="waterJet" d="M60 70 Q60 20 60 2"/><path class="waterJet" d="M60 70 Q71 24 86 3"/><path class="waterJet" d="M60 70 Q76 31 112 8"/><circle class="waterDrop" cx="13" cy="17" r="1.8"/><circle class="waterDrop" cx="34" cy="13" r="1.5" style="animation-delay:.3s"/><circle class="waterDrop" cx="60" cy="9" r="1.8" style="animation-delay:.55s"/><circle class="waterDrop" cx="85" cy="13" r="1.5" style="animation-delay:.15s"/><circle class="waterDrop" cx="107" cy="18" r="1.8" style="animation-delay:.7s"/></g></svg>';
+    stage.appendChild(water);
+  }
+  addWater(positions[0],1);
   positions.slice(1).forEach((p,i)=>{
     const sprinkler=first.cloneNode(true);
     sprinkler.removeAttribute("id");
@@ -5524,6 +5563,7 @@ renderNeighbors();
     sprinkler.style.zIndex=String(8+Math.round(p.y/10));
     sprinkler.dataset.sprinkler=String(i+2);
     stage.appendChild(sprinkler);
+    addWater(p,i+2);
   });
 })();
 
