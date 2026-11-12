@@ -4445,10 +4445,20 @@ const authOverlay=document.getElementById("authOverlay");
 /* Zaznaczanie trasy wróbla usunięte — współrzędne lotu są ustawione na stałe. */
 
 
-function getSeasonName(month){
-  if(month>=2&&month<=4)return "spring";
-  if(month>=5&&month<=7)return "summer";
-  if(month>=8&&month<=10)return "autumn";
+function getSeasonName(date){
+  // Astronomiczne granice pór roku na półkuli północnej.
+  // Daty przejścia: równonoc wiosenna, przesilenie letnie,
+  // równonoc jesienna i przesilenie zimowe.
+  const year=date.getFullYear();
+  const day=new Date(year,date.getMonth(),date.getDate()).getTime();
+  const boundary=(month,dayOfMonth)=>new Date(year,month-1,dayOfMonth).getTime();
+  const spring=boundary(3,20);
+  const summer=boundary(6,21);
+  const autumn=boundary(9,22);
+  const winter=boundary(12,21);
+  if(day>=spring&&day<summer)return "spring";
+  if(day>=summer&&day<autumn)return "summer";
+  if(day>=autumn&&day<winter)return "autumn";
   return "winter";
 }
 
@@ -4463,7 +4473,7 @@ let lastSceneKey="";
 let springDeerTimer=null;
 
 // Automatyczna sceneria: pory roku oraz pory dnia wyznaczane astronomicznie.
-const SCENE_PREVIEW="summer-night";
+const SCENE_PREVIEW=null;
 
 // Pory dnia wyznaczane astronomicznie dla Polski; godziny przesuwają się wraz z porami roku.
 const DAYLIGHT_LATITUDE=52.1;
@@ -4564,7 +4574,7 @@ function drawSpringBreeze(now){
 // Sceneria dobierana automatycznie według pory roku oraz astronomicznych godzin świtu, dnia i nocy.
 function updateSeason(){
   const now=new Date();
-  const automaticName=getSeasonName(now.getMonth());
+  const automaticName=getSeasonName(now);
   const automaticPeriod=getDayPeriod(now);
   const preview=SCENE_PREVIEW?SCENE_PREVIEW.split("-"):null;
   const name=preview?preview[0]:automaticName;
