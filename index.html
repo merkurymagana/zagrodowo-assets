@@ -5002,6 +5002,34 @@ html,body,#appStage{
   }
 }
 
+
+/* FIX POZYCJONOWANIA: panel gracza nie może tworzyć kontenera dla fixed menu. */
+#playerPanel{
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  filter:none!important;
+  transform:none!important;
+  perspective:none!important;
+  contain:none!important;
+}
+#playerPanel .side-menu{
+  position:fixed!important;
+  top:50vh!important;
+  left:18px!important;
+  right:auto!important;
+  bottom:auto!important;
+  transform:translateY(-50%)!important;
+  z-index:99999!important;
+}
+@media(max-width:700px){
+  #playerPanel .side-menu{
+    top:50vh!important;
+    left:8px!important;
+    right:auto!important;
+    transform:translateY(-50%)!important;
+  }
+}
+
 </style>
 </head>
 
