@@ -336,20 +336,55 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #start.storm-editing .summerStormStrike:active{cursor:grabbing}
 #start.storm-editing .summerStormStrike .stormGlow{opacity:.3}
 
-/* Nowe ognisko — letnia sceneria nocna. */
+/* Ognisko — osobne, naturalnie migoczące płomienie za nieruchomym drewnem. */
 #summerCampfire{
   position:absolute;
   z-index:10;
   left:calc(68% + 32px);
   top:calc(62% - 10px);
   width:clamp(49.4px,6.384vw,107.35px);
-  height:auto;
+  aspect-ratio:676 / 417;
   display:none;
   pointer-events:none;
   user-select:none;
-  object-fit:contain;
+  isolation:isolate;
 }
 #start.summer-night #summerCampfire{display:block!important;visibility:visible!important;opacity:1!important;z-index:30!important}
+#summerCampfire .campfireFlames{
+  position:absolute;inset:0;width:100%;height:100%;z-index:1;overflow:visible;
+}
+#summerCampfire .campfireBase{
+  position:absolute;inset:0;width:100%;height:100%;z-index:2;object-fit:contain;
+}
+#summerCampfire .campfireGlow{
+  position:absolute;left:50%;top:47%;width:85%;height:48%;z-index:0;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(ellipse,rgba(255,111,24,.32) 0%,rgba(255,91,16,.13) 38%,transparent 72%);
+  filter:blur(5px);animation:campfireGlow 2.8s ease-in-out infinite alternate;
+}
+#summerCampfire .flameOuter{fill:url(#campfireOuter);transform-origin:338px 285px;animation:campfireDance 1.65s ease-in-out infinite alternate}
+#summerCampfire .flameMiddle{fill:url(#campfireMiddle);transform-origin:338px 285px;animation:campfireDance 1.12s ease-in-out -0.45s infinite alternate-reverse}
+#summerCampfire .flameCore{fill:url(#campfireCore);transform-origin:338px 285px;animation:campfireDance 1.38s ease-in-out -0.2s infinite alternate}
+#summerCampfire .campfireSpark{fill:#ffd98a;opacity:0;transform-box:fill-box;transform-origin:center;animation:campfireSparkRise 3.8s linear infinite}
+#summerCampfire .campfireSpark:nth-of-type(2){animation-delay:-1.1s}
+#summerCampfire .campfireSpark:nth-of-type(3){animation-delay:-2.6s}
+#summerCampfire .campfireSpark:nth-of-type(4){animation-delay:-.5s}
+@keyframes campfireDance{
+  0%{transform:rotate(-2deg) scaleX(.94) scaleY(.94);opacity:.83}
+  45%{transform:rotate(1.5deg) scaleX(1.04) scaleY(1.07);opacity:1}
+  100%{transform:rotate(-1deg) scaleX(.97) scaleY(1.02);opacity:.9}
+}
+@keyframes campfireGlow{from{opacity:.62;transform:translate(-50%,-50%) scale(.92)}to{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
+@keyframes campfireSparkRise{
+  0%{opacity:0;transform:translate(0,0) scale(.45)}
+  12%{opacity:.9}
+  72%{opacity:.65}
+  100%{opacity:0;transform:translate(var(--spark-drift,5px),-42px) scale(.12)}
+}
+@media(prefers-reduced-motion:reduce){
+  #summerCampfire .flameOuter,#summerCampfire .flameMiddle,#summerCampfire .flameCore,
+  #summerCampfire .campfireGlow,#summerCampfire .campfireSpark{animation:none}
+}
 @media(max-width:700px){
   #summerCampfire{
     left:calc(60% + 32px);
@@ -3837,7 +3872,42 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   </div>
 </div>
 
-    <img id="summerCampfire" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ognisko.png?v=3" alt="" aria-hidden="true">
+    <div id="summerCampfire" aria-hidden="true">
+      <div class="campfireGlow"></div>
+      <svg class="campfireFlames" viewBox="0 0 676 417" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="campfireOuter" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#e33b0b"/><stop offset=".48" stop-color="#ff7416"/><stop offset="1" stop-color="#ffb52d" stop-opacity=".78"/>
+          </linearGradient>
+          <linearGradient id="campfireMiddle" x1="0" y1="1" x2=".15" y2="0">
+            <stop offset="0" stop-color="#ff5a0b"/><stop offset=".6" stop-color="#ff9c1c"/><stop offset="1" stop-color="#ffe06a" stop-opacity=".92"/>
+          </linearGradient>
+          <linearGradient id="campfireCore" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#ff9a1b"/><stop offset=".7" stop-color="#ffe16a"/><stop offset="1" stop-color="#fff3b0" stop-opacity=".7"/>
+          </linearGradient>
+          <filter id="campfireSoftGlow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="8"/>
+          </filter>
+        </defs>
+        <g class="flameOuter" filter="url(#campfireSoftGlow)" opacity=".7">
+          <path d="M247 284 C226 251 253 223 270 195 C280 177 276 155 270 139 C302 159 306 188 298 211 C323 191 333 157 323 119 C363 154 363 190 347 220 C376 202 387 174 380 148 C416 185 411 224 391 250 C420 233 434 211 430 190 C454 223 443 259 425 284Z"/>
+        </g>
+        <g class="flameOuter">
+          <path d="M250 286 C230 259 246 231 263 210 C280 188 282 168 272 145 C305 163 313 194 299 222 C327 202 339 169 328 137 C365 171 368 204 349 235 C378 216 392 190 384 164 C416 198 415 233 393 260 C417 247 430 228 426 209 C448 238 439 268 420 286Z"/>
+        </g>
+        <g class="flameMiddle">
+          <path d="M277 286 C265 261 284 241 299 220 C312 201 312 183 305 166 C333 186 338 211 326 235 C350 217 357 193 350 174 C378 205 374 234 357 256 C377 247 388 230 386 214 C404 241 392 269 376 286Z"/>
+        </g>
+        <g class="flameCore">
+          <path d="M310 286 C299 264 316 248 328 232 C338 218 339 205 334 192 C356 209 359 231 348 249 C366 238 371 222 367 209 C388 235 377 265 360 286Z"/>
+        </g>
+        <circle class="campfireSpark" cx="285" cy="204" r="3" style="--spark-drift:-8px"/>
+        <circle class="campfireSpark" cx="365" cy="188" r="2.5" style="--spark-drift:9px"/>
+        <circle class="campfireSpark" cx="337" cy="164" r="2" style="--spark-drift:-4px"/>
+        <circle class="campfireSpark" cx="397" cy="226" r="2.2" style="--spark-drift:7px"/>
+      </svg>
+      <img class="campfireBase" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ognisko.png?v=3" alt="">
+    </div>
     <img id="summerBalloon" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/balon.png?v=1" alt="" aria-hidden="true">
     <img id="summerSprinkler" class="summerSprinkler" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zraszacz.png?v=1" alt="" aria-hidden="true">
     <button id="sprinklerEditorToggle" type="button">✚ Edytor zraszaczy</button>
