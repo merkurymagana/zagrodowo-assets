@@ -6209,7 +6209,8 @@ renderNeighbors();
   const isTouchDevice=()=>window.matchMedia("(pointer:coarse)").matches || "ontouchstart" in window;
   const W=1686,H=950;
   const pointers=new Map();
-  let zoom=1,x=0,y=0,pinch=null,pan=null,renderFrame=0;
+  let zoom=1,x=0,y=0,pinch=null,pan=null,renderFrame=0,inertiaFrame=0;
+  let velocityX=0,velocityY=0,lastMoveTime=0;
   const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
   const viewport=()=>({
     w:window.visualViewport?.width||document.documentElement.clientWidth,
@@ -6253,9 +6254,15 @@ renderNeighbors();
   window.addEventListener("pointerdown",e=>{
     if(!isTouchDevice()||e.pointerType!=="touch")return;
     pointers.set(e.pointerId,pt(e));
-    if(pointers.size===2)beginPinch();
-    else if(pointers.size===1&&zoom>1){
-      pan={start:pt(e),x,y,moved:false};
+    if(pointers.size===2){
+      cancelInertia();
+      beginPinch();
+    }else if(pointers.size===1){
+      cancelInertia();
+      const p=pt(e);
+      pan={start:p,last:p,x,y,moved:false};
+      lastMoveTime=performance.now();
+      velocityX=velocityY=0;
     }
   },{capture:true,passive:true});
   window.addEventListener("pointermove",e=>{
@@ -6270,22 +6277,55 @@ renderNeighbors();
       x=c.x-(pinch.cx-pinch.x)*ratio;
       y=c.y-(pinch.cy-pinch.y)*ratio;
       scheduleRender();
-    }else if(pointers.size===1&&pan&&zoom>1){
+    }else if(pointers.size===1&&pan){
       const p=pt(e),dx=p.x-pan.start.x,dy=p.y-pan.start.y;
-      if(Math.abs(dx)+Math.abs(dy)>3)pan.moved=true;
+      if(Math.abs(dx)+Math.abs(dy)>5)pan.moved=true;
       if(pan.moved){
         if(e.cancelable)e.preventDefault();
+        const now=performance.now(),dt=Math.max(1,now-lastMoveTime);
+        velocityX=(p.x-pan.last.x)/dt;
+        velocityY=(p.y-pan.last.y)/dt;
+        lastMoveTime=now;
+        pan.last=p;
         x=pan.x+dx;y=pan.y+dy;scheduleRender();
       }
     }
   },{capture:true,passive:false});
+  function cancelInertia(){
+    if(inertiaFrame)cancelAnimationFrame(inertiaFrame);
+    inertiaFrame=0;
+  }
+  function startInertia(){
+    cancelInertia();
+    if(zoom<=1||Math.hypot(velocityX,velocityY)<.08)return;
+    let previous=performance.now();
+    function step(now){
+      const dt=Math.min(32,now-previous);previous=now;
+      const {v,base,bodyH}=metrics();
+      const minX=Math.min(0,v.w-W*base*zoom);
+      const minY=Math.min(0,v.h-bodyH*base*zoom);
+      x=clamp(x+velocityX*dt,minX,0);
+      y=clamp(y+velocityY*dt,minY,0);
+      const friction=Math.pow(.92,dt/16.67);
+      velocityX*=friction;velocityY*=friction;
+      scheduleRender();
+      if(Math.hypot(velocityX,velocityY)>.025)inertiaFrame=requestAnimationFrame(step);
+      else inertiaFrame=0;
+    }
+    inertiaFrame=requestAnimationFrame(step);
+  }
   function endPointer(e){
     pointers.delete(e.pointerId);
     if(pointers.size<2)pinch=null;
-    if(pointers.size===0)pan=null;
-    else if(pointers.size===1&&zoom>1){
+    if(pointers.size===0){
+      const wasPan=pan?.moved;
+      pan=null;
+      if(wasPan)startInertia();
+    }else if(pointers.size===1){
       const [id,p]=[...pointers.entries()][0];
-      pan={start:p,x,y,moved:false};
+      pan={start:p,last:p,x,y,moved:false};
+      velocityX=velocityY=0;
+      lastMoveTime=performance.now();
     }
   }
   window.addEventListener("pointerup",endPointer,{capture:true,passive:true});
