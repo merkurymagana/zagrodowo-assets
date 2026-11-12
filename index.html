@@ -3376,7 +3376,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 @media(max-width:700px){
   :root{--panel-width:0px}
   body{overflow:hidden}
-  #appStage{inset:0;width:100%;height:100%;transform:translate3d(var(--mobile-zoom-x,0px),var(--mobile-zoom-y,0px),0) scale(var(--mobile-zoom-scale,1))!important;transform-origin:top left;background:#70482f;will-change:transform}
+  #appStage{left:0;top:0;right:auto;bottom:auto;width:1686px;height:950px;inset:auto;transform:translate3d(var(--mobile-zoom-x,0px),var(--mobile-zoom-y,0px),0) scale(calc(var(--stage-scale,1)*var(--mobile-zoom-scale,1)))!important;transform-origin:top left;background:#70482f;will-change:transform;touch-action:none}
   #start{inset:0}
   .start-wood-left,.start-wood-right{display:none}
 
@@ -6176,13 +6176,18 @@ renderNeighbors();
 })();
 
 
-/* MOBILNY ZOOM OGRANICZONY DO GRANIC GRAFIKI ZAGRODOWA */
+/* MOBILNY ZOOM CAŁEJ PLANSZY — Z OGRANICZENIEM PRZESUWANIA DO JEJ KRAWĘDZI */
 (function boundedMobilePinchZoom(){
   const stage=document.getElementById("appStage");
   if(!stage)return;
   const mobile=()=>window.matchMedia("(max-width:700px), (pointer:coarse)").matches;
   let zoom=1, offsetX=0, offsetY=0, pinch=null;
-  const clamp=(value,min,max)=>Math.min(max,Math.max(min,value));
+  const clamp=(v,min,max)=>Math.min(max,Math.max(min,v));
+  const viewportSize=()=>{
+    const vv=window.visualViewport;
+    return {w:vv?vv.width:document.documentElement.clientWidth,
+      h:vv?vv.height:document.documentElement.clientHeight};
+  };
   function apply(){
     if(!mobile()){
       stage.style.removeProperty("--mobile-zoom-x");
@@ -6190,28 +6195,28 @@ renderNeighbors();
       stage.style.removeProperty("--mobile-zoom-scale");
       return;
     }
-    const width=stage.clientWidth, height=stage.clientHeight;
-    offsetX=clamp(offsetX,Math.min(0,width-width*zoom),0);
-    offsetY=clamp(offsetY,Math.min(0,height-height*zoom),0);
+    const baseScale=parseFloat(getComputedStyle(stage).getPropertyValue("--stage-scale"))||1;
+    const view=viewportSize();
+    const renderedWidth=1686*baseScale*zoom;
+    const renderedHeight=950*baseScale*zoom;
+    offsetX=clamp(offsetX,Math.min(0,view.w-renderedWidth),0);
+    offsetY=clamp(offsetY,Math.min(0,view.h-renderedHeight),0);
     stage.style.setProperty("--mobile-zoom-x",offsetX+"px");
     stage.style.setProperty("--mobile-zoom-y",offsetY+"px");
     stage.style.setProperty("--mobile-zoom-scale",String(zoom));
   }
-  function distance(t1,t2){
-    return Math.hypot(t2.clientX-t1.clientX,t2.clientY-t1.clientY);
-  }
-  function midpoint(t1,t2){
-    return {x:(t1.clientX+t2.clientX)/2,y:(t1.clientY+t2.clientY)/2};
-  }
+  function distance(a,b){return Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY)}
+  function midpoint(a,b){return {x:(a.clientX+b.clientX)/2,y:(a.clientY+b.clientY)/2}}
   stage.addEventListener("touchstart",event=>{
     if(!mobile()||event.touches.length!==2)return;
     const p=midpoint(event.touches[0],event.touches[1]);
-    pinch={distance:Math.max(1,distance(event.touches[0],event.touches[1])),zoom,
-      x:p.x,y:p.y,offsetX,offsetY};
-  },{passive:true});
+    pinch={distance:Math.max(1,distance(event.touches[0],event.touches[1])),
+      zoom,x:p.x,y:p.y,offsetX,offsetY};
+  },{passive:false});
   stage.addEventListener("touchmove",event=>{
-    if(!mobile()||event.touches.length!==2||!pinch)return;
+    if(!mobile())return;
     if(event.cancelable)event.preventDefault();
+    if(event.touches.length!==2||!pinch)return;
     const p=midpoint(event.touches[0],event.touches[1]);
     const nextZoom=clamp(pinch.zoom*distance(event.touches[0],event.touches[1])/pinch.distance,1,4);
     const ratio=nextZoom/pinch.zoom;
@@ -6220,18 +6225,20 @@ renderNeighbors();
     offsetY=p.y-(pinch.y-pinch.offsetY)*ratio;
     apply();
   },{passive:false});
-  const endPinch=event=>{
-    if(event.touches.length<2)pinch=null;
-  };
+  const endPinch=event=>{if(event.touches.length<2)pinch=null};
   stage.addEventListener("touchend",endPinch,{passive:true});
   stage.addEventListener("touchcancel",endPinch,{passive:true});
+  document.addEventListener("touchmove",event=>{
+    if(mobile()&&event.touches.length>1&&event.cancelable)event.preventDefault();
+  },{passive:false});
   window.addEventListener("resize",()=>{
-    if(!mobile()){zoom=1;offsetX=offsetY=0;}
+    if(!mobile()){zoom=1;offsetX=offsetY=0}
     apply();
   },{passive:true});
   window.addEventListener("orientationchange",()=>{
     zoom=1;offsetX=offsetY=0;pinch=null;apply();
   },{passive:true});
+  if(window.visualViewport)window.visualViewport.addEventListener("resize",apply,{passive:true});
   apply();
 })();
 
