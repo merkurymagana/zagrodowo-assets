@@ -3888,9 +3888,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   #appStage{
     position:absolute;left:0;top:0;right:auto;bottom:auto;
     width:1686px;height:950px;inset:auto;
-    transform:none!important;transform-origin:top left;
+    transform:translateZ(0)!important;transform-origin:top left;
     background:transparent!important;
     touch-action:none;
+    will-change:transform;
+    backface-visibility:hidden;
   }
   #appStage *{touch-action:none}
 }
@@ -6280,7 +6282,7 @@ renderNeighbors();
     }else if(pointers.size===1&&pan){
       const p=pt(e);
       // Przyspiesz przesuwanie względem palca — łatwiej pokonywać większe obszary planszy.
-      const DRAG_SENSITIVITY=2;
+      const DRAG_SENSITIVITY=1.5;
       const dx=(p.x-pan.start.x)*DRAG_SENSITIVITY;
       const dy=(p.y-pan.start.y)*DRAG_SENSITIVITY;
       if(Math.abs(dx)+Math.abs(dy)>5)pan.moved=true;
