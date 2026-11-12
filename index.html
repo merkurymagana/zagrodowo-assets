@@ -246,6 +246,28 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
 }
 
+/* Migoczące refleksy słońca na letnim stawie. */
+.summerPondGlints{
+  position:absolute;inset:0;z-index:5;display:none;pointer-events:none;overflow:hidden;
+}
+#start.summer-day .summerPondGlints{display:block}
+.summerPondGlint{
+  position:absolute;width:clamp(5px,.65vw,9px);height:clamp(2px,.22vw,3px);
+  border-radius:50%;
+  background:radial-gradient(ellipse at center,#fffde8d9 0%,#f4f5c77a 48%,transparent 100%);
+  filter:blur(.35px);
+  opacity:0;
+  transform:scale(.55) rotate(-18deg);
+  animation:summerPondGlimmer var(--glint-duration,3.8s) ease-in-out infinite;
+  animation-delay:var(--glint-delay,0s);
+}
+.summerPondGlint:nth-child(3n){width:clamp(8px,.9vw,13px);height:clamp(2px,.25vw,4px)}
+@keyframes summerPondGlimmer{
+  0%,100%{opacity:0;transform:scale(.5) rotate(-18deg)}
+  28%{opacity:.12}
+  48%{opacity:.72;transform:scale(1.08) rotate(-18deg)}
+  66%{opacity:.22;transform:scale(.82) rotate(-18deg)}
+}
 /* ZRASZACZ — letnia sceneria dzienna. */
 .summerSprinkler{
   position:absolute;
@@ -5554,6 +5576,33 @@ renderNeighbors();
   });
 })();
 
+/* Delikatne refleksy na tafli stawu w letni dzień. */
+(function addSummerPondGlints(){
+  const stage=document.getElementById("start");
+  if(!stage)return;
+  const glints=[
+    {x:84.1,y:76.2,d:3.7,t:-1.2},
+    {x:86.7,y:73.8,d:4.4,t:-2.8},
+    {x:88.9,y:77.4,d:3.3,t:-.5},
+    {x:91.2,y:74.9,d:5.1,t:-3.6},
+    {x:85.8,y:80.1,d:4.8,t:-2.1},
+    {x:89.4,y:82.0,d:3.9,t:-.9},
+    {x:92.0,y:79.3,d:4.6,t:-3.0},
+    {x:87.3,y:84.0,d:5.3,t:-1.7}
+  ];
+  const layer=document.createElement("div");
+  layer.className="summerPondGlints";
+  glints.forEach((p,i)=>{
+    const glint=document.createElement("i");
+    glint.className="summerPondGlint";
+    glint.style.left=p.x+"%";
+    glint.style.top=p.y+"%";
+    glint.style.setProperty("--glint-duration",p.d+"s");
+    glint.style.setProperty("--glint-delay",p.t+"s");
+    layer.appendChild(glint);
+  });
+  stage.appendChild(layer);
+})();
 /* ROZMIESZCZENIE CZTERECH ZRASZACZY W LETNIEJ SCENERII DZIENNEJ. */
 (function placeSummerSprinklers(){
   const positions=[
