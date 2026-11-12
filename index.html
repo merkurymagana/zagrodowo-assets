@@ -303,6 +303,20 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 @media(prefers-reduced-motion:reduce){
   .summerFieldJet,.summerFieldDrop{animation:none}
 }
+
+/* Letnia burza nocą — poziome, purpurowo-karminowe wyładowania. */
+.summerStorm{position:absolute;inset:0;z-index:18;display:none;pointer-events:none;overflow:hidden;}
+#start.summer-night .summerStorm{display:block;}
+.summerStormSky{position:absolute;inset:0;background:radial-gradient(ellipse at 58% 20%,rgba(157,67,190,.28),transparent 58%),linear-gradient(180deg,rgba(106,42,132,.12),rgba(65,30,93,.04) 65%,transparent);opacity:0;mix-blend-mode:screen;animation:summerStormSkyFlash 9.4s infinite;}
+.summerStormLightning{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+.summerStormBolt{fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:0;filter:drop-shadow(0 0 3px #d76bff) drop-shadow(0 0 10px #a52bdc) drop-shadow(0 0 22px #8e2bb8);animation:summerStormBoltFlash 9.4s infinite;}
+.summerStormBolt.main{stroke:#d58aff;stroke-width:4.2;}
+.summerStormBolt.branch{stroke:#e77b9f;stroke-width:2.5;animation-delay:.08s;}
+.summerStormBolt.faint{stroke:#b88bff;stroke-width:1.5;animation-delay:.16s;}
+@keyframes summerStormSkyFlash{0%,8%,10%,13%,100%{opacity:0}8.4%{opacity:.9}9.1%{opacity:.2}9.5%{opacity:.62}10.2%{opacity:0}12%{opacity:.25}}
+@keyframes summerStormBoltFlash{0%,7.8%,10.8%,100%{opacity:0}8.05%{opacity:.96}8.22%{opacity:.12}8.42%{opacity:.9}8.72%{opacity:.05}9.15%{opacity:.72}9.38%{opacity:0}10.1%{opacity:.22}10.35%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.summerStormSky,.summerStormBolt{animation:none;opacity:0}}
+
 /* Balon — na razie nieruchomy, do późniejszego ustawienia. */
 #summerBalloon{
   position:absolute;
@@ -3747,6 +3761,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
+<div class="summerStorm" aria-hidden="true">
+  <div class="summerStormSky"></div>
+  <svg class="summerStormLightning" viewBox="0 0 1686 950" preserveAspectRatio="none">
+    <path class="summerStormBolt main" d="M 115,205 L 255,188 L 310,202 L 380,165 L 445,178 L 510,148 L 570,164 L 640,132 L 700,151 L 760,120 L 825,143 L 885,112 L 950,130 L 1015,105 L 1080,124 L 1140,96 L 1210,116 L 1275,91 L 1340,112 L 1405,84 L 1470,101 L 1550,73 L 1625,91"/>
+    <path class="summerStormBolt branch" d="M 510,148 L 492,187 L 530,199 L 505,232 M 885,112 L 860,153 L 895,165 L 875,202 M 1210,116 L 1184,154 L 1220,169 L 1198,205 M 1405,84 L 1380,119 L 1410,132 L 1394,165"/>
+    <path class="summerStormBolt faint" d="M 255,188 L 230,220 L 260,233 L 246,260 M 700,151 L 680,185 L 710,197 L 695,226 M 1080,124 L 1058,160 L 1090,172 L 1074,205 M 1550,73 L 1528,105 L 1557,117 L 1543,145"/>
+  </svg>
+</div>
+
     <img id="summerBalloon" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/balon.png?v=1" alt="" aria-hidden="true">
     <img id="summerSprinkler" class="summerSprinkler" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zraszacz.png?v=1" alt="" aria-hidden="true">
     <button id="sprinklerEditorToggle" type="button">✚ Edytor zraszaczy</button>
