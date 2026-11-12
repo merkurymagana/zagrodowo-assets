@@ -3376,7 +3376,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 @media(max-width:700px){
   :root{--panel-width:0px}
   body{overflow:hidden}
-  #appStage{left:0;top:0;right:auto;bottom:auto;width:1686px;height:950px;inset:auto;transform:translate3d(var(--mobile-zoom-x,0px),var(--mobile-zoom-y,0px),0) scale(calc(var(--stage-scale,1)*var(--mobile-zoom-scale,1)))!important;transform-origin:top left;background:#70482f;will-change:transform;touch-action:none}
+  #appStage{position:absolute;left:0;top:0;right:auto;bottom:auto;width:1686px;height:950px;inset:auto;transform:none!important;transform-origin:top left;background:#70482f;will-change:auto;touch-action:none}
   #start{inset:0}
   .start-wood-left,.start-wood-right{display:none}
 
@@ -3869,16 +3869,25 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #sprinklerEditorToggle,
 #sprinklerEditorPanel{display:none!important}
 
-/* Na telefonach w poziomie plansza również korzysta z własnego skalowania gestem. */
+/* Na telefonie całe BODY jest jedną planszą: tło, grafika i interfejs przesuwają się razem. */
 @media (pointer:coarse){
-  #appStage{
-    left:0;top:0;right:auto;bottom:auto;
-    width:1686px;height:950px;inset:auto;
-    transform:translate3d(var(--mobile-zoom-x,0px),var(--mobile-zoom-y,0px),0) scale(calc(var(--stage-scale,1)*var(--mobile-zoom-scale,1)))!important;
+  html{overflow:hidden;touch-action:none;background:#70482f}
+  body{
+    position:fixed;left:0;top:0;right:auto;bottom:auto;
+    width:1686px;height:var(--mobile-body-height,950px);min-height:0;
+    overflow:hidden;margin:0;
+    transform:translate3d(var(--mobile-zoom-x,0px),var(--mobile-zoom-y,0px),0) scale(var(--mobile-total-scale,1))!important;
     transform-origin:top left;
-    will-change:transform;
+    background:#70482f var(--wood) repeat;
+    will-change:transform;touch-action:none;
+  }
+  #appStage{
+    position:absolute;left:0;top:0;right:auto;bottom:auto;
+    width:1686px;height:950px;inset:auto;
+    transform:none!important;transform-origin:top left;
     touch-action:none;
   }
+  #appStage *{touch-action:none}
 }
 </style>
 </head>
@@ -6188,72 +6197,88 @@ renderNeighbors();
 })();
 
 
-/* MOBILNY PINCH-ZOOM — Pointer Events, obsługa dwóch palców na całej planszy */
+/* MOBILNY PINCH-ZOOM I PAN — całe BODY (tło + plansza + interfejs) jako jedna powierzchnia */
 (function mobileStagePinchZoom(){
-  const stage=document.getElementById("appStage");
-  if(!stage)return;
+  const body=document.body,stage=document.getElementById("appStage");
+  if(!body||!stage)return;
   const isTouchDevice=()=>window.matchMedia("(pointer:coarse)").matches || "ontouchstart" in window;
   const W=1686,H=950;
   const pointers=new Map();
-  let zoom=1,x=0,y=0,pinch=null;
+  let zoom=1,x=0,y=0,pinch=null,pan=null;
   const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
   const viewport=()=>({
     w:window.visualViewport?.width||document.documentElement.clientWidth,
     h:window.visualViewport?.height||document.documentElement.clientHeight
   });
-  function baseScale(){
+  function metrics(){
     const v=viewport();
-    const scale=v.h>v.w?v.w/W:Math.min(v.w/W,v.h/H);
-    stage.style.setProperty("--stage-scale",String(Math.max(.1,scale)));
-    return Math.max(.1,scale);
+    const base=Math.max(.1,v.h>v.w?v.w/W:Math.min(v.w/W,v.h/H));
+    const bodyH=Math.max(H,v.h/base);
+    return {v,base,bodyH};
   }
   function render(){
     if(!isTouchDevice())return;
-    const v=viewport(),b=baseScale();
-    const scaledW=W*b*zoom,scaledH=H*b*zoom;
+    const {v,base,bodyH}=metrics();
+    const scaledW=W*base*zoom,scaledH=bodyH*base*zoom;
     x=clamp(x,Math.min(0,v.w-scaledW),0);
     y=clamp(y,Math.min(0,v.h-scaledH),0);
-    stage.style.setProperty("--mobile-zoom-x",x+"px");
-    stage.style.setProperty("--mobile-zoom-y",y+"px");
-    stage.style.setProperty("--mobile-zoom-scale",String(zoom));
+    body.style.setProperty("--mobile-body-height",bodyH+"px");
+    body.style.setProperty("--mobile-zoom-x",x+"px");
+    body.style.setProperty("--mobile-zoom-y",y+"px");
+    body.style.setProperty("--mobile-total-scale",String(base*zoom));
   }
-  function point(e){return {x:e.clientX,y:e.clientY}}
-  function midpoint(a,b){return {x:(a.x+b.x)/2,y:(a.y+b.y)/2}}
-  function distance(a,b){return Math.hypot(b.x-a.x,b.y-a.y)}
+  function pt(e){return {x:e.clientX,y:e.clientY}}
+  function mid(a,b){return {x:(a.x+b.x)/2,y:(a.y+b.y)/2}}
+  function dist(a,b){return Math.hypot(b.x-a.x,b.y-a.y)}
   function beginPinch(){
     if(pointers.size!==2){pinch=null;return}
-    const [a,b]=[...pointers.values()];
-    const center=midpoint(a,b);
-    pinch={distance:Math.max(1,distance(a,b)),zoom,x,y,cx:center.x,cy:center.y};
+    const [a,b]=[...pointers.values()],c=mid(a,b);
+    pinch={d:Math.max(1,dist(a,b)),zoom,x,y,cx:c.x,cy:c.y};
+    pan=null;
   }
   window.addEventListener("pointerdown",e=>{
     if(!isTouchDevice()||e.pointerType!=="touch")return;
-    pointers.set(e.pointerId,point(e));
+    pointers.set(e.pointerId,pt(e));
     if(pointers.size===2)beginPinch();
+    else if(pointers.size===1&&zoom>1){
+      pan={start:pt(e),x,y,moved:false};
+    }
   },{capture:true,passive:true});
   window.addEventListener("pointermove",e=>{
     if(!isTouchDevice()||e.pointerType!=="touch"||!pointers.has(e.pointerId))return;
-    pointers.set(e.pointerId,point(e));
-    if(pointers.size!==2||!pinch)return;
-    if(e.cancelable)e.preventDefault();
-    const [a,b]=[...pointers.values()];
-    const center=midpoint(a,b);
-    const next=clamp(pinch.zoom*distance(a,b)/pinch.distance,1,4);
-    const ratio=next/pinch.zoom;
-    zoom=next;
-    x=center.x-(pinch.cx-pinch.x)*ratio;
-    y=center.y-(pinch.cy-pinch.y)*ratio;
-    render();
+    pointers.set(e.pointerId,pt(e));
+    if(pointers.size===2&&pinch){
+      if(e.cancelable)e.preventDefault();
+      const [a,b]=[...pointers.values()],c=mid(a,b);
+      const next=clamp(pinch.zoom*dist(a,b)/pinch.d,1,4);
+      const ratio=next/pinch.zoom;
+      zoom=next;
+      x=c.x-(pinch.cx-pinch.x)*ratio;
+      y=c.y-(pinch.cy-pinch.y)*ratio;
+      render();
+    }else if(pointers.size===1&&pan&&zoom>1){
+      const p=pt(e),dx=p.x-pan.start.x,dy=p.y-pan.start.y;
+      if(Math.abs(dx)+Math.abs(dy)>3)pan.moved=true;
+      if(pan.moved){
+        if(e.cancelable)e.preventDefault();
+        x=pan.x+dx;y=pan.y+dy;render();
+      }
+    }
   },{capture:true,passive:false});
   function endPointer(e){
     pointers.delete(e.pointerId);
     if(pointers.size<2)pinch=null;
+    if(pointers.size===0)pan=null;
+    else if(pointers.size===1&&zoom>1){
+      const [id,p]=[...pointers.entries()][0];
+      pan={start:p,x,y,moved:false};
+    }
   }
   window.addEventListener("pointerup",endPointer,{capture:true,passive:true});
   window.addEventListener("pointercancel",endPointer,{capture:true,passive:true});
   window.addEventListener("resize",render,{passive:true});
   window.addEventListener("orientationchange",()=>{
-    zoom=1;x=0;y=0;pinch=null;pointers.clear();render();
+    zoom=1;x=0;y=0;pinch=null;pan=null;pointers.clear();render();
   },{passive:true});
   if(window.visualViewport)window.visualViewport.addEventListener("resize",render,{passive:true});
   render();
@@ -6267,6 +6292,7 @@ renderNeighbors();
   function fit(){
     cancelAnimationFrame(frame);
     frame=requestAnimationFrame(()=>{
+      if(window.matchMedia("(pointer:coarse)").matches)return;
       const viewport=window.visualViewport;
       // Przy aktywnym pinch-to-zoom nie nadpisuj skali ustawionej przez przeglądarkę.
       if(viewport && viewport.scale>1.01)return;
