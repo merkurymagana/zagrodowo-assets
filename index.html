@@ -3897,6 +3897,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   #appStage *{touch-action:none}
 }
 
+/* Podczas gry usuń drewno widoczne na skrajnych bokach planszy. */
+#appStage.game-active{
+  background:#eadfca!important;
+  background-image:none!important;
+  box-shadow:none!important;
+}
 /* Po zalogowaniu: usuń drewniane obramowania bocznych paneli. */
 #playerPanel{
   border:0!important;
@@ -5871,6 +5877,7 @@ function enterGame(){
   authOverlay.classList.remove("visible");
   start.style.display="none";
   document.getElementById("game").style.display="block";
+  document.getElementById("appStage").classList.add("game-active");
 
   openGameView("farm");
   fitGame();
@@ -5879,6 +5886,7 @@ function enterGame(){
 function backToStart(){
   setCompassSpinning(false);
   document.getElementById("game").style.display="none";
+  document.getElementById("appStage").classList.remove("game-active");
   start.style.display="block";
   closeAuth();
   closeProfileEditor();
