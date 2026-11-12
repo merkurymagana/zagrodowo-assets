@@ -4510,12 +4510,21 @@ html,body,#appStage{
   -webkit-backdrop-filter:blur(12px);
 }
 #playerPanel .currency-bar .currency-box{
+  flex:1 1 0!important;
   min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
   padding:0!important;
   border:0!important;
   background:transparent!important;
   box-shadow:none!important;
-  text-align:center;
+  text-align:center!important;
+}
+#playerPanel .currency-bar .currency-label{
+  width:100%!important;
+  justify-content:center!important;
+  text-align:center!important;
 }
 #playerPanel .currency-bar .currency-label{
   display:flex!important;
