@@ -4041,6 +4041,186 @@ html,body,#appStage{
   #playerPanel .profile-card{padding:8px}
 }
 
+
+/* PANEL GRACZA — kompaktowy, ciepły HUD zamiast bocznego panelu. */
+#playerPanel{
+  position:absolute!important;
+  top:18px!important;
+  right:18px!important;
+  left:auto!important;
+  bottom:auto!important;
+  width:auto!important;
+  height:auto!important;
+  min-width:0!important;
+  padding:0!important;
+  margin:0!important;
+  display:block!important;
+  overflow:visible!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  color:#554735!important;
+  z-index:120!important;
+}
+#playerPanel .profile-card{
+  box-sizing:border-box;
+  width:auto!important;
+  min-width:410px;
+  max-width:520px;
+  margin:0!important;
+  padding:10px 13px!important;
+  display:grid!important;
+  grid-template-columns:48px minmax(125px,1fr) auto;
+  grid-template-rows:auto auto;
+  align-items:center;
+  column-gap:11px;
+  row-gap:3px;
+  position:relative;
+  border:1px solid rgba(112,87,55,.20)!important;
+  border-radius:15px!important;
+  background:rgba(250,246,235,.92)!important;
+  color:#554735!important;
+  box-shadow:0 5px 18px rgba(47,38,25,.16),inset 0 1px 0 rgba(255,255,255,.8)!important;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+#playerPanel .avatar-row{display:contents}
+#playerPanel .avatar-frame{
+  grid-column:1;
+  grid-row:1 / 3;
+  width:46px!important;
+  height:46px!important;
+  flex:0 0 46px!important;
+  border:2px solid #b99b6c!important;
+  border-radius:50%!important;
+  box-shadow:0 2px 6px rgba(67,48,26,.14);
+}
+#playerPanel .avatar-placeholder{font-size:27px}
+#playerPanel .player-info{
+  grid-column:2;
+  grid-row:1;
+  min-width:0;
+  display:flex;
+  align-items:baseline;
+  flex-wrap:wrap;
+  gap:7px;
+}
+#playerPanel .player-name{
+  font-size:15px!important;
+  line-height:1.2;
+  font-weight:800;
+  color:#55432e!important;
+}
+#playerPanel .player-level{
+  font-size:11px!important;
+  color:#89724e!important;
+  white-space:nowrap;
+}
+#playerPanel .xp-label{
+  grid-column:2;
+  grid-row:2;
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin:0!important;
+  font-size:10px!important;
+  color:#8b795f!important;
+}
+#playerPanel .xp-track{
+  grid-column:2;
+  grid-row:3;
+  height:5px!important;
+  margin:0!important;
+  border-radius:20px!important;
+  overflow:hidden;
+  background:#e5dcc9!important;
+}
+#playerPanel .currency-grid{
+  grid-column:3;
+  grid-row:1 / 4;
+  display:flex!important;
+  align-items:center;
+  gap:13px!important;
+  margin:0!important;
+}
+#playerPanel .currency-box{
+  min-width:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+#playerPanel .currency-label{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  margin:0 0 3px!important;
+  font-size:9px!important;
+  letter-spacing:.04em;
+  color:#927d5e!important;
+}
+#playerPanel .currency-value{
+  font-size:15px!important;
+  line-height:1.1;
+  font-weight:800;
+  color:#5c4930!important;
+  white-space:nowrap;
+}
+#playerPanel .profile-edit{
+  position:absolute!important;
+  top:5px;
+  right:5px;
+  width:23px;
+  height:23px;
+  min-height:0!important;
+  padding:0!important;
+  overflow:hidden;
+  border:0!important;
+  border-radius:50%!important;
+  background:rgba(125,103,70,.10)!important;
+  color:#776044!important;
+  font-size:0!important;
+  box-shadow:none!important;
+}
+#playerPanel .profile-edit::before{
+  content:"✎";
+  font-size:14px;
+}
+#playerPanel .side-menu,
+#playerPanel .panel-bottom{display:none!important}
+@media(max-width:700px){
+  #playerPanel{
+    top:8px!important;
+    right:8px!important;
+    left:auto!important;
+    bottom:auto!important;
+    width:auto!important;
+    max-width:calc(100% - 16px);
+  }
+  #playerPanel .profile-card{
+    min-width:0!important;
+    max-width:min(440px,calc(100vw - 16px));
+    padding:7px 9px!important;
+    grid-template-columns:38px minmax(75px,1fr) auto;
+    column-gap:7px;
+    row-gap:2px;
+    border-radius:12px!important;
+  }
+  #playerPanel .avatar-frame{
+    width:36px!important;
+    height:36px!important;
+    flex-basis:36px!important;
+  }
+  #playerPanel .avatar-placeholder{font-size:22px}
+  #playerPanel .player-name{font-size:12px!important}
+  #playerPanel .player-level{font-size:9px!important}
+  #playerPanel .xp-label{font-size:8px!important}
+  #playerPanel .currency-grid{gap:8px!important}
+  #playerPanel .currency-label{font-size:7px!important}
+  #playerPanel .currency-value{font-size:11px!important}
+  #playerPanel .profile-edit{top:2px;right:2px;width:18px;height:18px}
+}
+
 </style>
 </head>
 
