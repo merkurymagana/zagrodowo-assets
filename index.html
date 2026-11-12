@@ -4951,6 +4951,57 @@ html,body,#appStage{
   }
 }
 
+
+/* KOREKTA: rzeczywisty element nawigacji to nav.side-menu wewnątrz panelu. */
+#playerPanel .side-menu{
+  position:fixed!important;
+  inset:50% auto auto 18px!important;
+  transform:translateY(-50%)!important;
+  z-index:9999!important;
+  display:flex!important;
+  flex-direction:column!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:58px!important;
+  min-width:58px!important;
+  max-width:58px!important;
+  box-sizing:border-box!important;
+  gap:8px!important;
+  margin:0!important;
+  padding:7px!important;
+}
+#playerPanel .side-menu .compass-links-row,
+#playerPanel .side-menu .compass-premium-stack,
+#playerPanel .side-menu .tasks-help-stack,
+#playerPanel .side-menu .premium-menu-row,
+#playerPanel .side-menu .help-menu-row{display:contents!important}
+#playerPanel .side-menu > button,
+#playerPanel .side-menu button.compass-menu-button,
+#playerPanel .side-menu button.premium-menu-button,
+#playerPanel .side-menu button.tasks-menu-button,
+#playerPanel .side-menu button.help-menu-button{
+  flex:0 0 44px!important;
+  width:44px!important;min-width:44px!important;max-width:44px!important;
+  height:44px!important;min-height:44px!important;max-height:44px!important;
+  margin:0!important;
+}
+@media(max-width:700px){
+  #playerPanel .side-menu{
+    inset:50% auto auto 8px!important;
+    width:48px!important;min-width:48px!important;max-width:48px!important;
+    gap:5px!important;padding:5px!important;
+  }
+  #playerPanel .side-menu > button,
+  #playerPanel .side-menu button.compass-menu-button,
+  #playerPanel .side-menu button.premium-menu-button,
+  #playerPanel .side-menu button.tasks-menu-button,
+  #playerPanel .side-menu button.help-menu-button{
+    flex-basis:36px!important;width:36px!important;min-width:36px!important;max-width:36px!important;
+    height:36px!important;min-height:36px!important;max-height:36px!important;
+  }
+}
+
 </style>
 </head>
 
