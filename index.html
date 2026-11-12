@@ -4675,6 +4675,17 @@ html,body,#appStage{
 #profileOverlay .close-btn .ui-icon{width:17px;height:17px}
 @media(prefers-reduced-motion:reduce){#game button,#profileOverlay button{transition:none!important}}
 
+
+/* Wektorowe ikony w widokach gry — rozmiary dopasowane do elementów UI. */
+#game .farm-area>.ui-icon{display:inline-block;width:27px;height:27px;vertical-align:middle;margin:0 auto 3px}
+#game .farm-home>.ui-icon{display:inline-block;width:30px;height:30px;vertical-align:middle;margin:0 auto 3px}
+#game .farm-map-icon>.ui-icon{width:32px;height:32px;margin:0 auto 6px}
+#game .premium-heading>.ui-icon,#game .social-title>.ui-icon{display:inline-block;width:25px;height:25px;vertical-align:-5px;margin-right:7px;color:#d6bd8b}
+#game .premium-card-icon>.ui-icon{width:34px;height:34px;margin:0 auto;color:#d6bd8b}
+#game .social-tab{display:inline-flex;align-items:center;justify-content:center;gap:7px}
+#game .social-tab>.ui-icon{width:16px;height:16px}
+#game .player-level>.ui-icon{display:inline-block;width:12px;height:12px;vertical-align:-2px;color:#d6bd8b}
+#game .big-icon>.ui-icon{width:42px;height:42px;color:#d6bd8b}
 </style>
 </head>
 
@@ -5043,15 +5054,15 @@ html,body,#appStage{
 
               <div class="farm-land">
                 <div class="farm-map">
-                  <button class="farm-area available" onclick="showNotice('Obszar 1 jest dostępny. To tutaj rozpoczniesz uprawę roślin.')">🌱<br>Obszar 1<br><small>Dostępny</small></button>
-                  <button class="farm-area locked" onclick="showNotice('Obszar 2 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 2<br><small>Zablokowany</small></button>
-                  <button class="farm-area locked" onclick="showNotice('Obszar 3 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 3<br><small>Zablokowany</small></button>
-                  <button class="farm-area locked" onclick="showNotice('Obszar 4 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 4<br><small>Zablokowany</small></button>
-                  <button class="farm-area locked" onclick="showNotice('Obszar 5 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 5<br><small>Zablokowany</small></button>
-                  <button class="farm-area locked" onclick="showNotice('Obszar 6 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')">🔒<br>Obszar 6<br><small>Zablokowany</small></button>
+                  <button class="farm-area available" onclick="showNotice('Obszar 1 jest dostępny. To tutaj rozpoczniesz uprawę roślin.')"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12C7 12 4 9 4 4c5 0 8 3 8 8Z"/><path d="M12 15c0-4 3-7 8-7 0 5-3 8-8 8"/></svg><br>Obszar 1<br><small>Dostępny</small></button>
+                  <button class="farm-area locked" onclick="showNotice('Obszar 2 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><br>Obszar 2<br><small>Zablokowany</small></button>
+                  <button class="farm-area locked" onclick="showNotice('Obszar 3 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><br>Obszar 3<br><small>Zablokowany</small></button>
+                  <button class="farm-area locked" onclick="showNotice('Obszar 4 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><br>Obszar 4<br><small>Zablokowany</small></button>
+                  <button class="farm-area locked" onclick="showNotice('Obszar 5 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><br>Obszar 5<br><small>Zablokowany</small></button>
+                  <button class="farm-area locked" onclick="showNotice('Obszar 6 jest zablokowany. W przyszłości odblokujesz go poprzez zadanie.')"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><br>Obszar 6<br><small>Zablokowany</small></button>
                 </div>
 
-                <button class="farm-home" onclick="openGameView('home')">🏡<br>Twój dom</button>
+                <button class="farm-home" onclick="openGameView('home')"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg><br>Twój dom</button>
 
                 <div class="game-notice" id="gameNotice">Wybierz obszar gospodarstwa, aby dowiedzieć się więcej.</div>
               </div>
@@ -5067,13 +5078,13 @@ html,body,#appStage{
 
                 <div class="map-farms">
                   <button class="map-farm-button" onclick="openGameView('farm')">
-                    <span class="farm-map-icon">🏡</span>
+                    <span class="farm-map-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg></span>
                     Pierwsza farma
                     <small>Twoje gospodarstwo początkowe</small>
                   </button>
 
                   <button class="map-farm-button locked-farm" disabled>
-                    <span class="farm-map-icon">🔒</span>
+                    <span class="farm-map-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
                     Kolejna farma
                     <small>Jeszcze niedostępna</small>
                   </button>
@@ -5083,19 +5094,19 @@ html,body,#appStage{
               </div>
 
               <div id="premiumContent">
-                <h2 class="premium-heading">💎 Usługi Premium</h2>
+                <h2 class="premium-heading"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m2 8 5 4 5-7 5 7 5-4-2 12H4L2 8Z"/><path d="M4 20h16"/></svg> Usługi Premium</h2>
                 <p class="premium-description">Tutaj znajdziesz diamenty oraz konto Premium, które pozwoli Ci korzystać z dodatkowych możliwości Zagrodowa.</p>
 
                 <div class="premium-options">
                   <div class="premium-card">
-                    <div class="premium-card-icon">💎</div>
+                    <div class="premium-card-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m2 8 5 4 5-7 5 7 5-4-2 12H4L2 8Z"/><path d="M4 20h16"/></svg></div>
                     <h3>Kup diamenty</h3>
                     <p>Wybierz pakiet diamentów i wykorzystaj je w Zagrodowie do zakupu dostępnych usług i dodatków.</p>
                     <button type="button" disabled>Pakiety diamentów — wkrótce</button>
                   </div>
 
                   <div class="premium-card">
-                    <div class="premium-card-icon">👑</div>
+                    <div class="premium-card-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m2 8 5 4 5-7 5 7 5-4-2 12H4L2 8Z"/><path d="M4 20h16"/></svg></div>
                     <h3>Konto Premium</h3>
                     <p>Wymień zgromadzone diamenty na konto Premium i korzystaj z dodatkowych udogodnień w grze.</p>
                     <button class="gold" type="button" disabled>Wymiana na Premium — wkrótce</button>
@@ -5106,20 +5117,20 @@ html,body,#appStage{
               </div>
 
               <div class="view-placeholder" id="genericViewContent">
-                <div class="big-icon" id="viewIcon">🌱</div>
+                <div class="big-icon" id="viewIcon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12C7 12 4 9 4 4c5 0 8 3 8 8Z"/><path d="M12 15c0-4 3-7 8-7 0 5-3 8-8 8"/></svg></div>
                 <h2 id="viewSubTitle">Twoja przygoda dopiero się zaczyna</h2>
                 <p id="viewText">Ta część gry będzie rozwijana w kolejnych etapach gry.</p>
               </div>
 
               <div id="neighborsContent">
-                <h2 class="social-title">🏡 Sąsiedzi Zagrodowa</h2>
+                <h2 class="social-title"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg> Sąsiedzi Zagrodowa</h2>
                 <p class="social-description">Znajdź gospodarzy, dodawaj znajomych i rozmawiaj z nimi.</p>
 
                 <div class="social-tabs">
-                  <button class="social-tab active" data-social-tab="friends" onclick="showSocialTab('friends')">👥 Znajomi <span id="friendsCount">0</span></button>
-                  <button class="social-tab" data-social-tab="messages" onclick="showSocialTab('messages')">✉ Wiadomości <span id="unreadCount"></span></button>
-                  <button class="social-tab" data-social-tab="search" onclick="showSocialTab('search')">🔎 Szukaj graczy</button>
-                  <button class="social-tab" data-social-tab="requests" onclick="showSocialTab('requests')">📨 Zaproszenia <span id="requestsCount"></span></button>
+                  <button class="social-tab active" data-social-tab="friends" onclick="showSocialTab('friends')"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg> Znajomi <span id="friendsCount">0</span></button>
+                  <button class="social-tab" data-social-tab="messages" onclick="showSocialTab('messages')"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> Wiadomości <span id="unreadCount"></span></button>
+                  <button class="social-tab" data-social-tab="search" onclick="showSocialTab('search')"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg> Szukaj graczy</button>
+                  <button class="social-tab" data-social-tab="requests" onclick="showSocialTab('requests')"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16l2 11v5H2v-5L4 4Z"/><path d="M2 15h6l2 3h4l2-3h6"/></svg> Zaproszenia <span id="requestsCount"></span></button>
                 </div>
 
                 <section class="social-pane active" id="socialFriends"><div class="social-list" id="friendsList"></div></section>
@@ -5172,7 +5183,7 @@ html,body,#appStage{
           </div>
           <div class="player-info">
             <div class="player-name" id="playerName">Nowy gospodarz</div>
-            <div class="player-level">⭐ Poziom <span id="level">1</span></div>
+            <div class="player-level"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg> Poziom <span id="level">1</span></div>
           </div>
         </div>
 
