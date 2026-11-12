@@ -303,6 +303,24 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 @media(prefers-reduced-motion:reduce){
   .summerFieldJet,.summerFieldDrop{animation:none}
 }
+/* Balon — na razie nieruchomy, do późniejszego ustawienia. */
+#summerBalloon{
+  position:absolute;
+  z-index:4;
+  left:30%;
+  top:16%;
+  width:clamp(48px,5vw,78px);
+  height:auto;
+  display:none;
+  pointer-events:none;
+  user-select:none;
+  object-fit:contain;
+}
+#start.summer-day #summerBalloon{display:block}
+@media(max-width:700px){
+  #summerBalloon{left:30%;top:16%;width:clamp(42px,10vw,66px)}
+}
+
 /* ZRASZACZ — letnia sceneria dzienna. */
 .summerSprinkler{
   position:absolute;
@@ -3718,6 +3736,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
+    <img id="summerBalloon" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/balon.png?v=1" alt="" aria-hidden="true">
     <img id="summerSprinkler" class="summerSprinkler" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zraszacz.png?v=1" alt="" aria-hidden="true">
     <button id="sprinklerEditorToggle" type="button">✚ Edytor zraszaczy</button>
     <div id="sprinklerEditorPanel" aria-label="Edytor położenia zraszaczy">
