@@ -4221,6 +4221,39 @@ html,body,#appStage{
   #playerPanel .profile-edit{top:2px;right:2px;width:18px;height:18px}
 }
 
+
+/* Wylogowanie pozostaje dostępne pod pływającym HUD-em. */
+#playerPanel .panel-bottom{
+  display:block!important;
+  position:absolute!important;
+  top:calc(100% + 7px)!important;
+  right:0!important;
+  width:auto!important;
+  margin:0!important;
+  padding:0!important;
+}
+#playerPanel .panel-version{display:none!important}
+#playerPanel .logout-button{
+  width:auto!important;
+  min-height:0!important;
+  padding:6px 11px!important;
+  border:1px solid rgba(112,87,55,.22)!important;
+  border-radius:9px!important;
+  background:rgba(250,246,235,.88)!important;
+  color:#776044!important;
+  font:700 11px 'Nunito',Arial,sans-serif!important;
+  box-shadow:0 3px 10px rgba(47,38,25,.10)!important;
+  cursor:pointer;
+}
+#playerPanel .logout-button:hover{
+  background:#fffaf0!important;
+  border-color:rgba(112,87,55,.4)!important;
+}
+@media(max-width:700px){
+  #playerPanel .panel-bottom{top:calc(100% + 5px)!important}
+  #playerPanel .logout-button{padding:5px 8px!important;font-size:9px!important}
+}
+
 </style>
 </head>
 
