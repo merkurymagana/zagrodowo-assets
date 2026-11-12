@@ -336,6 +336,28 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #start.storm-editing .summerStormStrike:active{cursor:grabbing}
 #start.storm-editing .summerStormStrike .stormGlow{opacity:.3}
 
+/* Nowe ognisko — letnia sceneria nocna. */
+#summerCampfire{
+  position:absolute;
+  z-index:10;
+  left:68%;
+  top:62%;
+  width:clamp(68px,8.8vw,148px);
+  height:auto;
+  display:none;
+  pointer-events:none;
+  user-select:none;
+  object-fit:contain;
+}
+#start.summer-night #summerCampfire{display:block}
+@media(max-width:700px){
+  #summerCampfire{
+    left:60%;
+    top:67%;
+    width:clamp(65px,17.5vw,115px);
+  }
+}
+
 /* Balon — na razie nieruchomy, do późniejszego ustawienia. */
 #summerBalloon{
   position:absolute;
@@ -3815,6 +3837,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   </div>
 </div>
 
+    <img id="summerCampfire" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ognisko.png?v=2" alt="" aria-hidden="true">
     <img id="summerBalloon" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/balon.png?v=1" alt="" aria-hidden="true">
     <img id="summerSprinkler" class="summerSprinkler" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zraszacz.png?v=1" alt="" aria-hidden="true">
     <button id="sprinklerEditorToggle" type="button">✚ Edytor zraszaczy</button>
