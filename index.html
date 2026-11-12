@@ -3868,6 +3868,18 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #summerStormEditorPanel,
 #sprinklerEditorToggle,
 #sprinklerEditorPanel{display:none!important}
+
+/* Na telefonach w poziomie plansza również korzysta z własnego skalowania gestem. */
+@media (pointer:coarse){
+  #appStage{
+    left:0;top:0;right:auto;bottom:auto;
+    width:1686px;height:950px;inset:auto;
+    transform:translate3d(var(--mobile-zoom-x,0px),var(--mobile-zoom-y,0px),0) scale(calc(var(--stage-scale,1)*var(--mobile-zoom-scale,1)))!important;
+    transform-origin:top left;
+    will-change:transform;
+    touch-action:none;
+  }
+}
 </style>
 </head>
 
@@ -6176,74 +6188,76 @@ renderNeighbors();
 })();
 
 
-/* MOBILNY PINCH-ZOOM — przybliżanie całej planszy, również nad formularzami */
+/* MOBILNY PINCH-ZOOM — Pointer Events, obsługa dwóch palców na całej planszy */
 (function mobileStagePinchZoom(){
   const stage=document.getElementById("appStage");
   if(!stage)return;
-  const isMobile=()=>window.matchMedia("(max-width:700px), (pointer:coarse)").matches;
-  const DESIGN_W=1686, DESIGN_H=950;
-  let zoom=1, x=0, y=0, pinch=null;
-  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-  const view=()=>({
+  const isTouchDevice=()=>window.matchMedia("(pointer:coarse)").matches || "ontouchstart" in window;
+  const W=1686,H=950;
+  const pointers=new Map();
+  let zoom=1,x=0,y=0,pinch=null;
+  const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
+  const viewport=()=>({
     w:window.visualViewport?.width||document.documentElement.clientWidth,
     h:window.visualViewport?.height||document.documentElement.clientHeight
   });
   function baseScale(){
-    const v=view();
-    const scale=v.h>v.w?v.w/DESIGN_W:Math.min(v.w/DESIGN_W,v.h/DESIGN_H);
+    const v=viewport();
+    const scale=v.h>v.w?v.w/W:Math.min(v.w/W,v.h/H);
     stage.style.setProperty("--stage-scale",String(Math.max(.1,scale)));
     return Math.max(.1,scale);
   }
   function render(){
-    if(!isMobile())return;
-    const b=baseScale(),v=view();
-    const w=DESIGN_W*b*zoom,h=DESIGN_H*b*zoom;
-    x=clamp(x,Math.min(0,v.w-w),0);
-    y=clamp(y,Math.min(0,v.h-h),0);
+    if(!isTouchDevice())return;
+    const v=viewport(),b=baseScale();
+    const scaledW=W*b*zoom,scaledH=H*b*zoom;
+    x=clamp(x,Math.min(0,v.w-scaledW),0);
+    y=clamp(y,Math.min(0,v.h-scaledH),0);
     stage.style.setProperty("--mobile-zoom-x",x+"px");
     stage.style.setProperty("--mobile-zoom-y",y+"px");
     stage.style.setProperty("--mobile-zoom-scale",String(zoom));
   }
-  function distance(a,b){return Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY)}
-  function midpoint(a,b){return {x:(a.clientX+b.clientX)/2,y:(a.clientY+b.clientY)/2}}
-
-  /* Nasłuch na window, aby gest działał także wtedy, gdy palce leżą na formularzu,
-     polu tekstowym lub przycisku, a nie tylko na samej grafice tła. */
-  window.addEventListener("touchstart",e=>{
-    if(!isMobile()||e.touches.length!==2)return;
-    const p=midpoint(e.touches[0],e.touches[1]);
-    pinch={
-      distance:Math.max(1,distance(e.touches[0],e.touches[1])),
-      zoom,x,y,cx:p.x,cy:p.y
-    };
+  function point(e){return {x:e.clientX,y:e.clientY}}
+  function midpoint(a,b){return {x:(a.x+b.x)/2,y:(a.y+b.y)/2}}
+  function distance(a,b){return Math.hypot(b.x-a.x,b.y-a.y)}
+  function beginPinch(){
+    if(pointers.size!==2){pinch=null;return}
+    const [a,b]=[...pointers.values()];
+    const center=midpoint(a,b);
+    pinch={distance:Math.max(1,distance(a,b)),zoom,x,y,cx:center.x,cy:center.y};
+  }
+  window.addEventListener("pointerdown",e=>{
+    if(!isTouchDevice()||e.pointerType!=="touch")return;
+    pointers.set(e.pointerId,point(e));
+    if(pointers.size===2)beginPinch();
+  },{capture:true,passive:true});
+  window.addEventListener("pointermove",e=>{
+    if(!isTouchDevice()||e.pointerType!=="touch"||!pointers.has(e.pointerId))return;
+    pointers.set(e.pointerId,point(e));
+    if(pointers.size!==2||!pinch)return;
     if(e.cancelable)e.preventDefault();
-  },{capture:true,passive:false});
-
-  window.addEventListener("touchmove",e=>{
-    if(!isMobile()||e.touches.length!==2||!pinch)return;
-    if(e.cancelable)e.preventDefault();
-    const p=midpoint(e.touches[0],e.touches[1]);
-    const next=clamp(pinch.zoom*distance(e.touches[0],e.touches[1])/pinch.distance,1,4);
+    const [a,b]=[...pointers.values()];
+    const center=midpoint(a,b);
+    const next=clamp(pinch.zoom*distance(a,b)/pinch.distance,1,4);
     const ratio=next/pinch.zoom;
     zoom=next;
-    /* Zachowaj punkt planszy znajdujący się pod środkiem gestu. */
-    x=p.x-(pinch.cx-pinch.x)*ratio;
-    y=p.y-(pinch.cy-pinch.y)*ratio;
+    x=center.x-(pinch.cx-pinch.x)*ratio;
+    y=center.y-(pinch.cy-pinch.y)*ratio;
     render();
   },{capture:true,passive:false});
-
-  const finish=e=>{if(e.touches.length<2)pinch=null};
-  window.addEventListener("touchend",finish,{capture:true,passive:true});
-  window.addEventListener("touchcancel",finish,{capture:true,passive:true});
+  function endPointer(e){
+    pointers.delete(e.pointerId);
+    if(pointers.size<2)pinch=null;
+  }
+  window.addEventListener("pointerup",endPointer,{capture:true,passive:true});
+  window.addEventListener("pointercancel",endPointer,{capture:true,passive:true});
   window.addEventListener("resize",render,{passive:true});
   window.addEventListener("orientationchange",()=>{
-    zoom=1;x=0;y=0;pinch=null;render();
+    zoom=1;x=0;y=0;pinch=null;pointers.clear();render();
   },{passive:true});
   if(window.visualViewport)window.visualViewport.addEventListener("resize",render,{passive:true});
   render();
-})();
-
-/* JEDEN KOMPUTEROWY UKŁAD NA KAŻDYM URZĄDZENIU — skalowanie całej planszy 16:9. */
+})();/* JEDEN KOMPUTEROWY UKŁAD NA KAŻDYM URZĄDZENIU — skalowanie całej planszy 16:9. */
 (function fitDesktopGameStage(){
   const stage=document.getElementById("appStage");
   if(!stage)return;
