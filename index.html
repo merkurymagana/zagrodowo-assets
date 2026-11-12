@@ -371,6 +371,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
   user-select:none;
   filter:brightness(1.06) contrast(1.22) saturate(1.2) drop-shadow(0 2px 3px #17241499);
+  opacity:.95;
   will-change:transform,opacity;
 }
 #start.summer-morning .summerButterfly{display:block}
@@ -399,38 +400,38 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   to{transform:scaleX(.42) scaleY(.88)}
 }
 @keyframes summerButterflyFlight1{
-  0%{opacity:0;transform:translate3d(0,0,0) rotate(-8deg) scale(1)}
-  6%{opacity:.96}
+  0%{transform:translate3d(0,0,0) rotate(-8deg) scale(1)}
+  6%{}
   18%{transform:translate3d(5vw,-2vh,0) rotate(7deg) scale(.94)}
   31%{transform:translate3d(11vw,3vh,0) rotate(13deg) scale(1.08)}
   45%{transform:translate3d(7vw,8vh,0) rotate(-4deg) scale(1.18)}
   59%{transform:translate3d(-1vw,5vh,0) rotate(-14deg) scale(1.12)}
   73%{transform:translate3d(-8vw,-1vh,0) rotate(-5deg) scale(.97)}
-  87%{transform:translate3d(-5vw,-7vh,0) rotate(9deg) scale(.82);opacity:.96}
-  100%{opacity:0;transform:translate3d(1vw,-3vh,0) rotate(-8deg) scale(.91)}
+  87%{transform:translate3d(-5vw,-7vh,0) rotate(9deg) scale(.82)}
+  100%{transform:translate3d(1vw,-3vh,0) rotate(-8deg) scale(.91)}
 }
 @keyframes summerButterflyFlight2{
-  0%{opacity:0;transform:translate3d(0,0,0) rotate(8deg) scale(1)}
-  7%{opacity:.94}
+  0%{transform:translate3d(0,0,0) rotate(8deg) scale(1)}
+  7%{}
   20%{transform:translate3d(-6vw,4vh,0) rotate(-10deg) scale(1.10)}
   35%{transform:translate3d(-13vw,1vh,0) rotate(-15deg) scale(1.02)}
   49%{transform:translate3d(-17vw,-5vh,0) rotate(2deg) scale(.88)}
   64%{transform:translate3d(-10vw,-9vh,0) rotate(12deg) scale(.78)}
   79%{transform:translate3d(-3vw,-3vh,0) rotate(6deg) scale(.91)}
-  91%{transform:translate3d(-8vw,4vh,0) rotate(-9deg) scale(1.10);opacity:.94}
-  100%{opacity:0;transform:translate3d(-12vw,1vh,0) rotate(8deg) scale(1.02)}
+  91%{transform:translate3d(-8vw,4vh,0) rotate(-9deg) scale(1.10)}
+  100%{transform:translate3d(-12vw,1vh,0) rotate(8deg) scale(1.02)}
 }
 @keyframes summerButterflyFlight3{
-  0%{opacity:0;transform:translate3d(0,0,0) rotate(-4deg) scale(1)}
-  8%{opacity:.95}
+  0%{transform:translate3d(0,0,0) rotate(-4deg) scale(1)}
+  8%{}
   17%{transform:translate3d(4vw,-7vh,0) rotate(11deg) scale(.82)}
   30%{transform:translate3d(12vw,-3vh,0) rotate(17deg) scale(.91)}
   43%{transform:translate3d(18vw,4vh,0) rotate(4deg) scale(1.08)}
   56%{transform:translate3d(13vw,10vh,0) rotate(-12deg) scale(1.18)}
   69%{transform:translate3d(5vw,6vh,0) rotate(-17deg) scale(1.12)}
   82%{transform:translate3d(-2vw,-1vh,0) rotate(-5deg) scale(.97)}
-  93%{transform:translate3d(3vw,-8vh,0) rotate(9deg) scale(.80);opacity:.95}
-  100%{opacity:0;transform:translate3d(8vw,-4vh,0) rotate(-4deg) scale(.88)}
+  93%{transform:translate3d(3vw,-8vh,0) rotate(9deg) scale(.80)}
+  100%{transform:translate3d(8vw,-4vh,0) rotate(-4deg) scale(.88)}
 }
 @media(max-width:700px){
   .summerButterfly{width:clamp(29px,6.2vw,40px)}
