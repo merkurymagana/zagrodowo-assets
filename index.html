@@ -4870,6 +4870,87 @@ html,body,#appStage{
   }
 }
 
+
+/* NAWIGACJA PO LEWEJ — pionowy pasek opcji gry; profil i waluty bez zmian. */
+#playerPanel nav.side-menu{
+  position:fixed!important;
+  top:50%!important;
+  left:18px!important;
+  right:auto!important;
+  bottom:auto!important;
+  transform:translateY(-50%)!important;
+  z-index:140!important;
+  display:flex!important;
+  flex-direction:column!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  width:58px!important;
+  max-width:58px!important;
+  box-sizing:border-box!important;
+  margin:0!important;
+  padding:7px!important;
+  border:1px solid rgba(112,87,55,.22)!important;
+  border-radius:16px!important;
+  background:rgba(250,246,235,.92)!important;
+  box-shadow:0 5px 18px rgba(47,38,25,.16),inset 0 1px 0 rgba(255,255,255,.8)!important;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+#playerPanel nav.side-menu .compass-links-row,
+#playerPanel nav.side-menu .compass-premium-stack,
+#playerPanel nav.side-menu .tasks-help-stack,
+#playerPanel nav.side-menu .premium-menu-row,
+#playerPanel nav.side-menu .help-menu-row{
+  display:contents!important;
+}
+#playerPanel nav.side-menu > button,
+#playerPanel nav.side-menu button.compass-menu-button,
+#playerPanel nav.side-menu button.premium-menu-button,
+#playerPanel nav.side-menu button.tasks-menu-button,
+#playerPanel nav.side-menu button.help-menu-button{
+  flex:0 0 44px!important;
+  width:44px!important;
+  min-width:44px!important;
+  max-width:44px!important;
+  height:44px!important;
+  min-height:44px!important;
+  max-height:44px!important;
+  margin:0!important;
+}
+@media(max-width:700px){
+  #playerPanel nav.side-menu{
+    top:50%!important;
+    left:8px!important;
+    right:auto!important;
+    width:48px!important;
+    max-width:48px!important;
+    padding:5px!important;
+    gap:5px!important;
+    border-radius:12px!important;
+  }
+  #playerPanel nav.side-menu > button,
+  #playerPanel nav.side-menu button.compass-menu-button,
+  #playerPanel nav.side-menu button.premium-menu-button,
+  #playerPanel nav.side-menu button.tasks-menu-button,
+  #playerPanel nav.side-menu button.help-menu-button{
+    flex-basis:36px!important;
+    width:36px!important;
+    min-width:36px!important;
+    max-width:36px!important;
+    height:36px!important;
+    min-height:36px!important;
+    max-height:36px!important;
+  }
+  #playerPanel nav.side-menu .compass-menu-icon,
+  #playerPanel nav.side-menu .premium-menu-icon,
+  #playerPanel nav.side-menu .tasks-menu-icon,
+  #playerPanel nav.side-menu .help-menu-icon{
+    width:29px!important;height:29px!important;flex-basis:29px!important;
+  }
+}
+
 </style>
 </head>
 
