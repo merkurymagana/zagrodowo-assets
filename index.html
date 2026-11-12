@@ -5719,8 +5719,8 @@ renderNeighbors();
   if(!stage||!svg||!panel||!toggle||!output)return;
   const strikes=[...svg.querySelectorAll(".summerStormStrike")];
   const offsets=strikes.map((group)=>({
-    x:group.dataset.stormId==="1"?398:-106.9,
-    y:group.dataset.stormId==="1"?29.7:144.7,
+    x:group.dataset.stormId==="1"?63.5:-106.9,
+    y:group.dataset.stormId==="1"?80.1:144.7,
     id:Number(group.dataset.stormId),
     anchorX:Number(group.dataset.anchorX),
     anchorY:Number(group.dataset.anchorY)
@@ -5745,7 +5745,7 @@ renderNeighbors();
   }
   toggle.addEventListener("click",()=>setEditing(!panel.classList.contains("open")));
   close?.addEventListener("click",()=>setEditing(false));
-  reset?.addEventListener("click",()=>{offsets.forEach(p=>{p.x=p.id===1?398:-106.9;p.y=p.id===1?29.7:144.7});render();});
+  reset?.addEventListener("click",()=>{offsets.forEach(p=>{p.x=p.id===1?63.5:-106.9;p.y=p.id===1?80.1:144.7});render();});
   copy?.addEventListener("click",async()=>{
     try{await navigator.clipboard.writeText(output.value);copy.textContent="Skopiowano!"}
     catch(e){output.focus();output.select();try{document.execCommand("copy");copy.textContent="Skopiowano!"}catch(err){copy.textContent="Zaznacz tekst ręcznie"}}
