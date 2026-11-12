@@ -56,12 +56,18 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 #appStage{
   position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
+  left:50%;
+  top:50%;
+  right:auto;
+  bottom:auto;
+  width:1686px;
+  height:950px;
   overflow:hidden;
   background:#70482f var(--wood) repeat;
   box-shadow:0 0 35px #0007;
+  container-type:size;
+  transform:translate(-50%,-50%) scale(var(--stage-scale,1));
+  transform-origin:center center;
 }
 
 /* EKRAN STARTOWY */
@@ -144,17 +150,17 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   100%{opacity:0;transform:scale(1.16,1.08)}
 }
 #start.spring-morning #springFrogSplash{display:block}
-@media(max-width:1050px){
+@media(max-width:0px){
   #springFrogSplash{right:calc(8% - 52px);bottom:calc(20% + 8px);width:66px;height:28px}
 }
-@media(max-width:700px){
+@media(max-width:0px){
   #springFrogSplash{right:calc(7% - 48px);bottom:calc(20% + 8px);width:58px;height:25px}
 }
 #start.spring-morning #springLilyWater{display:block}
-@media(max-width:1050px){
+@media(max-width:0px){
   #springLilyWater{right:calc(8% - 52px);bottom:calc(20% + 8px);width:66px;height:28px}
 }
-@media(max-width:700px){
+@media(max-width:0px){
   #springLilyWater{right:calc(7% - 48px);bottom:calc(20% + 8px);width:58px;height:25px}
 }
 
@@ -164,7 +170,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:4;
   right:calc(12% - 50px);
   bottom:calc(19% + 15px);
-  width:clamp(27px,2.55vw,42px);
+  width:clamp(27px,2.55cqw,42px);
   height:auto;
   display:none;
   object-fit:contain;
@@ -196,7 +202,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:9;
   right:calc(12% - 44px);
   bottom:calc(19% + 20px);
-  width:clamp(34px,2.8vw,46px);
+  width:clamp(34px,2.8cqw,46px);
   height:auto;
   display:none;
   pointer-events:none;
@@ -222,17 +228,17 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   90%{transform:translateY(0) scale(1,1)}
 }
 #start.spring-morning #springFrog{display:block}
-@media(max-width:1050px){
-  #springFrog{right:calc(8% - 42px);bottom:calc(20% + 20px);width:clamp(32px,3.8vw,41px)}
+@media(max-width:0px){
+  #springFrog{right:calc(8% - 42px);bottom:calc(20% + 20px);width:clamp(32px,3.8cqw,41px)}
 }
-@media(max-width:700px){
-  #springFrog{right:calc(7% - 42px);bottom:calc(20% + 20px);width:clamp(29px,6.2vw,35px)}
+@media(max-width:0px){
+  #springFrog{right:calc(7% - 42px);bottom:calc(20% + 20px);width:clamp(29px,6.2cqw,35px)}
 }
-@media(max-width:1050px){
-  #springLily{right:calc(8% - 50px);bottom:calc(20% + 15px);width:clamp(25px,3.55vw,37px)}
+@media(max-width:0px){
+  #springLily{right:calc(8% - 50px);bottom:calc(20% + 15px);width:clamp(25px,3.55cqw,37px)}
 }
-@media(max-width:700px){
-  #springLily{right:calc(7% - 50px);bottom:calc(20% + 15px);width:clamp(23px,5.8vw,32px)}
+@media(max-width:0px){
+  #springLily{right:calc(7% - 50px);bottom:calc(20% + 15px);width:clamp(23px,5.8cqw,32px)}
 }
 
 #seasonImage{
@@ -252,7 +258,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 #start.summer-day .summerPondGlints{display:none!important}
 .summerPondGlint{
-  position:absolute;width:clamp(5px,.65vw,9px);height:clamp(2px,.22vw,3px);
+  position:absolute;width:clamp(5px,.65cqw,9px);height:clamp(2px,.22cqw,3px);
   border-radius:50%;
   background:radial-gradient(ellipse at center,#fffde8d9 0%,#f4f5c77a 48%,transparent 100%);
   filter:blur(.35px);
@@ -261,7 +267,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation:summerPondGlimmer var(--glint-duration,3.8s) ease-in-out infinite;
   animation-delay:var(--glint-delay,0s);
 }
-.summerPondGlint:nth-child(3n){width:clamp(8px,.9vw,13px);height:clamp(2px,.25vw,4px)}
+.summerPondGlint:nth-child(3n){width:clamp(8px,.9cqw,13px);height:clamp(2px,.25cqw,4px)}
 @keyframes summerPondGlimmer{
   0%,100%{opacity:0;transform:scale(.5) rotate(-18deg)}
   28%{opacity:.12}
@@ -342,7 +348,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:10;
   left:calc(68% + 32px);
   top:calc(62% - 10px);
-  width:clamp(49.4px,6.384vw,107.35px);
+  width:clamp(49.4px,6.384cqw,107.35px);
   aspect-ratio:676 / 417;
   display:none;
   pointer-events:none;
@@ -395,11 +401,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   #summerCampfire .flameOuter,#summerCampfire .flameMiddle,#summerCampfire .flameCore,
   #summerCampfire .campfireGlow,#summerCampfire .campfireSpark{animation:none}
 }
-@media(max-width:700px){
+@media(max-width:0px){
   #summerCampfire{
     left:calc(60% + 32px);
     top:calc(67% - 10px);
-    width:clamp(47.5px,12.7585vw,83.6px);
+    width:clamp(47.5px,12.7585cqw,83.6px);
   }
 }
 
@@ -409,7 +415,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:4;
   left:calc(30% + 225px);
   top:calc(16% + 125px);
-  width:clamp(48px,5vw,78px);
+  width:clamp(48px,5cqw,78px);
   height:auto;
   display:none;
   pointer-events:none;
@@ -424,8 +430,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 @media(prefers-reduced-motion:reduce){
   #start.summer-day #summerBalloon{animation:none}
 }
-@media(max-width:700px){
-  #summerBalloon{left:calc(30% + 225px);top:calc(16% + 125px);width:clamp(42px,10vw,66px)}
+@media(max-width:0px){
+  #summerBalloon{left:calc(30% + 225px);top:calc(16% + 125px);width:clamp(42px,10cqw,66px)}
 }
 
 /* ZRASZACZ — letnia sceneria dzienna. */
@@ -434,13 +440,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:8;
   left:65%;
   top:77%;
-  width:clamp(42px,5vw,76px);
+  width:clamp(42px,5cqw,76px);
   height:auto;
 }
 /* Pierwszy zraszacz jest nieco mniejszy od pozostałych. */
-#summerSprinkler{width:clamp(34px,4vw,61px)}
-@media(max-width:700px){
-  #summerSprinkler{width:clamp(31px,6.4vw,47px)}
+#summerSprinkler{width:clamp(34px,4cqw,61px)}
+@media(max-width:0px){
+  #summerSprinkler{width:clamp(31px,6.4cqw,47px)}
 }
 .summerSprinkler{
   /* dalsze właściwości wspólne */
@@ -458,7 +464,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 /* Delikatne strumienie wody wokół każdego zraszacza. */
 .summerSprinklerWater{
-  position:absolute;z-index:7;left:0;top:0;width:clamp(76px,10vw,142px);height:auto;
+  position:absolute;z-index:7;left:0;top:0;width:clamp(76px,10cqw,142px);height:auto;
   overflow:visible;pointer-events:none;transform:translate(-50%,-50%);
   filter:drop-shadow(0 1px 2px #d8f7ff66);opacity:.93;
 }
@@ -496,30 +502,30 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   50%{transform:translate(-50%,-50%) perspective(180px) rotateY(32deg)}
 }
 /* Pierwszy zraszacz jest trzykrotnie mniejszy od poprzedniego rozmiaru. */
-#start.summer-day #summerSprinkler{width:clamp(11.33px,1.333vw,20.33px)}
-@media(max-width:700px){
-  #start.summer-day #summerSprinkler{width:clamp(10px,2.133vw,15.33px)}
+#start.summer-day #summerSprinkler{width:clamp(11.33px,1.333cqw,20.33px)}
+@media(max-width:0px){
+  #start.summer-day #summerSprinkler{width:clamp(10px,2.133cqw,15.33px)}
 }
 /* Drugi zraszacz jest odrobinę większy od pierwszego. */
-#start.summer-day .summerSprinkler[data-sprinkler="2"]{width:clamp(14.16px,1.666vw,25.4px)}
-@media(max-width:700px){
-  #start.summer-day .summerSprinkler[data-sprinkler="2"]{width:clamp(12.5px,2.666vw,19.16px)}
+#start.summer-day .summerSprinkler[data-sprinkler="2"]{width:clamp(14.16px,1.666cqw,25.4px)}
+@media(max-width:0px){
+  #start.summer-day .summerSprinkler[data-sprinkler="2"]{width:clamp(12.5px,2.666cqw,19.16px)}
 }
 /* Czwarty zraszacz ma taki sam rozmiar jak pierwszy. */
-#start.summer-day .summerSprinkler[data-sprinkler="4"]{width:clamp(11.33px,1.333vw,20.33px)}
-@media(max-width:700px){
-  #start.summer-day .summerSprinkler[data-sprinkler="4"]{width:clamp(10px,2.133vw,15.33px)}
+#start.summer-day .summerSprinkler[data-sprinkler="4"]{width:clamp(11.33px,1.333cqw,20.33px)}
+@media(max-width:0px){
+  #start.summer-day .summerSprinkler[data-sprinkler="4"]{width:clamp(10px,2.133cqw,15.33px)}
 }
 /* Trzeci zraszacz jest odrobinę mniejszy od czwartego. */
-#start.summer-day .summerSprinkler[data-sprinkler="3"]{width:clamp(10.2px,1.2vw,18.3px)}
-@media(max-width:700px){
-  #start.summer-day .summerSprinkler[data-sprinkler="3"]{width:clamp(9px,1.92vw,13.8px)}
+#start.summer-day .summerSprinkler[data-sprinkler="3"]{width:clamp(10.2px,1.2cqw,18.3px)}
+@media(max-width:0px){
+  #start.summer-day .summerSprinkler[data-sprinkler="3"]{width:clamp(9px,1.92cqw,13.8px)}
 }
 
 /* Mokre ślady na drodze w zasięgu zraszaczy 2 i 3. */
 .summerRoadWet{
   position:absolute;z-index:6;pointer-events:none;
-  width:clamp(24px,3.1vw,44px);height:clamp(7px,.8vw,12px);
+  width:clamp(24px,3.1cqw,44px);height:clamp(7px,.8cqw,12px);
   border-radius:50%;
   background:
     radial-gradient(ellipse at 50% 48%,#283a3170 0%,#35483b48 38%,#6473651c 67%,transparent 100%);
@@ -571,11 +577,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   display:grid;place-items:center;color:white;font:800 10px Nunito,Arial,sans-serif;
 }
 
-@media(max-width:700px){
+@media(max-width:0px){
   #summerSprinkler{
     left:65%;
     top:77%;
-    width:clamp(38px,8vw,58px);
+    width:clamp(38px,8cqw,58px);
   }
 }
 
@@ -586,7 +592,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:9;
   left:calc(39% - 510px);
   top:calc(13.5% + 69px);
-  width:clamp(10px,0.9vw,15px);
+  width:clamp(10px,0.9cqw,15px);
   height:auto;
   display:none;
   object-fit:contain;
@@ -596,18 +602,18 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   filter:drop-shadow(0 1px 1px #24170b55);
 }
 #start.summer-morning #summerNestEgg{display:block}
-@media(max-width:1050px){
+@media(max-width:0px){
   #summerNestEgg{
     left:calc(39% - 92px);
     top:calc(13.5% + 173px);
-    width:clamp(9px,1.4vw,13px);
+    width:clamp(9px,1.4cqw,13px);
   }
 }
-@media(max-width:700px){
+@media(max-width:0px){
   #summerNestEgg{
     left:calc(39% - 68px);
     top:calc(13.5% + 129px);
-    width:clamp(8px,2vw,12px);
+    width:clamp(8px,2cqw,12px);
   }
 }
 #summerNestEgg2{
@@ -615,7 +621,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:9;
   left:calc(39% - 501px);
   top:calc(13.5% + 69px);
-  width:clamp(10px,0.9vw,15px);
+  width:clamp(10px,0.9cqw,15px);
   height:auto;
   display:none;
   object-fit:contain;
@@ -631,7 +637,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:10;
   left:calc(39% - 520px);
   top:calc(13.5% + 73px);
-  width:clamp(9px,0.85vw,14px);
+  width:clamp(9px,0.85cqw,14px);
   height:auto;
   display:none;
   opacity:0;
@@ -650,18 +656,18 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   75%{opacity:.85;transform:translate(23px,23px) rotate(205deg)}
   100%{opacity:0;transform:translate(32px,39px) rotate(285deg)}
 }
-@media(max-width:1050px){
+@media(max-width:0px){
   #summerNestStick{
     left:calc(39% - 102px);
     top:calc(13.5% + 177px);
-    width:clamp(8px,1.25vw,12px);
+    width:clamp(8px,1.25cqw,12px);
   }
 }
-@media(max-width:700px){
+@media(max-width:0px){
   #summerNestStick{
     left:calc(39% - 77px);
     top:calc(13.5% + 133px);
-    width:clamp(7px,1.8vw,11px);
+    width:clamp(7px,1.8cqw,11px);
   }
 }
 
@@ -679,18 +685,18 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   100%{transform:rotate(0deg)}
 }
 
-@media(max-width:1050px){
+@media(max-width:0px){
   #summerNestEgg2{
     left:calc(39% - 83px);
     top:calc(13.5% + 173px);
-    width:clamp(9px,1.4vw,13px);
+    width:clamp(9px,1.4cqw,13px);
   }
 }
-@media(max-width:700px){
+@media(max-width:0px){
   #summerNestEgg2{
     left:calc(39% - 59px);
     top:calc(13.5% + 129px);
-    width:clamp(8px,2vw,12px);
+    width:clamp(8px,2cqw,12px);
   }
 }
 
@@ -699,7 +705,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   position:absolute;
   z-index:7;
   display:none;
-  width:clamp(32px,2.65vw,44px);
+  width:clamp(32px,2.65cqw,44px);
   height:auto;
   object-fit:contain;
   pointer-events:none;
@@ -715,12 +721,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 #summerButterfly2{
   left:82%;top:22%;
-  width:clamp(30px,2.45vw,41px);
+  width:clamp(30px,2.45cqw,41px);
   animation:summerButterflyFlight2 200s ease-in-out -29s infinite;
 }
 #summerButterfly3{
   left:34%;top:59%;
-  width:clamp(31px,2.55vw,42px);
+  width:clamp(31px,2.55cqw,42px);
   animation:summerButterflyFlight3 200s ease-in-out -19s infinite;
 }
 .summerButterfly img{
@@ -754,39 +760,39 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 @keyframes summerButterflyFlight1{
   0%{transform:translate3d(0,0,0) scale(1)}
   6%{}
-  18%{transform:translate3d(15vw,-12vh,0) scale(.88)}
-  31%{transform:translate3d(36vw,-19vh,0) scale(.78)}
-  45%{transform:translate3d(70vw,-5vh,0) scale(1.08)}
-  45.5%{transform:translate3d(70vw,-5vh,0) scale(1.08)}
-  59%{transform:translate3d(57vw,13vh,0) scale(1.16)}
-  73%{transform:translate3d(32vw,23vh,0) scale(1.12)}
-  87%{transform:translate3d(13vw,12vh,0) scale(.92)}
-  100%{transform:translate3d(0,2vh,0) scale(1)}
+  18%{transform:translate3d(15cqw,-12cqh,0) scale(.88)}
+  31%{transform:translate3d(36cqw,-19cqh,0) scale(.78)}
+  45%{transform:translate3d(70cqw,-5cqh,0) scale(1.08)}
+  45.5%{transform:translate3d(70cqw,-5cqh,0) scale(1.08)}
+  59%{transform:translate3d(57cqw,13cqh,0) scale(1.16)}
+  73%{transform:translate3d(32cqw,23cqh,0) scale(1.12)}
+  87%{transform:translate3d(13cqw,12cqh,0) scale(.92)}
+  100%{transform:translate3d(0,2cqh,0) scale(1)}
 }
 @keyframes summerButterflyFlight2{
   0%{transform:translate3d(0,0,0) scale(1)}
   7%{}
-  20%{transform:translate3d(-19vw,12vh,0) scale(1.10)}
-  35%{transform:translate3d(-39vw,25vh,0) scale(1.04)}
-  49%{transform:translate3d(-69vw,37vh,0) scale(.82)}
-  64%{transform:translate3d(-72vw,21vh,0) scale(.76)}
-  79%{transform:translate3d(-47vw,4vh,0) scale(.90)}
-  91%{transform:translate3d(-20vw,-5vh,0) scale(1.08)}
-  100%{transform:translate3d(0,-2vh,0) scale(1)}
+  20%{transform:translate3d(-19cqw,12cqh,0) scale(1.10)}
+  35%{transform:translate3d(-39cqw,25cqh,0) scale(1.04)}
+  49%{transform:translate3d(-69cqw,37cqh,0) scale(.82)}
+  64%{transform:translate3d(-72cqw,21cqh,0) scale(.76)}
+  79%{transform:translate3d(-47cqw,4cqh,0) scale(.90)}
+  91%{transform:translate3d(-20cqw,-5cqh,0) scale(1.08)}
+  100%{transform:translate3d(0,-2cqh,0) scale(1)}
 }
 @keyframes summerButterflyFlight3{
   0%{transform:translate3d(0,0,0) scale(1)}
   8%{}
-  17%{transform:translate3d(18vw,-16vh,0) scale(.80)}
-  30%{transform:translate3d(43vw,-31vh,0) scale(.74)}
-  43%{transform:translate3d(57vw,-16vh,0) scale(1.02)}
-  43.5%{transform:translate3d(57vw,-16vh,0) scale(1.02)}
-  56%{transform:translate3d(45vw,1vh,0) scale(1.16)}
-  69%{transform:translate3d(22vw,15vh,0) scale(1.12)}
-  82%{transform:translate3d(-3vw,8vh,0) scale(.96)}
-  82.5%{transform:translate3d(-3vw,8vh,0) scale(.96)}
-  93%{transform:translate3d(-9vw,-8vh,0) scale(.82)}
-  100%{transform:translate3d(0,-3vh,0) scale(.90)}
+  17%{transform:translate3d(18cqw,-16cqh,0) scale(.80)}
+  30%{transform:translate3d(43cqw,-31cqh,0) scale(.74)}
+  43%{transform:translate3d(57cqw,-16cqh,0) scale(1.02)}
+  43.5%{transform:translate3d(57cqw,-16cqh,0) scale(1.02)}
+  56%{transform:translate3d(45cqw,1cqh,0) scale(1.16)}
+  69%{transform:translate3d(22cqw,15cqh,0) scale(1.12)}
+  82%{transform:translate3d(-3cqw,8cqh,0) scale(.96)}
+  82.5%{transform:translate3d(-3cqw,8cqh,0) scale(.96)}
+  93%{transform:translate3d(-9cqw,-8cqh,0) scale(.82)}
+  100%{transform:translate3d(0,-3cqh,0) scale(.90)}
 }
 /* Ruch motyli sterowany punktami lądowania; pozycje są procentowe względem scenerii. */
 .summerButterfly{
@@ -801,10 +807,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   transition:none;
 }
 .summerButterfly.resting{pointer-events:auto!important;cursor:pointer}\n.summerButterfly.resting img{animation-play-state:running!important}
-@media(max-width:700px){
-  .summerButterfly{width:clamp(24px,5.2vw,34px)}
-  #summerButterfly2{width:clamp(23px,4.9vw,32px)}
-  #summerButterfly3{width:clamp(23px,5vw,33px)}
+@media(max-width:0px){
+  .summerButterfly{width:clamp(24px,5.2cqw,34px)}
+  #summerButterfly2{width:clamp(23px,4.9cqw,32px)}
+  #summerButterfly3{width:clamp(23px,5cqw,33px)}
   #summerButterfly1{left:6%;top:42%}
   #summerButterfly2{left:82%;top:22%}
   #summerButterfly3{left:34%;top:57%}
@@ -819,7 +825,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:8;
   left:calc(39% - 527px);
   top:calc(13.5% + 67px);
-  width:clamp(42px,3.9vw,64px);
+  width:clamp(42px,3.9cqw,64px);
   height:auto;
   display:none;
   object-fit:contain;
@@ -828,18 +834,18 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   filter:drop-shadow(0 2px 3px #24170b55);
 }
 #start.summer-morning #summerNest{display:block}
-@media(max-width:1050px){
+@media(max-width:0px){
   #summerNest{
     left:calc(39% - 105px);
     top:calc(13.5% + 160px);
-    width:clamp(40px,5.8vw,58px);
+    width:clamp(40px,5.8cqw,58px);
   }
 }
-@media(max-width:700px){
+@media(max-width:0px){
   #summerNest{
     left:calc(39% - 78px);
     top:calc(13.5% + 119px);
-    width:clamp(34px,8vw,48px);
+    width:clamp(34px,8cqw,48px);
   }
 }
 
@@ -873,9 +879,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #chickenGroup{
   position:absolute;
   z-index:5;
-  left:clamp(390px,52vw,820px);
+  left:clamp(390px,52cqw,820px);
   bottom:18%;
-  width:clamp(78px,8vw,116px);
+  width:clamp(78px,8cqw,116px);
   height:auto;
   display:block;
   pointer-events:none;
@@ -902,20 +908,20 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   pointer-events:none;
   user-select:none;
 }
-@media(max-width:1050px){
-  #chickenGroup{left:48vw;width:clamp(76px,12vw,108px);bottom:20%}
+@media(max-width:0px){
+  #chickenGroup{left:48cqw;width:clamp(76px,12cqw,108px);bottom:20%}
 }
-@media(max-width:700px){
-  #chickenGroup{left:auto;right:28%;bottom:92px;width:clamp(70px,19vw,100px)}
+@media(max-width:0px){
+  #chickenGroup{left:auto;right:28%;bottom:92px;width:clamp(70px,19cqw,100px)}
 }
 
 /* BIAŁY KOT — WSPÓLNA GRUPA, ŻEBY WARSTWY NIE ROZJEŻDŻAŁY SIĘ PRZY ZOOMIE */
 #catGroup{
   position:absolute;
   z-index:6;
-  left:clamp(520px,40vw,700px);
+  left:clamp(520px,40cqw,700px);
   bottom:31%;
-  width:clamp(55px,6vw,82px);
+  width:clamp(55px,6cqw,82px);
   aspect-ratio:676 / 369;
   pointer-events:none;
   user-select:none;
@@ -988,17 +994,17 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   0%,100%{transform:rotate(-3deg)}
   50%{transform:rotate(4deg)}
 }
-@media(max-width:1050px){
+@media(max-width:0px){
   #catGroup{
-    left:4vw;
-    width:clamp(115px,17vw,170px);
+    left:4cqw;
+    width:clamp(115px,17cqw,170px);
   }
 }
-@media(max-width:700px){
+@media(max-width:0px){
   #catGroup{
     left:12px;
     bottom:82px;
-    width:clamp(88px,25vw,125px);
+    width:clamp(88px,25cqw,125px);
   }
 }
 /* Kotek i chmury są widoczne wyłącznie w jesiennej scenerii dziennej. */
@@ -1018,7 +1024,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:2;
   top:calc(2.5% + 165px);
   right:calc(2.5% + 220px);
-  width:clamp(65px, 9vw, 148px);
+  width:clamp(65px, 9cqw, 148px);
   height:auto;
   max-height:12%;
   object-fit:contain;
@@ -1052,7 +1058,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:2;
   top:calc(2.5% + 165px);
   right:calc(2.5% + 420px);
-  width:clamp(65px, 9vw, 148px);
+  width:clamp(65px, 9cqw, 148px);
   height:auto;
   max-height:12%;
   object-fit:contain;
@@ -1076,17 +1082,17 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 #start.winter-night #auroraNorthern,
 #start.winter-night #auroraNorthern2{display:block}
-@media(max-width:700px){
+@media(max-width:0px){
   #auroraNorthern{
     top:3%;
     right:1%;
-    width:13.3vw;
+    width:13.3cqw;
     max-height:9.5%;
   }
   #auroraNorthern2{
     top:calc(3% + 30px);
     right:calc(1% + 325px);
-    width:13.3vw;
+    width:13.3cqw;
     max-height:9.5%;
   }
 }
@@ -1207,7 +1213,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   100%{opacity:0;filter:brightness(0) invert(1) blur(12px);clip-path:inset(0);transform:translate3d(16px,56px,0) rotate(12deg) scale(1.24)}
 }
 #start.winter-day #winterAvalanche{animation-name:winter-avalanche-slide-short}
-@media(max-width:700px){
+@media(max-width:0px){
   #winterAvalanche{top:calc(25% + 125px);right:calc(13% - 200px);transform:scale(.78);transform-origin:top right}
   #winterAvalancheLeft{top:calc(25% + 92px);left:calc(13% + 45px);width:112px;transform:scale(.78);transform-origin:top left;scale:2 1}
   #winterAvalancheLeft2{top:calc(25% + 92px);left:calc(13% + 33px);width:112px;transform:scale(.78);transform-origin:top left;scale:2 1}
@@ -1238,7 +1244,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   97%{opacity:.42;filter:brightness(0) invert(1) blur(5.5px);clip-path:inset(0);transform:scale(.968) translate3d(12.5px,49px,0) rotate(11deg);animation-timing-function:linear}
   100%{opacity:0;filter:brightness(0) invert(1) blur(9px);clip-path:inset(0);transform:scale(.97) translate3d(16px,56px,0) rotate(12deg)}
 }
-@media(max-width:700px){
+@media(max-width:0px){
   #start.winter-day #winterAvalanche{animation-name:winter-avalanche-slide-mobile-short}
 }
 @media(prefers-reduced-motion:reduce){
@@ -1249,9 +1255,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #goatBodyGroup{
   position:absolute;
   z-index:5;
-  left:calc(clamp(650px,62vw,1050px) - 102px);
+  left:calc(clamp(650px,62cqw,1050px) - 102px);
   bottom:19%;
-  width:calc((clamp(125px,14vw,205px) + 10px) * 1.33 * 1.66);
+  width:calc((clamp(125px,14cqw,205px) + 10px) * 1.33 * 1.66);
   aspect-ratio:676 / 369;
   display:none;
   pointer-events:none;
@@ -1287,19 +1293,19 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 #start.autumn-night #goatBodyGroup{display:block}
 #start.autumn-night #goatBodyGroup{transform:translate(-415px,125px)}
-@media(max-width:1050px){
+@media(max-width:0px){
   #goatBodyGroup{
     left:auto;
-    right:calc(8vw + 102px);
+    right:calc(8cqw + 102px);
     bottom:22%;
-    width:calc((clamp(115px,22vw,175px) + 10px) * 1.33 * 1.66);
+    width:calc((clamp(115px,22cqw,175px) + 10px) * 1.33 * 1.66);
   }
 }
-@media(max-width:700px){
+@media(max-width:0px){
   #goatBodyGroup{
     right:120px;
     bottom:90px;
-    width:calc((clamp(95px,28vw,140px) + 10px) * 1.33 * 1.66);
+    width:calc((clamp(95px,28cqw,140px) + 10px) * 1.33 * 1.66);
   }
 }
 
@@ -1307,9 +1313,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #pigGroup{
   position:absolute;
   z-index:5;
-  left:calc(clamp(650px,62vw,1050px) - 102px);
+  left:calc(clamp(650px,62cqw,1050px) - 102px);
   bottom:19%;
-  width:calc(clamp(125px,14vw,205px) + 10px);
+  width:calc(clamp(125px,14cqw,205px) + 10px);
   aspect-ratio:676 / 369;
   pointer-events:none;
   user-select:none;
@@ -1399,19 +1405,19 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   visibility:hidden;
   opacity:0;
 }
-@media(max-width:1050px){
+@media(max-width:0px){
   #pigGroup{
     left:auto;
-    right:calc(8vw + 102px);
+    right:calc(8cqw + 102px);
     bottom:22%;
-    width:calc(clamp(115px,22vw,175px) + 10px);
+    width:calc(clamp(115px,22cqw,175px) + 10px);
   }
 }
-@media(max-width:700px){
+@media(max-width:0px){
   #pigGroup{
     right:120px;
     bottom:90px;
-    width:calc(clamp(95px,28vw,140px) + 10px);
+    width:calc(clamp(95px,28cqw,140px) + 10px);
   }
 }
 
@@ -1422,7 +1428,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:3;
   top:28%;
   left:50%;
-  width:clamp(52px,5.3vw,78px);
+  width:clamp(52px,5.3cqw,78px);
   height:auto;
   display:block;
   pointer-events:none;
@@ -1437,21 +1443,21 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
    a pod koniec lotu rozpływa się przed osiągnięciem prawej krawędzi. */
 @keyframes cloud-second-half{
   0%   {transform:translate3d(0,0,0) scale(1.08);opacity:0;filter:blur(9px)}
-  5%   {transform:translate3d(2vw,0,0) scale(1.06);opacity:.18;filter:blur(6px)}
-  10%  {transform:translate3d(4vw,0,0) scale(1.03);opacity:.58;filter:blur(2px)}
-  14%  {transform:translate3d(6vw,0,0) scale(1);opacity:.88;filter:blur(0)}
-  72%  {transform:translate3d(31vw,0,0) scale(1);opacity:.88;filter:blur(0)}
-  82%  {transform:translate3d(35vw,0,0) scale(1.02);opacity:.58;filter:blur(2px)}
-  88%  {transform:translate3d(39vw,0,0) scale(1.08);opacity:.18;filter:blur(6px)}
-  90%  {transform:translate3d(40vw,0,0) scale(1.14);opacity:0;filter:blur(9px)}
-  100% {transform:translate3d(40vw,0,0) scale(1.14);opacity:0;filter:blur(9px)}
+  5%   {transform:translate3d(2cqw,0,0) scale(1.06);opacity:.18;filter:blur(6px)}
+  10%  {transform:translate3d(4cqw,0,0) scale(1.03);opacity:.58;filter:blur(2px)}
+  14%  {transform:translate3d(6cqw,0,0) scale(1);opacity:.88;filter:blur(0)}
+  72%  {transform:translate3d(31cqw,0,0) scale(1);opacity:.88;filter:blur(0)}
+  82%  {transform:translate3d(35cqw,0,0) scale(1.02);opacity:.58;filter:blur(2px)}
+  88%  {transform:translate3d(39cqw,0,0) scale(1.08);opacity:.18;filter:blur(6px)}
+  90%  {transform:translate3d(40cqw,0,0) scale(1.14);opacity:0;filter:blur(9px)}
+  100% {transform:translate3d(40cqw,0,0) scale(1.14);opacity:0;filter:blur(9px)}
 }
 
-@media(max-width:700px){
+@media(max-width:0px){
   #startCloud{
     top:28%;
     left:50%;
-    width:clamp(44px,11.5vw,66px);
+    width:clamp(44px,11.5cqw,66px);
     animation-duration:84s;
   }
 }
@@ -1478,12 +1484,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   will-change:transform,opacity,filter;
 }
 #startCloud2{
-  width:clamp(42px,4.2vw,62px);
+  width:clamp(42px,4.2cqw,62px);
   animation:cloud-second-half 90s linear -27s infinite,
              cloud-initial-reveal 12.6s linear;
 }
 #startCloud3{
-  width:clamp(42px,4.2vw,62px);
+  width:clamp(42px,4.2cqw,62px);
   animation:cloud-second-half 90s linear -54s infinite,
              cloud-initial-reveal 12.6s linear;
 }
@@ -1497,11 +1503,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   100%{opacity:.88;filter:blur(0)}
 }
 
-@media(max-width:700px){
+@media(max-width:0px){
   #startCloud2,
   #startCloud3{
     top:28%;
-    width:clamp(36px,9vw,52px);
+    width:clamp(36px,9cqw,52px);
     animation-duration:84s;
   }
   #startCloud2{
@@ -1565,7 +1571,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 @keyframes spring-night-twinkle-bright{0%,100%{opacity:.72;transform:scale(.9)}48%{opacity:1;transform:scale(1.2)}72%{opacity:.88;transform:scale(1.04)}}
 .spring-night-deer{
  position:absolute;left:var(--deer-start-x);top:var(--deer-start-y);
- width:clamp(15px,1.6vw,25px);height:auto;
+ width:clamp(15px,1.6cqw,25px);height:auto;
  opacity:0;filter:brightness(.78) sepia(.24) saturate(.82) hue-rotate(350deg) contrast(1.04);
  pointer-events:none;will-change:transform;
  transform:translate(-50%,-50%);
@@ -1601,9 +1607,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #autumnPumpkins{
   position:absolute;
   z-index:6;
-  left:clamp(480px,55vw,900px);
+  left:clamp(480px,55cqw,900px);
   bottom:-3%;
-  width:clamp(250px,27vw,370px);
+  width:clamp(250px,27cqw,370px);
   display:none;
   align-items:flex-end;
   justify-content:center;
@@ -1653,23 +1659,23 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   63%{opacity:.7;transform:scale(.98)}
   76%{opacity:.9;transform:scale(1.06)}
 }
-@media(max-width:1050px){
+@media(max-width:0px){
   #autumnPumpkins{
     left:auto;
-    right:calc(8vw + 105px);
+    right:calc(8cqw + 105px);
     bottom:-2%;
-    width:clamp(225px,32vw,310px);
+    width:clamp(225px,32cqw,310px);
   }
 }
-@media(max-width:700px){
+@media(max-width:0px){
   /* Na telefonie cała grupa jest kotwiczona bezpośrednio do kadru.
      Nie używamy dużych ujemnych przesunięć w px/% — zależały od szerokości
      obrazków i powodowały rozjazd dekoracji między urządzeniami. */
   #autumnPumpkins{
-    left:24vw;
+    left:24cqw;
     right:auto;
     bottom:70px;
-    width:min(260px,70vw);
+    width:min(260px,70cqw);
     transform:none;
   }
   #autumnPumpkins img:nth-of-type(1){
@@ -1717,7 +1723,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   0%{transform:translate3d(0,0,0) rotate(12deg);opacity:0}
   8%{opacity:var(--rain-opacity)}
   78%{opacity:var(--rain-opacity)}
-  100%{transform:translate3d(-9vw,78vh,0) rotate(12deg);opacity:0}
+  100%{transform:translate3d(-9cqw,78cqh,0) rotate(12deg);opacity:0}
 }
 @media(prefers-reduced-motion:reduce){
   .night-rain{display:none}
@@ -1728,9 +1734,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   position:absolute;
   z-index:2;
   /* Kałuża wyśrodkowana bezpośrednio nad świnką. */
-  left:calc(clamp(650px,62vw,1050px) - 27px + (clamp(125px,14vw,205px) + 10px)/2 - clamp(105px,13vw,190px)/2);
-  bottom:calc(19% + (clamp(125px,14vw,205px) + 10px)*369/676 - 13px);
-  width:clamp(105px,13vw,190px);
+  left:calc(clamp(650px,62cqw,1050px) - 27px + (clamp(125px,14cqw,205px) + 10px)/2 - clamp(105px,13cqw,190px)/2);
+  bottom:calc(19% + (clamp(125px,14cqw,205px) + 10px)*369/676 - 13px);
+  width:clamp(105px,13cqw,190px);
   aspect-ratio:1.9 / 1;
   pointer-events:none;
   opacity:.94;
@@ -1777,18 +1783,18 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   48%{transform:translate(-50%,-50%) scale(5.2);opacity:0}
   100%{transform:translate(-50%,-50%) scale(5.2);opacity:0}
 }
-@media(max-width:1050px){
+@media(max-width:0px){
   .autumn-puddle{
-    left:calc(100% - (8vw + 27px) - (clamp(115px,22vw,175px) + 10px)/2 - clamp(105px,13vw,190px)/2);
-    bottom:calc(22% + (clamp(115px,22vw,175px) + 10px)*369/676 - 13px);
+    left:calc(100% - (8cqw + 27px) - (clamp(115px,22cqw,175px) + 10px)/2 - clamp(105px,13cqw,190px)/2);
+    bottom:calc(22% + (clamp(115px,22cqw,175px) + 10px)*369/676 - 13px);
   }
 }
-@media(max-width:700px){
+@media(max-width:0px){
   .autumn-puddle{
     left:auto;
-    right:calc(45px + (clamp(95px,28vw,140px) + 10px)/2 - clamp(95px,29vw,155px)/2);
-    bottom:calc(90px + (clamp(95px,28vw,140px) + 10px)*369/676 - 13px);
-    width:clamp(95px,29vw,155px);
+    right:calc(45px + (clamp(95px,28cqw,140px) + 10px)/2 - clamp(95px,29cqw,155px)/2);
+    bottom:calc(90px + (clamp(95px,28cqw,140px) + 10px)*369/676 - 13px);
+    width:clamp(95px,29cqw,155px);
   }
 }
 @media(prefers-reduced-motion:reduce){
@@ -1811,9 +1817,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 @keyframes fall{
-  0%{transform:translate(0,-5vh) rotate(0)}
-  50%{transform:translate(var(--sway),50vh) rotate(180deg)}
-  100%{transform:translate(var(--sway-end),115vh) rotate(360deg)}
+  0%{transform:translate(0,-5cqh) rotate(0)}
+  50%{transform:translate(var(--sway),50cqh) rotate(180deg)}
+  100%{transform:translate(var(--sway-end),115cqh) rotate(360deg)}
 }
 
 /* NATURALNIE OPADAJĄCE LIŚCIE — LEKKI JESIENNY WIATR */
@@ -1834,13 +1840,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 @keyframes autumn-leaf-breeze{
   0%{transform:translate3d(0,0,0) rotate(var(--turn-start)) scale(.92) scaleX(var(--leaf-flip,1));opacity:0;filter:blur(0) drop-shadow(0 2px 2px #38271935)}
   5%{opacity:var(--leaf-opacity,1)}
-  20%{transform:translate3d(var(--drift-a),19vh,0) rotate(var(--turn-a)) scale(1) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1)}
-  42%{transform:translate3d(var(--drift-b),42vh,0) rotate(var(--turn-b)) scale(.96) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1)}
-  60%{transform:translate3d(var(--drift-c),61vh,0) rotate(var(--turn-c)) scale(1.02) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1);filter:blur(0) drop-shadow(0 2px 2px #38271935)}
+  20%{transform:translate3d(var(--drift-a),19cqh,0) rotate(var(--turn-a)) scale(1) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1)}
+  42%{transform:translate3d(var(--drift-b),42cqh,0) rotate(var(--turn-b)) scale(.96) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1)}
+  60%{transform:translate3d(var(--drift-c),61cqh,0) rotate(var(--turn-c)) scale(1.02) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1);filter:blur(0) drop-shadow(0 2px 2px #38271935)}
   72%{opacity:var(--leaf-opacity,1);filter:blur(2px) drop-shadow(0 2px 2px #38271920)}
-  82%{transform:translate3d(var(--drift-d),86vh,0) rotate(var(--turn-d)) scale(.94);opacity:.72;filter:blur(4px) drop-shadow(0 2px 2px #38271915)}
+  82%{transform:translate3d(var(--drift-d),86cqh,0) rotate(var(--turn-d)) scale(.94);opacity:.72;filter:blur(4px) drop-shadow(0 2px 2px #38271915)}
   91%{opacity:.28;filter:blur(7px) drop-shadow(0 2px 2px #38271910)}
-  100%{transform:translate3d(var(--drift-end),calc(110vh - 10px),0) rotate(var(--turn-end)) scale(.9) scaleX(var(--leaf-flip,1));opacity:0;filter:blur(10px)}
+  100%{transform:translate3d(var(--drift-end),calc(110cqh - 10px),0) rotate(var(--turn-end)) scale(.9) scaleX(var(--leaf-flip,1));opacity:0;filter:blur(10px)}
 }
 /* WIOSENNE PŁATKI — ten sam naturalny, wietrzny tor lotu co jesienne liście. */
 .spring-petal{
@@ -1860,13 +1866,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 @keyframes spring-petal-breeze{
   0%{transform:translate3d(0,0,0) rotate(var(--turn-start)) scale(.92) scaleX(var(--leaf-flip,1));opacity:0;filter:blur(0) drop-shadow(0 1px 2px #8f526333)}
   5%{opacity:var(--leaf-opacity,1)}
-  20%{transform:translate3d(var(--drift-a),19vh,0) rotate(var(--turn-a)) scale(1) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1)}
-  42%{transform:translate3d(var(--drift-b),42vh,0) rotate(var(--turn-b)) scale(.96) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1)}
-  60%{transform:translate3d(var(--drift-c),61vh,0) rotate(var(--turn-c)) scale(1.02) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1);filter:blur(0) drop-shadow(0 1px 2px #8f526333)}
+  20%{transform:translate3d(var(--drift-a),19cqh,0) rotate(var(--turn-a)) scale(1) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1)}
+  42%{transform:translate3d(var(--drift-b),42cqh,0) rotate(var(--turn-b)) scale(.96) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1)}
+  60%{transform:translate3d(var(--drift-c),61cqh,0) rotate(var(--turn-c)) scale(1.02) scaleX(var(--leaf-flip,1));opacity:var(--leaf-opacity,1);filter:blur(0) drop-shadow(0 1px 2px #8f526333)}
   72%{opacity:var(--leaf-opacity,1);filter:blur(2px) drop-shadow(0 1px 2px #8f526322)}
-  82%{transform:translate3d(var(--drift-d),86vh,0) rotate(var(--turn-d)) scale(.94);opacity:.72;filter:blur(4px) drop-shadow(0 1px 2px #8f526318)}
+  82%{transform:translate3d(var(--drift-d),86cqh,0) rotate(var(--turn-d)) scale(.94);opacity:.72;filter:blur(4px) drop-shadow(0 1px 2px #8f526318)}
   91%{opacity:.28;filter:blur(7px) drop-shadow(0 1px 2px #8f526310)}
-  100%{transform:translate3d(var(--drift-end),calc(110vh - 10px),0) rotate(var(--turn-end)) scale(.9) scaleX(var(--leaf-flip,1));opacity:0;filter:blur(10px)}
+  100%{transform:translate3d(var(--drift-end),calc(110cqh - 10px),0) rotate(var(--turn-end)) scale(.9) scaleX(var(--leaf-flip,1));opacity:0;filter:blur(10px)}
 }
 /* WRÓBEL NA PŁOCIE — tymczasowe, nieruchome ustawienie do precyzyjnego pozycjonowania. */
 .spring-sparrow{
@@ -1874,7 +1880,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   z-index:6;
   top:calc(56% + 101px);
   left:16%;
-  width:clamp(70px,7.6vw,108px);
+  width:clamp(70px,7.6cqw,108px);
   height:auto;
   opacity:1;
   pointer-events:none;
@@ -1920,8 +1926,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   overflow:visible;
   left:16%;
   top:calc(56% + 101px);
-  width:clamp(70px,7.6vw,108px);
-  height:clamp(70px,7.6vw,108px);
+  width:clamp(70px,7.6cqw,108px);
+  height:clamp(70px,7.6cqw,108px);
   aspect-ratio:1/1;
   opacity:0;
   pointer-events:none;
@@ -1975,14 +1981,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   /* W pozycji na płocie współrzędne CSS .spring-sparrow wskazują lewy górny róg.
      Lotnik jest kotwiczony środkiem, dlatego dodajemy połowę jego rozmiaru. */
   0%,24.99%{
-    left:calc(16% + clamp(70px,7.6vw,108px) / 2);
-    top:calc(56% + 101px + clamp(70px,7.6vw,108px) / 2);
+    left:calc(16% + clamp(70px,7.6cqw,108px) / 2);
+    top:calc(56% + 101px + clamp(70px,7.6cqw,108px) / 2);
     opacity:0;
   }
   /* Wylot i przylot mają liniowy ruch w poziomie z tą samą prędkością. */
   25%{
-    left:calc(16% + clamp(70px,7.6vw,108px) / 2);
-    top:calc(56% + 101px + clamp(70px,7.6vw,108px) / 2);
+    left:calc(16% + clamp(70px,7.6cqw,108px) / 2);
+    top:calc(56% + 101px + clamp(70px,7.6cqw,108px) / 2);
     opacity:1;
     animation-timing-function:linear;
   }
@@ -1990,13 +1996,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
      Przedłużenie tej samej linii za przesłonę — bez zmiany kierunku i bez opadania. */
   26.116%{
     left:-8%;
-    top:calc(54.5% - 12vh);
+    top:calc(54.5% - 12cqh);
     opacity:1;
     animation-timing-function:linear;
   }
   26.117%,77.49%{
     left:-8%;
-    top:calc(54.5% - 12vh);
+    top:calc(54.5% - 12cqh);
     opacity:0;
   }
   /* Przylot z prawej zaczyna się dokładnie w zaznaczonym punkcie. */
@@ -2007,8 +2013,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   }
   /* Wróbelek dolatuje dokładnie do punktu siadania. */
   80.833%{
-    left:calc(16% + clamp(70px,7.6vw,108px) / 2);
-    top:calc(56% + 101px + clamp(70px,7.6vw,108px) / 2);
+    left:calc(16% + clamp(70px,7.6cqw,108px) / 2);
+    top:calc(56% + 101px + clamp(70px,7.6cqw,108px) / 2);
     opacity:1;
     transform:rotate(0deg) scale(1);
     clip-path:inset(0 0 0 0);
@@ -2016,8 +2022,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   }
   /* Krótkie ugięcie tułowia — bez długiego zawisu nad płotem. */
   80.94%{
-    left:calc(16% + clamp(70px,7.6vw,108px) / 2);
-    top:calc(56% + 103px + clamp(70px,7.6vw,108px) / 2);
+    left:calc(16% + clamp(70px,7.6cqw,108px) / 2);
+    top:calc(56% + 103px + clamp(70px,7.6cqw,108px) / 2);
     opacity:.78;
     transform:rotate(2deg) scale(.97);
     clip-path:inset(0 0 0 0);
@@ -2025,8 +2031,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   }
   /* Szybkie, delikatne odbicie podczas przejścia do siedzącej pozycji. */
   80.958%{
-    left:calc(16% + clamp(70px,7.6vw,108px) / 2);
-    top:calc(56% + 100px + clamp(70px,7.6vw,108px) / 2);
+    left:calc(16% + clamp(70px,7.6cqw,108px) / 2);
+    top:calc(56% + 100px + clamp(70px,7.6cqw,108px) / 2);
     opacity:.35;
     transform:rotate(-.7deg) scale(1.015);
     clip-path:inset(0 0 0 0);
@@ -2034,8 +2040,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   }
   /* Lecący rysunek znika po 0,15 sekundy nakładania. */
   80.989%,100%{
-    left:calc(16% + clamp(70px,7.6vw,108px) / 2);
-    top:calc(56% + 101px + clamp(70px,7.6vw,108px) / 2);
+    left:calc(16% + clamp(70px,7.6cqw,108px) / 2);
+    top:calc(56% + 101px + clamp(70px,7.6cqw,108px) / 2);
     opacity:0;
     transform:rotate(0deg) scale(1);
     clip-path:inset(0 0 0 0);
@@ -2064,7 +2070,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   72%{transform:rotate(-.8deg) translateY(-.25px)}
 }
 
-@media(max-width:700px){
+@media(max-width:0px){
   .autumn-leaf,.spring-petal{width:calc(var(--leaf-size) * .78)}
 }
 @media(prefers-reduced-motion:reduce){
@@ -2339,7 +2345,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:min(1200px,100%);
   min-height:100%;
   margin:0 auto;
-  padding:22px clamp(12px,2.5vw,28px) 30px;
+  padding:22px clamp(12px,2.5cqw,28px) 30px;
 }
 
 .farm-title{
@@ -2361,7 +2367,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:100%;
   min-height:400px;
   margin:0 auto;
-  padding:clamp(12px,2vw,24px);
+  padding:clamp(12px,2cqw,24px);
   border:1px solid #b4b98b;
   border-radius:15px;
   background:linear-gradient(145deg,#dce4b6,#b6ca8e 60%,#c8d39f);
@@ -2437,7 +2443,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:100%;
   max-width:850px;
   margin:25px auto;
-  padding:clamp(16px,3vw,28px);
+  padding:clamp(16px,3cqw,28px);
   border:1px solid #c5bd91;
   border-radius:12px;
   background:#f8f3df;
@@ -2462,7 +2468,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:100%;
   max-width:850px;
   margin:25px auto;
-  padding:clamp(15px,3vw,28px);
+  padding:clamp(15px,3cqw,28px);
   border:1px solid #c5ad80;
   border-radius:14px;
   background:linear-gradient(145deg,#fff8e9,#eadfc7);
@@ -2548,7 +2554,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:100%;
   max-width:900px;
   margin:25px auto;
-  padding:clamp(12px,2.5vw,24px);
+  padding:clamp(12px,2.5cqw,24px);
   border:1px solid #b7a77e;
   border-radius:14px;
   background:linear-gradient(145deg,#f5efd9,#e7dfc2);
@@ -2779,7 +2785,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   visibility:visible;
   transform:translateY(-50%) translateX(0);
 }
-@media (max-width:760px){
+@media(max-width:0px){
   .help-menu-button::after{display:none}
 }
 @media(prefers-reduced-motion:reduce){
@@ -3155,7 +3161,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   visibility:visible;
   transform:translateY(-50%) translateX(0);
 }
-@media (max-width:760px){
+@media(max-width:0px){
   .premium-menu-button::after{display:none}
 }
 @media (prefers-reduced-motion:reduce){
@@ -3203,7 +3209,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 /* Etykieta zadań, tak jak etykieta kompasu, jest wyłączona na telefonach. */
-@media (max-width:760px){
+@media(max-width:0px){
   .tasks-menu-button::after{
     display:none;
   }
@@ -3239,7 +3245,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   transform:translateY(-50%) translateX(0);
 }
 
-@media (max-width:760px){
+@media(max-width:0px){
   .compass-links-row{
     grid-column:1 / -1;
   }
@@ -3287,7 +3293,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   width:100%;
   min-height:400px;
   margin:8px auto;
-  padding:clamp(10px,2vw,20px);
+  padding:clamp(10px,2cqw,20px);
   border:2px solid #b59a6b;
   border-radius:14px;
   background:linear-gradient(145deg,#f7f0dc,#e8dfc4);
@@ -3339,7 +3345,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 /* RESPONSYWNOŚĆ */
 
-@media(max-width:1050px){
+@media(max-width:0px){
   :root{--panel-width:260px}
   #start{left:0}
   #gameMain{left:0}
@@ -3347,7 +3353,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   .farm-map{gap:10px}
 }
 
-@media(max-width:700px){
+@media(max-width:0px){
   :root{--panel-width:0px}
   body{overflow:hidden}
   #appStage{background:#70482f}
@@ -3367,7 +3373,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
   .main-btn{min-height:48px;padding:9px 7px;font-size:15px}
   .auth-overlay,.profile-overlay{padding:10px;align-items:center}
-  .auth-window,.profile-window{width:100%;max-width:440px;max-height:calc(100dvh - 20px);padding:26px 19px 20px}
+  .auth-window,.profile-window{width:100%;max-width:440px;max-height:calc(100cqh - 20px);padding:26px 19px 20px}
 
   #gameMain{left:0;right:0;top:0;bottom:190px}
 
@@ -3462,14 +3468,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   .premium-card p{min-height:0}
 }
 
-@media(max-width:380px){
+@media(max-width:0px){
   #playerPanel{grid-template-columns:130px minmax(0,1fr)}
   .side-menu button{font-size:9px}
   .farm-area{font-size:13px}
   .main-btn{font-size:13px}
 }
 
-@media(max-height:520px){
+@media(max-height:0px){
   .auth-overlay,.profile-overlay{align-items:flex-start}
   .auth-window,.profile-window{max-height:none;margin:auto}
 }
@@ -3752,7 +3758,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   opacity:1!important;visibility:visible!important;
   transform:translate(-50%,0)!important;
 }
-@media(max-width:760px){
+@media(max-width:0px){
   .side-menu button.compass-menu-button::after,
   .side-menu button.premium-menu-button::after,
   .side-menu button.tasks-menu-button::after,
@@ -4663,22 +4669,22 @@ function updateSeason(){
       const petalFiles=["platek-wiosna1.png","platek-wiosna2.png","platek-wiosna3.png"];
       // Zróżnicowane, zakrzywione trasy z obu stron kadru — jak w jesiennym opadzie liści.
       const petalPaths=[
-        [0,"-2%","13px","22vw","44vw","68vw","88vw","102vw","-5deg","72deg","-38deg","96deg","-52deg","285deg",".94"],
-        [1,"-1%","11px","-24vw","-48vw","-72vw","-92vw","-106vw","18deg","-62deg","42deg","-92deg","35deg","-245deg",".91"],
-        [2,"-3%","10px","30vw","58vw","82vw","104vw","118vw","-12deg","88deg","-55deg","70deg","-30deg","310deg",".93"],
-        [0,"-2%","12px","-18vw","-42vw","-66vw","-88vw","-102vw","22deg","-75deg","58deg","-88deg","44deg","-270deg",".95"],
-        [1,"96%","14px","-22vw","-46vw","-70vw","-94vw","-108vw","-8deg","64deg","-48deg","105deg","-35deg","300deg",".94"],
-        [2,"97%","10px","24vw","50vw","76vw","98vw","112vw","15deg","-82deg","48deg","-100deg","30deg","-260deg",".90"],
-        [0,"98%","13px","-28vw","-54vw","-78vw","-102vw","-116vw","-18deg","76deg","-44deg","92deg","-42deg","295deg",".95"],
-        [1,"99%","11px","20vw","46vw","70vw","94vw","108vw","12deg","-68deg","52deg","-84deg","38deg","-250deg",".92"],
-        [2,"97%","10px","-24vw","-50vw","-74vw","-96vw","-110vw","-10deg","82deg","-50deg","96deg","-32deg","305deg",".92"],
-        [0,"-1%","11px","28vw","56vw","82vw","106vw","120vw","20deg","-72deg","46deg","-90deg","34deg","-255deg",".90"],
-        [1,"-2%","14px","18vw","40vw","64vw","84vw","98vw","-14deg","68deg","-42deg","88deg","-40deg","292deg",".96"],
-        [2,"98%","12px","-20vw","-44vw","-68vw","-90vw","-104vw","16deg","-70deg","50deg","-86deg","36deg","-248deg",".93"],
-        [0,"-1%","10px","26vw","52vw","78vw","100vw","114vw","-8deg","84deg","-52deg","98deg","-34deg","308deg",".91"],
-        [1,"97%","13px","-26vw","-52vw","-76vw","-98vw","-112vw","20deg","-74deg","56deg","-94deg","42deg","-262deg",".95"],
-        [2,"-2%","11px","16vw","38vw","60vw","80vw","94vw","-16deg","66deg","-40deg","82deg","-38deg","288deg",".92"],
-        [0,"99%","12px","-24vw","-48vw","-72vw","-94vw","-108vw","14deg","-78deg","54deg","-90deg","40deg","-258deg",".96"]
+        [0,"-2%","13px","22cqw","44cqw","68cqw","88cqw","102cqw","-5deg","72deg","-38deg","96deg","-52deg","285deg",".94"],
+        [1,"-1%","11px","-24cqw","-48cqw","-72cqw","-92cqw","-106cqw","18deg","-62deg","42deg","-92deg","35deg","-245deg",".91"],
+        [2,"-3%","10px","30cqw","58cqw","82cqw","104cqw","118cqw","-12deg","88deg","-55deg","70deg","-30deg","310deg",".93"],
+        [0,"-2%","12px","-18cqw","-42cqw","-66cqw","-88cqw","-102cqw","22deg","-75deg","58deg","-88deg","44deg","-270deg",".95"],
+        [1,"96%","14px","-22cqw","-46cqw","-70cqw","-94cqw","-108cqw","-8deg","64deg","-48deg","105deg","-35deg","300deg",".94"],
+        [2,"97%","10px","24cqw","50cqw","76cqw","98cqw","112cqw","15deg","-82deg","48deg","-100deg","30deg","-260deg",".90"],
+        [0,"98%","13px","-28cqw","-54cqw","-78cqw","-102cqw","-116cqw","-18deg","76deg","-44deg","92deg","-42deg","295deg",".95"],
+        [1,"99%","11px","20cqw","46cqw","70cqw","94cqw","108cqw","12deg","-68deg","52deg","-84deg","38deg","-250deg",".92"],
+        [2,"97%","10px","-24cqw","-50cqw","-74cqw","-96cqw","-110cqw","-10deg","82deg","-50deg","96deg","-32deg","305deg",".92"],
+        [0,"-1%","11px","28cqw","56cqw","82cqw","106cqw","120cqw","20deg","-72deg","46deg","-90deg","34deg","-255deg",".90"],
+        [1,"-2%","14px","18cqw","40cqw","64cqw","84cqw","98cqw","-14deg","68deg","-42deg","88deg","-40deg","292deg",".96"],
+        [2,"98%","12px","-20cqw","-44cqw","-68cqw","-90cqw","-104cqw","16deg","-70deg","50deg","-86deg","36deg","-248deg",".93"],
+        [0,"-1%","10px","26cqw","52cqw","78cqw","100cqw","114cqw","-8deg","84deg","-52deg","98deg","-34deg","308deg",".91"],
+        [1,"97%","13px","-26cqw","-52cqw","-76cqw","-98cqw","-112cqw","20deg","-74deg","56deg","-94deg","42deg","-262deg",".95"],
+        [2,"-2%","11px","16cqw","38cqw","60cqw","80cqw","94cqw","-16deg","66deg","-40deg","82deg","-38deg","288deg",".92"],
+        [0,"99%","12px","-24cqw","-48cqw","-72cqw","-94cqw","-108cqw","14deg","-78deg","54deg","-90deg","40deg","-258deg",".96"]
       ];
       Array.from({length:30},(_,index)=>{
         const [type,left,size,a,b,c,d,endX,start,turnA,turnB,turnC,turnD,end,opacity]=petalPaths[index%petalPaths.length];
@@ -4747,22 +4753,22 @@ function updateSeason(){
         "lisc-brzoza-lot.png"
       ];
       const leaves=[
-        [0,"-2%","25px","90s","-4s","22vw","44vw","68vw","88vw","102vw","-5deg","72deg","-38deg","96deg","-52deg","285deg",".96"],
-        [1,"-1%","20px","105s","-19s","-24vw","-48vw","-72vw","-92vw","-106vw","18deg","-62deg","42deg","-92deg","35deg","-245deg",".94"],
-        [2,"-3%","16px","84s","-11s","30vw","58vw","82vw","104vw","118vw","-12deg","88deg","-55deg","70deg","-30deg","310deg",".95"],
-        [0,"-2%","22px","112s","-28s","-18vw","-42vw","-66vw","-88vw","-102vw","22deg","-75deg","58deg","-88deg","44deg","-270deg",".97"],
-        [1,"96%","27px","96s","-8s","-22vw","-46vw","-70vw","-94vw","-108vw","-8deg","64deg","-48deg","105deg","-35deg","300deg",".96"],
-        [2,"97%","17px","108s","-23s","24vw","50vw","76vw","98vw","112vw","15deg","-82deg","48deg","-100deg","30deg","-260deg",".93"],
-        [0,"98%","23px","88s","-15s","-28vw","-54vw","-78vw","-102vw","-116vw","-18deg","76deg","-44deg","92deg","-42deg","295deg",".97"],
-        [1,"99%","19px","116s","-32s","20vw","46vw","70vw","94vw","108vw","12deg","-68deg","52deg","-84deg","38deg","-250deg",".94"],
-        [2,"97%","15px","94s","-6s","-24vw","-50vw","-74vw","-96vw","-110vw","-10deg","82deg","-50deg","96deg","-32deg","305deg",".95"],
-        [0,"-1%","18px","120s","-38s","28vw","56vw","82vw","106vw","120vw","20deg","-72deg","46deg","-90deg","34deg","-255deg",".92"],
-        [1,"-2%","24px","102s","-13s","18vw","40vw","64vw","84vw","98vw","-14deg","68deg","-42deg","88deg","-40deg","292deg",".98"],
-        [2,"98%","21px","110s","-25s","-20vw","-44vw","-68vw","-90vw","-104vw","16deg","-70deg","50deg","-86deg","36deg","-248deg",".96"],
-        [0,"-1%","17px","92s","-31s","26vw","52vw","78vw","100vw","114vw","-8deg","84deg","-52deg","98deg","-34deg","308deg",".94"],
-        [1,"97%","26px","118s","-17s","-26vw","-52vw","-76vw","-98vw","-112vw","20deg","-74deg","56deg","-94deg","42deg","-262deg",".97"],
-        [2,"-2%","19px","100s","-42s","16vw","38vw","60vw","80vw","94vw","-16deg","66deg","-40deg","82deg","-38deg","288deg",".95"],
-        [0,"99%","22px","114s","-36s","-24vw","-48vw","-72vw","-94vw","-108vw","14deg","-78deg","54deg","-90deg","40deg","-258deg",".98"]
+        [0,"-2%","25px","90s","-4s","22cqw","44cqw","68cqw","88cqw","102cqw","-5deg","72deg","-38deg","96deg","-52deg","285deg",".96"],
+        [1,"-1%","20px","105s","-19s","-24cqw","-48cqw","-72cqw","-92cqw","-106cqw","18deg","-62deg","42deg","-92deg","35deg","-245deg",".94"],
+        [2,"-3%","16px","84s","-11s","30cqw","58cqw","82cqw","104cqw","118cqw","-12deg","88deg","-55deg","70deg","-30deg","310deg",".95"],
+        [0,"-2%","22px","112s","-28s","-18cqw","-42cqw","-66cqw","-88cqw","-102cqw","22deg","-75deg","58deg","-88deg","44deg","-270deg",".97"],
+        [1,"96%","27px","96s","-8s","-22cqw","-46cqw","-70cqw","-94cqw","-108cqw","-8deg","64deg","-48deg","105deg","-35deg","300deg",".96"],
+        [2,"97%","17px","108s","-23s","24cqw","50cqw","76cqw","98cqw","112cqw","15deg","-82deg","48deg","-100deg","30deg","-260deg",".93"],
+        [0,"98%","23px","88s","-15s","-28cqw","-54cqw","-78cqw","-102cqw","-116cqw","-18deg","76deg","-44deg","92deg","-42deg","295deg",".97"],
+        [1,"99%","19px","116s","-32s","20cqw","46cqw","70cqw","94cqw","108cqw","12deg","-68deg","52deg","-84deg","38deg","-250deg",".94"],
+        [2,"97%","15px","94s","-6s","-24cqw","-50cqw","-74cqw","-96cqw","-110cqw","-10deg","82deg","-50deg","96deg","-32deg","305deg",".95"],
+        [0,"-1%","18px","120s","-38s","28cqw","56cqw","82cqw","106cqw","120cqw","20deg","-72deg","46deg","-90deg","34deg","-255deg",".92"],
+        [1,"-2%","24px","102s","-13s","18cqw","40cqw","64cqw","84cqw","98cqw","-14deg","68deg","-42deg","88deg","-40deg","292deg",".98"],
+        [2,"98%","21px","110s","-25s","-20cqw","-44cqw","-68cqw","-90cqw","-104cqw","16deg","-70deg","50deg","-86deg","36deg","-248deg",".96"],
+        [0,"-1%","17px","92s","-31s","26cqw","52cqw","78cqw","100cqw","114cqw","-8deg","84deg","-52deg","98deg","-34deg","308deg",".94"],
+        [1,"97%","26px","118s","-17s","-26cqw","-52cqw","-76cqw","-98cqw","-112cqw","20deg","-74deg","56deg","-94deg","42deg","-262deg",".97"],
+        [2,"-2%","19px","100s","-42s","16cqw","38cqw","60cqw","80cqw","94cqw","-16deg","66deg","-40deg","82deg","-38deg","288deg",".95"],
+        [0,"99%","22px","114s","-36s","-24cqw","-48cqw","-72cqw","-94cqw","-108cqw","14deg","-78deg","54deg","-90deg","40deg","-258deg",".98"]
       ];
       // Dwie fale liści na bazie różnych torów lotu: gęściej, ale nadal nieregularnie.
       Array.from({length:30},(_,index)=>{
@@ -6076,11 +6082,11 @@ renderNeighbors();
       wet.style.top=(p.y+Math.sin(rad)*radiusY)+"%";
       wet.style.zIndex=String(6+Math.round(p.y/10));
       wet.style.width=(index===0||index===1)
-        ? "clamp(34px,4.2vw,60px)"
-        : "clamp(20px,2.5vw,36px)";
+        ? "clamp(34px,4.2cqw,60px)"
+        : "clamp(20px,2.5cqw,36px)";
       wet.style.height=(index===0||index===1)
-        ? "clamp(9px,1.05vw,15px)"
-        : "clamp(7px,.8vw,12px)";
+        ? "clamp(9px,1.05cqw,15px)"
+        : "clamp(7px,.8cqw,12px)";
       wet.style.opacity=(index===0||index===1) ? ".72" : ".5";
       wet.style.transform="translate(-50%,-50%) rotate("+((j%2?12:-12)+index*5)+"deg)";
       stage.appendChild(wet);
@@ -6099,6 +6105,29 @@ renderNeighbors();
   });
 })();
 
+
+/* JEDEN KOMPUTEROWY UKŁAD NA KAŻDYM URZĄDZENIU — skalowanie całej planszy 16:9. */
+(function fitDesktopGameStage(){
+  const stage=document.getElementById("appStage");
+  if(!stage)return;
+  const DESIGN_WIDTH=1686;
+  const DESIGN_HEIGHT=950;
+  let frame=0;
+  function fit(){
+    cancelAnimationFrame(frame);
+    frame=requestAnimationFrame(()=>{
+      const viewport=window.visualViewport;
+      const width=viewport?viewport.width:document.documentElement.clientWidth;
+      const height=viewport?viewport.height:document.documentElement.clientHeight;
+      const scale=Math.min(width/DESIGN_WIDTH,height/DESIGN_HEIGHT);
+      stage.style.setProperty("--stage-scale",String(Math.max(.1,scale)));
+    });
+  }
+  window.addEventListener("resize",fit,{passive:true});
+  window.addEventListener("orientationchange",fit,{passive:true});
+  if(window.visualViewport)window.visualViewport.addEventListener("resize",fit,{passive:true});
+  fit();
+})();
 </script>
 </body>
 </html>
