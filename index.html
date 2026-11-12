@@ -5159,6 +5159,115 @@ html,body,#appStage{
 }
 
 
+
+/* Natural Modern — zielone ikony i zielony kafelek z białym symbolem po najechaniu. */
+.side-menu button{
+  transition:background-color .18s ease,color .18s ease,border-color .18s ease;
+}
+.side-menu button:not(.compass-menu-button):not(.premium-menu-button):not(.tasks-menu-button):not(.help-menu-button){
+  background:transparent!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+  color:#72965B!important;
+}
+.side-menu .menu-icon,
+.side-menu .logout-menu-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:40px;
+  height:40px;
+  flex:0 0 40px;
+  border-radius:9px;
+  color:#72965B;
+  background:transparent;
+  transition:background-color .18s ease,color .18s ease;
+}
+.side-menu .menu-icon .ui-icon,
+.side-menu .logout-menu-icon .ui-icon{
+  width:24px;
+  height:24px;
+  stroke:#72965B;
+  transition:stroke .18s ease;
+}
+.side-menu button:hover .menu-icon,
+.side-menu button:focus-visible .menu-icon,
+.side-menu button.selected .menu-icon,
+.side-menu button:hover .logout-menu-icon,
+.side-menu button:focus-visible .logout-menu-icon,
+.side-menu button.selected .logout-menu-icon{
+  background:#72965B;
+  color:#FFFFFF;
+}
+.side-menu button:hover .menu-icon .ui-icon,
+.side-menu button:focus-visible .menu-icon .ui-icon,
+.side-menu button.selected .menu-icon .ui-icon,
+.side-menu button:hover .logout-menu-icon .ui-icon,
+.side-menu button:focus-visible .logout-menu-icon .ui-icon,
+.side-menu button.selected .logout-menu-icon .ui-icon{
+  stroke:#FFFFFF;
+}
+.side-menu button.compass-menu-button,
+.side-menu button.premium-menu-button,
+.side-menu button.tasks-menu-button,
+.side-menu button.help-menu-button{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.side-menu .compass-menu-icon,
+.side-menu .premium-menu-icon,
+.side-menu .tasks-menu-icon,
+.side-menu .help-menu-icon{
+  display:flex!important;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  background:transparent;
+  transition:background-color .18s ease;
+}
+.side-menu .compass-menu-icon .ui-icon,
+.side-menu .premium-menu-icon .ui-icon,
+.side-menu .tasks-menu-icon .ui-icon,
+.side-menu .help-menu-icon .ui-icon{
+  stroke:#72965B!important;
+  transition:stroke .18s ease;
+}
+.side-menu button.compass-menu-button:hover .compass-menu-icon,
+.side-menu button.compass-menu-button:focus-visible .compass-menu-icon,
+.side-menu button.compass-menu-button.selected .compass-menu-icon,
+.side-menu button.premium-menu-button:hover .premium-menu-icon,
+.side-menu button.premium-menu-button:focus-visible .premium-menu-icon,
+.side-menu button.premium-menu-button.selected .premium-menu-icon,
+.side-menu button.tasks-menu-button:hover .tasks-menu-icon,
+.side-menu button.tasks-menu-button:focus-visible .tasks-menu-icon,
+.side-menu button.tasks-menu-button.selected .tasks-menu-icon,
+.side-menu button.help-menu-button:hover .help-menu-icon,
+.side-menu button.help-menu-button:focus-visible .help-menu-icon,
+.side-menu button.help-menu-button.selected .help-menu-icon{
+  background:#72965B!important;
+}
+.side-menu button.compass-menu-button:hover .ui-icon,
+.side-menu button.compass-menu-button:focus-visible .ui-icon,
+.side-menu button.compass-menu-button.selected .ui-icon,
+.side-menu button.premium-menu-button:hover .ui-icon,
+.side-menu button.premium-menu-button:focus-visible .ui-icon,
+.side-menu button.premium-menu-button.selected .ui-icon,
+.side-menu button.tasks-menu-button:hover .ui-icon,
+.side-menu button.tasks-menu-button:focus-visible .ui-icon,
+.side-menu button.tasks-menu-button.selected .ui-icon,
+.side-menu button.help-menu-button:hover .ui-icon,
+.side-menu button.help-menu-button:focus-visible .ui-icon,
+.side-menu button.help-menu-button.selected .ui-icon{
+  stroke:#FFFFFF!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .side-menu button,.side-menu .menu-icon,.side-menu .logout-menu-icon,
+  .side-menu .compass-menu-icon,.side-menu .premium-menu-icon,
+  .side-menu .tasks-menu-icon,.side-menu .help-menu-icon,
+  .side-menu .ui-icon{transition:none!important}
+}
+
 </style>
 </head>
 
