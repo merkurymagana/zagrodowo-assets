@@ -5324,7 +5324,7 @@ setInterval(()=>{
    if(e.pointerType!=="touch")startle();
   });
   /* Każdy motyl otrzymuje własny, losowy rytm i od razu rozpoczyna lot. */
-  setTimeout(takeOff,n*900);
+  setTimeout(takeOff,Math.random()*26000+n*7000);
  });
 })();
  
