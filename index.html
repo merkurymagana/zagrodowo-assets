@@ -4613,6 +4613,68 @@ html,body,#appStage{
   #playerPanel .currency-divider{height:23px}
 }
 
+
+/* ZAGRODOWO UI — nowoczesny system ikon i HUD; ekran startowy pozostaje nietknięty. */
+#game, #profileOverlay{--hud-ink:#f6f1e7;--hud-muted:#bdb5a6;--hud-line:rgba(222,210,187,.2);--hud-panel:rgba(27,32,29,.91);--hud-panel-soft:rgba(39,45,39,.92);--hud-accent:#c6a66b;--hud-accent-soft:#e0c78e;--hud-green:#8da77a;}
+#game{color:#f2eee5;background:transparent}
+#gameMain,#gameViewport,#gameCanvas,#gameCanvas>.game-content{color:#f2eee5}
+#game button,#profileOverlay button{font-family:'Nunito',Arial,sans-serif;letter-spacing:.01em}
+#game button:focus-visible,#profileOverlay button:focus-visible,#profileOverlay input:focus-visible{outline:2px solid var(--hud-accent-soft);outline-offset:3px}
+#game .ui-icon,#profileOverlay .ui-icon{display:block;width:1.25em;height:1.25em;flex:0 0 auto;stroke:currentColor;fill:none}
+#playerPanel{color:var(--hud-ink)!important;background:linear-gradient(145deg,rgba(24,29,27,.94),rgba(37,42,36,.94))!important;border:1px solid rgba(226,211,180,.24)!important;border-radius:15px!important;box-shadow:0 14px 36px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.07)!important;backdrop-filter:blur(16px) saturate(1.12)}
+#playerPanel .profile-card{background:transparent!important;border:0!important;box-shadow:none!important;color:var(--hud-ink)!important}
+#playerPanel .avatar-frame{border:1px solid rgba(222,198,151,.55)!important;background:linear-gradient(145deg,#555c4d,#292f29)!important;box-shadow:0 4px 14px #0005!important}
+#playerPanel .player-name{color:#fff!important;text-shadow:0 1px 8px #0006}
+#playerPanel .player-level,#playerPanel .xp-label{color:#c9c2b4!important}
+#playerPanel .xp-track{background:rgba(255,255,255,.13)!important;border:1px solid rgba(255,255,255,.08)}
+#playerPanel .xp-track>div{background:linear-gradient(90deg,#8da77a,#d0b47b)!important;box-shadow:0 0 10px #9dbb7a66}
+#playerPanel .currency-bar{background:rgba(18,22,20,.88)!important;border:1px solid rgba(225,207,170,.25)!important;border-radius:12px!important;box-shadow:0 8px 24px #0003!important;backdrop-filter:blur(12px)}
+#playerPanel .currency-label{display:flex!important;align-items:center;justify-content:center;gap:6px;color:#cfc5b3!important;letter-spacing:.11em!important;font-weight:800}
+#playerPanel .currency-label .ui-icon{width:13px;height:13px;color:var(--hud-accent-soft)}
+#playerPanel .currency-value{color:#fff!important;font-variant-numeric:tabular-nums;text-shadow:0 1px 8px #0006}
+#playerPanel .currency-divider{background:rgba(225,207,170,.25)!important}
+#playerPanel .side-menu button{color:#e9e3d7!important;text-shadow:none!important;transition:background .18s ease,border-color .18s ease,transform .18s ease,color .18s ease,box-shadow .18s ease!important}
+#playerPanel .side-menu button .ui-icon{width:25px;height:25px;color:#d6c39e;transition:color .18s ease,transform .18s ease}
+#playerPanel .side-menu button::after{color:#d8d0c2!important;font-weight:800!important;letter-spacing:.02em}
+#playerPanel .side-menu button:hover,#playerPanel .side-menu button:focus-visible{background:rgba(218,193,143,.12)!important;border-color:rgba(218,193,143,.42)!important;transform:translateY(-2px);box-shadow:0 8px 20px #0003!important}
+#playerPanel .side-menu button:hover .ui-icon,#playerPanel .side-menu button.selected .ui-icon{color:#f0d49a;transform:scale(1.08)}
+#playerPanel .side-menu button.selected{background:linear-gradient(145deg,rgba(195,159,97,.22),rgba(195,159,97,.08))!important;border-color:rgba(218,193,143,.55)!important;box-shadow:inset 0 0 0 1px rgba(218,193,143,.08),0 5px 18px #0002!important}
+#playerPanel .menu-icon{display:flex!important;align-items:center;justify-content:center}
+#playerPanel .panel-bottom{background:transparent!important}
+#playerPanel .logout-button{display:flex!important;align-items:center;justify-content:center;gap:7px;background:rgba(35,40,36,.94)!important;color:#e8dfd0!important;border:1px solid rgba(222,210,187,.24)!important;border-radius:9px!important;box-shadow:0 5px 16px #0003!important;letter-spacing:.04em}
+#playerPanel .logout-button .ui-icon{width:14px;height:14px;color:#d5b987}
+#playerPanel .logout-button:hover{background:rgba(91,66,49,.96)!important;border-color:rgba(222,190,145,.55)!important}
+#game #farmView .farm-title,#game #otherView h1,#game #otherView h2,#game #otherView h3{color:#f2eadc}
+#game #farmView .farm-subtitle,#game #otherView p{color:#d0c7b6}
+#game .farm-land{background:linear-gradient(145deg,rgba(34,42,34,.84),rgba(47,54,41,.88))!important;border:1px solid rgba(218,199,160,.28)!important;border-radius:16px!important;box-shadow:0 16px 34px #0003,inset 0 1px #ffffff12!important}
+#game .farm-area,#game .farm-home,#game .map-farm-button{position:relative;background:linear-gradient(145deg,rgba(62,70,56,.94),rgba(40,48,40,.96))!important;color:#f1eadc!important;border:1px solid rgba(217,198,159,.28)!important;border-radius:12px!important;box-shadow:0 5px 14px #0002,inset 0 1px #ffffff0d!important;transition:transform .18s ease,border-color .18s ease,background .18s ease!important}
+#game .farm-area:hover,#game .farm-home:hover,#game .map-farm-button:hover{transform:translateY(-2px);border-color:rgba(224,199,142,.65)!important;background:linear-gradient(145deg,rgba(78,88,66,.98),rgba(48,59,46,.98))!important}
+#game .farm-area.available{border-color:rgba(151,184,119,.7)!important;background:linear-gradient(145deg,rgba(74,95,61,.96),rgba(44,61,43,.98))!important}
+#game .farm-area.locked,#game .map-farm-button.locked-farm{opacity:.68;color:#c4beaf!important}
+#game .farm-area small,#game .map-farm-button small{color:#c6bea9!important}
+#game #gameNotice,#game .map-note,#game .premium-note,#game .social-note{background:rgba(22,27,24,.72)!important;color:#d9d0bf!important;border:1px solid var(--hud-line)!important;border-radius:10px!important}
+#game .premium-card,#game .social-card,#game .social-empty,#game .conversation-list,#game .conversation-window,#game .conversation-choice{background:linear-gradient(145deg,rgba(43,50,43,.96),rgba(30,36,32,.97))!important;color:#eee7da!important;border:1px solid rgba(220,202,164,.2)!important;border-radius:12px!important;box-shadow:0 8px 22px #0002!important}
+#game .premium-card h3,#game .social-user strong,#game .conversation-heading{color:#f1e6d1!important}
+#game .premium-card p,#game .social-user small,#game .conversation-choice small{color:#c9c0b0!important}
+#game .premium-card button,#game .social-action,#profileOverlay .profile-actions button{background:linear-gradient(135deg,#8d7958,#66563e)!important;color:#fff8eb!important;border:1px solid rgba(224,199,142,.42)!important;border-radius:9px!important;box-shadow:0 4px 12px #0002!important;font-weight:800}
+#game .premium-card button.gold{background:linear-gradient(135deg,#b18b4e,#79603a)!important}
+#game .social-action.secondary,#profileOverlay .profile-actions button.secondary{background:rgba(255,255,255,.08)!important;color:#e9dfce!important;border-color:var(--hud-line)!important}
+#game .social-action.danger{background:linear-gradient(135deg,#9b5146,#70382f)!important}
+#game .social-tab{background:rgba(255,255,255,.055)!important;color:#d9d0bf!important;border:1px solid var(--hud-line)!important;border-radius:9px!important;font-family:'Nunito',Arial,sans-serif!important;font-weight:800}
+#game .social-tab.active{background:linear-gradient(135deg,rgba(185,148,88,.34),rgba(107,87,57,.3))!important;color:#fff2d8!important;border-color:rgba(224,199,142,.55)!important}
+#game input,#game textarea,#profileOverlay input{background:rgba(16,21,18,.72)!important;color:#f4eee3!important;border:1px solid rgba(218,199,160,.3)!important;border-radius:9px!important}
+#game input::placeholder,#game textarea::placeholder,#profileOverlay input::placeholder{color:#aaa291!important}
+#game .social-avatar{border:1px solid rgba(222,198,151,.45)!important;background:#394238!important}
+#profileOverlay{background:rgba(8,12,10,.78)!important;backdrop-filter:blur(8px)}
+#profileOverlay .profile-window{background:linear-gradient(145deg,#29312b,#1c231f)!important;color:#f0e8d9!important;border:1px solid rgba(224,199,142,.34)!important;border-radius:18px!important;box-shadow:0 24px 70px #0008!important}
+#profileOverlay .profile-window h2{color:#f3e8d4!important}
+#profileOverlay .profile-window .field{color:#ddd2bf!important}
+#profileOverlay .profile-window .field input{background:rgba(10,15,12,.72)!important}
+#profileOverlay .profile-hint{color:#bdb4a4!important}
+#profileOverlay .close-btn{display:grid!important;place-items:center;background:rgba(255,255,255,.07)!important;color:#e8dfd0!important;border:1px solid var(--hud-line)!important;border-radius:9px!important}
+#profileOverlay .close-btn .ui-icon{width:17px;height:17px}
+@media(prefers-reduced-motion:reduce){#game button,#profileOverlay button{transition:none!important}}
+
 </style>
 </head>
 
@@ -5121,12 +5183,12 @@ html,body,#appStage{
 
       <div class="currency-grid currency-bar" aria-label="Stan walut">
         <div class="currency-box">
-          <div class="currency-label"><span class="coin-icon" aria-hidden="true"></span> GOTÓWKA</div>
+          <div class="currency-label"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5c-.7-.7-1.8-1-3.1-1-1.6 0-2.7.8-2.7 2s1 1.8 2.8 2.2 2.8 1 2.8 2.3-1.2 2.2-3 2.2c-1.3 0-2.5-.5-3.3-1.3M12 5.5v13"/></svg> GOTÓWKA</div>
           <div class="currency-value" id="money">1,00</div>
         </div>
         <div class="currency-divider" aria-hidden="true"></div>
         <div class="currency-box">
-          <div class="currency-label">💎 DIAMENTY</div>
+          <div class="currency-label"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m6 3-4 6 10 12L22 9l-4-6z"/><path d="M2 9h20M6 3l3 6 3 12 3-12 3-6"/></svg> DIAMENTY</div>
           <div class="currency-value" id="diamonds">0</div>
         </div>
       </div>
@@ -5135,41 +5197,31 @@ html,body,#appStage{
         <div class="compass-links-row">
           <div class="compass-premium-stack">
             <button class="compass-menu-button" data-view="map" onclick="openGameView('map',this)" aria-label="Otwórz mapę" aria-pressed="false" type="button">
-              <span class="compass-menu-icon">
-                <img class="compass-dial" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/tarcza-kompasu.png" alt="">
-                <img class="compass-pointer" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wskazowka-kompasu.png" alt="">
-              </span>
+              <span class="compass-menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg></span>
             </button>
             <div class="premium-menu-row">
               <button class="premium-menu-button" data-view="premium" onclick="openGameView('premium',this)" aria-label="Otwórz Usługi Premium" aria-pressed="false" type="button">
-                <span class="premium-menu-icon">
-                  <img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ikona-uslugi-premium.png" alt="">
-                  <span class="premium-sparkle-coins" aria-hidden="true"></span>
-                  <span class="premium-sparkle-diamonds" aria-hidden="true"></span>
-                </span>
+                <span class="premium-menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.4 5 5.6.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.6-.8z"/><path d="m19 3 .6 1.4L21 5l-1.4.6L19 7l-.6-1.4L17 5l1.4-.6z"/></svg></span>
               </button>
             </div>
           </div>
           <div class="tasks-help-stack">
             <button class="tasks-menu-button" data-view="tasks" onclick="openGameView('tasks',this)" aria-label="Otwórz zadania" aria-pressed="false" type="button">
-              <span class="tasks-menu-icon">
-                <img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ikona-zadania.png" alt="">
-                <img class="tasks-wax-seal" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lak.png?v=2" alt="" aria-hidden="true">
-              </span>
+              <span class="tasks-menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/><path d="m7 3 1 2h8l1-2"/></svg></span>
             </button>
             <div class="help-menu-row">
               <button class="help-menu-button" data-view="help" onclick="openGameView('help',this)" aria-label="Otwórz Centrum pomocy" aria-pressed="false" type="button">
-                <span class="help-menu-icon"><img src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ikona-pomoc.png" alt=""></span>
+                <span class="help-menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 1 1 4.3 1.7c-1.2 1.1-1.9 1.4-1.9 3"/><path d="M12 17.5h.01"/></svg></span>
               </button>
             </div>
           </div>
         </div>
-        <button data-view="neighbors" onclick="openGameView('neighbors',this)"><span class="menu-icon">🏡</span>Sąsiedzi <span class="menu-count" id="neighborsBadge" style="display:none">0</span></button>
-        <button data-view="settings" onclick="openGameView('settings',this)"><span class="menu-icon">⚙️</span>Ustawienia</button>
+        <button data-view="neighbors" onclick="openGameView('neighbors',this)"><span class="menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-7 9 7"/><path d="M5 10v10h14V10M9 20v-6h6v6"/><path d="M2 12h2m16 0h2"/></svg></span>Sąsiedzi <span class="menu-count" id="neighborsBadge" style="display:none">0</span></button>
+        <button data-view="settings" onclick="openGameView('settings',this)"><span class="menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a8 8 0 0 1-1.7 1l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.7-1.4-2.4 1.4-1.1a7 7 0 0 1 0-2l-1.4-1.1 1.4-2.4 1.7.7a8 8 0 0 1 1.7-1l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.7 1l1.7-.7 1.4 2.4-1.4 1.1a7 7 0 0 1 0 2z"/></svg></span>Ustawienia</button>
       </nav>
 
       <div class="panel-bottom">
-        <button class="logout-button" type="button" onclick="backToStart()">↩ Wyloguj się</button>
+        <button class="logout-button" type="button" onclick="backToStart()"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg><span>Wyloguj się</span></button>
         <div class="panel-version">Zagrodowo • wersja demonstracyjna</div>
       </div>
     </aside>
@@ -5179,7 +5231,7 @@ html,body,#appStage{
 
   <div class="profile-overlay" id="profileOverlay" onclick="profileOverlayClick(event)">
     <div class="profile-window">
-      <button class="close-btn" type="button" onclick="closeProfileEditor()" aria-label="Zamknij">×</button>
+      <button class="close-btn" type="button" onclick="closeProfileEditor()" aria-label="Zamknij"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
       <h2>Edytuj swój profil</h2>
 
       <div class="profile-preview">
