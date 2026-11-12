@@ -3897,57 +3897,76 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
       const ctx = canvas.getContext('2d');
       const W = 676, H = 417;
       let last = 0, raf = 0, active = true;
-      const tongues = [
-        {x:286,w:34,h:105,phase:0.4,speed:1.15},
-        {x:326,w:39,h:139,phase:2.1,speed:.92},
-        {x:365,w:32,h:112,phase:4.3,speed:1.28},
-        {x:398,w:25,h:76,phase:1.2,speed:1.48},
-        {x:250,w:22,h:65,phase:3.3,speed:1.05}
+      const embers = [
+        {x:296,y:282,r:5,p:0.2},{x:326,y:290,r:7,p:1.7},
+        {x:354,y:280,r:4,p:2.8},{x:379,y:289,r:5,p:4.1},
+        {x:340,y:271,r:3,p:3.4}
       ];
-      function plume(t, p) {
-        const sway = Math.sin(t*p.speed+p.phase)*10 + Math.sin(t*2.13+p.phase*1.7)*5;
-        const pulse = .82 + .18*Math.sin(t*2.7+p.phase);
-        const h = p.h*pulse;
-        const x = p.x+sway;
-        const grad=ctx.createLinearGradient(0,286,0,286-h);
-        grad.addColorStop(0,'rgba(105,24,8,.96)');
-        grad.addColorStop(.2,'rgba(190,55,12,.95)');
-        grad.addColorStop(.48,'rgba(224,103,20,.88)');
-        grad.addColorStop(.76,'rgba(235,151,43,.62)');
-        grad.addColorStop(.94,'rgba(244,190,91,.24)');
-        grad.addColorStop(1,'rgba(244,190,91,0)');
-        ctx.fillStyle=grad;
-        ctx.beginPath();
-        ctx.moveTo(x-p.w*.58,292);
-        ctx.bezierCurveTo(x-p.w*.9,270,x-p.w*.25,246-h*.42,x+Math.sin(t*3+p.phase)*p.w*.35,286-h);
-        ctx.bezierCurveTo(x+p.w*.95,246-h*.7,x+p.w*.75,271,x+p.w*.58,292);
-        ctx.closePath();ctx.fill();
-      }
+      const wisps = [
+        {x:320,y:245,phase:0.4,speed:.22},
+        {x:352,y:238,phase:2.1,speed:.18}
+      ];
       function draw(ms) {
         if(!active) return;
         const t=ms/1000;
         ctx.clearRect(0,0,W,H);
-        // Miękki żar tuż pomiędzy polanami.
-        const ember=ctx.createRadialGradient(338,285,3,338,285,92);
-        ember.addColorStop(0,'rgba(210,119,31,.34)');
-        ember.addColorStop(.42,'rgba(151,54,15,.18)');
-        ember.addColorStop(1,'rgba(112,35,8,0)');
-        ctx.fillStyle=ember;ctx.fillRect(225,205,230,125);
-        tongues.forEach(p=>plume(t,p));
-        // Jasne, krótkie rdzenie poruszają się niezależnie w środku płomienia.
-        ctx.globalCompositeOperation='screen';
-        tongues.slice(0,3).forEach((p,i)=>{
-          const x=p.x+Math.sin(t*p.speed+p.phase)*8;
-          const h=p.h*(.48+.13*Math.sin(t*3.1+p.phase));
-          const g=ctx.createLinearGradient(0,286,0,286-h);
-          g.addColorStop(0,'rgba(255,190,94,.58)');
-          g.addColorStop(.55,'rgba(244,158,62,.38)');
-          g.addColorStop(1,'rgba(239,183,105,0)');
-          ctx.fillStyle=g;ctx.beginPath();
-          ctx.moveTo(x-8,288);ctx.bezierCurveTo(x-13,267,x-2,260-h*.5,x+Math.sin(t*3+i)*5,286-h);
-          ctx.bezierCurveTo(x+10,250-h*.45,x+12,273,x+8,288);ctx.closePath();ctx.fill();
+
+        // Niski, rozproszony blask żaru pod polanami.
+        const glow=ctx.createRadialGradient(338,283,2,338,283,82);
+        glow.addColorStop(0,'rgba(238,112,30,.32)');
+        glow.addColorStop(.28,'rgba(174,58,18,.24)');
+        glow.addColorStop(.68,'rgba(104,35,13,.11)');
+        glow.addColorStop(1,'rgba(70,24,8,0)');
+        ctx.fillStyle=glow;ctx.fillRect(245,205,190,145);
+
+        // Dwa krótkie płomyki pojawiają się nieregularnie i szybko przygasają.
+        const flickers=[
+          {x:311,w:17,h:31,phase:.7,period:4.8},
+          {x:347,w:20,h:43,phase:2.9,period:6.3},
+          {x:374,w:13,h:25,phase:4.4,period:5.6}
+        ];
+        flickers.forEach((p,k)=>{
+          const q=(t+p.phase)%p.period;
+          const envelope=Math.pow(Math.max(0,Math.sin(q/p.period*Math.PI*2)),3);
+          if(envelope<.08) return;
+          const sway=Math.sin(t*2.2+p.phase)*4;
+          const h=p.h*(.45+.55*envelope);
+          const x=p.x+sway;
+          const g=ctx.createLinearGradient(0,289,0,289-h);
+          g.addColorStop(0,'rgba(112,32,10,0)');
+          g.addColorStop(.2,'rgba(190,67,18,'+(envelope*.68)+')');
+          g.addColorStop(.62,'rgba(229,125,35,'+(envelope*.7)+')');
+          g.addColorStop(1,'rgba(240,174,83,0)');
+          ctx.fillStyle=g;
+          ctx.beginPath();
+          ctx.moveTo(x-p.w*.55,290);
+          ctx.bezierCurveTo(x-p.w*.9,278,x-p.w*.2,267-h*.45,x+Math.sin(t*3+k)*3,289-h);
+          ctx.bezierCurveTo(x+p.w*.8,267-h*.65,x+p.w*.75,281,x+p.w*.55,290);
+          ctx.closePath();ctx.fill();
         });
-        ctx.globalCompositeOperation='source-over';
+
+        // Rozżarzone szczeliny na węglach — delikatnie pulsują, bez jaskrawego światła.
+        embers.forEach((p,i)=>{
+          const pulse=.55+.35*Math.sin(t*.9+p.p);
+          const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*2.7);
+          g.addColorStop(0,'rgba(255,174,75,'+(pulse*.72)+')');
+          g.addColorStop(.38,'rgba(210,75,22,'+(pulse*.55)+')');
+          g.addColorStop(1,'rgba(130,35,10,0)');
+          ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r*2.7,0,Math.PI*2);ctx.fill();
+          ctx.fillStyle='rgba(255,190,105,'+(pulse*.42)+')';
+          ctx.fillRect(p.x-1,p.y-1,2,2);
+        });
+
+        // Prawie niewidoczny, cienki dym unoszący się znad dogasających polan.
+        wisps.forEach((p,i)=>{
+          const phase=(t*p.speed+p.phase)%(Math.PI*2);
+          const rise=(phase/(Math.PI*2))*34;
+          ctx.beginPath();
+          ctx.moveTo(p.x,p.y-rise);
+          ctx.bezierCurveTo(p.x-9+Math.sin(phase)*5,p.y-12-rise,p.x+12+Math.cos(phase)*6,p.y-22-rise,p.x+3,p.y-34-rise);
+          ctx.strokeStyle='rgba(116,111,102,'+(0.055+0.035*Math.sin(phase))+')';
+          ctx.lineWidth=5-i*1.2;ctx.lineCap='round';ctx.stroke();
+        });
         raf=requestAnimationFrame(draw);
       }
       const observer=new IntersectionObserver(entries=>{
@@ -3957,7 +3976,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
       });
       observer.observe(root);
       if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) raf=requestAnimationFrame(draw);
-      else {active=false;draw(0);}
+      else {active=false;}
     })();
     </script>
     <img id="summerBalloon" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/balon.png?v=1" alt="" aria-hidden="true">
