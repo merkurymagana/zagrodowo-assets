@@ -3896,6 +3896,28 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   }
   #appStage *{touch-action:none}
 }
+
+/* Po zalogowaniu: jednolite tło bez drewnianej tekstury pod kafelkami i panelami. */
+#game,
+#gameMain,
+#gameViewport,
+#gameCanvas,
+#gameCanvas > .game-content,
+#playerPanel{
+  background-color:#eadfca!important;
+  background-image:none!important;
+}
+#gameMain,
+#gameViewport,
+#gameCanvas,
+#gameCanvas > .game-content{
+  background:#eadfca!important;
+}
+#playerPanel{
+  border-left-color:#eadfca!important;
+  box-shadow:none!important;
+}
+
 </style>
 </head>
 
