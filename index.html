@@ -454,10 +454,18 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   93%{transform:translate3d(-9vw,-8vh,0) scale(.82)}
   100%{transform:translate3d(0,-3vh,0) scale(.90)}
 }
-/* Motyle odpoczywają w wybranych punktach; skrzydła milkną razem z lotem. */
-.summerButterfly{pointer-events:auto;cursor:default}
-.summerButterfly.resting img{animation-play-state:paused,paused}
-.summerButterfly.scared img{animation-duration:.12s,200s}
+/* Ruch motyli sterowany punktami lądowania; pozycje są procentowe względem scenerii. */
+.summerButterfly{
+  left:0!important;top:0!important;
+  animation:none!important;
+  transform-origin:center center;
+  pointer-events:auto;cursor:default;
+}
+.summerButterfly img{
+  animation:summerButterflyWings .24s ease-in-out infinite alternate!important;
+  transition:none;
+}
+.summerButterfly.resting img{animation-play-state:paused!important}
 @media(max-width:700px){
   .summerButterfly{width:clamp(24px,5.2vw,34px)}
   #summerButterfly2{width:clamp(23px,4.9vw,32px)}
@@ -5347,85 +5355,102 @@ setInterval(()=>{
   render();
 })();
  
-/* MOTYLE — krótkie odpoczynki w punktach lotu i płoszenie po najechaniu kursorem. */
+/* MOTYLE — lądowanie w punktach wybranych w edytorze, odpoczynek i płoszenie kursorem. */
 (function initSummerButterflyBehavior(){
-  const duration=200000;
+  const points=[
+    {x:48.62,y:72.68},
+    {x:77.45,y:67.17},
+    {x:55.56,y:58.96},
+    {x:18.06,y:63.17},
+    {x:72.19,y:60.26}
+  ];
   const configs=[
-    {id:"summerButterfly1",flight:"summerButterflyFlight1",facing:"summerButterflyFacing1",stops:[62000,146000]},
-    {id:"summerButterfly2",flight:"summerButterflyFlight2",facing:"summerButterflyFacing2",stops:[98000,158000]},
-    {id:"summerButterfly3",flight:"summerButterflyFlight3",facing:"summerButterflyFacing3",stops:[86000,164000]}
+    {id:"summerButterfly1",start:0,order:[0,2,4,1,3]},
+    {id:"summerButterfly2",start:2,order:[2,3,0,4,1]},
+    {id:"summerButterfly3",start:4,order:[4,1,3,2,0]}
   ];
   const states=[];
-  function findAnimation(element,name){
-    return element.getAnimations().find(animation=>animation.animationName===name);
+  function setDepth(state,y){
+    /* Im wyższy punkt (mniejsze y), tym mniejszy motyl. */
+    const scale=.68+y*.005;
+    state.element.style.transform="translate(-50%,-50%) scale("+scale.toFixed(3)+")";
   }
-  function resume(state){
+  function setFacing(state,from,to){
+    state.image.style.transform="scaleX("+(to.x<from.x?-1:1)+")";
+  }
+  function rest(state){
+    state.element.classList.add("resting");
+    state.image.style.animationPlayState="paused";
+    state.restTimer=setTimeout(()=>depart(state),5500+Math.random()*4500);
+  }
+  function depart(state){
+    clearTimeout(state.restTimer);
     state.element.classList.remove("resting");
-    state.flight?.play();
-    state.facing?.play();
-  }
-  function frighten(state){
-    if(state.departureTimer)clearTimeout(state.departureTimer);
-    if(state.restTimer)clearTimeout(state.restTimer);
-    resume(state);
-    state.nextStop=Math.min(state.nextStop+1,state.config.stops.length);
-    state.element.classList.add("scared");
-    state.element.animate(
+    state.image.style.animationPlayState="running";
+    const nextIndex=(state.orderIndex+1)%state.config.order.length;
+    const next=points[state.config.order[nextIndex]];
+    const current=points[state.config.order[state.orderIndex]];
+    setFacing(state,current,next);
+    setDepth(state,next.y);
+    state.orderIndex=nextIndex;
+    state.element.style.zIndex=String(7+Math.round(next.y/100));
+    const duration=32000+Math.random()*10000;
+    const animation=state.element.animate(
       [
-        {transform:"translate3d(0,0,0) scale(1)"},
-        {transform:"translate3d(34px,-28px,0) scale(1.08)",offset:.38},
-        {transform:"translate3d(88px,-74px,0) scale(.9)"}
+        {left:current.x+"%",top:current.y+"%"},
+        {left:next.x+"%",top:next.y+"%"}
       ],
-      {duration:850,easing:"cubic-bezier(.12,.72,.2,1)",composite:"add"}
+      {duration,easing:"ease-in-out",fill:"forwards"}
     );
-    state.departureTimer=setTimeout(()=>state.element.classList.remove("scared"),950);
+    state.animation=animation;
+    animation.onfinish=()=>{
+      state.element.style.left=next.x+"%";
+      state.element.style.top=next.y+"%";
+      animation.cancel();
+      rest(state);
+    };
+  }
+  function scare(state){
+    if(state.animation){state.animation.cancel();state.animation=null;}
+    clearTimeout(state.restTimer);
+    state.element.classList.remove("resting");
+    state.image.style.animationPlayState="running";
+    const current={
+      x:parseFloat(state.element.style.left)||points[state.config.order[state.orderIndex]].x,
+      y:parseFloat(state.element.style.top)||points[state.config.order[state.orderIndex]].y
+    };
+    state.element.animate(
+      [{left:current.x+"%",top:current.y+"%",opacity:1},
+       {left:Math.max(2,Math.min(98,current.x+ (Math.random()>.5?12:-12)))+"%",
+        top:Math.max(8,current.y-12)+"%",opacity:1}],
+      {duration:650,easing:"cubic-bezier(.12,.72,.2,1)",fill:"forwards"}
+    ).onfinish=()=>{
+      const animation=state.element.getAnimations().find(a=>a!==state.animation);
+      if(animation)animation.cancel();
+      state.element.style.left=current.x+"%";
+      state.element.style.top=current.y+"%";
+      depart(state);
+    };
   }
   configs.forEach(config=>{
     const element=document.getElementById(config.id);
     if(!element)return;
     const image=element.querySelector("img");
-    const state={config,element,image,flight:null,facing:null,nextStop:0,cycle:-1,restTimer:null,departureTimer:null};
+    const state={config,element,image,orderIndex:0,restTimer:null,animation:null};
+    const first=points[config.start];
+    state.orderIndex=config.order.indexOf(config.start);
+    element.style.left=first.x+"%";
+    element.style.top=first.y+"%";
+    setDepth(state,first.y);
     element.addEventListener("pointerenter",event=>{
       if(event.pointerType==="touch")return;
-      frighten(state);
+      scare(state);
     });
     states.push(state);
+    setTimeout(()=>rest(state),9000+Math.random()*7000);
   });
-  function checkStops(){
-    if(!start.classList.contains("summer-morning")){
-      requestAnimationFrame(checkStops);
-      return;
-    }
-    states.forEach(state=>{
-      if(state.element.classList.contains("resting")||state.element.classList.contains("scared"))return;
-      state.flight=findAnimation(state.element,state.config.flight);
-      state.facing=findAnimation(state.image,state.config.facing);
-      if(!state.flight||state.flight.currentTime==null)return;
-      const elapsed=Number(state.flight.currentTime);
-      const cycle=Math.floor(elapsed/duration);
-      const progress=elapsed%duration;
-      if(cycle!==state.cycle){
-        state.cycle=cycle;
-        state.nextStop=0;
-      }
-      const stop=state.config.stops[state.nextStop];
-      if(stop!==undefined&&progress>=stop){
-        state.flight.pause();
-        state.facing?.pause();
-        state.element.classList.add("resting");
-        const dwell=4500+Math.random()*4000;
-        state.restTimer=setTimeout(()=>{
-          resume(state);
-          state.nextStop++;
-          if(state.nextStop>=state.config.stops.length)state.nextStop=0;
-        },dwell);
-      }
-    });
-    setTimeout(checkStops,180);
-  }
-  requestAnimationFrame(checkStops);
 })();
-
+ 
 /* START */
 
 loadDemoProfile();
