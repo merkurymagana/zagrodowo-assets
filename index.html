@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#70482f">
 <title>Zagrodowo</title>
 
@@ -3376,7 +3376,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 @media(max-width:700px){
   :root{--panel-width:0px}
   body{overflow:hidden}
-  #appStage{inset:0;width:100%;height:100%;transform:none!important;background:#70482f}
+  #appStage{inset:0;width:100%;height:100%;transform:translate3d(var(--mobile-zoom-x,0px),var(--mobile-zoom-y,0px),0) scale(var(--mobile-zoom-scale,1))!important;transform-origin:top left;background:#70482f;will-change:transform}
   #start{inset:0}
   .start-wood-left,.start-wood-right{display:none}
 
@@ -6175,6 +6175,65 @@ renderNeighbors();
   });
 })();
 
+
+/* MOBILNY ZOOM OGRANICZONY DO GRANIC GRAFIKI ZAGRODOWA */
+(function boundedMobilePinchZoom(){
+  const stage=document.getElementById("appStage");
+  if(!stage)return;
+  const mobile=()=>window.matchMedia("(max-width:700px), (pointer:coarse)").matches;
+  let zoom=1, offsetX=0, offsetY=0, pinch=null;
+  const clamp=(value,min,max)=>Math.min(max,Math.max(min,value));
+  function apply(){
+    if(!mobile()){
+      stage.style.removeProperty("--mobile-zoom-x");
+      stage.style.removeProperty("--mobile-zoom-y");
+      stage.style.removeProperty("--mobile-zoom-scale");
+      return;
+    }
+    const width=stage.clientWidth, height=stage.clientHeight;
+    offsetX=clamp(offsetX,Math.min(0,width-width*zoom),0);
+    offsetY=clamp(offsetY,Math.min(0,height-height*zoom),0);
+    stage.style.setProperty("--mobile-zoom-x",offsetX+"px");
+    stage.style.setProperty("--mobile-zoom-y",offsetY+"px");
+    stage.style.setProperty("--mobile-zoom-scale",String(zoom));
+  }
+  function distance(t1,t2){
+    return Math.hypot(t2.clientX-t1.clientX,t2.clientY-t1.clientY);
+  }
+  function midpoint(t1,t2){
+    return {x:(t1.clientX+t2.clientX)/2,y:(t1.clientY+t2.clientY)/2};
+  }
+  stage.addEventListener("touchstart",event=>{
+    if(!mobile()||event.touches.length!==2)return;
+    const p=midpoint(event.touches[0],event.touches[1]);
+    pinch={distance:Math.max(1,distance(event.touches[0],event.touches[1])),zoom,
+      x:p.x,y:p.y,offsetX,offsetY};
+  },{passive:true});
+  stage.addEventListener("touchmove",event=>{
+    if(!mobile()||event.touches.length!==2||!pinch)return;
+    if(event.cancelable)event.preventDefault();
+    const p=midpoint(event.touches[0],event.touches[1]);
+    const nextZoom=clamp(pinch.zoom*distance(event.touches[0],event.touches[1])/pinch.distance,1,4);
+    const ratio=nextZoom/pinch.zoom;
+    zoom=nextZoom;
+    offsetX=p.x-(pinch.x-pinch.offsetX)*ratio;
+    offsetY=p.y-(pinch.y-pinch.offsetY)*ratio;
+    apply();
+  },{passive:false});
+  const endPinch=event=>{
+    if(event.touches.length<2)pinch=null;
+  };
+  stage.addEventListener("touchend",endPinch,{passive:true});
+  stage.addEventListener("touchcancel",endPinch,{passive:true});
+  window.addEventListener("resize",()=>{
+    if(!mobile()){zoom=1;offsetX=offsetY=0;}
+    apply();
+  },{passive:true});
+  window.addEventListener("orientationchange",()=>{
+    zoom=1;offsetX=offsetY=0;pinch=null;apply();
+  },{passive:true});
+  apply();
+})();
 
 /* JEDEN KOMPUTEROWY UKŁAD NA KAŻDYM URZĄDZENIU — skalowanie całej planszy 16:9. */
 (function fitDesktopGameStage(){
