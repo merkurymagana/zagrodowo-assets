@@ -4424,6 +4424,67 @@ html,body,#appStage{
   #playerPanel .side-menu > button[data-view="settings"] .menu-icon{font-size:22px!important}
 }
 
+
+/* Wyrównanie HUD-u gracza do wymiarów paska nawigacji. */
+@media(min-width:701px){
+  #playerPanel .profile-card{
+    box-sizing:border-box!important;
+    width:326px!important;
+    min-width:326px!important;
+    max-width:326px!important;
+    height:62px!important;
+    min-height:62px!important;
+    max-height:62px!important;
+    padding:6px 9px!important;
+    grid-template-columns:38px minmax(65px,1fr) auto!important;
+    column-gap:7px!important;
+    row-gap:2px!important;
+    border-radius:15px!important;
+  }
+  #playerPanel .avatar-frame{
+    width:38px!important;height:38px!important;flex-basis:38px!important;
+  }
+  #playerPanel .avatar-placeholder{font-size:23px!important}
+  #playerPanel .player-info{gap:4px!important}
+  #playerPanel .player-name{font-size:12px!important}
+  #playerPanel .player-level{font-size:9px!important}
+  #playerPanel .xp-label{font-size:8px!important}
+  #playerPanel .xp-track{height:4px!important}
+  #playerPanel .currency-grid{gap:8px!important}
+  #playerPanel .currency-label{font-size:7px!important;letter-spacing:0!important}
+  #playerPanel .currency-value{font-size:12px!important}
+}
+@media(max-width:700px){
+  #playerPanel .profile-card{
+    box-sizing:border-box!important;
+    width:261px!important;
+    min-width:261px!important;
+    max-width:261px!important;
+    height:51px!important;
+    min-height:51px!important;
+    max-height:51px!important;
+    padding:4px 6px!important;
+    grid-template-columns:30px minmax(54px,1fr) auto!important;
+    column-gap:5px!important;
+    row-gap:1px!important;
+    border-radius:12px!important;
+  }
+  #playerPanel .avatar-frame{
+    width:29px!important;height:29px!important;flex-basis:29px!important;
+  }
+  #playerPanel .avatar-placeholder{font-size:18px!important}
+  #playerPanel .player-info{gap:3px!important}
+  #playerPanel .player-name{font-size:10px!important}
+  #playerPanel .player-level{font-size:8px!important}
+  #playerPanel .xp-label{font-size:7px!important}
+  #playerPanel .xp-track{height:3px!important}
+  #playerPanel .currency-grid{gap:5px!important}
+  #playerPanel .currency-label{font-size:6px!important;letter-spacing:0!important;gap:2px!important}
+  #playerPanel .currency-value{font-size:10px!important}
+  #playerPanel .profile-edit{width:15px!important;height:15px!important}
+  #playerPanel .profile-edit::before{font-size:10px!important}
+}
+
 </style>
 </head>
 
