@@ -5305,7 +5305,7 @@ setInterval(()=>{
    state.direction=to.x<from.x?-1:1;
    img.style.scale=state.direction<0?"-1 1":"1 1";
    const distance=Math.hypot((to.x-from.x)*stage.clientWidth/100,(to.y-from.y)*stage.clientHeight/100);
-   const duration=200000;
+   const duration=100000;
    state.flight=el.animate(makePath(from,to),{duration,easing:"linear",fill:"forwards"});
    state.flight.onfinish=()=>{
     styleAt(to);state.point=to;state.flight.cancel();state.flight=null;rest();
