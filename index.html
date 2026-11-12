@@ -57,7 +57,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #appStage{
   position:fixed;
   left:50%;
-  top:50%;
+  top:0;
   right:auto;
   bottom:auto;
   width:1686px;
@@ -66,8 +66,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   background:#70482f var(--wood) repeat;
   box-shadow:0 0 35px #0007;
   container-type:size;
-  transform:translate(-50%,-50%) scale(var(--stage-scale,1));
-  transform-origin:center center;
+  transform:translateX(-50%) scale(var(--stage-scale,1));
+  transform-origin:top center;
 }
 
 /* EKRAN STARTOWY */
@@ -6119,7 +6119,12 @@ renderNeighbors();
       const viewport=window.visualViewport;
       const width=viewport?viewport.width:document.documentElement.clientWidth;
       const height=viewport?viewport.height:document.documentElement.clientHeight;
-      const scale=Math.min(width/DESIGN_WIDTH,height/DESIGN_HEIGHT);
+      // W pionie dopasuj planszę do całej szerokości, pozostawiając pustą przestrzeń pod grą.
+      // W poziomie zachowaj klasyczne dopasowanie do dostępnej szerokości i wysokości.
+      const portrait=height>width;
+      const scale=portrait
+        ? width/DESIGN_WIDTH
+        : Math.min(width/DESIGN_WIDTH,height/DESIGN_HEIGHT);
       stage.style.setProperty("--stage-scale",String(Math.max(.1,scale)));
     });
   }
