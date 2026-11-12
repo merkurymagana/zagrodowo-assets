@@ -5132,6 +5132,7 @@ html,body,#appStage{
 #game > nav.side-menu button.help-menu-button::after{content:"Centrum pomocy"!important}
 #game > nav.side-menu > button[data-view="neighbors"]::after{content:"Sąsiedzi"!important}
 #game > nav.side-menu > button[data-view="settings"]::after{content:"Ustawienia"!important}
+#game > nav.side-menu > button.logout-menu-button::after{content:"Wyloguj się"!important}
 #game > nav.side-menu button:hover::after,
 #game > nav.side-menu button:focus-visible::after{
   opacity:1!important;
@@ -5678,7 +5679,7 @@ html,body,#appStage{
       
 
       <div class="panel-bottom">
-        <button class="logout-button" type="button" onclick="backToStart()"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg><span>Wyloguj się</span></button>
+        
         <div class="panel-version">Zagrodowo • wersja demonstracyjna</div>
       </div>
     </aside>
@@ -5708,6 +5709,7 @@ html,body,#appStage{
         </div>
         <button data-view="neighbors" onclick="openGameView('neighbors',this)"><span class="menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a6 6 0 0 1 12 0v2"/><circle cx="19" cy="8" r="3"/><path d="M19 14a5 5 0 0 1 3 4.6V21"/></svg></span>Sąsiedzi <span class="menu-count" id="neighborsBadge" style="display:none">0</span></button>
         <button data-view="settings" onclick="openGameView('settings',this)"><span class="menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5a2 2 0 0 1 2 1.7l.2 1.2a7 7 0 0 1 1.5.9l1.2-.4a2 2 0 0 1 2.4 1l.6 1a2 2 0 0 1-.5 2.5l-.9.8a7 7 0 0 1 0 1.7l.9.8a2 2 0 0 1 .5 2.5l-.6 1a2 2 0 0 1-2.4 1l-1.2-.4a7 7 0 0 1-1.5.9l-.2 1.2a2 2 0 0 1-2 1.7h-1.2a2 2 0 0 1-2-1.7l-.2-1.2a7 7 0 0 1-1.5-.9l-1.2.4a2 2 0 0 1-2.4-1l-.6-1a2 2 0 0 1 .5-2.5l.9-.8a7 7 0 0 1 0-1.7l-.9-.8a2 2 0 0 1-.5-2.5l.6-1a2 2 0 0 1 2.4-1l1.2.4a7 7 0 0 1 1.5-.9l.2-1.2a2 2 0 0 1 2-1.7z"/><circle cx="11.4" cy="12" r="3.1"/></svg></span>Ustawienia</button>
+<button class="logout-menu-button" type="button" onclick="backToStart()" aria-label="Wyloguj się"><span class="logout-menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg></span></button>
       </nav>
   </div>
 
