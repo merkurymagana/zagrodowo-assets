@@ -6278,17 +6278,20 @@ renderNeighbors();
       y=c.y-(pinch.cy-pinch.y)*ratio;
       scheduleRender();
     }else if(pointers.size===1&&pan){
-      const p=pt(e),dx=p.x-pan.start.x,dy=p.y-pan.start.y;
+      const p=pt(e);
+      // Przyspiesz przesuwanie względem palca — łatwiej pokonywać większe obszary planszy.
+      const DRAG_SENSITIVITY=1.8;
+      const dx=(p.x-pan.start.x)*DRAG_SENSITIVITY;
+      const dy=(p.y-pan.start.y)*DRAG_SENSITIVITY;
       if(Math.abs(dx)+Math.abs(dy)>5)pan.moved=true;
       if(pan.moved){
         if(e.cancelable)e.preventDefault();
         const now=performance.now(),dt=Math.max(1,now-lastMoveTime);
-        const instantVX=(p.x-pan.last.x)/dt;
-        const instantVY=(p.y-pan.last.y)/dt;
-        // Wygładź pomiar prędkości, żeby drobne drgania dotyku
-        // nie powodowały szarpnięć podczas wyhamowywania planszy.
-        velocityX=velocityX*.35+instantVX*.65;
-        velocityY=velocityY*.35+instantVY*.65;
+        const instantVX=((p.x-pan.last.x)*DRAG_SENSITIVITY)/dt;
+        const instantVY=((p.y-pan.last.y)*DRAG_SENSITIVITY)/dt;
+        // Wygładź pomiar prędkości bez opóźniania ruchu pod palcem.
+        velocityX=velocityX*.2+instantVX*.8;
+        velocityY=velocityY*.2+instantVY*.8;
         lastMoveTime=now;
         pan.last=p;
         x=pan.x+dx;y=pan.y+dy;scheduleRender();
