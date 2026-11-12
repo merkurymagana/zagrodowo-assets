@@ -278,6 +278,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 .summerSprinklerWater .waterFan{
   transform-box:fill-box;transform-origin:50% 50%;
+  transform-style:preserve-3d;
   animation:summerWaterSweep 3.8s linear infinite;
 }
 .summerSprinklerWater .waterJet{
@@ -289,14 +290,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   fill:#f2fdff;opacity:.32;animation:summerWaterDrop 1.15s ease-in-out infinite;
 }
 @keyframes summerWaterSweep{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
+  from{transform:perspective(180px) rotateY(0deg)}
+  to{transform:perspective(180px) rotateY(360deg)}
 }
 @keyframes summerWaterFlow{to{stroke-dashoffset:-12}}
 @keyframes summerWaterDrop{
-  0%{opacity:0;transform:translateY(-2px)}
-  25%{opacity:.95}
-  100%{opacity:0;transform:translateY(9px)}
+  0%{opacity:0;transform:translateX(-3px)}
+  25%{opacity:.7}
+  100%{opacity:0;transform:translateX(9px)}
 }
 #start.summer-day .summerSprinkler{display:block;animation:summerSprinklerSpin 3.8s ease-in-out infinite;transform-origin:50% 50%}
 #start.summer-day .summerSprinkler[data-sprinkler="2"]{animation-delay:-0.9s}
