@@ -351,7 +351,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 #start.summer-night #summerCampfire{display:block!important;visibility:visible!important;opacity:1!important;z-index:30!important}
 #summerCampfire .campfireFlames{
-  position:absolute;inset:0;width:100%;height:100%;z-index:3;overflow:visible;
+  position:absolute;inset:0;width:100%;height:100%;z-index:3;
+  overflow:visible;pointer-events:none;
 }
 #summerCampfire .campfireBase{
   position:absolute;inset:0;width:100%;height:100%;z-index:2;object-fit:contain;
@@ -3883,49 +3884,81 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
     <div id="summerCampfire" aria-hidden="true">
       <div class="campfireGlow"></div>
-      <svg class="campfireFlames" viewBox="0 0 676 417" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="campfireOuter" x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0" stop-color="#e33b0b"/><stop offset=".48" stop-color="#ff7416"/><stop offset="1" stop-color="#ffb52d" stop-opacity=".78"/>
-          </linearGradient>
-          <linearGradient id="campfireMiddle" x1="0" y1="1" x2=".15" y2="0">
-            <stop offset="0" stop-color="#ff5a0b"/><stop offset=".6" stop-color="#ff9c1c"/><stop offset="1" stop-color="#ffe06a" stop-opacity=".92"/>
-          </linearGradient>
-          <linearGradient id="campfireCore" x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0" stop-color="#ff9a1b"/><stop offset=".7" stop-color="#ffe16a"/><stop offset="1" stop-color="#fff3b0" stop-opacity=".7"/>
-          </linearGradient>
-          <filter id="campfireSoftGlow" x="-60%" y="-60%" width="220%" height="220%">
-            <feGaussianBlur stdDeviation="8"/>
-          </filter>
-          <filter id="campfireWarp" x="-35%" y="-35%" width="170%" height="170%">
-            <feTurbulence type="fractalNoise" baseFrequency=".022 .035" numOctaves="2" seed="13" result="fireNoise">
-              <animate attributeName="baseFrequency" values=".018 .03;.025 .04;.02 .034;.018 .03" dur="2.7s" repeatCount="indefinite"/>
-            </feTurbulence>
-            <feDisplacementMap in="SourceGraphic" in2="fireNoise" scale="13" xChannelSelector="R" yChannelSelector="G"/>
-          </filter>
-        </defs>
-        <g class="flameBlur">
-          <path d="M258 286 C246 270 260 251 273 235 C290 213 286 190 281 177 C304 190 309 213 298 235 C321 214 325 185 319 166 C344 187 347 215 333 241 C359 220 365 198 359 181 C384 208 379 240 360 261 C382 247 390 230 386 215 C406 240 394 270 381 286Z"/>
-        </g>
-        <g class="flameOuter">
-          <path d="M260 286 C250 271 262 254 274 238 C286 221 292 204 286 188 C307 202 308 221 299 239 C319 223 329 201 324 183 C345 203 344 226 333 246 C354 231 365 212 359 196 C379 218 376 245 361 264 C378 254 386 239 383 228 C397 247 391 269 379 286Z"/>
-          <path d="M291 286 C282 271 293 258 303 245 C316 227 314 210 310 198 C331 211 334 232 322 249 C341 237 348 220 345 207 C363 228 357 253 344 270 L336 286Z"/>
-          <path d="M345 286 C335 269 349 253 358 237 C368 219 366 203 362 191 C385 211 385 235 371 255 C389 245 396 230 393 218 C411 241 400 268 387 286Z"/>
-        </g>
-        <g class="flameMiddle">
-          <path d="M276 286 C270 270 284 257 293 244 C306 225 303 210 300 201 C319 216 319 237 308 253 C326 241 334 226 330 214 C347 236 338 260 326 276 L319 286Z"/>
-          <path d="M326 286 C317 270 331 254 340 241 C351 225 350 211 346 201 C367 220 364 243 351 259 C369 248 374 234 371 224 C388 247 377 269 365 286Z"/>
-        </g>
-        <g class="flameCore">
-          <path d="M303 286 C296 270 310 256 319 243 C329 228 327 216 324 207 C342 222 342 241 331 257 C347 247 352 234 349 225 C365 247 353 270 343 286Z"/>
-        </g>
-        <circle class="campfireSpark" cx="285" cy="204" r="3" style="--spark-drift:-8px"/>
-        <circle class="campfireSpark" cx="365" cy="188" r="2.5" style="--spark-drift:9px"/>
-        <circle class="campfireSpark" cx="337" cy="164" r="2" style="--spark-drift:-4px"/>
-        <circle class="campfireSpark" cx="397" cy="226" r="2.2" style="--spark-drift:7px"/>
-      </svg>
+      <canvas class="campfireFlames" width="676" height="417"></canvas>
+
       <img class="campfireBase" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ognisko.png?v=3" alt="">
     </div>
+    <script>
+    (() => {
+      const root = document.getElementById('summerCampfire');
+      const canvas = root && root.querySelector('.campfireFlames');
+      if (!canvas || canvas.dataset.ready) return;
+      canvas.dataset.ready = '1';
+      const ctx = canvas.getContext('2d');
+      const W = 676, H = 417;
+      let last = 0, raf = 0, active = true;
+      const tongues = [
+        {x:286,w:34,h:105,phase:0.4,speed:1.15},
+        {x:326,w:39,h:139,phase:2.1,speed:.92},
+        {x:365,w:32,h:112,phase:4.3,speed:1.28},
+        {x:398,w:25,h:76,phase:1.2,speed:1.48},
+        {x:250,w:22,h:65,phase:3.3,speed:1.05}
+      ];
+      function plume(t, p) {
+        const sway = Math.sin(t*p.speed+p.phase)*10 + Math.sin(t*2.13+p.phase*1.7)*5;
+        const pulse = .82 + .18*Math.sin(t*2.7+p.phase);
+        const h = p.h*pulse;
+        const x = p.x+sway;
+        const grad=ctx.createLinearGradient(0,286,0,286-h);
+        grad.addColorStop(0,'rgba(190,35,5,.94)');
+        grad.addColorStop(.22,'rgba(255,78,8,.96)');
+        grad.addColorStop(.58,'rgba(255,145,22,.86)');
+        grad.addColorStop(.86,'rgba(255,196,64,.48)');
+        grad.addColorStop(1,'rgba(255,213,105,0)');
+        ctx.fillStyle=grad;
+        ctx.beginPath();
+        ctx.moveTo(x-p.w*.58,292);
+        ctx.bezierCurveTo(x-p.w*.9,270,x-p.w*.25,246-h*.42,x+Math.sin(t*3+p.phase)*p.w*.35,286-h);
+        ctx.bezierCurveTo(x+p.w*.95,246-h*.7,x+p.w*.75,271,x+p.w*.58,292);
+        ctx.closePath();ctx.fill();
+      }
+      function draw(ms) {
+        if(!active) return;
+        const t=ms/1000;
+        ctx.clearRect(0,0,W,H);
+        // Miękki żar tuż pomiędzy polanami.
+        const ember=ctx.createRadialGradient(338,285,3,338,285,92);
+        ember.addColorStop(0,'rgba(255,190,55,.45)');
+        ember.addColorStop(.42,'rgba(255,83,10,.22)');
+        ember.addColorStop(1,'rgba(255,55,0,0)');
+        ctx.fillStyle=ember;ctx.fillRect(225,205,230,125);
+        tongues.forEach(p=>plume(t,p));
+        // Jasne, krótkie rdzenie poruszają się niezależnie w środku płomienia.
+        ctx.globalCompositeOperation='screen';
+        tongues.slice(0,3).forEach((p,i)=>{
+          const x=p.x+Math.sin(t*p.speed+p.phase)*8;
+          const h=p.h*(.48+.13*Math.sin(t*3.1+p.phase));
+          const g=ctx.createLinearGradient(0,286,0,286-h);
+          g.addColorStop(0,'rgba(255,210,95,.65)');
+          g.addColorStop(.55,'rgba(255,190,80,.48)');
+          g.addColorStop(1,'rgba(255,220,145,0)');
+          ctx.fillStyle=g;ctx.beginPath();
+          ctx.moveTo(x-8,288);ctx.bezierCurveTo(x-13,267,x-2,260-h*.5,x+Math.sin(t*3+i)*5,286-h);
+          ctx.bezierCurveTo(x+10,250-h*.45,x+12,273,x+8,288);ctx.closePath();ctx.fill();
+        });
+        ctx.globalCompositeOperation='source-over';
+        raf=requestAnimationFrame(draw);
+      }
+      const observer=new IntersectionObserver(entries=>{
+        active=entries[0].isIntersecting;
+        if(active&&!raf) raf=requestAnimationFrame(draw);
+        if(!active&&raf){cancelAnimationFrame(raf);raf=0;}
+      });
+      observer.observe(root);
+      if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) raf=requestAnimationFrame(draw);
+      else {active=false;draw(0);}
+    })();
+    </script>
     <img id="summerBalloon" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/balon.png?v=1" alt="" aria-hidden="true">
     <img id="summerSprinkler" class="summerSprinkler" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zraszacz.png?v=1" alt="" aria-hidden="true">
     <button id="sprinklerEditorToggle" type="button">✚ Edytor zraszaczy</button>
