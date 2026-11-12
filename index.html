@@ -4485,6 +4485,114 @@ html,body,#appStage{
   #playerPanel .profile-edit::before{font-size:10px!important}
 }
 
+
+/* WALUTY — wyśrodkowany pasek HUD na górnej krawędzi planszy. */
+#playerPanel .currency-bar{
+  position:fixed!important;
+  top:18px!important;
+  left:50%!important;
+  right:auto!important;
+  z-index:125!important;
+  transform:translateX(-50%)!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:20px!important;
+  width:max-content!important;
+  min-width:250px!important;
+  margin:0!important;
+  padding:9px 20px!important;
+  border:1px solid rgba(112,87,55,.20)!important;
+  border-radius:16px!important;
+  background:rgba(250,246,235,.92)!important;
+  box-shadow:0 5px 18px rgba(47,38,25,.14),inset 0 1px 0 rgba(255,255,255,.8)!important;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+#playerPanel .currency-bar .currency-box{
+  min-width:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  text-align:center;
+}
+#playerPanel .currency-bar .currency-label{
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  gap:4px!important;
+  margin:0 0 2px!important;
+  font-size:9px!important;
+  letter-spacing:.045em;
+  color:#927d5e!important;
+}
+#playerPanel .currency-bar .currency-value{
+  font-size:15px!important;
+  line-height:1.15;
+  font-weight:800;
+  color:#5c4930!important;
+  white-space:nowrap;
+}
+#playerPanel .currency-divider{
+  width:1px;
+  height:29px;
+  background:rgba(137,113,78,.24);
+}
+@media(min-width:701px){
+  #playerPanel .profile-card{
+    width:286px!important;
+    min-width:286px!important;
+    max-width:286px!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:10px 13px!important;
+    grid-template-columns:48px minmax(0,1fr)!important;
+    grid-template-rows:auto auto auto!important;
+    column-gap:11px!important;
+    row-gap:4px!important;
+  }
+  #playerPanel .avatar-frame{width:46px!important;height:46px!important;flex-basis:46px!important}
+  #playerPanel .avatar-placeholder{font-size:27px!important}
+  #playerPanel .player-name{font-size:15px!important}
+  #playerPanel .player-level{font-size:11px!important}
+  #playerPanel .xp-label{font-size:10px!important}
+  #playerPanel .xp-track{height:5px!important}
+}
+@media(max-width:700px){
+  #playerPanel .profile-card{
+    width:250px!important;
+    min-width:250px!important;
+    max-width:calc(100vw - 16px)!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:8px 10px!important;
+    grid-template-columns:40px minmax(0,1fr)!important;
+    grid-template-rows:auto auto auto!important;
+    column-gap:8px!important;
+    row-gap:3px!important;
+  }
+  #playerPanel .avatar-frame{width:38px!important;height:38px!important;flex-basis:38px!important}
+  #playerPanel .avatar-placeholder{font-size:23px!important}
+  #playerPanel .player-name{font-size:12px!important}
+  #playerPanel .player-level{font-size:9px!important}
+  #playerPanel .xp-label{font-size:8px!important}
+  #playerPanel .xp-track{height:4px!important}
+  #playerPanel .currency-bar{
+    top:8px!important;
+    min-width:0!important;
+    max-width:calc(100vw - 16px)!important;
+    gap:12px!important;
+    padding:6px 11px!important;
+    border-radius:12px!important;
+  }
+  #playerPanel .currency-bar .currency-label{font-size:7px!important}
+  #playerPanel .currency-bar .currency-value{font-size:11px!important}
+  #playerPanel .currency-divider{height:23px}
+}
+
 </style>
 </head>
 
@@ -4989,19 +5097,20 @@ html,body,#appStage{
         <div class="xp-label"><span>Doświadczenie</span><span id="xpText">0 / 100 XP</span></div>
         <div class="xp-track"><div id="xpFill"></div></div>
 
-        <div class="currency-grid">
-          <div class="currency-box">
-            <div class="currency-label"><span class="coin-icon" aria-hidden="true"></span> GOTÓWKA</div>
-            <div class="currency-value" id="money">1,00</div>
-          </div>
-          <div class="currency-box">
-            <div class="currency-label">💎 DIAMENTY</div>
-            <div class="currency-value" id="diamonds">0</div>
-          </div>
-        </div>
-
         <button class="profile-edit" type="button" onclick="openProfileEditor()">✎ Edytuj profil</button>
       </section>
+
+      <div class="currency-grid currency-bar" aria-label="Stan walut">
+        <div class="currency-box">
+          <div class="currency-label"><span class="coin-icon" aria-hidden="true"></span> GOTÓWKA</div>
+          <div class="currency-value" id="money">1,00</div>
+        </div>
+        <div class="currency-divider" aria-hidden="true"></div>
+        <div class="currency-box">
+          <div class="currency-label">💎 DIAMENTY</div>
+          <div class="currency-value" id="diamonds">0</div>
+        </div>
+      </div>
 
       <nav class="side-menu">
         <div class="compass-links-row">
