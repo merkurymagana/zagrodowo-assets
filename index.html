@@ -3878,7 +3878,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     overflow:hidden;margin:0;
     transform:translate3d(var(--mobile-zoom-x,0px),var(--mobile-zoom-y,0px),0) scale(var(--mobile-total-scale,1))!important;
     transform-origin:top left;
-    background:#70482f var(--wood) repeat;
+    background-color:#70482f;
+    background-image:var(--wood);
+    background-repeat:no-repeat;
+    background-position:top left;
+    background-size:1686px var(--mobile-body-height,950px);
     will-change:transform;touch-action:none;
   }
   #appStage{
