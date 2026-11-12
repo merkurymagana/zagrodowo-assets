@@ -4254,6 +4254,176 @@ html,body,#appStage{
   #playerPanel .logout-button{padding:5px 8px!important;font-size:9px!important}
 }
 
+
+/* GŁÓWNA NAWIGACJA — lekki pasek ikon w lewym górnym rogu planszy. */
+#playerPanel .side-menu{
+  position:fixed!important;
+  top:18px!important;
+  left:18px!important;
+  right:auto!important;
+  bottom:auto!important;
+  z-index:130!important;
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:7px!important;
+  width:auto!important;
+  max-width:calc(100vw - 36px);
+  margin:0!important;
+  padding:7px!important;
+  border:1px solid rgba(112,87,55,.20)!important;
+  border-radius:15px!important;
+  background:rgba(250,246,235,.88)!important;
+  box-shadow:0 5px 18px rgba(47,38,25,.14),inset 0 1px 0 rgba(255,255,255,.8)!important;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+#playerPanel .side-menu .compass-links-row,
+#playerPanel .side-menu .compass-premium-stack,
+#playerPanel .side-menu .tasks-help-stack,
+#playerPanel .side-menu .premium-menu-row,
+#playerPanel .side-menu .help-menu-row{display:contents!important}
+#playerPanel .side-menu button.compass-menu-button,
+#playerPanel .side-menu button.premium-menu-button,
+#playerPanel .side-menu button.tasks-menu-button,
+#playerPanel .side-menu button.help-menu-button,
+#playerPanel .side-menu > button[data-view="neighbors"],
+#playerPanel .side-menu > button[data-view="settings"]{
+  position:relative!important;
+  display:flex!important;
+  flex:0 0 46px!important;
+  width:46px!important;
+  min-width:46px!important;
+  max-width:46px!important;
+  height:46px!important;
+  min-height:46px!important;
+  max-height:46px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin:0!important;
+  padding:4px!important;
+  overflow:visible!important;
+  border:1px solid transparent!important;
+  border-radius:10px!important;
+  background:rgba(222,207,179,.24)!important;
+  box-shadow:none!important;
+  color:#6e5638!important;
+  transition:background .16s ease,border-color .16s ease,transform .16s ease!important;
+}
+#playerPanel .side-menu button.compass-menu-button:hover,
+#playerPanel .side-menu button.premium-menu-button:hover,
+#playerPanel .side-menu button.tasks-menu-button:hover,
+#playerPanel .side-menu button.help-menu-button:hover,
+#playerPanel .side-menu > button[data-view="neighbors"]:hover,
+#playerPanel .side-menu > button[data-view="settings"]:hover,
+#playerPanel .side-menu button.selected{
+  background:#eee2cc!important;
+  border-color:rgba(137,105,65,.25)!important;
+  color:#57432b!important;
+  transform:translateY(-1px);
+}
+#playerPanel .side-menu .compass-menu-icon,
+#playerPanel .side-menu .premium-menu-icon,
+#playerPanel .side-menu .tasks-menu-icon,
+#playerPanel .side-menu .help-menu-icon{
+  display:block!important;
+  position:relative!important;
+  width:35px!important;
+  height:35px!important;
+  flex:0 0 35px!important;
+}
+#playerPanel .side-menu .compass-dial{width:35px!important;height:35px!important}
+#playerPanel .side-menu .compass-pointer{width:23px!important;height:23px!important}
+#playerPanel .side-menu .premium-menu-icon>img{width:34px!important;height:34px!important}
+#playerPanel .side-menu .tasks-menu-icon>img:not(.tasks-wax-seal){width:35px!important;height:35px!important}
+#playerPanel .side-menu .tasks-menu-icon img.tasks-wax-seal{right:0!important;bottom:0!important;width:13px!important;height:13px!important}
+#playerPanel .side-menu .help-menu-icon{width:35px!important;height:35px!important;flex:0 0 35px!important}
+#playerPanel .side-menu .help-menu-icon img{width:43px!important;height:43px!important}
+#playerPanel .side-menu > button[data-view="neighbors"],
+#playerPanel .side-menu > button[data-view="settings"]{
+  font-size:0!important;
+  gap:0!important;
+}
+#playerPanel .side-menu > button[data-view="neighbors"] .menu-icon,
+#playerPanel .side-menu > button[data-view="settings"] .menu-icon{
+  display:block!important;
+  width:auto!important;
+  flex:0 0 auto!important;
+  font-size:25px!important;
+  line-height:1!important;
+}
+#playerPanel .side-menu .menu-count{
+  position:absolute!important;
+  top:-3px!important;
+  right:-3px!important;
+  margin:0!important;
+  z-index:3!important;
+}
+#playerPanel .side-menu button::after{
+  top:calc(100% + 8px)!important;
+  bottom:auto!important;
+  left:50%!important;
+  z-index:150!important;
+  padding:5px 8px!important;
+  border:1px solid rgba(112,87,55,.22)!important;
+  border-radius:7px!important;
+  background:#faf4e8!important;
+  color:#604b31!important;
+  box-shadow:0 3px 10px rgba(47,38,25,.14)!important;
+  font:700 11px 'Nunito',Arial,sans-serif!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  transform:translate(-50%,4px)!important;
+}
+#playerPanel .side-menu button:hover::after,
+#playerPanel .side-menu button:focus-visible::after{
+  opacity:1!important;
+  visibility:visible!important;
+  transform:translate(-50%,0)!important;
+}
+@media(max-width:700px){
+  #playerPanel .side-menu{
+    top:8px!important;
+    left:8px!important;
+    right:auto!important;
+    max-width:calc(100vw - 16px);
+    gap:3px!important;
+    padding:5px!important;
+    border-radius:12px!important;
+  }
+  #playerPanel .side-menu button.compass-menu-button,
+  #playerPanel .side-menu button.premium-menu-button,
+  #playerPanel .side-menu button.tasks-menu-button,
+  #playerPanel .side-menu button.help-menu-button,
+  #playerPanel .side-menu > button[data-view="neighbors"],
+  #playerPanel .side-menu > button[data-view="settings"]{
+    flex-basis:39px!important;
+    width:39px!important;
+    min-width:39px!important;
+    max-width:39px!important;
+    height:39px!important;
+    min-height:39px!important;
+    max-height:39px!important;
+    padding:3px!important;
+  }
+  #playerPanel .side-menu .compass-menu-icon,
+  #playerPanel .side-menu .premium-menu-icon,
+  #playerPanel .side-menu .tasks-menu-icon,
+  #playerPanel .side-menu .help-menu-icon{
+    width:30px!important;height:30px!important;flex-basis:30px!important;
+  }
+  #playerPanel .side-menu .compass-dial{width:30px!important;height:30px!important}
+  #playerPanel .side-menu .compass-pointer{width:20px!important;height:20px!important}
+  #playerPanel .side-menu .premium-menu-icon>img{width:29px!important;height:29px!important}
+  #playerPanel .side-menu .tasks-menu-icon>img:not(.tasks-wax-seal){width:30px!important;height:30px!important}
+  #playerPanel .side-menu .tasks-menu-icon img.tasks-wax-seal{width:11px!important;height:11px!important}
+  #playerPanel .side-menu .help-menu-icon img{width:36px!important;height:36px!important}
+  #playerPanel .side-menu > button[data-view="neighbors"] .menu-icon,
+  #playerPanel .side-menu > button[data-view="settings"] .menu-icon{font-size:22px!important}
+}
+
 </style>
 </head>
 
