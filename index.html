@@ -275,8 +275,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #start.summer-day .summerSprinkler[data-sprinkler="3"]{animation-delay:-1.8s}
 #start.summer-day .summerSprinkler[data-sprinkler="4"]{animation-delay:-2.7s}
 @keyframes summerSprinklerSpin{
-  from{transform:translate(-50%,-50%) rotate(0deg)}
-  to{transform:translate(-50%,-50%) rotate(360deg)}
+  0%,100%{transform:translate(-50%,-50%) perspective(180px) rotateY(-32deg)}
+  50%{transform:translate(-50%,-50%) perspective(180px) rotateY(32deg)}
 }
 /* Pierwszy zraszacz jest trzykrotnie mniejszy od poprzedniego rozmiaru. */
 #start.summer-day #summerSprinkler{width:clamp(11.33px,1.333vw,20.33px)}
