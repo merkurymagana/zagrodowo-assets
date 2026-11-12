@@ -308,7 +308,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   position:absolute;
   z-index:4;
   left:calc(30% + 225px);
-  top:calc(16% + 100px);
+  top:calc(16% + 125px);
   width:clamp(48px,5vw,78px);
   height:auto;
   display:none;
@@ -316,9 +316,16 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   user-select:none;
   object-fit:contain;
 }
-#start.summer-day #summerBalloon{display:block}
+#start.summer-day #summerBalloon{display:block;animation:summerBalloonFloat 5.5s ease-in-out infinite;transform-origin:50% 85%}
+@keyframes summerBalloonFloat{
+  0%,100%{transform:translateY(0) rotate(-1deg)}
+  50%{transform:translateY(-9px) rotate(1.2deg)}
+}
+@media(prefers-reduced-motion:reduce){
+  #start.summer-day #summerBalloon{animation:none}
+}
 @media(max-width:700px){
-  #summerBalloon{left:calc(30% + 225px);top:calc(16% + 100px);width:clamp(42px,10vw,66px)}
+  #summerBalloon{left:calc(30% + 225px);top:calc(16% + 125px);width:clamp(42px,10vw,66px)}
 }
 
 /* ZRASZACZ — letnia sceneria dzienna. */
