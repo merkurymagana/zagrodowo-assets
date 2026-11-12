@@ -454,6 +454,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   93%{transform:translate3d(-9vw,-8vh,0) scale(.82)}
   100%{transform:translate3d(0,-3vh,0) scale(.90)}
 }
+/* Motyle odpoczywają w wybranych punktach; skrzydła milkną razem z lotem. */
+.summerButterfly{pointer-events:auto;cursor:default}
+.summerButterfly.resting img{animation-play-state:paused,paused}
+.summerButterfly.scared img{animation-duration:.12s,200s}
 @media(max-width:700px){
   .summerButterfly{width:clamp(24px,5.2vw,34px)}
   #summerButterfly2{width:clamp(23px,4.9vw,32px)}
@@ -5230,6 +5234,85 @@ setInterval(()=>{
     stick.addEventListener("animationend",()=>stick.classList.remove("stick-flying"),{once:true});
   }
 },15000);
+
+/* MOTYLE — krótkie odpoczynki w punktach lotu i płoszenie po najechaniu kursorem. */
+(function initSummerButterflyBehavior(){
+  const duration=200000;
+  const configs=[
+    {id:"summerButterfly1",flight:"summerButterflyFlight1",facing:"summerButterflyFacing1",stops:[62000,146000]},
+    {id:"summerButterfly2",flight:"summerButterflyFlight2",facing:"summerButterflyFacing2",stops:[98000,158000]},
+    {id:"summerButterfly3",flight:"summerButterflyFlight3",facing:"summerButterflyFacing3",stops:[86000,164000]}
+  ];
+  const states=[];
+  function findAnimation(element,name){
+    return element.getAnimations().find(animation=>animation.animationName===name);
+  }
+  function resume(state){
+    state.element.classList.remove("resting");
+    state.flight?.play();
+    state.facing?.play();
+  }
+  function frighten(state){
+    if(state.departureTimer)clearTimeout(state.departureTimer);
+    if(state.restTimer)clearTimeout(state.restTimer);
+    resume(state);
+    state.nextStop=Math.min(state.nextStop+1,state.config.stops.length);
+    state.element.classList.add("scared");
+    state.element.animate(
+      [
+        {transform:"translate3d(0,0,0) scale(1)"},
+        {transform:"translate3d(34px,-28px,0) scale(1.08)",offset:.38},
+        {transform:"translate3d(88px,-74px,0) scale(.9)"}
+      ],
+      {duration:850,easing:"cubic-bezier(.12,.72,.2,1)",composite:"add"}
+    );
+    state.departureTimer=setTimeout(()=>state.element.classList.remove("scared"),950);
+  }
+  configs.forEach(config=>{
+    const element=document.getElementById(config.id);
+    if(!element)return;
+    const image=element.querySelector("img");
+    const state={config,element,image,flight:null,facing:null,nextStop:0,cycle:-1,restTimer:null,departureTimer:null};
+    element.addEventListener("pointerenter",event=>{
+      if(event.pointerType==="touch")return;
+      frighten(state);
+    });
+    states.push(state);
+  });
+  function checkStops(){
+    if(!start.classList.contains("summer-morning")){
+      requestAnimationFrame(checkStops);
+      return;
+    }
+    states.forEach(state=>{
+      if(state.element.classList.contains("resting")||state.element.classList.contains("scared"))return;
+      state.flight=findAnimation(state.element,state.config.flight);
+      state.facing=findAnimation(state.image,state.config.facing);
+      if(!state.flight||state.flight.currentTime==null)return;
+      const elapsed=Number(state.flight.currentTime);
+      const cycle=Math.floor(elapsed/duration);
+      const progress=elapsed%duration;
+      if(cycle!==state.cycle){
+        state.cycle=cycle;
+        state.nextStop=0;
+      }
+      const stop=state.config.stops[state.nextStop];
+      if(stop!==undefined&&progress>=stop){
+        state.flight.pause();
+        state.facing?.pause();
+        state.element.classList.add("resting");
+        const dwell=4500+Math.random()*4000;
+        state.restTimer=setTimeout(()=>{
+          resume(state);
+          state.nextStop++;
+          if(state.nextStop>=state.config.stops.length)state.nextStop=0;
+        },dwell);
+      }
+    });
+    setTimeout(checkStops,180);
+  }
+  requestAnimationFrame(checkStops);
+})();
 
 /* START */
 
