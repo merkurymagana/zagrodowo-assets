@@ -360,6 +360,78 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   }
 }
 
+/* MOTYLE — delikatny lot wyłącznie w letnim poranku. */
+.summerButterfly{
+  position:absolute;
+  z-index:7;
+  display:none;
+  width:clamp(23px,2.15vw,36px);
+  height:auto;
+  object-fit:contain;
+  pointer-events:none;
+  user-select:none;
+  transform-origin:50% 50%;
+  filter:drop-shadow(0 2px 2px #26351c55);
+  will-change:transform,opacity;
+}
+#start.summer-morning .summerButterfly{display:block}
+#summerButterfly1{
+  left:7%;
+  top:48%;
+  animation:summerButterflyFlight1 23s ease-in-out -4s infinite;
+}
+#summerButterfly2{
+  left:29%;
+  top:39%;
+  width:clamp(21px,1.95vw,33px);
+  animation:summerButterflyFlight2 27s ease-in-out -13s infinite;
+}
+#summerButterfly3{
+  left:48%;
+  top:55%;
+  width:clamp(22px,2.05vw,34px);
+  animation:summerButterflyFlight3 25s ease-in-out -8s infinite;
+}
+@keyframes summerButterflyFlight1{
+  0%{opacity:0;transform:translate3d(0,0,0) rotate(-12deg) scale(.92)}
+  7%{opacity:.96}
+  23%{transform:translate3d(9vw,-5vh,0) rotate(10deg) scale(1.04,.94)}
+  42%{transform:translate3d(20vw,1vh,0) rotate(-8deg) scale(.94,1.05)}
+  61%{transform:translate3d(31vw,-8vh,0) rotate(13deg) scale(1.05,.93)}
+  80%{transform:translate3d(43vw,-2vh,0) rotate(-7deg) scale(.94,1.04);opacity:.96}
+  94%{opacity:.9}
+  100%{opacity:0;transform:translate3d(51vw,-7vh,0) rotate(9deg) scale(1,.96)}
+}
+@keyframes summerButterflyFlight2{
+  0%{opacity:0;transform:translate3d(0,0,0) rotate(8deg) scale(1,.94)}
+  8%{opacity:.94}
+  25%{transform:translate3d(7vw,5vh,0) rotate(-13deg) scale(.94,1.05)}
+  46%{transform:translate3d(19vw,-4vh,0) rotate(9deg) scale(1.05,.94)}
+  66%{transform:translate3d(30vw,3vh,0) rotate(-10deg) scale(.95,1.04)}
+  84%{transform:translate3d(42vw,-5vh,0) rotate(12deg) scale(1.04,.94);opacity:.94}
+  100%{opacity:0;transform:translate3d(49vw,1vh,0) rotate(-8deg) scale(.96,1.02)}
+}
+@keyframes summerButterflyFlight3{
+  0%{opacity:0;transform:translate3d(0,0,0) rotate(-7deg) scale(.94,1.04)}
+  9%{opacity:.95}
+  26%{transform:translate3d(8vw,-6vh,0) rotate(12deg) scale(1.04,.94)}
+  47%{transform:translate3d(18vw,2vh,0) rotate(-9deg) scale(.94,1.05)}
+  68%{transform:translate3d(29vw,-5vh,0) rotate(10deg) scale(1.05,.94)}
+  87%{transform:translate3d(39vw,1vh,0) rotate(-11deg) scale(.95,1.04);opacity:.95}
+  100%{opacity:0;transform:translate3d(46vw,-5vh,0) rotate(8deg) scale(1,.96)}
+}
+@media(max-width:700px){
+  .summerButterfly{width:clamp(18px,4.4vw,27px)}
+  #summerButterfly2{width:clamp(17px,4vw,25px)}
+  #summerButterfly3{width:clamp(18px,4.2vw,26px)}
+  #summerButterfly1{left:5%;top:49%}
+  #summerButterfly2{left:25%;top:41%}
+  #summerButterfly3{left:45%;top:56%}
+}
+@media(prefers-reduced-motion:reduce){
+  .summerButterfly{animation:none!important;opacity:0!important}
+}
+
 /* GNIAZDO JASKÓŁEK POD OKAPEM OBORY — tylko letni poranek. */
 #summerNest{
   position:absolute;
@@ -3397,6 +3469,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     <img id="summerNestEgg" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jaskolka-jajko.png?v=1" alt="" aria-hidden="true">
     <img id="summerNestEgg2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jaskolka-jajko.png?v=1" alt="" aria-hidden="true">
     <img id="summerNestStick" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/patyk-gniazdo.png?v=1" alt="" aria-hidden="true">
+    <img id="summerButterfly1" class="summerButterfly" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/motyl1.png?v=1" alt="" aria-hidden="true">
+    <img id="summerButterfly2" class="summerButterfly" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/motyl2.png?v=1" alt="" aria-hidden="true">
+    <img id="summerButterfly3" class="summerButterfly" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/motyl3.png?v=1" alt="" aria-hidden="true">
     <div id="springLilyWater" aria-hidden="true"></div>
 <div id="springFrogSplash" aria-hidden="true"></div>
     <img id="springLily" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lilia-wodna.png?v=1" alt="" aria-hidden="true">
