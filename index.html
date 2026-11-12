@@ -3897,6 +3897,17 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   #appStage *{touch-action:none}
 }
 
+/* Po zalogowaniu: usuń drewniane obramowania bocznych paneli. */
+#playerPanel{
+  border:0!important;
+  box-shadow:none!important;
+}
+@media(max-width:700px){
+  #playerPanel{
+    border:0!important;
+    box-shadow:none!important;
+  }
+}
 /* Po zalogowaniu: jednolite tło bez drewnianej tekstury pod kafelkami i panelami. */
 #game{
   background:#eadfca!important;
