@@ -274,18 +274,19 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .summerSprinklerWater{
   position:absolute;z-index:7;left:0;top:0;width:clamp(76px,10vw,142px);height:auto;
   overflow:visible;pointer-events:none;transform:translate(-50%,-50%);
-  filter:drop-shadow(0 1px 1px #d8f7ff88);opacity:.9;
+  filter:drop-shadow(0 1px 1px #d8f7ff33);opacity:.72;
 }
 .summerSprinklerWater .waterFan{
   transform-box:fill-box;transform-origin:50% 50%;
   animation:summerWaterSweep 3.8s linear infinite;
 }
 .summerSprinklerWater .waterJet{
-  fill:none;stroke:#c9f5ff;stroke-width:1.7;stroke-linecap:round;
-  stroke-dasharray:3 3;animation:summerWaterFlow .75s linear infinite;
+  fill:none;stroke:#e7fbff;stroke-width:.65;stroke-linecap:round;
+  stroke-dasharray:2.5 3.5;opacity:.24;
+  animation:summerWaterFlow .75s linear infinite;
 }
 .summerSprinklerWater .waterDrop{
-  fill:#e5fbff;opacity:.9;animation:summerWaterDrop 1.15s ease-in-out infinite;
+  fill:#f2fdff;opacity:.32;animation:summerWaterDrop 1.15s ease-in-out infinite;
 }
 @keyframes summerWaterSweep{
   from{transform:rotate(0deg)}
