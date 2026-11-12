@@ -4445,20 +4445,43 @@ const authOverlay=document.getElementById("authOverlay");
 /* Zaznaczanie trasy wróbla usunięte — współrzędne lotu są ustawione na stałe. */
 
 
+function getMarchEquinoxAndSolsticeDates(year){
+  // Przybliżone chwile równonocy i przesileń wg wielomianów Meeusa
+  // (lata 2000–3000), skorygowane o główne perturbacje orbitalne.
+  const y=(year-2000)/1000;
+  const coeffs=[
+    [2451623.80984,365242.37404,0.05169,-0.00411,-0.00057],
+    [2451716.56767,365241.62603,0.00325,0.00888,-0.00030],
+    [2451810.21715,365242.01767,-0.11575,0.00337,0.00078],
+    [2451900.05952,365242.74049,-0.06223,-0.00823,0.00032]
+  ];
+  const terms=[
+    [485,324.96,1934.136],[203,337.23,32964.467],[199,342.08,20.186],
+    [182,27.85,445267.112],[156,73.14,45036.886],[136,171.52,22518.443],
+    [77,222.54,65928.934],[74,296.72,3034.906],[70,243.58,9037.513],
+    [58,119.81,33718.147],[52,297.17,150.678],[50,21.02,2281.226],
+    [45,247.54,29929.562],[44,325.15,31555.956],[29,60.93,4443.417],
+    [18,155.12,67555.328],[17,288.79,4562.452],[16,198.04,62894.029],
+    [14,199.76,31436.921],[12,95.39,14577.848],[12,287.11,31931.756],
+    [12,320.81,34777.259],[9,227.73,1222.114],[8,15.45,16859.074]
+  ];
+  return coeffs.map(c=>{
+    const jde0=c[0]+c[1]*y+c[2]*y*y+c[3]*y*y*y+c[4]*y*y*y*y;
+    const t=(jde0-2451545)/36525;
+    const w=(35999.373*t-2.47)*Math.PI/180;
+    const deltaLambda=1+0.0334*Math.cos(w)+0.0007*Math.cos(2*w);
+    const sum=terms.reduce((total,item)=>total+item[0]*Math.cos((item[1]+item[2]*t)*Math.PI/180),0);
+    const jd=jde0+0.00001*sum/deltaLambda;
+    return new Date((jd-2440587.5)*86400000);
+  });
+}
 function getSeasonName(date){
-  // Astronomiczne granice pór roku na półkuli północnej.
-  // Daty przejścia: równonoc wiosenna, przesilenie letnie,
-  // równonoc jesienna i przesilenie zimowe.
   const year=date.getFullYear();
-  const day=new Date(year,date.getMonth(),date.getDate()).getTime();
-  const boundary=(month,dayOfMonth)=>new Date(year,month-1,dayOfMonth).getTime();
-  const spring=boundary(3,20);
-  const summer=boundary(6,21);
-  const autumn=boundary(9,22);
-  const winter=boundary(12,21);
-  if(day>=spring&&day<summer)return "spring";
-  if(day>=summer&&day<autumn)return "summer";
-  if(day>=autumn&&day<winter)return "autumn";
+  const [spring,summer,autumn,winter]=getMarchEquinoxAndSolsticeDates(year);
+  const instant=date.getTime();
+  if(instant>=spring.getTime()&&instant<summer.getTime())return "spring";
+  if(instant>=summer.getTime()&&instant<autumn.getTime())return "summer";
+  if(instant>=autumn.getTime()&&instant<winter.getTime())return "autumn";
   return "winter";
 }
 
