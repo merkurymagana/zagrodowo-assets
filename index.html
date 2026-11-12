@@ -3493,6 +3493,44 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 
 
+
+/* EDYTOR PUNKTÓW SIADANIA MOTYLI — narzędzie pomocnicze do ustawiania współrzędnych. */
+#butterflyPointEditor{
+  position:absolute;inset:0;z-index:1000;display:none;pointer-events:none;
+}
+#start.butterfly-point-editing #butterflyPointEditor{display:block;pointer-events:auto;cursor:crosshair}
+#butterflyPointToolbar{
+  position:absolute;z-index:1002;right:18px;bottom:18px;width:min(310px,calc(100% - 36px));
+  padding:13px 14px;border:1px solid #e8d2a4;border-radius:12px;
+  background:#34271eeF;color:#fff4dc;box-shadow:0 5px 22px #160f0b66;
+  font:13px/1.4 'Nunito',sans-serif;display:none;
+}
+#start.summer-morning #butterflyPointToolbar{display:block}
+#butterflyPointToolbar strong{display:block;font-size:14px;margin-bottom:5px}
+#butterflyPointToolbar p{margin:0 0 9px;color:#e7d9c3}
+#butterflyPointToolbar .editor-actions{display:flex;flex-wrap:wrap;gap:6px}
+#butterflyPointToolbar button{
+  border:1px solid #d6bd8b;border-radius:7px;padding:6px 9px;
+  background:#725234;color:#fff7e8;font-weight:700;font-size:12px;
+}
+#butterflyPointToolbar button.primary{background:#a06e36}
+#butterflyPointToolbar button:disabled{opacity:.45}
+#butterflyPointCount{display:inline-block;margin-left:5px;color:#f5d99c}
+.butterfly-point-marker{
+  position:absolute;z-index:1001;width:25px;height:25px;margin:-12px 0 0 -12px;
+  display:grid;place-items:center;border:2px solid white;border-radius:50%;
+  background:#b66c32;color:white;font:700 12px 'Nunito',sans-serif;
+  box-shadow:0 1px 5px #0009;pointer-events:none;
+}
+#butterflyPointOutput{
+  display:none;max-height:125px;overflow:auto;margin-top:9px;padding:7px;
+  border-radius:6px;background:#1d1712;color:#f6e8c9;white-space:pre-wrap;
+  font:11px/1.45 ui-monospace,monospace;user-select:text;
+}
+#start.butterfly-points-ready #butterflyPointOutput{display:block}
+@media(max-width:700px){
+  #butterflyPointToolbar{right:9px;bottom:9px;width:min(285px,calc(100% - 18px));padding:10px}
+}
 </style>
 </head>
 
@@ -3504,6 +3542,19 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
+    <div id="butterflyPointEditor" aria-hidden="true"></div>
+    <section id="butterflyPointToolbar" aria-label="Edytor punktów siadania motyli">
+      <strong>Edytor punktów siadania <span id="butterflyPointCount">0</span></strong>
+      <p id="butterflyPointHint">Włącz edytor, a następnie klikaj miejsca na scenerii, w których motyle mogą przysiadać.</p>
+      <div class="editor-actions">
+        <button type="button" class="primary" id="butterflyPointToggle">Oznacz punkty</button>
+        <button type="button" id="butterflyPointUndo" disabled>Cofnij</button>
+        <button type="button" id="butterflyPointClear" disabled>Wyczyść</button>
+        <button type="button" id="butterflyPointCopy" disabled>Kopiuj współrzędne</button>
+      </div>
+      <pre id="butterflyPointOutput"></pre>
+    </section>
+
     <img id="summerNest" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/gniazdo.png?v=1" alt="" aria-hidden="true">
     <img id="summerNestEgg" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jaskolka-jajko.png?v=1" alt="" aria-hidden="true">
     <img id="summerNestEgg2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jaskolka-jajko.png?v=1" alt="" aria-hidden="true">
@@ -5235,6 +5286,67 @@ setInterval(()=>{
   }
 },15000);
 
+/* EDYTOR WSPÓŁRZĘDNYCH PUNKTÓW SIADANIA MOTYLI. */
+(function initButterflyPointEditor(){
+  const editor=document.getElementById("butterflyPointEditor");
+  const toggle=document.getElementById("butterflyPointToggle");
+  const undo=document.getElementById("butterflyPointUndo");
+  const clear=document.getElementById("butterflyPointClear");
+  const copy=document.getElementById("butterflyPointCopy");
+  const output=document.getElementById("butterflyPointOutput");
+  const count=document.getElementById("butterflyPointCount");
+  const hint=document.getElementById("butterflyPointHint");
+  if(!editor||!toggle)return;
+  const points=[];
+  let active=false;
+  function render(){
+    editor.querySelectorAll(".butterfly-point-marker").forEach(node=>node.remove());
+    points.forEach((point,index)=>{
+      const marker=document.createElement("span");
+      marker.className="butterfly-point-marker";
+      marker.textContent=String(index+1);
+      marker.style.left=point.x+"%";
+      marker.style.top=point.y+"%";
+      editor.appendChild(marker);
+    });
+    const data=JSON.stringify(points.map((point,index)=>({id:index+1,x:Number(point.x.toFixed(2)),y:Number(point.y.toFixed(2))})),null,2);
+    output.textContent=data;
+    count.textContent=String(points.length);
+    undo.disabled=points.length===0;
+    clear.disabled=points.length===0;
+    copy.disabled=points.length===0;
+    document.getElementById("start").classList.toggle("butterfly-points-ready",points.length>0);
+  }
+  toggle.addEventListener("click",()=>{
+    active=!active;
+    document.getElementById("start").classList.toggle("butterfly-point-editing",active);
+    toggle.textContent=active?"Zakończ oznaczanie":"Oznacz punkty";
+    hint.textContent=active?"Klikaj na scenerii, aby dodawać punkty. Współrzędne są procentowe względem całego obrazu.":"Punkty są gotowe do skopiowania. Możesz ponownie włączyć oznaczanie.";
+  });
+  editor.addEventListener("click",event=>{
+    if(!active)return;
+    const rect=document.getElementById("start").getBoundingClientRect();
+    const x=Math.max(0,Math.min(100,(event.clientX-rect.left)/rect.width*100));
+    const y=Math.max(0,Math.min(100,(event.clientY-rect.top)/rect.height*100));
+    points.push({x,y});
+    render();
+  });
+  undo.addEventListener("click",()=>{points.pop();render()});
+  clear.addEventListener("click",()=>{points.length=0;render()});
+  copy.addEventListener("click",async()=>{
+    const text=output.textContent;
+    try{
+      await navigator.clipboard.writeText(text);
+      hint.textContent="Współrzędne skopiowane. Wklej je tutaj w rozmowie.";
+    }catch(error){
+      const range=document.createRange();range.selectNodeContents(output);
+      const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);
+      hint.textContent="Zaznaczyłem współrzędne — skopiuj je skrótem Ctrl+C.";
+    }
+  });
+  render();
+})();
+ 
 /* MOTYLE — krótkie odpoczynki w punktach lotu i płoszenie po najechaniu kursorem. */
 (function initSummerButterflyBehavior(){
   const duration=200000;
