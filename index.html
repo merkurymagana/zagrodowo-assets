@@ -4562,7 +4562,13 @@ html,body,#appStage{
     column-gap:11px!important;
     row-gap:4px!important;
   }
-  #playerPanel .avatar-frame{width:46px!important;height:46px!important;flex-basis:46px!important}
+  #playerPanel .avatar-frame{
+    grid-column:1!important;grid-row:1 / 4!important;align-self:stretch!important;
+    box-sizing:border-box;width:46px!important;height:auto!important;min-height:58px!important;flex-basis:46px!important;
+    cursor:pointer!important;transition:box-shadow .16s ease,transform .16s ease;
+  }
+  #playerPanel .avatar-frame:hover{transform:scale(1.04);box-shadow:0 3px 9px rgba(67,48,26,.24)}
+  #playerPanel .avatar-frame:focus-visible{outline:2px solid #8b7048;outline-offset:3px}
   #playerPanel .avatar-placeholder{font-size:27px!important}
   #playerPanel .player-name{font-size:15px!important}
   #playerPanel .player-level{font-size:11px!important}
@@ -4583,7 +4589,10 @@ html,body,#appStage{
     column-gap:8px!important;
     row-gap:3px!important;
   }
-  #playerPanel .avatar-frame{width:38px!important;height:38px!important;flex-basis:38px!important}
+  #playerPanel .avatar-frame{
+    grid-column:1!important;grid-row:1 / 4!important;align-self:stretch!important;
+    width:38px!important;height:auto!important;min-height:52px!important;flex-basis:38px!important;
+  }
   #playerPanel .avatar-placeholder{font-size:23px!important}
   #playerPanel .player-name{font-size:12px!important}
   #playerPanel .player-level{font-size:9px!important}
@@ -5093,7 +5102,7 @@ html,body,#appStage{
     <aside id="playerPanel">
       <section class="profile-card">
         <div class="avatar-row">
-          <div class="avatar-frame">
+          <div class="avatar-frame" role="button" tabindex="0" aria-label="Edytuj profil gracza" title="Edytuj profil" onclick="openProfileEditor()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProfileEditor();}">
             <img id="playerAvatar" src="" alt="Awatar gracza" style="display:none">
             <span class="avatar-placeholder" id="avatarPlaceholder">👨‍🌾</span>
           </div>
@@ -5106,7 +5115,6 @@ html,body,#appStage{
         <div class="xp-label"><span>Doświadczenie</span><span id="xpText">0 / 100 XP</span></div>
         <div class="xp-track"><div id="xpFill"></div></div>
 
-        <button class="profile-edit" type="button" onclick="openProfileEditor()">✎ Edytuj profil</button>
       </section>
 
       <div class="currency-grid currency-bar" aria-label="Stan walut">
