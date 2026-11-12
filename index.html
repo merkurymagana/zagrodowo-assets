@@ -2141,10 +2141,34 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 .auth-overlay.visible,.profile-overlay.visible{display:flex}
-/* Na urządzeniach dotykowych przeglądarka może przybliżać sam formularz gestem dwóch palców. */
+
+/* Formularz logowania jest przenoszony bezpośrednio do body, poza skalowaną planszę gry. */
+#authOverlay{
+  position:fixed;
+  inset:var(--auth-viewport-top,0px) 0 auto;
+  width:100%;
+  height:var(--auth-viewport-height,100dvh);
+  z-index:1000000;
+  align-items:flex-start;
+  justify-content:center;
+  overflow-x:hidden;
+  overflow-y:auto;
+  padding:12px max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-x pan-y pinch-zoom;
+}
+#authOverlay .auth-window{
+  width:min(460px,100%);
+  max-height:calc(var(--auth-viewport-height,100dvh) - 24px);
+  margin:auto;
+  flex:0 0 auto;
+  overflow-x:hidden;
+  overflow-y:auto;
+  touch-action:pan-x pan-y pinch-zoom;
+  overscroll-behavior:contain;
+}
 @media (pointer:coarse){
-  #authOverlay{touch-action:pan-x pan-y pinch-zoom;align-items:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-  #authOverlay .auth-window{touch-action:pan-x pan-y pinch-zoom;margin:auto;flex:0 0 auto;}
+  #authOverlay .field input{font-size:16px;}
 }
 
 
@@ -4503,6 +4527,29 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 const start=document.getElementById("start");
 const authOverlay=document.getElementById("authOverlay");
 
+/* Odłącz formularz od #appStage: transformacja planszy nie może go pomniejszać. */
+if(authOverlay && authOverlay.parentElement!==document.body){
+  document.body.appendChild(authOverlay);
+}
+
+/* Dopasuj warstwę formularza do widocznego obszaru także po otwarciu klawiatury. */
+(function fitAuthToVisualViewport(){
+  const update=()=>{
+    const vv=window.visualViewport;
+    const height=vv?vv.height:window.innerHeight;
+    const top=vv?vv.offsetTop:0;
+    document.documentElement.style.setProperty("--auth-viewport-height",Math.max(160,height)+"px");
+    document.documentElement.style.setProperty("--auth-viewport-top",Math.max(0,top)+"px");
+  };
+  window.addEventListener("resize",update,{passive:true});
+  window.addEventListener("orientationchange",update,{passive:true});
+  if(window.visualViewport){
+    window.visualViewport.addEventListener("resize",update,{passive:true});
+    window.visualViewport.addEventListener("scroll",update,{passive:true});
+  }
+  update();
+})();
+
 /* Zaznaczanie trasy wróbla usunięte — współrzędne lotu są ustawione na stałe. */
 
 
@@ -6172,10 +6219,10 @@ renderNeighbors();
     cancelAnimationFrame(frame);
     frame=requestAnimationFrame(()=>{
       const viewport=window.visualViewport;
-      // Klawiatura ekranowa potrafi zmniejszyć visualViewport nawet o połowę.
-      // Nie zmniejszaj wtedy planszy i formularza — pozwól przewijać okno logowania.
-      const focused=document.activeElement;
-      if(focused && focused.matches && focused.matches('#authOverlay input, #authOverlay textarea'))return;
+      // Formularz jest niezależną warstwą nad planszą — jej skali nie zmieniaj,
+      // gdy formularz jest otwarty, klawiatura widoczna lub trwa pinch-to-zoom.
+      if(document.getElementById("authOverlay")?.classList.contains("visible"))return;
+      if(viewport && viewport.scale>1.01)return;
       const width=viewport?viewport.width:document.documentElement.clientWidth;
       const height=viewport?viewport.height:document.documentElement.clientHeight;
       // W pionie dopasuj planszę do całej szerokości, pozostawiając pustą przestrzeń pod grą.
