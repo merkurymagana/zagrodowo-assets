@@ -393,7 +393,24 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   display:block;width:100%;height:auto;
   transform-origin:50% 50%;
   animation:summerButterflyWings .24s ease-in-out infinite alternate;
-  will-change:transform;
+  will-change:transform,scale;
+}
+#summerButterfly1 img{animation:summerButterflyWings .24s ease-in-out infinite alternate,summerButterflyFacing1 58s steps(1,end) -11s infinite}
+#summerButterfly2 img{animation:summerButterflyWings .24s ease-in-out infinite alternate,summerButterflyFacing2 67s steps(1,end) -29s infinite}
+#summerButterfly3 img{animation:summerButterflyWings .24s ease-in-out infinite alternate,summerButterflyFacing3 63s steps(1,end) -19s infinite}
+@keyframes summerButterflyFacing1{
+  0%,31.49%{scale:1 1}
+  31.5%,100%{scale:-1 1}
+}
+@keyframes summerButterflyFacing2{
+  0%,49.49%{scale:-1 1}
+  49.5%,79.49%{scale:1 1}
+  79.5%,100%{scale:-1 1}
+}
+@keyframes summerButterflyFacing3{
+  0%,43.49%{scale:1 1}
+  43.5%,82.49%{scale:-1 1}
+  82.5%,100%{scale:1 1}
 }
 @keyframes summerButterflyWings{
   from{transform:scaleX(1) scaleY(1)}
@@ -404,22 +421,22 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   6%{}
   18%{transform:translate3d(5vw,-2vh,0) rotate(7deg) scale(.94)}
   31%{transform:translate3d(11vw,3vh,0) rotate(13deg) scale(1.08)}
-  45%{transform:translate3d(7vw,8vh,0) rotate(-4deg) scale(1.18) scaleX(1)}
-  45.5%{transform:translate3d(7vw,8vh,0) rotate(-4deg) scale(1.18) scaleX(-1)}
+  45%{transform:translate3d(7vw,8vh,0) rotate(-4deg) scale(1.18)}
+  45.5%{transform:translate3d(7vw,8vh,0) rotate(-4deg) scale(1.18)}
   59%{transform:translate3d(-1vw,5vh,0) rotate(-14deg) scale(1.12)}
   73%{transform:translate3d(-8vw,-1vh,0) rotate(-5deg) scale(.97)}
   87%{transform:translate3d(-5vw,-7vh,0) rotate(9deg) scale(.82)}
   100%{transform:translate3d(1vw,-3vh,0) rotate(-8deg) scale(.91)}
 }
 @keyframes summerButterflyFlight2{
-  0%{transform:translate3d(0,0,0) rotate(8deg) scale(1) scaleX(-1)}
+  0%{transform:translate3d(0,0,0) rotate(8deg) scale(1)}
   7%{}
   20%{transform:translate3d(-6vw,4vh,0) rotate(-10deg) scale(1.10)}
   35%{transform:translate3d(-13vw,1vh,0) rotate(-15deg) scale(1.02)}
   49%{transform:translate3d(-17vw,-5vh,0) rotate(2deg) scale(.88)}
   64%{transform:translate3d(-10vw,-9vh,0) rotate(12deg) scale(.78)}
-  79%{transform:translate3d(-3vw,-3vh,0) rotate(6deg) scale(.91) scaleX(-1)}
-  79.5%{transform:translate3d(-3vw,-3vh,0) rotate(6deg) scale(.91) scaleX(1)}
+  79%{transform:translate3d(-3vw,-3vh,0) rotate(6deg) scale(.91)}
+  79.5%{transform:translate3d(-3vw,-3vh,0) rotate(6deg) scale(.91)}
   91%{transform:translate3d(-8vw,4vh,0) rotate(-9deg) scale(1.10)}
   100%{transform:translate3d(-12vw,1vh,0) rotate(8deg) scale(1.02)}
 }
@@ -428,12 +445,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   8%{}
   17%{transform:translate3d(4vw,-7vh,0) rotate(11deg) scale(.82)}
   30%{transform:translate3d(12vw,-3vh,0) rotate(17deg) scale(.91)}
-  43%{transform:translate3d(18vw,4vh,0) rotate(4deg) scale(1.08) scaleX(1)}
-  43.5%{transform:translate3d(18vw,4vh,0) rotate(4deg) scale(1.08) scaleX(-1)}
+  43%{transform:translate3d(18vw,4vh,0) rotate(4deg) scale(1.08)}
+  43.5%{transform:translate3d(18vw,4vh,0) rotate(4deg) scale(1.08)}
   56%{transform:translate3d(13vw,10vh,0) rotate(-12deg) scale(1.18)}
   69%{transform:translate3d(5vw,6vh,0) rotate(-17deg) scale(1.12)}
-  82%{transform:translate3d(-2vw,-1vh,0) rotate(-5deg) scale(.97) scaleX(-1)}
-  82.5%{transform:translate3d(-2vw,-1vh,0) rotate(-5deg) scale(.97) scaleX(1)}
+  82%{transform:translate3d(-2vw,-1vh,0) rotate(-5deg) scale(.97)}
+  82.5%{transform:translate3d(-2vw,-1vh,0) rotate(-5deg) scale(.97)}
   93%{transform:translate3d(3vw,-8vh,0) rotate(9deg) scale(.80)}
   100%{transform:translate3d(8vw,-4vh,0) rotate(-4deg) scale(.88)}
 }
@@ -821,27 +838,27 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   animation-delay:-5s;
 }
 @keyframes winter-avalanche-slide{
-  0%,71.2%{opacity:0;filter:brightness(0) invert(1) blur(0);transform:translate3d(0,0,0) rotate(0) scale(1) scaleX(-1)}
-  72%{opacity:.18;filter:brightness(0) invert(1) blur(7px);clip-path:inset(0 0 78% 0);transform:translate3d(0,0,0) rotate(0) scale(1) scaleX(-1);animation-timing-function:linear}
-  76%{opacity:.48;filter:brightness(0) invert(1) blur(5px);clip-path:inset(0 0 58% 0);transform:translate3d(1.5px,9px,0) rotate(2deg) scale(1.04) scaleX(-1);animation-timing-function:linear}
-  79.5%{opacity:.82;filter:brightness(0) invert(1) blur(2.5px);clip-path:inset(0 0 30% 0);transform:translate3d(3.5px,24px,0) rotate(5deg) scale(1.12) scaleX(-1);animation-timing-function:linear}
-  81.5%{opacity:.96;filter:brightness(0) invert(1) blur(.8px);clip-path:inset(0 0 8% 0);transform:translate3d(5.5px,38px,0) rotate(8deg) scale(1.2) scaleX(-1);animation-timing-function:linear}
-  83.11%{opacity:1;filter:brightness(0) invert(1) blur(1.4px);clip-path:inset(0 0 0 0);transform:translate3d(5.8px,39px,0) rotate(8.2deg) scale(1.21) scaleX(-1);animation-timing-function:linear}
-  88.89%{opacity:1;filter:brightness(0) invert(1) blur(1.4px);clip-path:inset(0);transform:translate3d(7px,57px,0) rotate(9deg) scale(1.22) scaleX(-1);animation-timing-function:linear}
-  94%{opacity:.72;filter:brightness(0) invert(1) blur(4px);clip-path:inset(0);transform:translate3d(9.5px,73px,0) rotate(10deg) scale(1.23) scaleX(-1);animation-timing-function:linear}
-  97%{opacity:.42;filter:brightness(0) invert(1) blur(7px);clip-path:inset(0);transform:translate3d(12.5px,86px,0) rotate(11deg) scale(1.235) scaleX(-1);animation-timing-function:linear}
-  100%{opacity:0;filter:brightness(0) invert(1) blur(12px);clip-path:inset(0);transform:translate3d(16px,100px,0) rotate(12deg) scale(1.24) scaleX(-1)}
+  0%,71.2%{opacity:0;filter:brightness(0) invert(1) blur(0);transform:translate3d(0,0,0) rotate(0) scale(1)}
+  72%{opacity:.18;filter:brightness(0) invert(1) blur(7px);clip-path:inset(0 0 78% 0);transform:translate3d(0,0,0) rotate(0) scale(1);animation-timing-function:linear}
+  76%{opacity:.48;filter:brightness(0) invert(1) blur(5px);clip-path:inset(0 0 58% 0);transform:translate3d(1.5px,9px,0) rotate(2deg) scale(1.04);animation-timing-function:linear}
+  79.5%{opacity:.82;filter:brightness(0) invert(1) blur(2.5px);clip-path:inset(0 0 30% 0);transform:translate3d(3.5px,24px,0) rotate(5deg) scale(1.12);animation-timing-function:linear}
+  81.5%{opacity:.96;filter:brightness(0) invert(1) blur(.8px);clip-path:inset(0 0 8% 0);transform:translate3d(5.5px,38px,0) rotate(8deg) scale(1.2);animation-timing-function:linear}
+  83.11%{opacity:1;filter:brightness(0) invert(1) blur(1.4px);clip-path:inset(0 0 0 0);transform:translate3d(5.8px,39px,0) rotate(8.2deg) scale(1.21);animation-timing-function:linear}
+  88.89%{opacity:1;filter:brightness(0) invert(1) blur(1.4px);clip-path:inset(0);transform:translate3d(7px,57px,0) rotate(9deg) scale(1.22);animation-timing-function:linear}
+  94%{opacity:.72;filter:brightness(0) invert(1) blur(4px);clip-path:inset(0);transform:translate3d(9.5px,73px,0) rotate(10deg) scale(1.23);animation-timing-function:linear}
+  97%{opacity:.42;filter:brightness(0) invert(1) blur(7px);clip-path:inset(0);transform:translate3d(12.5px,86px,0) rotate(11deg) scale(1.235);animation-timing-function:linear}
+  100%{opacity:0;filter:brightness(0) invert(1) blur(12px);clip-path:inset(0);transform:translate3d(16px,100px,0) rotate(12deg) scale(1.24)}
 }@keyframes winter-avalanche-slide-short{
-  0%,71.2%{opacity:0;filter:brightness(0) invert(1) blur(0);transform:translate3d(0,0,0) rotate(0) scale(1) scaleX(-1)}
-  72%{opacity:.18;filter:brightness(0) invert(1) blur(7px);clip-path:inset(0 0 78% 0);transform:translate3d(0,0,0) rotate(0) scale(1) scaleX(-1);animation-timing-function:linear}
-  76%{opacity:.48;filter:brightness(0) invert(1) blur(5px);clip-path:inset(0 0 58% 0);transform:translate3d(1.5px,5px,0) rotate(2deg) scale(1.04) scaleX(-1);animation-timing-function:linear}
-  79.5%{opacity:.82;filter:brightness(0) invert(1) blur(2.5px);clip-path:inset(0 0 30% 0);transform:translate3d(3.5px,13.5px,0) rotate(5deg) scale(1.12) scaleX(-1);animation-timing-function:linear}
-  81.5%{opacity:.96;filter:brightness(0) invert(1) blur(.8px);clip-path:inset(0 0 8% 0);transform:translate3d(5.5px,22px,0) rotate(8deg) scale(1.2) scaleX(-1);animation-timing-function:linear}
-  83.11%{opacity:1;filter:brightness(0) invert(1) blur(1.4px);clip-path:inset(0 0 0 0);transform:translate3d(5.8px,22.5px,0) rotate(8.2deg) scale(1.21) scaleX(-1);animation-timing-function:linear}
-  88.89%{opacity:1;filter:brightness(0) invert(1) blur(1.4px);clip-path:inset(0);transform:translate3d(7px,32px,0) rotate(9deg) scale(1.22) scaleX(-1);animation-timing-function:linear}
-  94%{opacity:.72;filter:brightness(0) invert(1) blur(4px);clip-path:inset(0);transform:translate3d(9.5px,41px,0) rotate(10deg) scale(1.23) scaleX(-1);animation-timing-function:linear}
-  97%{opacity:.42;filter:brightness(0) invert(1) blur(7px);clip-path:inset(0);transform:translate3d(12.5px,49px,0) rotate(11deg) scale(1.235) scaleX(-1);animation-timing-function:linear}
-  100%{opacity:0;filter:brightness(0) invert(1) blur(12px);clip-path:inset(0);transform:translate3d(16px,56px,0) rotate(12deg) scale(1.24) scaleX(-1)}
+  0%,71.2%{opacity:0;filter:brightness(0) invert(1) blur(0);transform:translate3d(0,0,0) rotate(0) scale(1)}
+  72%{opacity:.18;filter:brightness(0) invert(1) blur(7px);clip-path:inset(0 0 78% 0);transform:translate3d(0,0,0) rotate(0) scale(1);animation-timing-function:linear}
+  76%{opacity:.48;filter:brightness(0) invert(1) blur(5px);clip-path:inset(0 0 58% 0);transform:translate3d(1.5px,5px,0) rotate(2deg) scale(1.04);animation-timing-function:linear}
+  79.5%{opacity:.82;filter:brightness(0) invert(1) blur(2.5px);clip-path:inset(0 0 30% 0);transform:translate3d(3.5px,13.5px,0) rotate(5deg) scale(1.12);animation-timing-function:linear}
+  81.5%{opacity:.96;filter:brightness(0) invert(1) blur(.8px);clip-path:inset(0 0 8% 0);transform:translate3d(5.5px,22px,0) rotate(8deg) scale(1.2);animation-timing-function:linear}
+  83.11%{opacity:1;filter:brightness(0) invert(1) blur(1.4px);clip-path:inset(0 0 0 0);transform:translate3d(5.8px,22.5px,0) rotate(8.2deg) scale(1.21);animation-timing-function:linear}
+  88.89%{opacity:1;filter:brightness(0) invert(1) blur(1.4px);clip-path:inset(0);transform:translate3d(7px,32px,0) rotate(9deg) scale(1.22);animation-timing-function:linear}
+  94%{opacity:.72;filter:brightness(0) invert(1) blur(4px);clip-path:inset(0);transform:translate3d(9.5px,41px,0) rotate(10deg) scale(1.23);animation-timing-function:linear}
+  97%{opacity:.42;filter:brightness(0) invert(1) blur(7px);clip-path:inset(0);transform:translate3d(12.5px,49px,0) rotate(11deg) scale(1.235);animation-timing-function:linear}
+  100%{opacity:0;filter:brightness(0) invert(1) blur(12px);clip-path:inset(0);transform:translate3d(16px,56px,0) rotate(12deg) scale(1.24)}
 }
 #start.winter-day #winterAvalanche{animation-name:winter-avalanche-slide-short}
 @media(max-width:700px){
@@ -853,27 +870,27 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   #start.winter-day #winterAvalancheLeft2{animation-name:winter-avalanche-slide-mobile}
 }
 @keyframes winter-avalanche-slide-mobile{
-  0%,71.2%{opacity:0;filter:brightness(0) invert(1) blur(0);transform:scale(.78) translate3d(0,0,0) rotate(0) scaleX(-1)}
-  72%{opacity:.18;filter:brightness(0) invert(1) blur(5.5px);clip-path:inset(0 0 78% 0);transform:scale(.78) translate3d(0,0,0) rotate(0) scaleX(-1);animation-timing-function:linear}
-  76%{opacity:.48;filter:brightness(0) invert(1) blur(4px);clip-path:inset(0 0 58% 0);transform:scale(.81) translate3d(1.5px,9px,0) rotate(2deg) scaleX(-1);animation-timing-function:linear}
-  79.5%{opacity:.82;filter:brightness(0) invert(1) blur(2px);clip-path:inset(0 0 30% 0);transform:scale(.87) translate3d(3.5px,24px,0) rotate(5deg) scaleX(-1);animation-timing-function:linear}
-  81.5%{opacity:.96;filter:brightness(0) invert(1) blur(.6px);clip-path:inset(0 0 8% 0);transform:scale(.94) translate3d(5.5px,38px,0) rotate(8deg) scaleX(-1);animation-timing-function:linear}
-  83.11%{opacity:1;filter:brightness(0) invert(1) blur(1.1px);clip-path:inset(0 0 0 0);transform:scale(.945) translate3d(5.8px,39px,0) rotate(8.2deg) scaleX(-1);animation-timing-function:linear}
-  88.89%{opacity:1;filter:brightness(0) invert(1) blur(1.1px);clip-path:inset(0);transform:scale(.96) translate3d(7px,57px,0) rotate(9deg) scaleX(-1);animation-timing-function:linear}
-  94%{opacity:.72;filter:brightness(0) invert(1) blur(3.5px);clip-path:inset(0);transform:scale(.965) translate3d(9.5px,73px,0) rotate(10deg) scaleX(-1);animation-timing-function:linear}
-  97%{opacity:.42;filter:brightness(0) invert(1) blur(5.5px);clip-path:inset(0);transform:scale(.968) translate3d(12.5px,86px,0) rotate(11deg) scaleX(-1);animation-timing-function:linear}
-  100%{opacity:0;filter:brightness(0) invert(1) blur(9px);clip-path:inset(0);transform:scale(.97) translate3d(16px,100px,0) rotate(12deg) scaleX(-1)}
+  0%,71.2%{opacity:0;filter:brightness(0) invert(1) blur(0);transform:scale(.78) translate3d(0,0,0) rotate(0)}
+  72%{opacity:.18;filter:brightness(0) invert(1) blur(5.5px);clip-path:inset(0 0 78% 0);transform:scale(.78) translate3d(0,0,0) rotate(0);animation-timing-function:linear}
+  76%{opacity:.48;filter:brightness(0) invert(1) blur(4px);clip-path:inset(0 0 58% 0);transform:scale(.81) translate3d(1.5px,9px,0) rotate(2deg);animation-timing-function:linear}
+  79.5%{opacity:.82;filter:brightness(0) invert(1) blur(2px);clip-path:inset(0 0 30% 0);transform:scale(.87) translate3d(3.5px,24px,0) rotate(5deg);animation-timing-function:linear}
+  81.5%{opacity:.96;filter:brightness(0) invert(1) blur(.6px);clip-path:inset(0 0 8% 0);transform:scale(.94) translate3d(5.5px,38px,0) rotate(8deg);animation-timing-function:linear}
+  83.11%{opacity:1;filter:brightness(0) invert(1) blur(1.1px);clip-path:inset(0 0 0 0);transform:scale(.945) translate3d(5.8px,39px,0) rotate(8.2deg);animation-timing-function:linear}
+  88.89%{opacity:1;filter:brightness(0) invert(1) blur(1.1px);clip-path:inset(0);transform:scale(.96) translate3d(7px,57px,0) rotate(9deg);animation-timing-function:linear}
+  94%{opacity:.72;filter:brightness(0) invert(1) blur(3.5px);clip-path:inset(0);transform:scale(.965) translate3d(9.5px,73px,0) rotate(10deg);animation-timing-function:linear}
+  97%{opacity:.42;filter:brightness(0) invert(1) blur(5.5px);clip-path:inset(0);transform:scale(.968) translate3d(12.5px,86px,0) rotate(11deg);animation-timing-function:linear}
+  100%{opacity:0;filter:brightness(0) invert(1) blur(9px);clip-path:inset(0);transform:scale(.97) translate3d(16px,100px,0) rotate(12deg)}
 }@keyframes winter-avalanche-slide-mobile-short{
-  0%,71.2%{opacity:0;filter:brightness(0) invert(1) blur(0);transform:scale(.78) translate3d(0,0,0) rotate(0) scaleX(-1)}
-  72%{opacity:.18;filter:brightness(0) invert(1) blur(5.5px);clip-path:inset(0 0 78% 0);transform:scale(.78) translate3d(0,0,0) rotate(0) scaleX(-1);animation-timing-function:linear}
-  76%{opacity:.48;filter:brightness(0) invert(1) blur(4px);clip-path:inset(0 0 58% 0);transform:scale(.81) translate3d(1.5px,5px,0) rotate(2deg) scaleX(-1);animation-timing-function:linear}
-  79.5%{opacity:.82;filter:brightness(0) invert(1) blur(2px);clip-path:inset(0 0 30% 0);transform:scale(.87) translate3d(3.5px,13.5px,0) rotate(5deg) scaleX(-1);animation-timing-function:linear}
-  81.5%{opacity:.96;filter:brightness(0) invert(1) blur(.6px);clip-path:inset(0 0 8% 0);transform:scale(.94) translate3d(5.5px,22px,0) rotate(8deg) scaleX(-1);animation-timing-function:linear}
-  83.11%{opacity:1;filter:brightness(0) invert(1) blur(1.1px);clip-path:inset(0 0 0 0);transform:scale(.945) translate3d(5.8px,22.5px,0) rotate(8.2deg) scaleX(-1);animation-timing-function:linear}
-  88.89%{opacity:1;filter:brightness(0) invert(1) blur(1.1px);clip-path:inset(0);transform:scale(.96) translate3d(7px,32px,0) rotate(9deg) scaleX(-1);animation-timing-function:linear}
-  94%{opacity:.72;filter:brightness(0) invert(1) blur(3.5px);clip-path:inset(0);transform:scale(.965) translate3d(9.5px,41px,0) rotate(10deg) scaleX(-1);animation-timing-function:linear}
-  97%{opacity:.42;filter:brightness(0) invert(1) blur(5.5px);clip-path:inset(0);transform:scale(.968) translate3d(12.5px,49px,0) rotate(11deg) scaleX(-1);animation-timing-function:linear}
-  100%{opacity:0;filter:brightness(0) invert(1) blur(9px);clip-path:inset(0);transform:scale(.97) translate3d(16px,56px,0) rotate(12deg) scaleX(-1)}
+  0%,71.2%{opacity:0;filter:brightness(0) invert(1) blur(0);transform:scale(.78) translate3d(0,0,0) rotate(0)}
+  72%{opacity:.18;filter:brightness(0) invert(1) blur(5.5px);clip-path:inset(0 0 78% 0);transform:scale(.78) translate3d(0,0,0) rotate(0);animation-timing-function:linear}
+  76%{opacity:.48;filter:brightness(0) invert(1) blur(4px);clip-path:inset(0 0 58% 0);transform:scale(.81) translate3d(1.5px,5px,0) rotate(2deg);animation-timing-function:linear}
+  79.5%{opacity:.82;filter:brightness(0) invert(1) blur(2px);clip-path:inset(0 0 30% 0);transform:scale(.87) translate3d(3.5px,13.5px,0) rotate(5deg);animation-timing-function:linear}
+  81.5%{opacity:.96;filter:brightness(0) invert(1) blur(.6px);clip-path:inset(0 0 8% 0);transform:scale(.94) translate3d(5.5px,22px,0) rotate(8deg);animation-timing-function:linear}
+  83.11%{opacity:1;filter:brightness(0) invert(1) blur(1.1px);clip-path:inset(0 0 0 0);transform:scale(.945) translate3d(5.8px,22.5px,0) rotate(8.2deg);animation-timing-function:linear}
+  88.89%{opacity:1;filter:brightness(0) invert(1) blur(1.1px);clip-path:inset(0);transform:scale(.96) translate3d(7px,32px,0) rotate(9deg);animation-timing-function:linear}
+  94%{opacity:.72;filter:brightness(0) invert(1) blur(3.5px);clip-path:inset(0);transform:scale(.965) translate3d(9.5px,41px,0) rotate(10deg);animation-timing-function:linear}
+  97%{opacity:.42;filter:brightness(0) invert(1) blur(5.5px);clip-path:inset(0);transform:scale(.968) translate3d(12.5px,49px,0) rotate(11deg);animation-timing-function:linear}
+  100%{opacity:0;filter:brightness(0) invert(1) blur(9px);clip-path:inset(0);transform:scale(.97) translate3d(16px,56px,0) rotate(12deg)}
 }
 @media(max-width:700px){
   #start.winter-day #winterAvalanche{animation-name:winter-avalanche-slide-mobile-short}
@@ -923,7 +940,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   #goatHead{animation:none}
 }
 #start.autumn-night #goatBodyGroup{display:block}
-#start.autumn-night #goatBodyGroup{transform:translate(-415px,125px) scaleX(-1)}
+#start.autumn-night #goatBodyGroup{transform:translate(-415px,125px)}
 @media(max-width:1050px){
   #goatBodyGroup{
     left:auto;
@@ -1212,14 +1229,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 /* Pojawianie i znikanie jak u wróbla: krótkie, płynne przejście
    trwające około 0,15 s, bez długiego narastania przez całą trasę. */
 @keyframes spring-deer-forward{
- 0%{transform:translate(-50%,-50%) scaleX(-1);opacity:0}
+ 0%{transform:translate(-50%,-50%);opacity:0}
  1%{opacity:.55}
  2%{opacity:.9}
  2.9%{opacity:1}
  97.1%{opacity:1}
  98%{opacity:.9}
  99%{opacity:.55}
- 100%{transform:translate(calc(-50% + var(--deer-dx)),calc(-50% + var(--deer-dy))) scaleX(-1);opacity:0}
+ 100%{transform:translate(calc(-50% + var(--deer-dx)),calc(-50% + var(--deer-dy)));opacity:0}
 }
 @keyframes spring-deer-reverse{
  0%{transform:translate(-50%,-50%);opacity:0}
