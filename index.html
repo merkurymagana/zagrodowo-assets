@@ -289,9 +289,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .summerSprinklerWater .waterDrop{
   fill:#f2fdff;opacity:.32;animation:summerWaterDrop 1.15s ease-in-out infinite;
 }
+/* Strumienie leżą na spłaszczonej, poziomej płaszczyźnie — jak wirujący dysk UFO,
+   a nie pionowa fontanna. Obrót odbywa się wokół pionowej osi zraszacza. */
 @keyframes summerWaterSweep{
-  from{transform:perspective(180px) rotateY(0deg)}
-  to{transform:perspective(180px) rotateY(360deg)}
+  from{transform:perspective(240px) rotateY(0deg) rotateX(76deg)}
+  to{transform:perspective(240px) rotateY(360deg) rotateX(76deg)}
 }
 @keyframes summerWaterFlow{to{stroke-dashoffset:-12}}
 @keyframes summerWaterDrop{
