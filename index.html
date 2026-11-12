@@ -3910,11 +3910,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
         const h = p.h*pulse;
         const x = p.x+sway;
         const grad=ctx.createLinearGradient(0,286,0,286-h);
-        grad.addColorStop(0,'rgba(190,35,5,.94)');
-        grad.addColorStop(.22,'rgba(255,78,8,.96)');
-        grad.addColorStop(.58,'rgba(255,145,22,.86)');
-        grad.addColorStop(.86,'rgba(255,196,64,.48)');
-        grad.addColorStop(1,'rgba(255,213,105,0)');
+        grad.addColorStop(0,'rgba(105,24,8,.96)');
+        grad.addColorStop(.2,'rgba(190,55,12,.95)');
+        grad.addColorStop(.48,'rgba(224,103,20,.88)');
+        grad.addColorStop(.76,'rgba(235,151,43,.62)');
+        grad.addColorStop(.94,'rgba(244,190,91,.24)');
+        grad.addColorStop(1,'rgba(244,190,91,0)');
         ctx.fillStyle=grad;
         ctx.beginPath();
         ctx.moveTo(x-p.w*.58,292);
@@ -3928,9 +3929,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
         ctx.clearRect(0,0,W,H);
         // Miękki żar tuż pomiędzy polanami.
         const ember=ctx.createRadialGradient(338,285,3,338,285,92);
-        ember.addColorStop(0,'rgba(255,190,55,.45)');
-        ember.addColorStop(.42,'rgba(255,83,10,.22)');
-        ember.addColorStop(1,'rgba(255,55,0,0)');
+        ember.addColorStop(0,'rgba(210,119,31,.34)');
+        ember.addColorStop(.42,'rgba(151,54,15,.18)');
+        ember.addColorStop(1,'rgba(112,35,8,0)');
         ctx.fillStyle=ember;ctx.fillRect(225,205,230,125);
         tongues.forEach(p=>plume(t,p));
         // Jasne, krótkie rdzenie poruszają się niezależnie w środku płomienia.
@@ -3939,9 +3940,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
           const x=p.x+Math.sin(t*p.speed+p.phase)*8;
           const h=p.h*(.48+.13*Math.sin(t*3.1+p.phase));
           const g=ctx.createLinearGradient(0,286,0,286-h);
-          g.addColorStop(0,'rgba(255,210,95,.65)');
-          g.addColorStop(.55,'rgba(255,190,80,.48)');
-          g.addColorStop(1,'rgba(255,220,145,0)');
+          g.addColorStop(0,'rgba(255,190,94,.58)');
+          g.addColorStop(.55,'rgba(244,158,62,.38)');
+          g.addColorStop(1,'rgba(239,183,105,0)');
           ctx.fillStyle=g;ctx.beginPath();
           ctx.moveTo(x-8,288);ctx.bezierCurveTo(x-13,267,x-2,260-h*.5,x+Math.sin(t*3+i)*5,286-h);
           ctx.bezierCurveTo(x+10,250-h*.45,x+12,273,x+8,288);ctx.closePath();ctx.fill();
