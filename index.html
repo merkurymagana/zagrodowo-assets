@@ -323,6 +323,21 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 @media(prefers-reduced-motion:reduce){.summerStormStrike{animation:none;opacity:0}}
 
+/* Edytor ręcznego przesuwania błyskawic — tylko w letniej nocy. */
+#summerStormEditorToggle{position:absolute;z-index:42;left:16px;top:16px;display:none;padding:9px 13px;border:2px solid #67472c;border-radius:9px;background:#fff4df;color:#49351f;font:800 13px Nunito,Arial,sans-serif;box-shadow:0 2px 7px #0004;cursor:pointer}
+#start.summer-night #summerStormEditorToggle{display:block}
+#summerStormEditorPanel{position:absolute;z-index:43;left:16px;top:60px;width:min(320px,calc(100% - 32px));display:none;padding:12px;border:2px solid #67472c;border-radius:10px;background:#fff4eaf2;color:#49351f;box-shadow:0 3px 12px #0005;font:600 12px/1.4 Nunito,Arial,sans-serif}
+#summerStormEditorPanel.open{display:block}
+#summerStormEditorPanel strong{display:block;font-size:14px;margin-bottom:4px}
+#summerStormEditorPanel p{margin:0 0 8px}
+#summerStormEditorPanel textarea{width:100%;height:90px;resize:vertical;padding:7px;border:1px solid #a58b68;border-radius:6px;background:#fffdf8;color:#49351f;font:11px/1.35 monospace}
+.storm-editor-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.storm-editor-actions button{padding:6px 9px;border:1px solid #765333;border-radius:6px;background:#f2dfbd;color:#49351f;font:800 11px Nunito,Arial,sans-serif;cursor:pointer}
+#start.storm-editing .summerStorm{z-index:41}
+#start.storm-editing .summerStormStrike{opacity:.85!important;animation-play-state:paused!important;cursor:grab;pointer-events:all}
+#start.storm-editing .summerStormStrike:active{cursor:grabbing}
+#start.storm-editing .summerStormStrike .stormGlow{opacity:.3}
+
 /* Balon — na razie nieruchomy, do późniejszego ustawienia. */
 #summerBalloon{
   position:absolute;
@@ -3790,6 +3805,17 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     </g>
   </svg>
 </div>
+<button id="summerStormEditorToggle" type="button">✥ Edytuj położenie burzy</button>
+<div id="summerStormEditorPanel" aria-label="Edytor położenia błyskawic">
+  <strong>Edytor położenia błyskawic</strong>
+  <p>Przeciągnij wybraną błyskawicę myszką w nowe miejsce. Każdą z trzech możesz ustawić osobno. Na końcu skopiuj współrzędne i prześlij mi je.</p>
+  <textarea id="summerStormEditorCoordinates" readonly></textarea>
+  <div class="storm-editor-actions">
+    <button id="summerStormEditorCopy" type="button">Kopiuj współrzędne</button>
+    <button id="summerStormEditorReset" type="button">Resetuj</button>
+    <button id="summerStormEditorClose" type="button">Zamknij</button>
+  </div>
+</div>
 
     <img id="summerBalloon" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/balon.png?v=1" alt="" aria-hidden="true">
     <img id="summerSprinkler" class="summerSprinkler" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zraszacz.png?v=1" alt="" aria-hidden="true">
@@ -5686,6 +5712,63 @@ renderNeighbors();
     const y=(event.clientY-rect.top)/rect.height*100;
     points.push({x,y});render();
   });
+})();
+
+/* EDYTOR POŁOŻENIA BŁYSKAWIC — przeciąganie trzech wyładowań. */
+(function initSummerStormEditor(){
+  const stage=document.getElementById("start");
+  const svg=stage?.querySelector(".summerStormLightning");
+  const panel=document.getElementById("summerStormEditorPanel");
+  const toggle=document.getElementById("summerStormEditorToggle");
+  const output=document.getElementById("summerStormEditorCoordinates");
+  const copy=document.getElementById("summerStormEditorCopy");
+  const reset=document.getElementById("summerStormEditorReset");
+  const close=document.getElementById("summerStormEditorClose");
+  if(!stage||!svg||!panel||!toggle||!output)return;
+  const strikes=[...svg.querySelectorAll(".summerStormStrike")];
+  const offsets=strikes.map(()=>({x:0,y:0}));
+  let dragging=null;
+  function pointFromEvent(event){
+    const point=svg.createSVGPoint();
+    point.x=event.clientX;point.y=event.clientY;
+    return point.matrixTransform(svg.getScreenCTM().inverse());
+  }
+  function render(){
+    strikes.forEach((group,i)=>group.setAttribute("transform",`translate(${offsets[i].x} ${offsets[i].y})`));
+    output.value=JSON.stringify(offsets.map((p,i)=>({id:i+1,x:Number(p.x.toFixed(1)),y:Number(p.y.toFixed(1))})),null,2);
+  }
+  function setEditing(value){
+    stage.classList.toggle("storm-editing",value);
+    panel.classList.toggle("open",value);
+    if(!value)dragging=null;
+  }
+  toggle.addEventListener("click",()=>setEditing(!panel.classList.contains("open")));
+  close?.addEventListener("click",()=>setEditing(false));
+  reset?.addEventListener("click",()=>{offsets.forEach(p=>{p.x=0;p.y=0});render();});
+  copy?.addEventListener("click",async()=>{
+    try{await navigator.clipboard.writeText(output.value);copy.textContent="Skopiowano!"}
+    catch(e){output.focus();output.select();try{document.execCommand("copy");copy.textContent="Skopiowano!"}catch(err){copy.textContent="Zaznacz tekst ręcznie"}}
+    setTimeout(()=>copy.textContent="Kopiuj współrzędne",1500);
+  });
+  strikes.forEach((group,index)=>{
+    group.addEventListener("pointerdown",event=>{
+      if(!stage.classList.contains("storm-editing"))return;
+      event.preventDefault();
+      const p=pointFromEvent(event);
+      dragging={index,startX:p.x,startY:p.y,originX:offsets[index].x,originY:offsets[index].y};
+      group.setPointerCapture?.(event.pointerId);
+    });
+  });
+  svg.addEventListener("pointermove",event=>{
+    if(!dragging)return;
+    const p=pointFromEvent(event);
+    offsets[dragging.index].x=dragging.originX+p.x-dragging.startX;
+    offsets[dragging.index].y=dragging.originY+p.y-dragging.startY;
+    render();
+  });
+  svg.addEventListener("pointerup",()=>dragging=null);
+  svg.addEventListener("pointercancel",()=>dragging=null);
+  render();
 })();
 
 /* Delikatne refleksy na tafli stawu w letni dzień. */
