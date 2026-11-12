@@ -3960,6 +3960,87 @@ html,body,#appStage{
   box-shadow:none!important;
 }
 
+
+/* NOWY UKŁAD GRY: pełnoekranowe gospodarstwo + sam panel gracza. */
+#game{
+  position:absolute!important;
+  inset:0!important;
+}
+#gameMain{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+}
+#gameViewport{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  overflow:auto!important;
+}
+#gameCanvas{
+  width:100%!important;
+  min-height:100%!important;
+}
+#gameCanvas > .game-content{
+  width:100%!important;
+  min-height:100%!important;
+  height:100%!important;
+  margin:0!important;
+  padding:0!important;
+}
+/* Zostawiamy sam widok gospodarstwa; pozostałe widoki i nagłówki interfejsu chowamy. */
+#farmView{
+  width:100%;
+  min-height:100%;
+  height:100%;
+}
+#farmView > .farm-title,
+#farmView > .farm-subtitle,
+#otherView,
+#playerPanel .side-menu,
+#playerPanel .panel-bottom{
+  display:none!important;
+}
+/* Panel gracza staje się niewielkim, pływającym elementem HUD w prawym górnym rogu. */
+#playerPanel{
+  position:absolute!important;
+  top:16px!important;
+  right:16px!important;
+  left:auto!important;
+  bottom:auto!important;
+  width:286px!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:0!important;
+  margin:0!important;
+  display:block!important;
+  overflow:visible!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  z-index:100!important;
+}
+#playerPanel .profile-card{
+  width:100%;
+  margin:0;
+}
+@media(max-width:700px){
+  #gameMain{inset:0!important;bottom:0!important}
+  #playerPanel{
+    top:8px!important;
+    right:8px!important;
+    left:auto!important;
+    bottom:auto!important;
+    width:min(250px,calc(100% - 16px))!important;
+    height:auto!important;
+    padding:0!important;
+    display:block!important;
+  }
+  #playerPanel .profile-card{padding:8px}
+}
+
 </style>
 </head>
 
