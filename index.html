@@ -5465,6 +5465,32 @@ renderNeighbors();
     points.push({x,y});render();
   });
 })();
+
+/* ROZMIESZCZENIE CZTERECH ZRASZACZY W LETNIEJ SCENERII DZIENNEJ. */
+(function placeSummerSprinklers(){
+  const positions=[
+    {x:19.56,y:69.65},
+    {x:51.02,y:74.95},
+    {x:65.31,y:62.85},
+    {x:85.47,y:63.71}
+  ];
+  const first=document.getElementById("summerSprinkler");
+  if(!first)return;
+  const stage=document.getElementById("start");
+  first.style.left=positions[0].x+"%";
+  first.style.top=positions[0].y+"%";
+  first.style.zIndex=String(8+Math.round(positions[0].y/10));
+  positions.slice(1).forEach((p,i)=>{
+    const sprinkler=first.cloneNode(true);
+    sprinkler.removeAttribute("id");
+    sprinkler.style.left=p.x+"%";
+    sprinkler.style.top=p.y+"%";
+    sprinkler.style.zIndex=String(8+Math.round(p.y/10));
+    sprinkler.dataset.sprinkler=String(i+2);
+    stage.appendChild(sprinkler);
+  });
+})();
+
 </script>
 </body>
 </html>
