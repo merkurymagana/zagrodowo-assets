@@ -6283,8 +6283,12 @@ renderNeighbors();
       if(pan.moved){
         if(e.cancelable)e.preventDefault();
         const now=performance.now(),dt=Math.max(1,now-lastMoveTime);
-        velocityX=(p.x-pan.last.x)/dt;
-        velocityY=(p.y-pan.last.y)/dt;
+        const instantVX=(p.x-pan.last.x)/dt;
+        const instantVY=(p.y-pan.last.y)/dt;
+        // Wygładź pomiar prędkości, żeby drobne drgania dotyku
+        // nie powodowały szarpnięć podczas wyhamowywania planszy.
+        velocityX=velocityX*.35+instantVX*.65;
+        velocityY=velocityY*.35+instantVY*.65;
         lastMoveTime=now;
         pan.last=p;
         x=pan.x+dx;y=pan.y+dy;scheduleRender();
@@ -6304,9 +6308,13 @@ renderNeighbors();
       const {v,base,bodyH}=metrics();
       const minX=Math.min(0,v.w-W*base*zoom);
       const minY=Math.min(0,v.h-bodyH*base*zoom);
-      x=clamp(x+velocityX*dt,minX,0);
-      y=clamp(y+velocityY*dt,minY,0);
-      const friction=Math.pow(.92,dt/16.67);
+      const nextX=x+velocityX*dt,nextY=y+velocityY*dt;
+      x=clamp(nextX,minX,0);
+      y=clamp(nextY,minY,0);
+      // Dłuższy, łagodniejszy poślizg z miękkim zatrzymaniem na krawędziach.
+      if(x!==nextX)velocityX=0;
+      if(y!==nextY)velocityY=0;
+      const friction=Math.pow(.965,dt/16.67);
       velocityX*=friction;velocityY*=friction;
       scheduleRender();
       if(Math.hypot(velocityX,velocityY)>.025)inertiaFrame=requestAnimationFrame(step);
