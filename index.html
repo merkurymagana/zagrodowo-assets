@@ -4227,7 +4227,7 @@ let lastSceneKey="";
 let springDeerTimer=null;
 
 // Automatyczna sceneria: pory roku oraz pory dnia wyznaczane astronomicznie.
-const SCENE_PREVIEW="summer-day";
+const SCENE_PREVIEW="summer-night";
 
 // Pory dnia wyznaczane astronomicznie dla Polski; godziny przesuwają się wraz z porami roku.
 const DAYLIGHT_LATITUDE=52.1;
@@ -4348,6 +4348,7 @@ function updateSeason(){
   start.classList.toggle("spring-morning",name==="spring"&&period==="morning");
   start.classList.toggle("summer-morning",name==="summer"&&period==="morning");
   start.classList.toggle("summer-day",name==="summer"&&period==="day");
+  start.classList.toggle("summer-night",name==="summer"&&period==="night");
   start.classList.toggle("spring-day-animations",name==="spring"&&period==="day");
 
   const seasonImage=document.getElementById("seasonImage");
@@ -4356,6 +4357,8 @@ function updateSeason(){
     // Osobne grafiki poranne i nocne dla poszczególnych pór roku.
     if(name==="summer"&&period==="morning"){
       imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lato-rano.png?v=1";
+    }else if(name==="summer"&&period==="night"){
+      imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/lato-noc.png?v=1";
     }else if(name==="spring"&&period==="morning"){
       imageUrl="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/wiosna-rano.png?v=1";
     }else if(name==="spring"&&period==="night"){
