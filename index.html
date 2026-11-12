@@ -5358,96 +5358,81 @@ setInterval(()=>{
 /* MOTYLE — lądowanie w punktach wybranych w edytorze, odpoczynek i płoszenie kursorem. */
 (function initSummerButterflyBehavior(){
   const points=[
-    {x:48.62,y:72.68},
-    {x:77.45,y:67.17},
-    {x:55.56,y:58.96},
-    {x:18.06,y:63.17},
-    {x:72.19,y:60.26}
+    {x:48.62,y:72.68},{x:77.45,y:67.17},{x:55.56,y:58.96},
+    {x:18.06,y:63.17},{x:72.19,y:60.26}
   ];
   const configs=[
-    {id:"summerButterfly1",start:0,order:[0,2,4,1,3]},
-    {id:"summerButterfly2",start:2,order:[2,3,0,4,1]},
-    {id:"summerButterfly3",start:4,order:[4,1,3,2,0]}
+    {id:"summerButterfly1",order:[0,2,4,1,3]},
+    {id:"summerButterfly2",order:[2,3,0,4,1]},
+    {id:"summerButterfly3",order:[4,1,3,2,0]}
   ];
-  const states=[];
-  function setDepth(state,y){
-    /* Im wyższy punkt (mniejsze y), tym mniejszy motyl. */
-    const scale=.68+y*.005;
-    state.element.style.transform="translate(-50%,-50%) scale("+scale.toFixed(3)+")";
-  }
-  function setFacing(state,from,to){
-    state.image.style.transform="scaleX("+(to.x<from.x?-1:1)+")";
-  }
-  function rest(state){
-    state.element.classList.add("resting");
-    state.image.style.animationPlayState="paused";
-    state.restTimer=setTimeout(()=>depart(state),5500+Math.random()*4500);
-  }
-  function depart(state){
-    clearTimeout(state.restTimer);
-    state.element.classList.remove("resting");
-    state.image.style.animationPlayState="running";
-    const nextIndex=(state.orderIndex+1)%state.config.order.length;
-    const next=points[state.config.order[nextIndex]];
-    const current=points[state.config.order[state.orderIndex]];
-    setFacing(state,current,next);
-    setDepth(state,next.y);
-    state.orderIndex=nextIndex;
-    state.element.style.zIndex=String(7+Math.round(next.y/100));
-    const duration=32000+Math.random()*10000;
-    const animation=state.element.animate(
-      [
-        {left:current.x+"%",top:current.y+"%"},
-        {left:next.x+"%",top:next.y+"%"}
-      ],
-      {duration,easing:"ease-in-out",fill:"forwards"}
-    );
-    state.animation=animation;
-    animation.onfinish=()=>{
-      state.element.style.left=next.x+"%";
-      state.element.style.top=next.y+"%";
-      animation.cancel();
-      rest(state);
-    };
-  }
-  function scare(state){
-    if(state.animation){state.animation.cancel();state.animation=null;}
-    clearTimeout(state.restTimer);
-    state.element.classList.remove("resting");
-    state.image.style.animationPlayState="running";
-    const current={
-      x:parseFloat(state.element.style.left)||points[state.config.order[state.orderIndex]].x,
-      y:parseFloat(state.element.style.top)||points[state.config.order[state.orderIndex]].y
-    };
-    state.element.animate(
-      [{left:current.x+"%",top:current.y+"%",opacity:1},
-       {left:Math.max(2,Math.min(98,current.x+ (Math.random()>.5?12:-12)))+"%",
-        top:Math.max(8,current.y-12)+"%",opacity:1}],
-      {duration:650,easing:"cubic-bezier(.12,.72,.2,1)",fill:"forwards"}
-    ).onfinish=()=>{
-      const animation=state.element.getAnimations().find(a=>a!==state.animation);
-      if(animation)animation.cancel();
-      state.element.style.left=current.x+"%";
-      state.element.style.top=current.y+"%";
-      depart(state);
-    };
-  }
+  function depth(y){return .68+y*.005}
   configs.forEach(config=>{
     const element=document.getElementById(config.id);
     if(!element)return;
     const image=element.querySelector("img");
-    const state={config,element,image,orderIndex:0,restTimer:null,animation:null};
-    const first=points[config.start];
-    state.orderIndex=config.order.indexOf(config.start);
+    const state={element,image,config,index:0,restTimer:null,animation:null};
+    const first=points[config.order[0]];
     element.style.left=first.x+"%";
     element.style.top=first.y+"%";
-    setDepth(state,first.y);
+    element.style.transform="translate(-50%,-50%) scale("+depth(first.y).toFixed(3)+")";
+    function currentPoint(){
+      return {x:parseFloat(element.style.left)||0,y:parseFloat(element.style.top)||0};
+    }
+    function fly(){
+      clearTimeout(state.restTimer);
+      element.classList.remove("resting");
+      image.style.animationPlayState="running";
+      const from=currentPoint();
+      state.index=(state.index+1)%config.order.length;
+      const to=points[config.order[state.index]];
+      image.style.transform="scaleX("+(to.x<from.x?-1:1)+")";
+      element.style.transform="translate(-50%,-50%) scale("+depth(to.y).toFixed(3)+")";
+      state.animation=element.animate(
+        [{left:from.x+"%",top:from.y+"%"},{left:to.x+"%",top:to.y+"%"}],
+        {duration:32000+Math.random()*10000,easing:"ease-in-out",fill:"forwards"}
+      );
+      state.animation.onfinish=()=>{
+        element.style.left=to.x+"%";
+        element.style.top=to.y+"%";
+        state.animation.cancel();
+        state.animation=null;
+        rest();
+      };
+    }
+    function rest(){
+      element.classList.add("resting");
+      image.style.animationPlayState="paused";
+      state.restTimer=setTimeout(fly,5500+Math.random()*4500);
+    }
+    function scare(){
+      const rect=element.getBoundingClientRect();
+      const stage=document.getElementById("start").getBoundingClientRect();
+      const from={x:(rect.left+rect.width/2-stage.left)/stage.width*100,
+                  y:(rect.top+rect.height/2-stage.top)/stage.height*100};
+      if(state.animation){state.animation.cancel();state.animation=null;}
+      clearTimeout(state.restTimer);
+      element.classList.remove("resting");
+      image.style.animationPlayState="running";
+      element.style.left=from.x+"%";
+      element.style.top=from.y+"%";
+      const to={x:Math.max(2,Math.min(98,from.x+(Math.random()>.5?12:-12))),
+                y:Math.max(8,from.y-12)};
+      const escape=element.animate(
+        [{left:from.x+"%",top:from.y+"%"},{left:to.x+"%",top:to.y+"%"}],
+        {duration:650,easing:"cubic-bezier(.12,.72,.2,1)",fill:"forwards"}
+      );
+      escape.onfinish=()=>{
+        element.style.left=to.x+"%";
+        element.style.top=to.y+"%";
+        escape.cancel();
+        fly();
+      };
+    }
     element.addEventListener("pointerenter",event=>{
-      if(event.pointerType==="touch")return;
-      scare(state);
+      if(event.pointerType!=="touch")scare();
     });
-    states.push(state);
-    setTimeout(()=>rest(state),9000+Math.random()*7000);
+    state.restTimer=setTimeout(rest,9000+Math.random()*7000);
   });
 })();
  
