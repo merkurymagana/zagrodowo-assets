@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover">
 <meta name="theme-color" content="#70482f">
 <title>Zagrodowo</title>
 
@@ -2141,6 +2141,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 .auth-overlay.visible,.profile-overlay.visible{display:flex}
+/* Na urządzeniach dotykowych przeglądarka może przybliżać sam formularz gestem dwóch palców. */
+@media (pointer:coarse){
+  #authOverlay{touch-action:pan-x pan-y pinch-zoom;align-items:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+  #authOverlay .auth-window{touch-action:pan-x pan-y pinch-zoom;margin:auto;flex:0 0 auto;}
+}
+
 
 .auth-window{
   position:relative;
@@ -2212,12 +2218,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   box-shadow:0 0 0 2px #79985b33;
 }
 
-/* Na telefonach nie zmniejszaj tekstu pól — ułatwia to czytanie i zapobiega
-   automatycznemu przybliżaniu formularza przez przeglądarki mobilne. */
-@media (pointer:coarse){
-  .auth-window{width:min(480px,calc(100% - 12px));}
-  .field input{font-size:16px;min-height:48px;}
-}
 
 .password-wrap{position:relative}
 .password-wrap input{padding-right:49px}
@@ -6172,9 +6172,10 @@ renderNeighbors();
     cancelAnimationFrame(frame);
     frame=requestAnimationFrame(()=>{
       const viewport=window.visualViewport;
-      // Podczas gestu pinch-to-zoom nie przeliczaj skali planszy:
-      // inaczej plansza kurczyłaby się i niwelowała powiększenie użytkownika.
-      if(viewport && viewport.scale>1.01)return;
+      // Klawiatura ekranowa potrafi zmniejszyć visualViewport nawet o połowę.
+      // Nie zmniejszaj wtedy planszy i formularza — pozwól przewijać okno logowania.
+      const focused=document.activeElement;
+      if(focused && focused.matches && focused.matches('#authOverlay input, #authOverlay textarea'))return;
       const width=viewport?viewport.width:document.documentElement.clientWidth;
       const height=viewport?viewport.height:document.documentElement.clientHeight;
       // W pionie dopasuj planszę do całej szerokości, pozostawiając pustą przestrzeń pod grą.
