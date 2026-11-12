@@ -5030,6 +5030,133 @@ html,body,#appStage{
   }
 }
 
+
+/* NAWIGACJA GŁÓWNA: lewy górny róg, poziomy układ; etykiety pod ikonami. */
+#game > nav.side-menu{
+  position:absolute!important;
+  top:18px!important;
+  left:18px!important;
+  right:auto!important;
+  bottom:auto!important;
+  z-index:9999!important;
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:12px!important;
+  width:max-content!important;
+  max-width:calc(100% - 36px)!important;
+  margin:0!important;
+  padding:8px 10px!important;
+  box-sizing:border-box!important;
+  border:1px solid rgba(222,210,187,.22)!important;
+  border-radius:14px!important;
+  background:rgba(27,32,29,.88)!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.24)!important;
+  -webkit-backdrop-filter:blur(12px)!important;
+  backdrop-filter:blur(12px)!important;
+}
+#game > nav.side-menu .compass-links-row,
+#game > nav.side-menu .compass-premium-stack,
+#game > nav.side-menu .tasks-help-stack,
+#game > nav.side-menu .premium-menu-row,
+#game > nav.side-menu .help-menu-row{display:contents!important}
+#game > nav.side-menu button{
+  position:relative!important;
+  display:flex!important;
+  flex:0 0 44px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:44px!important;
+  min-width:44px!important;
+  max-width:44px!important;
+  height:44px!important;
+  min-height:44px!important;
+  max-height:44px!important;
+  margin:0!important;
+  padding:3px!important;
+  gap:0!important;
+  border:0!important;
+  border-radius:9px!important;
+  background:transparent!important;
+  color:#e9e3d7!important;
+  box-shadow:none!important;
+  font-size:0!important;
+  overflow:visible!important;
+}
+#game > nav.side-menu button:hover,
+#game > nav.side-menu button:focus-visible,
+#game > nav.side-menu button.selected{
+  background:rgba(218,193,143,.14)!important;
+  outline:1px solid rgba(218,193,143,.4)!important;
+  transform:translateY(-1px)!important;
+}
+#game > nav.side-menu .compass-menu-icon,
+#game > nav.side-menu .premium-menu-icon,
+#game > nav.side-menu .tasks-menu-icon,
+#game > nav.side-menu .help-menu-icon,
+#game > nav.side-menu .menu-icon{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:34px!important;
+  height:34px!important;
+  flex:0 0 34px!important;
+  font-size:0!important;
+}
+#game > nav.side-menu .ui-icon{width:27px!important;height:27px!important;color:#d6c39e!important}
+#game > nav.side-menu button::after{
+  position:absolute!important;
+  top:calc(100% + 9px)!important;
+  bottom:auto!important;
+  left:50%!important;
+  right:auto!important;
+  z-index:10000!important;
+  padding:5px 9px!important;
+  border:1px solid rgba(222,210,187,.28)!important;
+  border-radius:7px!important;
+  background:rgba(27,32,29,.96)!important;
+  color:#f1e8d8!important;
+  box-shadow:0 5px 14px rgba(0,0,0,.28)!important;
+  font:700 11px 'Nunito',Arial,sans-serif!important;
+  white-space:nowrap!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transform:translate(-50%,4px)!important;
+}
+#game > nav.side-menu button.compass-menu-button::after{content:"Mapa"!important}
+#game > nav.side-menu button.premium-menu-button::after{content:"Usługi Premium"!important}
+#game > nav.side-menu button.tasks-menu-button::after{content:"Zadania"!important}
+#game > nav.side-menu button.help-menu-button::after{content:"Centrum pomocy"!important}
+#game > nav.side-menu > button[data-view="neighbors"]::after{content:"Sąsiedzi"!important}
+#game > nav.side-menu > button[data-view="settings"]::after{content:"Ustawienia"!important}
+#game > nav.side-menu button:hover::after,
+#game > nav.side-menu button:focus-visible::after{
+  opacity:1!important;
+  visibility:visible!important;
+  transform:translate(-50%,0)!important;
+}
+#game > nav.side-menu .menu-count{position:absolute!important;top:0!important;right:0!important;font-size:9px!important}
+@media(max-width:700px){
+  #game > nav.side-menu{
+    top:8px!important;left:8px!important;
+    max-width:calc(100% - 16px)!important;
+    gap:5px!important;padding:5px 6px!important;
+  }
+  #game > nav.side-menu button{
+    flex-basis:38px!important;width:38px!important;min-width:38px!important;max-width:38px!important;
+    height:38px!important;min-height:38px!important;max-height:38px!important;
+  }
+  #game > nav.side-menu .compass-menu-icon,
+  #game > nav.side-menu .premium-menu-icon,
+  #game > nav.side-menu .tasks-menu-icon,
+  #game > nav.side-menu .help-menu-icon,
+  #game > nav.side-menu .menu-icon{width:30px!important;height:30px!important;flex-basis:30px!important}
+  #game > nav.side-menu .ui-icon{width:24px!important;height:24px!important}
+}
+
 </style>
 </head>
 
@@ -5548,7 +5675,15 @@ html,body,#appStage{
         </div>
       </div>
 
-      <nav class="side-menu">
+      
+
+      <div class="panel-bottom">
+        <button class="logout-button" type="button" onclick="backToStart()"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg><span>Wyloguj się</span></button>
+        <div class="panel-version">Zagrodowo • wersja demonstracyjna</div>
+      </div>
+    </aside>
+
+<nav class="side-menu">
         <div class="compass-links-row">
           <div class="compass-premium-stack">
             <button class="compass-menu-button" data-view="map" onclick="openGameView('map',this)" aria-label="Otwórz mapę" aria-pressed="false" type="button">
@@ -5574,12 +5709,6 @@ html,body,#appStage{
         <button data-view="neighbors" onclick="openGameView('neighbors',this)"><span class="menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-7 9 7"/><path d="M5 10v10h14V10M9 20v-6h6v6"/><path d="M2 12h2m16 0h2"/></svg></span>Sąsiedzi <span class="menu-count" id="neighborsBadge" style="display:none">0</span></button>
         <button data-view="settings" onclick="openGameView('settings',this)"><span class="menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a8 8 0 0 1-1.7 1l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.7-1.4-2.4 1.4-1.1a7 7 0 0 1 0-2l-1.4-1.1 1.4-2.4 1.7.7a8 8 0 0 1 1.7-1l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.7 1l1.7-.7 1.4 2.4-1.4 1.1a7 7 0 0 1 0 2z"/></svg></span>Ustawienia</button>
       </nav>
-
-      <div class="panel-bottom">
-        <button class="logout-button" type="button" onclick="backToStart()"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg><span>Wyloguj się</span></button>
-        <div class="panel-version">Zagrodowo • wersja demonstracyjna</div>
-      </div>
-    </aside>
   </div>
 
   <!-- EDYCJA PROFILU -->
