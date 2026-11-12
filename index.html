@@ -310,11 +310,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .summerStormLightning{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
 .summerStormStrike{opacity:0;animation:summerStormLocalFlash var(--storm-duration,15s) infinite;animation-delay:var(--storm-delay,0s);}
 .summerStormStrike .stormGlow{fill:url(#summerStormGlow);mix-blend-mode:screen;}
-.summerStormStrike .stormBolt{fill:none;stroke:#d58aff;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 3px #d76bff) drop-shadow(0 0 10px #a52bdc) drop-shadow(0 0 20px #8e2bb8);}
-.summerStormStrike .stormCore{fill:none;stroke:#ffd6f4;stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px #ff9de8);}
-.summerStormStrike .stormBranch{fill:none;stroke:#e77b9f;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 7px #e75cbd);}
-.summerStormStrike:nth-of-type(2){--storm-duration:13.7s;--storm-delay:-3.1s;}
-.summerStormStrike:nth-of-type(3){--storm-duration:18.3s;--storm-delay:-8.4s;}
+.summerStormStrike .stormBolt{fill:none;stroke:#a85d69;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 3px #9d4e5d) drop-shadow(0 0 9px #783c4b) drop-shadow(0 0 17px #65313f);}
+.summerStormStrike .stormCore{fill:none;stroke:#d09aa0;stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px #bd7e88);}
+.summerStormStrike .stormBranch{fill:none;stroke:#a76570;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 7px #8b4855);}
 @keyframes summerStormLocalFlash{
   0%,15%,17%,19%,21%,100%{opacity:0}
   15.2%{opacity:.98}15.45%{opacity:.14}15.7%{opacity:.88}
@@ -3784,20 +3782,14 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
 <div class="summerStorm" aria-hidden="true">
   <svg class="summerStormLightning" viewBox="0 0 1686 950" preserveAspectRatio="none">
-    <defs><radialGradient id="summerStormGlow"><stop offset="0" stop-color="#d98bff" stop-opacity=".42"/><stop offset=".48" stop-color="#a64fc8" stop-opacity=".18"/><stop offset="1" stop-color="#a64fc8" stop-opacity="0"/></radialGradient></defs>
-    <g class="summerStormStrike" style="--storm-duration:15.2s;--storm-delay:-1.7s">
+    <defs><radialGradient id="summerStormGlow"><stop offset="0" stop-color="#bd7781" stop-opacity=".34"/><stop offset=".48" stop-color="#98515e" stop-opacity=".16"/><stop offset="1" stop-color="#98515e" stop-opacity="0"/></radialGradient></defs>
+    <g class="summerStormStrike" data-storm-id="1" data-anchor-x="390" data-anchor-y="170" style="--storm-duration:15.2s;--storm-delay:-1.7s">
       <ellipse class="stormGlow" cx="390" cy="190" rx="330" ry="145"/>
       <path class="stormBolt" d="M95 185 L175 172 L220 187 L285 151 L330 166 L390 136 L445 151 L505 121 L565 137 L625 111 L680 125"/>
       <path class="stormCore" d="M95 185 L175 172 L220 187 L285 151 L330 166 L390 136 L445 151 L505 121 L565 137 L625 111 L680 125"/>
       <path class="stormBranch" d="M285 151 L270 188 L301 200 L286 228 M505 121 L488 158 L520 172 L506 202"/>
     </g>
-    <g class="summerStormStrike" style="--storm-duration:13.7s;--storm-delay:-3.1s">
-      <ellipse class="stormGlow" cx="900" cy="205" rx="300" ry="150"/>
-      <path class="stormBolt" d="M650 205 L720 187 L765 202 L825 169 L875 181 L930 150 L985 166 L1040 138 L1095 153 L1150 125"/>
-      <path class="stormCore" d="M650 205 L720 187 L765 202 L825 169 L875 181 L930 150 L985 166 L1040 138 L1095 153 L1150 125"/>
-      <path class="stormBranch" d="M825 169 L810 205 L842 218 L827 246 M1040 138 L1025 174 L1057 187 L1042 216"/>
-    </g>
-    <g class="summerStormStrike" style="--storm-duration:18.3s;--storm-delay:-8.4s">
+    <g class="summerStormStrike" data-storm-id="3" data-anchor-x="1390" data-anchor-y="160" style="--storm-duration:18.3s;--storm-delay:-8.4s">
       <ellipse class="stormGlow" cx="1390" cy="185" rx="285" ry="140"/>
       <path class="stormBolt" d="M1150 175 L1220 157 L1265 172 L1325 139 L1375 153 L1430 122 L1485 139 L1545 111 L1600 126 L1660 101"/>
       <path class="stormCore" d="M1150 175 L1220 157 L1265 172 L1325 139 L1375 153 L1430 122 L1485 139 L1545 111 L1600 126 L1660 101"/>
@@ -5726,7 +5718,13 @@ renderNeighbors();
   const close=document.getElementById("summerStormEditorClose");
   if(!stage||!svg||!panel||!toggle||!output)return;
   const strikes=[...svg.querySelectorAll(".summerStormStrike")];
-  const offsets=strikes.map(()=>({x:0,y:0}));
+  const offsets=strikes.map((group)=>({
+    x:group.dataset.stormId==="1"?118:-106.9,
+    y:144.7,
+    id:Number(group.dataset.stormId),
+    anchorX:Number(group.dataset.anchorX),
+    anchorY:Number(group.dataset.anchorY)
+  }));
   let dragging=null;
   function pointFromEvent(event){
     const point=svg.createSVGPoint();
@@ -5734,8 +5732,11 @@ renderNeighbors();
     return point.matrixTransform(svg.getScreenCTM().inverse());
   }
   function render(){
-    strikes.forEach((group,i)=>group.setAttribute("transform",`translate(${offsets[i].x} ${offsets[i].y})`));
-    output.value=JSON.stringify(offsets.map((p,i)=>({id:i+1,x:Number(p.x.toFixed(1)),y:Number(p.y.toFixed(1))})),null,2);
+    strikes.forEach((group,i)=>{
+      const p=offsets[i];
+      group.setAttribute("transform",`translate(${p.x} ${p.y}) translate(${p.anchorX} ${p.anchorY}) scale(.5) translate(${-p.anchorX} ${-p.anchorY})`);
+    });
+    output.value=JSON.stringify(offsets.map(p=>({id:p.id,x:Number(p.x.toFixed(1)),y:Number(p.y.toFixed(1))})),null,2);
   }
   function setEditing(value){
     stage.classList.toggle("storm-editing",value);
@@ -5744,7 +5745,7 @@ renderNeighbors();
   }
   toggle.addEventListener("click",()=>setEditing(!panel.classList.contains("open")));
   close?.addEventListener("click",()=>setEditing(false));
-  reset?.addEventListener("click",()=>{offsets.forEach(p=>{p.x=0;p.y=0});render();});
+  reset?.addEventListener("click",()=>{offsets.forEach(p=>{p.x=p.id===1?118:-106.9;p.y=144.7});render();});
   copy?.addEventListener("click",async()=>{
     try{await navigator.clipboard.writeText(output.value);copy.textContent="Skopiowano!"}
     catch(e){output.focus();output.select();try{document.execCommand("copy");copy.textContent="Skopiowano!"}catch(err){copy.textContent="Zaznacz tekst ręcznie"}}
