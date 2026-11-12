@@ -336,50 +336,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 #start.storm-editing .summerStormStrike:active{cursor:grabbing}
 #start.storm-editing .summerStormStrike .stormGlow{opacity:.3}
 
-/* OGNISKO — letnia sceneria dzienna i nocna. */
-#summerCampfire,
-#summerCampfireFlames{
-  position:absolute;
-  left:68%;
-  top:62%;
-  width:clamp(68px,8.8vw,148px);
-  height:auto;
-  pointer-events:none;
-  user-select:none;
-  object-fit:contain;
-}
-#summerCampfire{
-  z-index:10;
-  display:none;
-}
-#summerCampfireFlames{
-  z-index:11;
-  display:none;
-  clip-path:inset(0 0 49% 0);
-  transform-origin:50% 78%;
-  animation:summerCampfireFlicker 1.8s ease-in-out infinite alternate;
-  filter:brightness(1.04) saturate(1.08);
-}
-#start.summer-night #summerCampfire,
-#start.summer-night #summerCampfireFlames{display:block}
-@keyframes summerCampfireFlicker{
-  0%{transform:translateY(0) scaleX(1) scaleY(1);filter:brightness(1.02) saturate(1.04)}
-  35%{transform:translateY(-1px) scaleX(1.012) scaleY(1.025);filter:brightness(1.12) saturate(1.12)}
-  70%{transform:translateY(1px) scaleX(.99) scaleY(.985);filter:brightness(1.05) saturate(1.08)}
-  100%{transform:translateY(-2px) scaleX(1.018) scaleY(1.035);filter:brightness(1.15) saturate(1.14)}
-}
-@media(prefers-reduced-motion:reduce){
-  #summerCampfireFlames{animation:none}
-}
-@media(max-width:700px){
-  #summerCampfire,
-  #summerCampfireFlames{
-    left:60%;
-    top:67%;
-    width:clamp(65px,17.5vw,115px);
-  }
-}
-
 /* Balon — na razie nieruchomy, do późniejszego ustawienia. */
 #summerBalloon{
   position:absolute;
@@ -3859,8 +3815,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   </div>
 </div>
 
-    <img id="summerCampfire" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ognisko.png?v=1" alt="" aria-hidden="true">
-    <img id="summerCampfireFlames" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/ognisko.png?v=1" alt="" aria-hidden="true">
     <img id="summerBalloon" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/balon.png?v=1" alt="" aria-hidden="true">
     <img id="summerSprinkler" class="summerSprinkler" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zraszacz.png?v=1" alt="" aria-hidden="true">
     <button id="sprinklerEditorToggle" type="button">✚ Edytor zraszaczy</button>
