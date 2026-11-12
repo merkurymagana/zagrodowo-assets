@@ -247,7 +247,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 /* ZRASZACZ — letnia sceneria dzienna. */
-#summerSprinkler{
+.summerSprinkler{
   position:absolute;
   z-index:8;
   left:65%;
@@ -261,7 +261,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   transform:translate(-50%,-50%);
   filter:drop-shadow(0 2px 2px #26351d66);
 }
-#start.summer-day #summerSprinkler{display:block}
+#start.summer-day .summerSprinkler{display:block}
 
 /* TYMCZASOWY EDYTOR POŁOŻENIA ZRASZACZY — tylko w podglądzie lata dziennego. */
 #sprinklerEditorToggle{
@@ -3573,7 +3573,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
-    <img id="summerSprinkler" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zraszacz.png?v=1" alt="" aria-hidden="true">
+    <img id="summerSprinkler" class="summerSprinkler" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zraszacz.png?v=1" alt="" aria-hidden="true">
     <button id="sprinklerEditorToggle" type="button">✚ Edytor zraszaczy</button>
     <div id="sprinklerEditorPanel" aria-label="Edytor położenia zraszaczy">
       <strong>Edytor położenia zraszaczy</strong>
