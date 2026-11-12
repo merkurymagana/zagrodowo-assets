@@ -6280,7 +6280,7 @@ renderNeighbors();
     }else if(pointers.size===1&&pan){
       const p=pt(e);
       // Przyspiesz przesuwanie względem palca — łatwiej pokonywać większe obszary planszy.
-      const DRAG_SENSITIVITY=1.8;
+      const DRAG_SENSITIVITY=2;
       const dx=(p.x-pan.start.x)*DRAG_SENSITIVITY;
       const dy=(p.y-pan.start.y)*DRAG_SENSITIVITY;
       if(Math.abs(dx)+Math.abs(dy)>5)pan.moved=true;
