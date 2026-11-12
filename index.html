@@ -262,6 +262,41 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   filter:drop-shadow(0 2px 2px #26351d66);
 }
 #start.summer-day #summerSprinkler{display:block}
+
+/* TYMCZASOWY EDYTOR POŁOŻENIA ZRASZACZY — tylko w podglądzie lata dziennego. */
+#sprinklerEditorToggle{
+  position:absolute;z-index:40;left:16px;top:16px;
+  display:none;padding:9px 13px;border:2px solid #67472c;border-radius:9px;
+  background:#fff4df;color:#49351f;font:800 13px Nunito,Arial,sans-serif;
+  box-shadow:0 2px 7px #0004;cursor:pointer;
+}
+#start.summer-day #sprinklerEditorToggle{display:block}
+#sprinklerEditorPanel{
+  position:absolute;z-index:41;left:16px;top:60px;width:min(310px,calc(100% - 32px));
+  display:none;padding:12px;border:2px solid #67472c;border-radius:10px;
+  background:#fff4eaf2;color:#49351f;box-shadow:0 3px 12px #0005;
+  font:600 12px/1.4 Nunito,Arial,sans-serif;
+}
+#sprinklerEditorPanel.open{display:block}
+#sprinklerEditorPanel strong{display:block;font-size:14px;margin-bottom:4px}
+#sprinklerEditorPanel p{margin:0 0 8px}
+#sprinklerEditorPanel textarea{
+  width:100%;height:100px;resize:vertical;padding:7px;border:1px solid #a58b68;
+  border-radius:6px;background:#fffdf8;color:#49351f;font:11px/1.35 monospace;
+}
+.sprinkler-editor-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.sprinkler-editor-actions button{
+  padding:6px 9px;border:1px solid #765333;border-radius:6px;
+  background:#f2dfbd;color:#49351f;font:800 11px Nunito,Arial,sans-serif;cursor:pointer;
+}
+#start.sprinkler-editing{cursor:crosshair}
+.sprinkler-edit-point{
+  position:absolute;z-index:39;width:22px;height:22px;margin:-11px 0 0 -11px;
+  border:2px solid white;border-radius:50%;background:#e44b28;
+  box-shadow:0 0 0 2px #633b20,0 2px 5px #0008;pointer-events:none;
+  display:grid;place-items:center;color:white;font:800 10px Nunito,Arial,sans-serif;
+}
+
 @media(max-width:700px){
   #summerSprinkler{
     left:65%;
@@ -3539,6 +3574,19 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div id="start" class="autumn">
     <img id="seasonImage" alt="Zagrodowo — sezonowy ekran startowy">
     <img id="summerSprinkler" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/zraszacz.png?v=1" alt="" aria-hidden="true">
+    <button id="sprinklerEditorToggle" type="button">✚ Edytor zraszaczy</button>
+    <div id="sprinklerEditorPanel" aria-label="Edytor położenia zraszaczy">
+      <strong>Edytor położenia zraszaczy</strong>
+      <p>Włącz zaznaczanie, a następnie klikaj miejsca na trawniku, w których mają stanąć zraszacze. Współrzędne zapisują się jako procenty ekranu.</p>
+      <textarea id="sprinklerEditorCoordinates" readonly placeholder="Tutaj pojawią się współrzędne..."></textarea>
+      <div class="sprinkler-editor-actions">
+        <button id="sprinklerEditorAdd" type="button">Zaznacz punkty</button>
+        <button id="sprinklerEditorUndo" type="button">Cofnij punkt</button>
+        <button id="sprinklerEditorCopy" type="button">Kopiuj współrzędne</button>
+        <button id="sprinklerEditorClear" type="button">Wyczyść</button>
+        <button id="sprinklerEditorClose" type="button">Zamknij</button>
+      </div>
+    </div>
     <img id="summerNest" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/gniazdo.png?v=1" alt="" aria-hidden="true">
     <img id="summerNestEgg" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jaskolka-jajko.png?v=1" alt="" aria-hidden="true">
     <img id="summerNestEgg2" src="https://raw.githubusercontent.com/merkurymagana/zagrodowo-assets/main/jaskolka-jajko.png?v=1" alt="" aria-hidden="true">
@@ -5361,6 +5409,62 @@ loadDemoProfile();
 loadSocial();
 renderNeighbors();
 
+
+
+/* EDYTOR PUNKTÓW USTAWIENIA ZRASZACZY — współrzędne względem całej scenerii. */
+(function initSprinklerPositionEditor(){
+  const panel=document.getElementById("sprinklerEditorPanel");
+  const toggle=document.getElementById("sprinklerEditorToggle");
+  const add=document.getElementById("sprinklerEditorAdd");
+  const undo=document.getElementById("sprinklerEditorUndo");
+  const copy=document.getElementById("sprinklerEditorCopy");
+  const clear=document.getElementById("sprinklerEditorClear");
+  const close=document.getElementById("sprinklerEditorClose");
+  const output=document.getElementById("sprinklerEditorCoordinates");
+  if(!panel||!toggle||!output)return;
+  const points=[];
+  let selecting=false;
+  function render(){
+    document.querySelectorAll(".sprinkler-edit-point").forEach(el=>el.remove());
+    points.forEach((p,i)=>{
+      const marker=document.createElement("div");
+      marker.className="sprinkler-edit-point";
+      marker.textContent=String(i+1);
+      marker.style.left=p.x+"%";marker.style.top=p.y+"%";
+      document.getElementById("start").appendChild(marker);
+    });
+    output.value=JSON.stringify(points.map((p,i)=>({id:i+1,x:Number(p.x.toFixed(2)),y:Number(p.y.toFixed(2))})),null,2);
+  }
+  function setSelecting(value){
+    selecting=value;
+    document.getElementById("start").classList.toggle("sprinkler-editing",selecting);
+    add.textContent=selecting?"Zakończ zaznaczanie":"Zaznacz punkty";
+  }
+  toggle.addEventListener("click",()=>panel.classList.toggle("open"));
+  add.addEventListener("click",()=>setSelecting(!selecting));
+  undo.addEventListener("click",()=>{points.pop();render();});
+  clear.addEventListener("click",()=>{points.length=0;render();});
+  close.addEventListener("click",()=>{setSelecting(false);panel.classList.remove("open");});
+  copy.addEventListener("click",async()=>{
+    const value=output.value;
+    try{
+      await navigator.clipboard.writeText(value);
+      copy.textContent="Skopiowano!";
+    }catch(e){
+      output.focus();output.select();
+      try{document.execCommand("copy");copy.textContent="Skopiowano!";}
+      catch(err){copy.textContent="Zaznacz tekst ręcznie";}
+    }
+    setTimeout(()=>copy.textContent="Kopiuj współrzędne",1600);
+  });
+  document.getElementById("start").addEventListener("click",event=>{
+    if(!selecting||event.target.closest("#sprinklerEditorPanel,#sprinklerEditorToggle"))return;
+    const rect=document.getElementById("start").getBoundingClientRect();
+    const x=(event.clientX-rect.left)/rect.width*100;
+    const y=(event.clientY-rect.top)/rect.height*100;
+    points.push({x,y});render();
+  });
+})();
 </script>
 </body>
 </html>
