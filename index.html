@@ -5022,7 +5022,7 @@ const formInfo={
 
 function openAuth(name){authOverlay.classList.add("visible");showForm(name)}
 function closeAuth(){authOverlay.classList.remove("visible");hideMessage()}
-function overlayClick(event){if(event.target===authOverlay)closeAuth()}
+function overlayClick(event){/* Formularz zamyka wyłącznie czerwony przycisk X. Kliknięcie tła niczego nie zamyka. */}
 
 function showForm(name){
   const form=document.getElementById(name+"Form");
@@ -6176,54 +6176,69 @@ renderNeighbors();
 })();
 
 
-/* MOBILNY PINCH-ZOOM — obsługa globalna, skala całej planszy */
+/* MOBILNY PINCH-ZOOM — przybliżanie całej planszy, również nad formularzami */
 (function mobileStagePinchZoom(){
   const stage=document.getElementById("appStage");
   if(!stage)return;
   const isMobile=()=>window.matchMedia("(max-width:700px), (pointer:coarse)").matches;
+  const DESIGN_W=1686, DESIGN_H=950;
   let zoom=1, x=0, y=0, pinch=null;
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-  const view=()=>({w:window.visualViewport?.width||document.documentElement.clientWidth,
-    h:window.visualViewport?.height||document.documentElement.clientHeight});
+  const view=()=>({
+    w:window.visualViewport?.width||document.documentElement.clientWidth,
+    h:window.visualViewport?.height||document.documentElement.clientHeight
+  });
   function baseScale(){
-    const n=parseFloat(stage.style.getPropertyValue("--stage-scale"));
-    return Number.isFinite(n)&&n>0?n:Math.min(view().w/1686,view().h/950);
+    const v=view();
+    const scale=v.h>v.w?v.w/DESIGN_W:Math.min(v.w/DESIGN_W,v.h/DESIGN_H);
+    stage.style.setProperty("--stage-scale",String(Math.max(.1,scale)));
+    return Math.max(.1,scale);
   }
   function render(){
     if(!isMobile())return;
-    const b=baseScale(),v=view(),w=1686*b*zoom,h=950*b*zoom;
+    const b=baseScale(),v=view();
+    const w=DESIGN_W*b*zoom,h=DESIGN_H*b*zoom;
     x=clamp(x,Math.min(0,v.w-w),0);
     y=clamp(y,Math.min(0,v.h-h),0);
     stage.style.setProperty("--mobile-zoom-x",x+"px");
     stage.style.setProperty("--mobile-zoom-y",y+"px");
     stage.style.setProperty("--mobile-zoom-scale",String(zoom));
   }
-  function dist(a,b){return Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY)}
-  function mid(a,b){return {x:(a.clientX+b.clientX)/2,y:(a.clientY+b.clientY)/2}}
-  document.addEventListener("touchstart",e=>{
-    if(!isMobile()||!stage.contains(e.target)||e.touches.length!==2)return;
-    const p=mid(e.touches[0],e.touches[1]);
-    pinch={d:Math.max(1,dist(e.touches[0],e.touches[1])),zoom,x,y,px:p.x,py:p.y};
-    e.preventDefault();
+  function distance(a,b){return Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY)}
+  function midpoint(a,b){return {x:(a.clientX+b.clientX)/2,y:(a.clientY+b.clientY)/2}}
+
+  /* Nasłuch na window, aby gest działał także wtedy, gdy palce leżą na formularzu,
+     polu tekstowym lub przycisku, a nie tylko na samej grafice tła. */
+  window.addEventListener("touchstart",e=>{
+    if(!isMobile()||e.touches.length!==2)return;
+    const p=midpoint(e.touches[0],e.touches[1]);
+    pinch={
+      distance:Math.max(1,distance(e.touches[0],e.touches[1])),
+      zoom,x,y,cx:p.x,cy:p.y
+    };
+    if(e.cancelable)e.preventDefault();
   },{capture:true,passive:false});
-  document.addEventListener("touchmove",e=>{
-    if(!isMobile())return;
-    if(e.touches.length===2&&pinch){
-      if(e.cancelable)e.preventDefault();
-      const p=mid(e.touches[0],e.touches[1]);
-      const next=clamp(pinch.zoom*dist(e.touches[0],e.touches[1])/pinch.d,1,4);
-      const ratio=next/pinch.zoom;
-      zoom=next;
-      x=p.x-(pinch.px-pinch.x)*ratio;
-      y=p.y-(pinch.py-pinch.y)*ratio;
-      render();
-    }else if(e.touches.length>1&&e.cancelable)e.preventDefault();
+
+  window.addEventListener("touchmove",e=>{
+    if(!isMobile()||e.touches.length!==2||!pinch)return;
+    if(e.cancelable)e.preventDefault();
+    const p=midpoint(e.touches[0],e.touches[1]);
+    const next=clamp(pinch.zoom*distance(e.touches[0],e.touches[1])/pinch.distance,1,4);
+    const ratio=next/pinch.zoom;
+    zoom=next;
+    /* Zachowaj punkt planszy znajdujący się pod środkiem gestu. */
+    x=p.x-(pinch.cx-pinch.x)*ratio;
+    y=p.y-(pinch.cy-pinch.y)*ratio;
+    render();
   },{capture:true,passive:false});
+
   const finish=e=>{if(e.touches.length<2)pinch=null};
-  document.addEventListener("touchend",finish,{capture:true,passive:true});
-  document.addEventListener("touchcancel",finish,{capture:true,passive:true});
+  window.addEventListener("touchend",finish,{capture:true,passive:true});
+  window.addEventListener("touchcancel",finish,{capture:true,passive:true});
   window.addEventListener("resize",render,{passive:true});
-  window.addEventListener("orientationchange",()=>{zoom=1;x=y=0;pinch=null;render()},{passive:true});
+  window.addEventListener("orientationchange",()=>{
+    zoom=1;x=0;y=0;pinch=null;render();
+  },{passive:true});
   if(window.visualViewport)window.visualViewport.addEventListener("resize",render,{passive:true});
   render();
 })();
