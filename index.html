@@ -360,17 +360,17 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   }
 }
 
-/* MOTYLE — spokojny, nieregularny lot i osobne trzepotanie skrzydeł. */
+/* MOTYLE — wyraźniejsze sylwetki, mocniejszy kontrast i osobne trzepotanie skrzydeł. */
 .summerButterfly{
   position:absolute;
   z-index:7;
   display:none;
-  width:clamp(23px,2.15vw,36px);
+  width:clamp(38px,3.15vw,52px);
   height:auto;
   object-fit:contain;
   pointer-events:none;
   user-select:none;
-  filter:drop-shadow(0 2px 2px #26351c55);
+  filter:brightness(1.06) contrast(1.22) saturate(1.2) drop-shadow(0 2px 3px #17241499);
   will-change:transform,opacity;
 }
 #start.summer-morning .summerButterfly{display:block}
@@ -380,12 +380,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 #summerButterfly2{
   left:72%;top:40%;
-  width:clamp(21px,1.95vw,33px);
+  width:clamp(35px,2.9vw,48px);
   animation:summerButterflyFlight2 67s ease-in-out -29s infinite;
 }
 #summerButterfly3{
   left:44%;top:59%;
-  width:clamp(22px,2.05vw,34px);
+  width:clamp(36px,3vw,50px);
   animation:summerButterflyFlight3 63s ease-in-out -19s infinite;
 }
 .summerButterfly img{
@@ -433,9 +433,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   100%{opacity:0;transform:translate3d(8vw,-4vh,0) rotate(-4deg)}
 }
 @media(max-width:700px){
-  .summerButterfly{width:clamp(18px,4.4vw,27px)}
-  #summerButterfly2{width:clamp(17px,4vw,25px)}
-  #summerButterfly3{width:clamp(18px,4.2vw,26px)}
+  .summerButterfly{width:clamp(29px,6.2vw,40px)}
+  #summerButterfly2{width:clamp(27px,5.8vw,37px)}
+  #summerButterfly3{width:clamp(28px,6vw,39px)}
   #summerButterfly1{left:6%;top:48%}
   #summerButterfly2{left:78%;top:42%}
   #summerButterfly3{left:43%;top:58%}
