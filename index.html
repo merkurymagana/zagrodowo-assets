@@ -6209,7 +6209,7 @@ renderNeighbors();
   const isTouchDevice=()=>window.matchMedia("(pointer:coarse)").matches || "ontouchstart" in window;
   const W=1686,H=950;
   const pointers=new Map();
-  let zoom=1,x=0,y=0,pinch=null,pan=null;
+  let zoom=1,x=0,y=0,pinch=null,pan=null,renderFrame=0;
   const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
   const viewport=()=>({
     w:window.visualViewport?.width||document.documentElement.clientWidth,
@@ -6231,6 +6231,15 @@ renderNeighbors();
     body.style.setProperty("--mobile-zoom-x",x+"px");
     body.style.setProperty("--mobile-zoom-y",y+"px");
     body.style.setProperty("--mobile-total-scale",String(base*zoom));
+  }
+  // Aktualizuj transformację najwyżej raz na klatkę ekranu.
+  // Zdarzenia dotyku mogą przychodzić częściej niż przeglądarka rysuje obraz.
+  function scheduleRender(){
+    if(renderFrame)return;
+    renderFrame=requestAnimationFrame(()=>{
+      renderFrame=0;
+      render();
+    });
   }
   function pt(e){return {x:e.clientX,y:e.clientY}}
   function mid(a,b){return {x:(a.x+b.x)/2,y:(a.y+b.y)/2}}
@@ -6260,13 +6269,13 @@ renderNeighbors();
       zoom=next;
       x=c.x-(pinch.cx-pinch.x)*ratio;
       y=c.y-(pinch.cy-pinch.y)*ratio;
-      render();
+      scheduleRender();
     }else if(pointers.size===1&&pan&&zoom>1){
       const p=pt(e),dx=p.x-pan.start.x,dy=p.y-pan.start.y;
       if(Math.abs(dx)+Math.abs(dy)>3)pan.moved=true;
       if(pan.moved){
         if(e.cancelable)e.preventDefault();
-        x=pan.x+dx;y=pan.y+dy;render();
+        x=pan.x+dx;y=pan.y+dy;scheduleRender();
       }
     }
   },{capture:true,passive:false});
