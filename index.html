@@ -5268,6 +5268,32 @@ html,body,#appStage{
   .side-menu .ui-icon{transition:none!important}
 }
 
+
+/* Natural Modern — jeden kolor dla wszystkich ikon interfejsu gry. */
+#game .ui-icon,
+#profileOverlay .ui-icon{
+  color:#72965B!important;
+  stroke:#72965B!important;
+}
+#game .side-menu .compass-menu-icon img,
+#game .side-menu .premium-menu-icon img,
+#game .side-menu .tasks-menu-icon img,
+#game .side-menu .help-menu-icon img{
+  filter:brightness(0) saturate(100%) invert(56%) sepia(17%) saturate(1000%) hue-rotate(53deg) brightness(91%) contrast(86%);
+}
+#game .side-menu button:hover .ui-icon,
+#game .side-menu button:focus-visible .ui-icon,
+#game .side-menu button.selected .ui-icon,
+#game .side-menu button:hover .menu-icon .ui-icon,
+#game .side-menu button:focus-visible .menu-icon .ui-icon,
+#game .side-menu button.selected .menu-icon .ui-icon,
+#game .side-menu button:hover .logout-menu-icon .ui-icon,
+#game .side-menu button:focus-visible .logout-menu-icon .ui-icon,
+#game .side-menu button.selected .logout-menu-icon .ui-icon{
+  color:#FFFFFF!important;
+  stroke:#FFFFFF!important;
+}
+
 </style>
 </head>
 
