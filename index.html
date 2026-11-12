@@ -4687,56 +4687,145 @@ html,body,#appStage{
 #game .player-level>.ui-icon{display:inline-block;width:12px;height:12px;vertical-align:-2px;color:#d6bd8b}
 #game .big-icon>.ui-icon{width:42px;height:42px;color:#d6bd8b}
 
-/* HUD SPACING PASS — zachowuje dotychczasowe kotwice i porządkuje rytm elementów. */
+/* HUD LAYOUT FIX — równa siatka ikon i czytelny panel gracza.
+   Zachowuje kotwice: menu lewy-górny róg, waluty środek góry,
+   profil prawy-górny róg, wylogowanie bezpośrednio pod profilem. */
 @media(min-width:701px){
-  #playerPanel .side-menu{gap:6px!important;padding:6px!important;border-radius:13px!important}
-  #playerPanel .side-menu button.compass-menu-button,
-  #playerPanel .side-menu button.premium-menu-button,
-  #playerPanel .side-menu button.tasks-menu-button,
-  #playerPanel .side-menu button.help-menu-button,
-  #playerPanel .side-menu > button[data-view="neighbors"],
-  #playerPanel .side-menu > button[data-view="settings"]{
-    flex:0 0 42px!important;width:42px!important;min-width:42px!important;max-width:42px!important;
-    height:42px!important;min-height:42px!important;max-height:42px!important;border-radius:9px!important;
+  /* Nawigacja: sześć równych pól w jednym, zwartym rzędzie. */
+  #playerPanel nav.side-menu{
+    box-sizing:border-box!important;
+    display:grid!important;
+    grid-template-columns:repeat(6,44px)!important;
+    grid-auto-rows:44px!important;
+    grid-auto-flow:row!important;
+    align-items:center!important;
+    justify-content:start!important;
+    gap:7px!important;
+    width:max-content!important;
+    min-width:0!important;
+    padding:6px!important;
+    margin:0!important;
   }
-  #playerPanel .side-menu .compass-menu-icon,
-  #playerPanel .side-menu .premium-menu-icon,
-  #playerPanel .side-menu .tasks-menu-icon,
-  #playerPanel .side-menu .help-menu-icon{width:31px!important;height:31px!important;flex-basis:31px!important}
-  #playerPanel .side-menu .compass-dial{width:31px!important;height:31px!important}
-  #playerPanel .side-menu .compass-pointer{width:21px!important;height:21px!important}
-  #playerPanel .side-menu .premium-menu-icon>img{width:30px!important;height:30px!important}
-  #playerPanel .side-menu .tasks-menu-icon>img:not(.tasks-wax-seal){width:31px!important;height:31px!important}
-  #playerPanel .side-menu .help-menu-icon img{width:37px!important;height:37px!important}
-  #playerPanel .side-menu > button[data-view="neighbors"] .menu-icon,
-  #playerPanel .side-menu > button[data-view="settings"] .menu-icon{font-size:22px!important}
+  #playerPanel nav.side-menu > .compass-links-row,
+  #playerPanel nav.side-menu .compass-premium-stack,
+  #playerPanel nav.side-menu .tasks-help-stack,
+  #playerPanel nav.side-menu .premium-menu-row,
+  #playerPanel nav.side-menu .help-menu-row{
+    display:contents!important;
+  }
+  #playerPanel nav.side-menu > button,
+  #playerPanel nav.side-menu button.compass-menu-button,
+  #playerPanel nav.side-menu button.premium-menu-button,
+  #playerPanel nav.side-menu button.tasks-menu-button,
+  #playerPanel nav.side-menu button.help-menu-button{
+    box-sizing:border-box!important;
+    display:grid!important;
+    place-items:center!important;
+    width:44px!important;
+    min-width:44px!important;
+    max-width:44px!important;
+    height:44px!important;
+    min-height:44px!important;
+    max-height:44px!important;
+    flex:none!important;
+    margin:0!important;
+    padding:5px!important;
+    border-radius:10px!important;
+  }
+  #playerPanel nav.side-menu button .ui-icon,
+  #playerPanel nav.side-menu .compass-menu-icon,
+  #playerPanel nav.side-menu .premium-menu-icon,
+  #playerPanel nav.side-menu .tasks-menu-icon,
+  #playerPanel nav.side-menu .help-menu-icon,
+  #playerPanel nav.side-menu .menu-icon{
+    display:grid!important;
+    place-items:center!important;
+    width:28px!important;
+    height:28px!important;
+    min-width:28px!important;
+    min-height:28px!important;
+    margin:0!important;
+    flex:none!important;
+  }
+  #playerPanel nav.side-menu .compass-menu-icon .ui-icon,
+  #playerPanel nav.side-menu .premium-menu-icon .ui-icon,
+  #playerPanel nav.side-menu .tasks-menu-icon .ui-icon,
+  #playerPanel nav.side-menu .help-menu-icon .ui-icon,
+  #playerPanel nav.side-menu .menu-icon .ui-icon{
+    width:25px!important;height:25px!important;
+  }
 
+  /* Profil: awatar po lewej, nick i poziom obok, XP pod nimi. */
   #playerPanel .profile-card{
-    box-sizing:border-box!important;width:286px!important;min-width:286px!important;max-width:286px!important;
-    min-height:72px!important;height:auto!important;max-height:none!important;padding:9px 11px!important;
-    display:grid!important;grid-template-columns:46px minmax(0,1fr)!important;
-    grid-template-rows:auto auto auto!important;column-gap:10px!important;row-gap:4px!important;align-items:center!important;
+    box-sizing:border-box!important;
+    width:286px!important;
+    min-width:286px!important;
+    max-width:286px!important;
+    min-height:76px!important;
+    height:auto!important;
+    max-height:none!important;
+    padding:10px 12px!important;
+    display:grid!important;
+    grid-template-columns:48px minmax(0,1fr)!important;
+    grid-template-rows:auto auto auto!important;
+    align-items:center!important;
+    column-gap:11px!important;
+    row-gap:4px!important;
   }
   #playerPanel .avatar-row{display:contents!important}
   #playerPanel .avatar-frame{
-    grid-column:1!important;grid-row:1 / 4!important;width:46px!important;min-width:46px!important;
-    height:52px!important;min-height:52px!important;align-self:center!important;border-radius:8px!important;
+    grid-column:1!important;
+    grid-row:1 / 4!important;
+    width:48px!important;
+    min-width:48px!important;
+    height:54px!important;
+    min-height:54px!important;
+    align-self:center!important;
+    border-radius:8px!important;
   }
   #playerPanel .player-info{
-    grid-column:2!important;grid-row:1!important;display:flex!important;flex-direction:column!important;
-    align-items:flex-start!important;justify-content:center!important;gap:2px!important;min-width:0!important;
+    grid-column:2!important;
+    grid-row:1!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    justify-content:center!important;
+    gap:3px!important;
+    min-width:0!important;
   }
-  #playerPanel .player-name{font-size:14px!important;line-height:1.15!important}
+  #playerPanel .player-name{
+    max-width:100%!important;
+    font-size:14px!important;
+    line-height:1.15!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
   #playerPanel .player-level{margin:0!important;font-size:10px!important;line-height:1.2!important}
   #playerPanel .xp-label{
-    grid-column:2!important;grid-row:2!important;display:flex!important;justify-content:space-between!important;
-    width:100%!important;margin:0!important;font-size:9px!important;line-height:1.2!important;
+    grid-column:2!important;
+    grid-row:2!important;
+    display:flex!important;
+    justify-content:space-between!important;
+    width:100%!important;
+    margin:0!important;
+    font-size:9px!important;
+    line-height:1.2!important;
   }
-  #playerPanel .xp-track{grid-column:2!important;grid-row:3!important;width:100%!important;height:5px!important;margin:0!important}
+  #playerPanel .xp-track{
+    grid-column:2!important;
+    grid-row:3!important;
+    width:100%!important;
+    height:5px!important;
+    margin:0!important;
+  }
   #playerPanel .panel-bottom{right:0!important}
-  #playerPanel .logout-button{min-height:30px!important;padding:6px 11px!important}
+  #playerPanel .logout-button{
+    min-height:32px!important;
+    padding:6px 12px!important;
+    justify-content:center!important;
+  }
 }
-
 </style>
 </head>
 
