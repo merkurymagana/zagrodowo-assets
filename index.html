@@ -369,17 +369,19 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   background:radial-gradient(ellipse,rgba(255,111,24,.32) 0%,rgba(255,91,16,.13) 38%,transparent 72%);
   filter:blur(5px);animation:campfireGlow 2.8s ease-in-out infinite alternate;
 }
-#summerCampfire .flameOuter{fill:url(#campfireOuter);transform-origin:338px 285px;animation:campfireDance 1.65s ease-in-out infinite alternate}
-#summerCampfire .flameMiddle{fill:url(#campfireMiddle);transform-origin:338px 285px;animation:campfireDance 1.12s ease-in-out -0.45s infinite alternate-reverse}
-#summerCampfire .flameCore{fill:url(#campfireCore);transform-origin:338px 285px;animation:campfireDance 1.38s ease-in-out -0.2s infinite alternate}
+#summerCampfire .flameOuter{fill:url(#campfireOuter);transform-origin:50% 100%;animation:campfireDance 1.05s ease-in-out infinite alternate;filter:url(#campfireWarp)}
+#summerCampfire .flameMiddle{fill:url(#campfireMiddle);transform-origin:50% 100%;animation:campfireDance 1.32s ease-in-out -0.4s infinite alternate-reverse;filter:url(#campfireWarp)}
+#summerCampfire .flameCore{fill:url(#campfireCore);transform-origin:50% 100%;animation:campfireDance .86s ease-in-out -.2s infinite alternate;filter:url(#campfireWarp)}
+#summerCampfire .flameBlur{fill:url(#campfireOuter);opacity:.38;filter:url(#campfireSoftGlow);animation:campfireDance 1.4s ease-in-out -.3s infinite alternate}
 #summerCampfire .campfireSpark{fill:#ffd98a;opacity:0;transform-box:fill-box;transform-origin:center;animation:campfireSparkRise 3.8s linear infinite}
 #summerCampfire .campfireSpark:nth-of-type(2){animation-delay:-1.1s}
 #summerCampfire .campfireSpark:nth-of-type(3){animation-delay:-2.6s}
 #summerCampfire .campfireSpark:nth-of-type(4){animation-delay:-.5s}
 @keyframes campfireDance{
-  0%{transform:rotate(-2deg) scaleX(.94) scaleY(.94);opacity:.83}
-  45%{transform:rotate(1.5deg) scaleX(1.04) scaleY(1.07);opacity:1}
-  100%{transform:rotate(-1deg) scaleX(.97) scaleY(1.02);opacity:.9}
+  0%{transform:translate(-2px,1px) rotate(-3deg) scaleX(.88) scaleY(.91);opacity:.78}
+  37%{transform:translate(1px,-3px) rotate(2deg) scaleX(1.08) scaleY(1.13);opacity:1}
+  71%{transform:translate(3px,0) rotate(-1deg) scaleX(.96) scaleY(.96);opacity:.9}
+  100%{transform:translate(-1px,-2px) rotate(3deg) scaleX(1.03) scaleY(1.08);opacity:.96}
 }
 @keyframes campfireGlow{from{opacity:.62;transform:translate(-50%,-50%) scale(.92)}to{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
 @keyframes campfireSparkRise{
@@ -3895,18 +3897,27 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
           <filter id="campfireSoftGlow" x="-60%" y="-60%" width="220%" height="220%">
             <feGaussianBlur stdDeviation="8"/>
           </filter>
+          <filter id="campfireWarp" x="-35%" y="-35%" width="170%" height="170%">
+            <feTurbulence type="fractalNoise" baseFrequency=".022 .035" numOctaves="2" seed="13" result="fireNoise">
+              <animate attributeName="baseFrequency" values=".018 .03;.025 .04;.02 .034;.018 .03" dur="2.7s" repeatCount="indefinite"/>
+            </feTurbulence>
+            <feDisplacementMap in="SourceGraphic" in2="fireNoise" scale="13" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
         </defs>
-        <g class="flameOuter" filter="url(#campfireSoftGlow)" opacity=".7">
-          <path d="M247 284 C226 251 253 223 270 195 C280 177 276 155 270 139 C302 159 306 188 298 211 C323 191 333 157 323 119 C363 154 363 190 347 220 C376 202 387 174 380 148 C416 185 411 224 391 250 C420 233 434 211 430 190 C454 223 443 259 425 284Z"/>
+        <g class="flameBlur">
+          <path d="M258 286 C246 270 260 251 273 235 C290 213 286 190 281 177 C304 190 309 213 298 235 C321 214 325 185 319 166 C344 187 347 215 333 241 C359 220 365 198 359 181 C384 208 379 240 360 261 C382 247 390 230 386 215 C406 240 394 270 381 286Z"/>
         </g>
         <g class="flameOuter">
-          <path d="M250 286 C230 259 246 231 263 210 C280 188 282 168 272 145 C305 163 313 194 299 222 C327 202 339 169 328 137 C365 171 368 204 349 235 C378 216 392 190 384 164 C416 198 415 233 393 260 C417 247 430 228 426 209 C448 238 439 268 420 286Z"/>
+          <path d="M260 286 C250 271 262 254 274 238 C286 221 292 204 286 188 C307 202 308 221 299 239 C319 223 329 201 324 183 C345 203 344 226 333 246 C354 231 365 212 359 196 C379 218 376 245 361 264 C378 254 386 239 383 228 C397 247 391 269 379 286Z"/>
+          <path d="M291 286 C282 271 293 258 303 245 C316 227 314 210 310 198 C331 211 334 232 322 249 C341 237 348 220 345 207 C363 228 357 253 344 270 L336 286Z"/>
+          <path d="M345 286 C335 269 349 253 358 237 C368 219 366 203 362 191 C385 211 385 235 371 255 C389 245 396 230 393 218 C411 241 400 268 387 286Z"/>
         </g>
         <g class="flameMiddle">
-          <path d="M277 286 C265 261 284 241 299 220 C312 201 312 183 305 166 C333 186 338 211 326 235 C350 217 357 193 350 174 C378 205 374 234 357 256 C377 247 388 230 386 214 C404 241 392 269 376 286Z"/>
+          <path d="M276 286 C270 270 284 257 293 244 C306 225 303 210 300 201 C319 216 319 237 308 253 C326 241 334 226 330 214 C347 236 338 260 326 276 L319 286Z"/>
+          <path d="M326 286 C317 270 331 254 340 241 C351 225 350 211 346 201 C367 220 364 243 351 259 C369 248 374 234 371 224 C388 247 377 269 365 286Z"/>
         </g>
         <g class="flameCore">
-          <path d="M310 286 C299 264 316 248 328 232 C338 218 339 205 334 192 C356 209 359 231 348 249 C366 238 371 222 367 209 C388 235 377 265 360 286Z"/>
+          <path d="M303 286 C296 270 310 256 319 243 C329 228 327 216 324 207 C342 222 342 241 331 257 C347 247 352 234 349 225 C365 247 353 270 343 286Z"/>
         </g>
         <circle class="campfireSpark" cx="285" cy="204" r="3" style="--spark-drift:-8px"/>
         <circle class="campfireSpark" cx="365" cy="188" r="2.5" style="--spark-drift:9px"/>
