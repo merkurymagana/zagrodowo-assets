@@ -5269,27 +5269,50 @@ html,body,#appStage{
 }
 
 
-/* Natural Modern — jeden kolor dla wszystkich ikon interfejsu gry. */
+/* Natural Modern — białe ikony; zielone tło kafelka po najechaniu lub wyborze. */
 #game .ui-icon,
 #profileOverlay .ui-icon{
-  color:#72965B!important;
-  stroke:#72965B!important;
+  color:#FFFFFF!important;
+  stroke:#FFFFFF!important;
 }
 #game .side-menu .compass-menu-icon img,
 #game .side-menu .premium-menu-icon img,
 #game .side-menu .tasks-menu-icon img,
 #game .side-menu .help-menu-icon img{
-  filter:brightness(0) saturate(100%) invert(56%) sepia(17%) saturate(1000%) hue-rotate(53deg) brightness(91%) contrast(86%);
+  filter:brightness(0) invert(1)!important;
+}
+#game .side-menu .menu-icon,
+#game .side-menu .logout-menu-icon,
+#game .side-menu .compass-menu-icon,
+#game .side-menu .premium-menu-icon,
+#game .side-menu .tasks-menu-icon,
+#game .side-menu .help-menu-icon{
+  background:transparent!important;
+  transition:background-color .18s ease;
+}
+#game .side-menu button:hover .menu-icon,
+#game .side-menu button:focus-visible .menu-icon,
+#game .side-menu button.selected .menu-icon,
+#game .side-menu button:hover .logout-menu-icon,
+#game .side-menu button:focus-visible .logout-menu-icon,
+#game .side-menu button.selected .logout-menu-icon,
+#game .side-menu button.compass-menu-button:hover .compass-menu-icon,
+#game .side-menu button.compass-menu-button:focus-visible .compass-menu-icon,
+#game .side-menu button.compass-menu-button.selected .compass-menu-icon,
+#game .side-menu button.premium-menu-button:hover .premium-menu-icon,
+#game .side-menu button.premium-menu-button:focus-visible .premium-menu-icon,
+#game .side-menu button.premium-menu-button.selected .premium-menu-icon,
+#game .side-menu button.tasks-menu-button:hover .tasks-menu-icon,
+#game .side-menu button.tasks-menu-button:focus-visible .tasks-menu-icon,
+#game .side-menu button.tasks-menu-button.selected .tasks-menu-icon,
+#game .side-menu button.help-menu-button:hover .help-menu-icon,
+#game .side-menu button.help-menu-button:focus-visible .help-menu-icon,
+#game .side-menu button.help-menu-button.selected .help-menu-icon{
+  background:#72965B!important;
 }
 #game .side-menu button:hover .ui-icon,
 #game .side-menu button:focus-visible .ui-icon,
-#game .side-menu button.selected .ui-icon,
-#game .side-menu button:hover .menu-icon .ui-icon,
-#game .side-menu button:focus-visible .menu-icon .ui-icon,
-#game .side-menu button.selected .menu-icon .ui-icon,
-#game .side-menu button:hover .logout-menu-icon .ui-icon,
-#game .side-menu button:focus-visible .logout-menu-icon .ui-icon,
-#game .side-menu button.selected .logout-menu-icon .ui-icon{
+#game .side-menu button.selected .ui-icon{
   color:#FFFFFF!important;
   stroke:#FFFFFF!important;
 }
