@@ -5275,10 +5275,13 @@ setInterval(()=>{
   }
   function makePath(a,b){
    const dx=b.x-a.x,dy=b.y-a.y;
-   const bend=(Math.random()<.5?-1:1)*(4+Math.random()*5);
-   const lift=-(3+Math.random()*5);
-   const c1={x:a.x+dx*.28+bend,y:a.y+dy*.28+lift};
-   const c2={x:a.x+dx*.72-bend*.45,y:a.y+dy*.72+lift*.35};
+   const side=(Math.random()<.5?-1:1);
+   /* Szeroki, łagodny łuk sprawia, że motyl wyraźnie przemierza scenerię,
+      nawet gdy punkt odpoczynku leży stosunkowo blisko. */
+   const bend=side*(13+Math.random()*9);
+   const lift=-(9+Math.random()*8);
+   const c1={x:Math.max(7,Math.min(93,a.x+dx*.28+bend)),y:Math.max(12,Math.min(82,a.y+dy*.28+lift))};
+   const c2={x:Math.max(7,Math.min(93,a.x+dx*.72-bend*.45)),y:Math.max(12,Math.min(82,a.y+dy*.72+lift*.35))};
    const frames=[];
    for(let i=0;i<=24;i++){
     const t=i/24,u=1-t;
@@ -5321,7 +5324,7 @@ setInterval(()=>{
    if(e.pointerType!=="touch")startle();
   });
   /* Każdy motyl otrzymuje własny, losowy rytm i od razu rozpoczyna lot. */
-  setTimeout(takeOff,Math.random()*(n+1)*4200);
+  setTimeout(takeOff,n*900);
  });
 })();
  
