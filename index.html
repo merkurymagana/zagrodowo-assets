@@ -4440,8 +4440,56 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 </div>
 
+<div id="orientationGate" aria-live="polite" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(28,35,24,.96);color:#fff;align-items:center;justify-content:center;padding:28px;box-sizing:border-box;text-align:center;font-family:Nunito,Arial,sans-serif">
+  <div style="width:min(420px,100%);display:flex;flex-direction:column;align-items:center;gap:16px">
+    <div aria-hidden="true" style="font-size:54px;line-height:1">↻</div>
+    <div style="font:normal 30px 'Bree Serif',Georgia,serif">Obróć telefon</div>
+    <div id="orientationMessage" style="font-size:16px;line-height:1.5;color:#e9e7dc">Zagrodowo najlepiej działa w poziomym ustawieniu ekranu.</div>
+    <button id="orientationButton" type="button" style="margin-top:8px;border:2px solid #e5c987;border-radius:10px;padding:13px 22px;background:#78934c;color:#fff;font:700 16px Nunito,Arial,sans-serif;cursor:pointer">Włącz widok poziomy</button>
+  </div>
+</div>
+
 <script>
 "use strict";
+
+/* ORIENTACJA TELEFONU — próba przełączenia gry w poziom. */
+(function setupLandscapeMode(){
+  const gate=document.getElementById("orientationGate");
+  const button=document.getElementById("orientationButton");
+  const message=document.getElementById("orientationMessage");
+  if(!gate||!button||!message)return;
+
+  const mobile=window.matchMedia("(pointer: coarse)").matches ||
+    /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
+  function update(){
+    const portrait=window.innerHeight>window.innerWidth;
+    gate.style.display=mobile&&portrait?"flex":"none";
+  }
+
+  button.addEventListener("click",async()=>{
+    message.textContent="Próbuję przełączyć ekran na poziomy…";
+    try{
+      if(!document.fullscreenElement&&document.documentElement.requestFullscreen){
+        await document.documentElement.requestFullscreen();
+      }
+      if(screen.orientation&&typeof screen.orientation.lock==="function"){
+        await screen.orientation.lock("landscape");
+        message.textContent="Gotowe! Możesz grać w poziomie.";
+      }else{
+        throw new Error("Blokada orientacji nie jest obsługiwana.");
+      }
+    }catch(error){
+      message.textContent="Ta przeglądarka nie pozwala automatycznie obrócić ekranu. Obróć telefon ręcznie do poziomu — gra dopasuje się sama.";
+    }
+    update();
+  });
+
+  window.addEventListener("resize",update,{passive:true});
+  window.addEventListener("orientationchange",update,{passive:true});
+  if(window.visualViewport)window.visualViewport.addEventListener("resize",update,{passive:true});
+  update();
+})();
 
 /* PORY ROKU */
 
