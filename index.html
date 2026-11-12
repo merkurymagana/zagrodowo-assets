@@ -5245,49 +5245,77 @@ setInterval(()=>{
   }
 },15000);
 
-/* MOTYLE — spokojny, łukowaty lot między punktami, odpoczynek i naturalne płoszenie. */
+/* MOTYLE — spokojny lot, odpoczynek i długi, płynny odlot po spłoszeniu. */
 (function initSummerButterflyBehavior(){
  const points=[{x:48.62,y:72.68},{x:77.45,y:67.17},{x:55.56,y:58.96},{x:18.06,y:63.17},{x:72.19,y:60.26}];
  const configs=[{id:"summerButterfly1",order:[0,2,4,1,3]},{id:"summerButterfly2",order:[2,3,0,4,1]},{id:"summerButterfly3",order:[4,1,3,2,0]}];
  const stage=document.getElementById("start"),depth=y=>.68+y*.005;
  configs.forEach(config=>{
   const element=document.getElementById(config.id);if(!element)return;
-  const image=element.querySelector("img"),state={element,image,config,index:0,restTimer:null,animation:null,escape:null};
+  const image=element.querySelector("img"),state={element,image,config,index:0,restTimer:null,animation:null,escape:null,direction:1,respawnTimer:null};
   const first=points[config.order[0]];
-  element.style.left=first.x+"%";element.style.top=first.y+"%";
+  element.style.left=first.x+"%";element.style.top=first.y+"%";element.style.opacity="1";
   element.style.transform="translate(-50%,-50%) scale("+depth(first.y).toFixed(3)+")";
   function currentPoint(){
    const rect=element.getBoundingClientRect(),base=stage.getBoundingClientRect();
    return {x:(rect.left+rect.width/2-base.left)/base.width*100,y:(rect.top+rect.height/2-base.top)/base.height*100};
   }
-  function keyframes(from,to){
-   const dx=to.x-from.x,dy=to.y-from.y,bend=(Math.random()>.5?1:-1)*(6+Math.random()*5),lift=-(6+Math.random()*7);
-   const p1={x:from.x+dx*.28+Math.sign(-dy||1)*bend,y:from.y+dy*.28+lift};
-   const p2={x:from.x+dx*.72+Math.sign(-dy||1)*bend*.5,y:from.y+dy*.72+lift*.5};
-   const f=p=>({left:p.x+"%",top:p.y+"%",transform:"translate(-50%,-50%) scale("+depth(p.y).toFixed(3)+")"});
-   return [f(from),f(p1),f(p2),f(to)];
+  function frame(p,opacity=1){
+   return {left:p.x+"%",top:p.y+"%",opacity,transform:"translate(-50%,-50%) scale("+depth(Math.max(0,Math.min(100,p.y))).toFixed(3)+")"};
   }
-  function rest(){element.classList.add("resting");image.style.animationPlayState="paused";state.restTimer=setTimeout(fly,6500+Math.random()*5000)}
+  function keyframes(from,to){
+   const dx=to.x-from.x,dy=to.y-from.y,bend=(Math.random()>.5?1:-1)*(5+Math.random()*4),lift=-(5+Math.random()*6);
+   const p1={x:from.x+dx*.3+Math.sign(-dy||1)*bend,y:from.y+dy*.3+lift};
+   const p2={x:from.x+dx*.7+Math.sign(-dy||1)*bend*.45,y:from.y+dy*.7+lift*.45};
+   return [frame(from),frame(p1),frame(p2),frame(to)];
+  }
+  function rest(){
+   element.classList.add("resting");image.style.animationPlayState="paused";
+   state.restTimer=setTimeout(fly,6500+Math.random()*5000);
+  }
   function fly(){
    clearTimeout(state.restTimer);element.classList.remove("resting");image.style.animationPlayState="running";
    const from=currentPoint();state.index=(state.index+1)%config.order.length;const to=points[config.order[state.index]];
-   image.style.scale=to.x<from.x?"-1 1":"1 1";
+   state.direction=to.x<from.x?-1:1;image.style.scale=state.direction<0?"-1 1":"1 1";
    const dist=Math.hypot((to.x-from.x)*stage.clientWidth/100,(to.y-from.y)*stage.clientHeight/100);
    const duration=Math.max(65000,Math.min(110000,65000+dist*22+Math.random()*12000));
    state.animation=element.animate(keyframes(from,to),{duration,easing:"linear",fill:"forwards"});
-   state.animation.onfinish=()=>{element.style.left=to.x+"%";element.style.top=to.y+"%";element.style.transform="translate(-50%,-50%) scale("+depth(to.y).toFixed(3)+")";state.animation.cancel();state.animation=null;rest()};
+   state.animation.onfinish=()=>{
+    element.style.left=to.x+"%";element.style.top=to.y+"%";element.style.transform=frame(to).transform;
+    state.animation.cancel();state.animation=null;rest();
+   };
   }
   function scare(){
-   if(state.escape)return;
-   const from=currentPoint();if(state.animation){state.animation.cancel();state.animation=null}clearTimeout(state.restTimer);
-   element.classList.remove("resting");image.style.animationPlayState="running";
+   if(state.escape||element.style.opacity==="0")return;
+   const from=currentPoint();
+   if(state.animation){state.animation.cancel();state.animation=null;}
+   clearTimeout(state.restTimer);element.classList.remove("resting");image.style.animationPlayState="running";
    element.style.left=from.x+"%";element.style.top=from.y+"%";
-   const dir=Math.random()>.5?1:-1,to={x:Math.max(2,Math.min(98,from.x+dir*(9+Math.random()*5))),y:Math.max(7,from.y-(8+Math.random()*5))};
-   image.style.scale=dir<0?"-1 1":"1 1";
-   state.escape=element.animate(keyframes(from,to),{duration:1150,easing:"cubic-bezier(.2,.65,.25,1)",fill:"forwards"});
-   state.escape.onfinish=()=>{element.style.left=to.x+"%";element.style.top=to.y+"%";element.style.transform="translate(-50%,-50%) scale("+depth(to.y).toFixed(3)+")";state.escape.cancel();state.escape=null;fly()};
+   const dir=state.direction||1;image.style.scale=dir<0?"-1 1":"1 1";
+   /* Jedna długa, gładka krzywa Béziera — bez ostrego załamania toru. */
+   const to={x:dir>0?118:-18,y:Math.max(-12,from.y-28)};
+   const control={x:from.x+dir*32,y:from.y-13};
+   const frames=[];
+   for(let i=0;i<=16;i++){
+    const t=i/16,u=1-t;
+    const p={x:u*u*from.x+2*u*t*control.x+t*t*to.x,y:u*u*from.y+2*u*t*control.y+t*t*to.y};
+    frames.push(frame(p,t<.68?1:1-(t-.68)/.32));
+   }
+   state.escape=element.animate(frames,{duration:4600,easing:"linear",fill:"forwards"});
+   state.escape.onfinish=()=>{
+    element.style.opacity="0";element.style.pointerEvents="none";
+    state.escape.cancel();state.escape=null;
+    state.respawnTimer=setTimeout(()=>{
+     const next=points[Math.floor(Math.random()*points.length)];
+     element.style.left=next.x+"%";element.style.top=next.y+"%";
+     element.style.transform=frame(next).transform;element.style.opacity="0";
+     element.style.pointerEvents="auto";
+     state.direction=Math.random()>.5?1:-1;image.style.scale=state.direction<0?"-1 1":"1 1";
+     element.animate([{opacity:0},{opacity:1}],{duration:1600,easing:"ease-out",fill:"forwards"}).onfinish=rest;
+    },12000+Math.random()*10000);
+   };
   }
-  element.addEventListener("pointerenter",e=>{if(e.pointerType!=="touch")scare()});
+  element.addEventListener("pointerenter",e=>{if(e.pointerType!=="touch")scare();});
   state.restTimer=setTimeout(rest,10000+Math.random()*9000);
  });
 })();
