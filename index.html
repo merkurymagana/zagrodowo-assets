@@ -3897,6 +3897,22 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   #appStage *{touch-action:none}
 }
 
+/* Usuń drewniane pasy z zewnętrznych krawędzi całej strony — także ekranu startowego. */
+html,body,#appStage{
+  background-color:#eadfca!important;
+  background-image:none!important;
+}
+#appStage{
+  box-shadow:none!important;
+}
+.start-wood-left,
+.start-wood-right{
+  display:none!important;
+}
+@media(pointer:coarse){
+  body{background:#eadfca!important;background-image:none!important}
+  #appStage{background:#eadfca!important;background-image:none!important}
+}
 /* Podczas gry usuń drewno widoczne na skrajnych bokach planszy. */
 #appStage.game-active{
   background:#eadfca!important;
