@@ -5582,8 +5582,8 @@ renderNeighbors();
   // Subtelne ślady wilgoci w punktach, w których obracający się
   // poziomo strumień wody dociera do podłoża.
   positions.forEach((p,index)=>{
-    const radiusX= index===1 || index===2 ? 3.0 : 2.65;
-    const radiusY= index===1 || index===2 ? 4.0 : 3.5;
+    const radiusX= index===0 || index===1 ? 3.6 : 2.65;
+    const radiusY= index===0 || index===1 ? 4.8 : 3.5;
     const landingAngles=[0,90,180,270];
     landingAngles.forEach((angle,j)=>{
       const rad=angle*Math.PI/180;
@@ -5593,11 +5593,13 @@ renderNeighbors();
       wet.style.left=(p.x+Math.cos(rad)*radiusX)+"%";
       wet.style.top=(p.y+Math.sin(rad)*radiusY)+"%";
       wet.style.zIndex=String(6+Math.round(p.y/10));
-      wet.style.width=(index===1||index===2)
-        ? "clamp(24px,3.1vw,44px)"
+      wet.style.width=(index===0||index===1)
+        ? "clamp(34px,4.2vw,60px)"
         : "clamp(20px,2.5vw,36px)";
-      wet.style.height="clamp(7px,.8vw,12px)";
-      wet.style.opacity=".5";
+      wet.style.height=(index===0||index===1)
+        ? "clamp(9px,1.05vw,15px)"
+        : "clamp(7px,.8vw,12px)";
+      wet.style.opacity=(index===0||index===1) ? ".72" : ".5";
       wet.style.transform="translate(-50%,-50%) rotate("+((j%2?12:-12)+index*5)+"deg)";
       stage.appendChild(wet);
     });
