@@ -6203,48 +6203,6 @@ html,body,#appStage{
 }
 
 
-/* Edytor HUD: prowadnice środka, zmiana rozmiaru i pasek przy dolnej krawędzi. */
-body.hud-layout-editing [data-hud-edit-id]{
-  outline:2px dashed rgba(114,150,91,.95)!important;
-  outline-offset:3px!important;
-  cursor:grab!important;
-  touch-action:none!important;
-  user-select:none!important;
-}
-body.hud-layout-editing [data-hud-edit-id]:active{cursor:grabbing!important}
-body.hud-layout-editing [data-hud-edit-id].hud-edit-selected{
-  outline:2px solid #E9C342!important;
-  outline-offset:4px!important;
-}
-body.hud-layout-editing:before,body.hud-layout-editing:after{
-  content:"";position:fixed;z-index:2147482998;pointer-events:none;
-  background:rgba(233,195,66,.8);
-}
-body.hud-layout-editing:before{left:50%;top:0;bottom:0;width:1px}
-body.hud-layout-editing:after{top:50%;left:0;right:0;height:1px}
-#hudLayoutToolbar{
-  position:fixed;left:50%;bottom:12px;transform:translateX(-50%);
-  z-index:2147483000;display:none;align-items:center;justify-content:center;flex-wrap:wrap;gap:7px;
-  padding:10px 12px;border:1px solid rgba(255,255,255,.18);border-radius:12px;
-  background:rgba(27,32,29,.97);box-shadow:0 8px 28px rgba(0,0,0,.38);
-  color:#F5F1E7;font:600 12px 'Nunito',Arial,sans-serif;
-  max-width:calc(100vw - 20px);white-space:normal;
-}
-body.hud-layout-editing #hudLayoutToolbar{display:flex}
-#hudLayoutToolbar button,#hudLayoutToolbar input{
-  box-sizing:border-box;border:1px solid rgba(245,241,231,.22);border-radius:7px;
-  padding:7px 9px;background:rgba(245,241,231,.1);
-  color:#F5F1E7;font:600 12px 'Nunito',Arial,sans-serif;
-}
-#hudLayoutToolbar button{cursor:pointer}
-#hudLayoutToolbar input{width:66px;background:rgba(0,0,0,.22)}
-#hudLayoutToolbar button.primary{background:#72965B;border-color:#72965B;color:#fff}
-#hudLayoutToolbar button:hover{filter:brightness(1.12)}
-#hudLayoutToolbar .hud-layout-hint{opacity:.9}
-@media(max-width:560px){
-  #hudLayoutToolbar{bottom:6px;gap:5px;padding:7px 8px;font-size:10px}
-  #hudLayoutToolbar button,#hudLayoutToolbar input{padding:6px 7px;font-size:10px}
-}
 </style>
 </head>
 
@@ -8800,85 +8758,7 @@ renderNeighbors();
 })();
 </script>
 
-<script>
-/* Lokalny edytor HUD-u: przesuwanie, centrowanie i rozmiary. */
-(()=>{
-  const STORE='zagrodowo_hud_layout_v1';
-  const selectors=[
-    ['profile-card','#playerPanel .profile-card'],
-    ['avatar','#playerPanel .avatar-frame'],
-    ['player-info','#playerPanel .player-info'],
-    ['currency-bar','#playerPanel .currency-bar'],
-    ['cash','#playerPanel .currency-box[aria-label="Gotówka"]'],
-    ['diamonds','#playerPanel .currency-box[aria-label="Diamenty"]'],
-    ['main-menu','#game > nav.side-menu'],
-    ['logout','#playerPanel .panel-bottom']
-  ];
-  const toolbar=document.createElement('div');toolbar.id='hudLayoutToolbar';
-  toolbar.innerHTML='<span class="hud-layout-hint">Zaznacz element • przeciągnij • środek ekranu oznaczają żółte linie</span><label>Szer. <input data-size="width" type="number" min="20" step="1"></label><label>Wys. <input data-size="height" type="number" min="20" step="1"></label><button type="button" data-action="center-x">Wyśrodkuj poziomo</button><button type="button" data-action="center-y">Wyśrodkuj pionowo</button><button class="primary" type="button" data-action="save">Zapisz układ</button><button type="button" data-action="reset">Przywróć domyślny</button><button type="button" data-action="close">Zamknij</button>';
-  document.body.appendChild(toolbar);
-  let active=false,drag=null,positions={},sizes={},selected=null;
-  const storageKey=()=>STORE+(matchMedia('(max-width: 700px)').matches?'_mobile':'_desktop');
-  function read(){try{const v=JSON.parse(localStorage.getItem(storageKey())||'{}');positions=v.positions||{};sizes=v.sizes||{}}catch(_){positions={};sizes={}}}
-  function getElements(){return selectors.map(([id,sel])=>[id,document.querySelector(sel)]).filter(x=>x[1])}
-  function apply(){
-    getElements().forEach(([id,el])=>{
-      el.dataset.hudEditId=id;
-      const p=positions[id],z=sizes[id];
-      el.style.translate=p?p.x+'px '+p.y+'px':'';
-      el.style.width=z&&z.width?z.width+'px':'';
-      el.style.height=z&&z.height?z.height+'px':'';
-      el.classList.toggle('hud-edit-selected',selected===id);
-    });
-    updateSizeInputs();
-  }
-  function save(){try{localStorage.setItem(storageKey(),JSON.stringify({positions,sizes}))}catch(_){alert('Nie udało się zapisać układu w tej przeglądarce.')}}
-  function updateSizeInputs(){
-    const el=getElements().find(x=>x[0]===selected)?.[1];
-    ['width','height'].forEach(k=>{const input=toolbar.querySelector('[data-size="'+k+'"]');input.disabled=!el;input.value=el?Math.round(el.getBoundingClientRect()[k]):''});
-  }
-  function select(id){selected=id;apply()}
-  function center(axis){
-    const el=getElements().find(x=>x[0]===selected)?.[1];if(!el)return;
-    const r=el.getBoundingClientRect(),p=positions[selected]||{x:0,y:0};
-    if(axis==='x')p.x=Math.round(p.x+innerWidth/2-(r.left+r.width/2));
-    if(axis==='y')p.y=Math.round(p.y+innerHeight/2-(r.top+r.height/2));
-    positions[selected]=p;apply();save();
-  }
-  function setMode(on){active=on;document.body.classList.toggle('hud-layout-editing',on);if(on){read();apply()}else{drag=null;selected=null;apply()}}
-  toolbar.addEventListener('click',e=>{
-    const action=e.target.closest('button')?.dataset.action;if(!action)return;
-    if(action==='save'){save();const b=toolbar.querySelector('[data-action="save"]');b.textContent='Zapisano ✓';setTimeout(()=>{b.textContent='Zapisz układ'},1300)}
-    if(action==='reset'){if(!confirm('Przywrócić domyślne położenie i rozmiary HUD-u?'))return;positions={};sizes={};selected=null;try{localStorage.removeItem(storageKey())}catch(_){}apply()}
-    if(action==='center-x')center('x');
-    if(action==='center-y')center('y');
-    if(action==='close')setMode(false);
-  });
-  toolbar.addEventListener('change',e=>{
-    const k=e.target.dataset.size;if(!k||!selected)return;
-    const value=Math.max(20,Number(e.target.value)||20);
-    sizes[selected]={...(sizes[selected]||{}),[k]:value};apply();save();
-  });
-  document.addEventListener('pointerdown',e=>{
-    if(!active||e.button!==0||toolbar.contains(e.target))return;
-    const el=e.target.closest('[data-hud-edit-id]');if(!el)return;
-    e.preventDefault();e.stopPropagation();
-    const id=el.dataset.hudEditId;select(id);const p=positions[id]||{x:0,y:0};
-    drag={el,id,pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,x:p.x,y:p.y};
-    try{el.setPointerCapture(e.pointerId)}catch(_){}
-  },true);
-  document.addEventListener('pointermove',e=>{
-    if(!drag||e.pointerId!==drag.pointerId)return;e.preventDefault();
-    const x=Math.round(drag.x+e.clientX-drag.startX),y=Math.round(drag.y+e.clientY-drag.startY);
-    positions[drag.id]={x,y};drag.el.style.translate=x+'px '+y+'px';
-  },{capture:true,passive:false});
-  function finish(e){if(!drag||e.pointerId!==drag.pointerId)return;save();drag=null}
-  document.addEventListener('pointerup',finish,true);document.addEventListener('pointercancel',finish,true);
-  window.addEventListener('keydown',e=>{if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='e'){e.preventDefault();setMode(!active)}if(active&&e.key==='Escape')setMode(false)});
-  window.addEventListener('resize',()=>{if(active){read();apply()}},{passive:true});
-  read();if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});else apply();
-})();
-</script>
+
 
 </body>
 </html>
