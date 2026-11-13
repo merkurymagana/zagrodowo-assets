@@ -6291,6 +6291,14 @@ html,body,#appStage{
   stroke:#72965B!important;
 }
 
+/* Awatar jest elementem klikalnym — pokaż kursor wskazujący możliwość kliknięcia. */
+#playerPanel .avatar-frame[role="button"]{
+  cursor:pointer!important;
+}
+#playerPanel .avatar-frame[role="button"] *{
+  cursor:pointer!important;
+}
+
 /* Dymek awatara: identyczny wygląd jak pozostałe etykiety po najechaniu. */
 #playerPanel .avatar-frame::after{
   background:rgba(0,0,0,.5)!important;
