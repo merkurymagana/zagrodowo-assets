@@ -4624,8 +4624,7 @@ html,body,#appStage{
 #playerPanel{color:var(--hud-ink)!important;background:linear-gradient(145deg,rgba(24,29,27,.94),rgba(37,42,36,.94))!important;border:1px solid rgba(226,211,180,.24)!important;border-radius:15px!important;box-shadow:0 14px 36px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.07)!important;backdrop-filter:blur(16px) saturate(1.12)}
 #playerPanel .profile-card{background:transparent!important;border:0!important;box-shadow:none!important;color:var(--hud-ink)!important}
 #playerPanel .avatar-frame{border:1px solid rgba(222,198,151,.55)!important;background:linear-gradient(145deg,#555c4d,#292f29)!important;box-shadow:0 4px 14px #0005!important}
-#playerPanel .player-name{color:#fff!important;text-shadow:0 1px 8px #0006}
-#playerPanel .player-level,#playerPanel .xp-label{color:#c9c2b4!important}
+/* Kolor i typografia profilu są definiowane wspólnie w końcowym bloku CSS. */
 #playerPanel .xp-track{background:rgba(255,255,255,.13)!important;border:1px solid rgba(255,255,255,.08)}
 #playerPanel .xp-track>div{background:linear-gradient(90deg,#8da77a,#d0b47b)!important;box-shadow:0 0 10px #9dbb7a66}
 #playerPanel .currency-bar{background:rgba(18,22,20,.88)!important;border:1px solid rgba(225,207,170,.25)!important;border-radius:12px!important;box-shadow:0 8px 24px #0003!important;backdrop-filter:blur(12px)}
@@ -5831,13 +5830,11 @@ html,body,#appStage{
   -webkit-backdrop-filter:none!important;
 }
 
-/* Punktacja XP obok poziomu gracza */
+/* Punktacja XP obok poziomu gracza — bez osobnego koloru i grubości. */
 #playerPanel .player-level .xp-inline{
   display:inline-block!important;
   margin-left:10px!important;
-  color:#c9c2b4!important;
   font:inherit!important;
-  font-weight:400!important;
   white-space:nowrap!important;
 }
 
@@ -5901,77 +5898,33 @@ html,body,#appStage{
 }
 
 
-/* Spójna typografia panelu gracza — Nunito Light */
+/* PANEL GRACZA — jedna, spójna definicja typografii i koloru.
+   Nazwa ma taki sam krój, grubość i biel jak saldo waluty. */
 #playerPanel .player-name,
+#playerPanel .player-name:hover,
 #playerPanel .player-level,
-#playerPanel .player-level .xp-inline{
+#playerPanel .player-level .xp-inline,
+#playerPanel .xp-label,
+#playerPanel .xp-label *{
   font-family:'Nunito',Arial,sans-serif!important;
   font-style:normal!important;
   font-weight:300!important;
-}
-
-/* PANEL GRACZA — wszystkie napisy profilu w bieli. */
-#playerPanel .player-name,
-#playerPanel .player-level,
-#playerPanel .xp-label{
   color:#FFFFFF!important;
-}
-
-
-/* TYPOGRAFIA PANELU GRACZA — jednoznaczna grubość Nunito Light. */
-#playerPanel .player-name,
-#playerPanel .player-level,
-#playerPanel .player-level .xp-inline,
-#playerPanel .xp-label,
-#playerPanel .xp-label *{
-  font-family:'Nunito',Arial,sans-serif!important;
-  font-style:normal!important;
-  font-weight:300!important;
-}
-
-
-
-/* PANEL GRACZA — tekst bez cienia, tak jak wartości waluty. */
-#playerPanel .player-name,
-#playerPanel .player-level,
-#playerPanel .player-level .xp-inline,
-#playerPanel .xp-label,
-#playerPanel .xp-label *{
+  -webkit-text-fill-color:#FFFFFF!important;
   text-shadow:none!important;
   filter:none!important;
+  opacity:1!important;
+  mix-blend-mode:normal!important;
 }
-
-
-/* NAZWA GRACZA — dokładnie ten sam krój, rozmiar i kolor co saldo waluty. */
 #playerPanel .player-name,
 #playerPanel .player-name:hover{
-  font-family:'Nunito',Arial,sans-serif!important;
   font-size:15px!important;
-  font-style:normal!important;
-  font-weight:300!important;
-  color:#FFFFFF!important;
-  text-shadow:none!important;
-  filter:none!important;
 }
 @media(max-width:700px){
   #playerPanel .player-name,
   #playerPanel .player-name:hover{
     font-size:11px!important;
   }
-}
-
-
-/* KOLOR LICZB I NAZWY GRACZA — identyczna czysta biel bez kremowego zabarwienia. */
-#playerPanel .player-name,
-#playerPanel .player-name:hover,
-#playerPanel .currency-bar .currency-value,
-#playerPanel .currency-bar .currency-value:hover{
-  color:#FFFFFF!important;
-  -webkit-text-fill-color:#FFFFFF!important;
-  opacity:1!important;
-  mix-blend-mode:normal!important;
-  text-shadow:none!important;
-  filter:none!important;
 }
 
 </style>
