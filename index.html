@@ -4430,67 +4430,6 @@ html,body,#appStage{
 }
 
 
-/* Wyrównanie HUD-u gracza do wymiarów paska nawigacji. */
-@media(min-width:701px){
-  #playerPanel .profile-card{
-    box-sizing:border-box!important;
-    width:326px!important;
-    min-width:326px!important;
-    max-width:326px!important;
-    height:62px!important;
-    min-height:62px!important;
-    max-height:62px!important;
-    padding:6px 9px!important;
-    grid-template-columns:38px minmax(65px,1fr) auto!important;
-    column-gap:7px!important;
-    row-gap:2px!important;
-    border-radius:15px!important;
-  }
-  #playerPanel .avatar-frame{
-    width:38px!important;height:38px!important;flex-basis:38px!important;
-  }
-  #playerPanel .avatar-placeholder{font-size:23px!important}
-  #playerPanel .player-info{gap:4px!important}
-  #playerPanel .player-name{font-size:12px!important}
-  #playerPanel .player-level{font-size:9px!important}
-  #playerPanel .xp-label{font-size:8px!important}
-  #playerPanel .xp-track{height:4px!important}
-  #playerPanel .currency-grid{gap:8px!important}
-  #playerPanel .currency-label{font-size:7px!important;letter-spacing:0!important}
-  #playerPanel .currency-value{font-size:12px!important}
-}
-@media(max-width:700px){
-  #playerPanel .profile-card{
-    box-sizing:border-box!important;
-    width:261px!important;
-    min-width:261px!important;
-    max-width:261px!important;
-    height:51px!important;
-    min-height:51px!important;
-    max-height:51px!important;
-    padding:4px 6px!important;
-    grid-template-columns:30px minmax(54px,1fr) auto!important;
-    column-gap:5px!important;
-    row-gap:1px!important;
-    border-radius:12px!important;
-  }
-  #playerPanel .avatar-frame{
-    width:29px!important;height:29px!important;flex-basis:29px!important;
-  }
-  #playerPanel .avatar-placeholder{font-size:18px!important}
-  #playerPanel .player-info{gap:3px!important}
-  #playerPanel .player-name{font-size:10px!important}
-  #playerPanel .player-level{font-size:8px!important}
-  #playerPanel .xp-label{font-size:7px!important}
-  #playerPanel .xp-track{height:3px!important}
-  #playerPanel .currency-grid{gap:5px!important}
-  #playerPanel .currency-label{font-size:6px!important;letter-spacing:0!important;gap:2px!important}
-  #playerPanel .currency-value{font-size:10px!important}
-  #playerPanel .profile-edit{width:15px!important;height:15px!important}
-  #playerPanel .profile-edit::before{font-size:10px!important}
-}
-
-
 /* WALUTY — wyśrodkowany pasek HUD na górnej krawędzi planszy. */
 #playerPanel .currency-bar{
   position:fixed!important;
@@ -4553,59 +4492,7 @@ html,body,#appStage{
   height:29px;
   background:rgba(137,113,78,.24);
 }
-@media(min-width:701px){
-  #playerPanel .profile-card{
-    width:286px!important;
-    min-width:286px!important;
-    max-width:286px!important;
-    height:auto!important;
-    min-height:0!important;
-    max-height:none!important;
-    padding:6px!important;
-    grid-template-columns:48px minmax(0,1fr)!important;
-    grid-template-rows:auto auto auto!important;
-    column-gap:11px!important;
-    row-gap:4px!important;
-  }
-  #playerPanel .avatar-frame{
-    grid-column:1!important;grid-row:1 / 4!important;align-self:stretch!important;
-    box-sizing:border-box;width:46px!important;height:auto!important;min-height:58px!important;flex-basis:46px!important;
-    border-radius:10px!important;
-    cursor:pointer!important;transition:box-shadow .16s ease;
-  }
-  /* Najechanie na awatar nie może zmieniać jego geometrii ani poruszać układem profilu. */
-  #playerPanel .avatar-frame:hover{transform:none!important;box-shadow:0 3px 9px rgba(67,48,26,.24)!important}
-  #playerPanel .avatar-frame:focus-visible{outline:2px solid #8b7048;outline-offset:3px}
-  #playerPanel .avatar-placeholder{font-size:27px!important}
-  #playerPanel .player-name{font-size:15px!important}
-  #playerPanel .player-level{font-size:11px!important}
-  #playerPanel .xp-label{font-size:10px!important}
-  #playerPanel .xp-track{height:5px!important}
-}
 @media(max-width:700px){
-  #playerPanel .profile-card{
-    width:250px!important;
-    min-width:250px!important;
-    max-width:calc(100vw - 16px)!important;
-    height:auto!important;
-    min-height:0!important;
-    max-height:none!important;
-    padding:3px!important;
-    grid-template-columns:40px minmax(0,1fr)!important;
-    grid-template-rows:auto auto auto!important;
-    column-gap:8px!important;
-    row-gap:3px!important;
-  }
-  #playerPanel .avatar-frame{
-    grid-column:1!important;grid-row:1 / 4!important;align-self:stretch!important;
-    width:38px!important;height:auto!important;min-height:52px!important;flex-basis:38px!important;
-    border-radius:8px!important;
-  }
-  #playerPanel .avatar-placeholder{font-size:23px!important}
-  #playerPanel .player-name{font-size:12px!important}
-  #playerPanel .player-level{font-size:9px!important}
-  #playerPanel .xp-label{font-size:8px!important}
-  #playerPanel .xp-track{height:4px!important}
   #playerPanel .currency-bar{
     top:8px!important;
     min-width:0!important;
@@ -4760,24 +4647,6 @@ html,body,#appStage{
     width:25px!important;height:25px!important;
   }
 
-  /* Profil: awatar po lewej, nick i poziom obok, XP pod nimi. */
-  #playerPanel .profile-card{
-    box-sizing:border-box!important;
-    width:286px!important;
-    min-width:286px!important;
-    max-width:286px!important;
-    min-height:76px!important;
-    height:auto!important;
-    max-height:none!important;
-    padding:10px 12px!important;
-    display:grid!important;
-    grid-template-columns:48px minmax(0,1fr)!important;
-    grid-template-rows:auto auto auto!important;
-    align-items:center!important;
-    column-gap:11px!important;
-    row-gap:4px!important;
-  }
-  #playerPanel .avatar-row{display:contents!important}
   #playerPanel .avatar-frame{
     grid-column:1!important;
     grid-row:1 / 4!important;
@@ -4787,42 +4656,6 @@ html,body,#appStage{
     min-height:54px!important;
     align-self:center!important;
     border-radius:8px!important;
-  }
-  #playerPanel .player-info{
-    grid-column:2!important;
-    grid-row:1!important;
-    display:flex!important;
-    flex-direction:column!important;
-    align-items:flex-start!important;
-    justify-content:center!important;
-    gap:3px!important;
-    min-width:0!important;
-  }
-  #playerPanel .player-name{
-    max-width:100%!important;
-    font-size:14px!important;
-    line-height:1.15!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-  }
-  #playerPanel .player-level{margin:0!important;font-size:10px!important;line-height:1.2!important}
-  #playerPanel .xp-label{
-    grid-column:2!important;
-    grid-row:2!important;
-    display:flex!important;
-    justify-content:space-between!important;
-    width:100%!important;
-    margin:0!important;
-    font-size:9px!important;
-    line-height:1.2!important;
-  }
-  #playerPanel .xp-track{
-    grid-column:2!important;
-    grid-row:3!important;
-    width:100%!important;
-    height:5px!important;
-    margin:0!important;
   }
   #playerPanel .panel-bottom{right:0!important}
   #playerPanel .logout-button{
@@ -5891,19 +5724,6 @@ html,body,#appStage{
   transform:translate(-50%,0)!important;
 }
 
-/* Pasek doświadczenia bez pustego wiersza — bliżej nazwy i poziomu gracza. */
-#playerPanel .xp-track{
-  grid-row:2!important;
-  margin-top:4px!important;
-}
-@media(max-width:700px){
-  #playerPanel .xp-track{
-    grid-row:2!important;
-    margin-top:4px!important;
-  }
-}
-
-
 /* PANEL GRACZA I WALUTY — Exo 2 Regular, pełna biel i brak przezroczystości tekstu. */
 #playerPanel .player-name,
 #playerPanel .player-name:hover,
@@ -6095,82 +5915,51 @@ html,body,#appStage{
   }
 }
 
-/* RÓWNE MARGINESY WEWNĘTRZNE WSZYSTKICH GŁÓWNYCH KONTENERÓW HUD. */
-#game > nav.side-menu,
-#playerPanel .profile-card,
-#playerPanel .currency-bar{
-  box-sizing:border-box!important;
-  padding:8px!important;
-}
-@media(max-width:700px){
-  #game > nav.side-menu,
-  #playerPanel .profile-card,
-  #playerPanel .currency-bar{
-    padding:5px!important;
-  }
-}
-
-/* PROFIL: równy odstęp od krawędzi karty do treści, w tym od paska XP. */
+/* JEDEN OBOWIĄZUJĄCY UKŁAD PROFILU — odstęp liczony od dolnej krawędzi paska XP. */
 #playerPanel .profile-card{
+  box-sizing:border-box!important;
   height:auto!important;
   min-height:0!important;
   max-height:none!important;
   padding:8px!important;
-  box-sizing:border-box!important;
-  grid-template-rows:auto!important;
-  align-items:stretch!important;
-}
-#playerPanel .avatar-frame{
-  aspect-ratio:auto!important;
-  height:100%!important;
-  min-height:0!important;
-  align-self:stretch!important;
+  display:grid!important;
+  grid-template-columns:46px minmax(0,1fr)!important;
+  grid-template-rows:max-content!important;
+  align-items:start!important;
 }
 #playerPanel .player-info{
-  height:auto!important;
-  min-height:0!important;
-  padding:0!important;
-  box-sizing:border-box!important;
+  grid-column:2!important;
+  grid-row:1!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
   justify-content:flex-start!important;
   gap:4px!important;
+  height:max-content!important;
+  min-height:0!important;
+  padding:0!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+#playerPanel .player-name,
+#playerPanel .player-level{
+  margin:0!important;
+  line-height:1.15!important;
 }
 #playerPanel .xp-track{
   display:block!important;
+  grid-row:auto!important;
+  width:100%!important;
+  height:4px!important;
+  min-height:4px!important;
   margin:0!important;
+  padding:0!important;
+  flex:0 0 4px!important;
 }
 @media(max-width:700px){
   #playerPanel .profile-card{padding:5px!important}
-}
-
-
-/* PROFIL: wymuś wysokość karty z rzeczywistej zawartości tekstu i paska XP. */
-/* Wiersz karty kończy się dokładnie na końcu .player-info; dolny luz daje wyłącznie karta. */
-#playerPanel .profile-card{
-  grid-template-rows:min-content!important;
-  padding-bottom:8px!important;
-}
-#playerPanel .player-info{
-  align-self:start!important;
-  height:max-content!important;
-  min-height:0!important;
-}
-@media(max-width:700px){
-  #playerPanel .profile-card{padding-bottom:5px!important;}
-}
-
-
-/* PROFIL: awatar nie może narzucać wysokości wiersza — wysokość wyznacza treść z paskiem XP. */
-#playerPanel .avatar-frame{
-  contain:size!important;
-  min-height:0!important;
-}
-#playerPanel .profile-card{
-  grid-template-rows:minmax(0,max-content)!important;
-}
-#playerPanel .player-info{
-  min-height:0!important;
-  height:max-content!important;
-  align-self:start!important;
+  #playerPanel .profile-card{grid-template-columns:36px minmax(0,1fr)!important}
+  #playerPanel .xp-track{height:4px!important;min-height:4px!important;flex-basis:4px!important}
 }
 </style>
 </head>
