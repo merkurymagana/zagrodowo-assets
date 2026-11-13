@@ -5853,7 +5853,7 @@ html,body,#appStage{
 #playerPanel .avatar-placeholder{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:0;color:#fff}
 #playerPanel .avatar-placeholder-icon{display:block;width:42px;height:42px;flex:0 0 42px;stroke-width:1.7}
 
-/* Dymek awatara — identyczny styl jak etykiety ikon w panelu menu. */
+/* Dymek awatara — dopasowany do etykiet menu (ciepła paleta Zagrodowa). */
 #playerPanel .avatar-frame{
   position:relative;
   overflow:visible!important;
@@ -5861,17 +5861,17 @@ html,body,#appStage{
 #playerPanel .avatar-frame::after{
   content:"Edytuj Profil";
   position:absolute;
-  top:calc(100% + 8px);
-  bottom:auto;
   left:50%;
+  top:calc(100% + 8px);
   z-index:150;
-  padding:5px 8px;
-  border:1px solid rgba(112,87,55,.22);
-  border-radius:7px;
-  background:#faf4e8;
-  color:#604b31;
-  box-shadow:0 3px 10px rgba(47,38,25,.14);
-  font:700 11px 'Nunito',Arial,sans-serif;
+  padding:6px 12px;
+  border:2px solid #8b633d;
+  border-radius:5px;
+  background:linear-gradient(180deg,#f8edcf 0%,#e8d2a7 100%);
+  box-shadow:0 2px 5px rgba(48,30,14,.35),inset 0 0 0 1px rgba(255,255,255,.55);
+  color:#573c26!important;
+  font:700 14px/1.2 "Bree Serif",Georgia,serif;
+  letter-spacing:.3px;
   white-space:nowrap;
   pointer-events:none;
   opacity:0;
