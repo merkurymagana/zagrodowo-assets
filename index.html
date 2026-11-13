@@ -6030,6 +6030,47 @@ html,body,#appStage{
 #game nav.side-menu button:focus-visible img{
   filter:sepia(1) saturate(2.2) hue-rotate(48deg) brightness(.88)!important;
 }
+
+/* LEWY KONTENER MENU — ten sam standard wizualny i odstępy co pozostałe panele HUD. */
+#game > nav.side-menu{
+  box-sizing:border-box!important;
+  position:fixed!important;
+  top:50%!important;
+  left:18px!important;
+  right:auto!important;
+  bottom:auto!important;
+  transform:translateY(-50%)!important;
+  display:flex!important;
+  flex-direction:column!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  width:max-content!important;
+  min-width:0!important;
+  max-width:calc(100vw - 36px)!important;
+  margin:0!important;
+  padding:8px!important;
+  border:1px solid rgba(226,211,180,.24)!important;
+  border-radius:15px!important;
+  background:linear-gradient(145deg,rgba(24,29,27,.94),rgba(37,42,36,.94))!important;
+  background-image:linear-gradient(145deg,rgba(24,29,27,.94),rgba(37,42,36,.94))!important;
+  box-shadow:0 14px 36px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.07)!important;
+  -webkit-backdrop-filter:blur(16px) saturate(1.12)!important;
+  backdrop-filter:blur(16px) saturate(1.12)!important;
+}
+@media(max-width:700px){
+  #game > nav.side-menu{
+    top:50%!important;
+    left:8px!important;
+    right:auto!important;
+    width:max-content!important;
+    max-width:calc(100vw - 16px)!important;
+    gap:5px!important;
+    padding:5px!important;
+    border-radius:12px!important;
+  }
+}
 </style>
 </head>
 
