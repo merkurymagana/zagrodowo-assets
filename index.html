@@ -6086,7 +6086,7 @@ html,body,#appStage{
   flex-wrap:nowrap!important;
   align-items:center!important;
   justify-content:flex-start!important;
-  gap:6px!important;
+  gap:4px!important;
   width:max-content!important;
   min-width:0!important;
   max-width:calc(100vw - 36px)!important;
@@ -6141,6 +6141,43 @@ html,body,#appStage{
     padding:5px!important;
     max-width:calc(100vw - 16px)!important;
     border-radius:12px!important;
+  }
+}
+/* KOREKTA GĘSTOŚCI MENU — bez obramowania i z mniejszymi marginesami. */
+#game > nav.side-menu{
+  padding:2px!important;
+  border:0!important;
+}
+#game > nav.side-menu > button,
+#game > nav.side-menu button.compass-menu-button,
+#game > nav.side-menu button.premium-menu-button,
+#game > nav.side-menu button.tasks-menu-button,
+#game > nav.side-menu button.help-menu-button{
+  flex-basis:34px!important;
+  width:34px!important;
+  min-width:34px!important;
+  max-width:34px!important;
+  height:34px!important;
+  min-height:34px!important;
+  max-height:34px!important;
+}
+@media(max-width:700px){
+  #game > nav.side-menu{
+    padding:2px!important;
+    gap:2px!important;
+  }
+  #game > nav.side-menu > button,
+  #game > nav.side-menu button.compass-menu-button,
+  #game > nav.side-menu button.premium-menu-button,
+  #game > nav.side-menu button.tasks-menu-button,
+  #game > nav.side-menu button.help-menu-button{
+    flex-basis:30px!important;
+    width:30px!important;
+    min-width:30px!important;
+    max-width:30px!important;
+    height:30px!important;
+    min-height:30px!important;
+    max-height:30px!important;
   }
 }
 </style>
