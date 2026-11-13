@@ -5704,6 +5704,24 @@ html,body,#appStage{
   }
 }
 
+
+/* KOREKTA CENTROWANIA: ikony Sąsiedzi/Ustawienia sąsiadują z ukrytym tekstem
+   węzłowym, dlatego pozycjonujemy wszystkie pola ikon niezależnie od tekstu. */
+#game > nav.side-menu > button > .menu-icon,
+#game > nav.side-menu > button > .logout-menu-icon,
+#game > nav.side-menu .compass-menu-button > .compass-menu-icon,
+#game > nav.side-menu .premium-menu-button > .premium-menu-icon,
+#game > nav.side-menu .tasks-menu-button > .tasks-menu-icon,
+#game > nav.side-menu .help-menu-button > .help-menu-icon{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  right:auto!important;
+  bottom:auto!important;
+  transform:translate(-50%,-50%)!important;
+  margin:0!important;
+}
+
 </style>
 </head>
 
