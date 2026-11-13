@@ -5986,6 +5986,50 @@ html,body,#appStage{
   }
   #playerPanel .xp-track{height:4px!important;min-height:4px!important;flex-basis:4px!important}
 }
+
+/* KOŃCOWA REGUŁA MENU — hover zmienia wyłącznie kolor symbolu, nigdy tło kafelka. */
+#game nav.side-menu > button:hover,
+#game nav.side-menu > button:focus-visible,
+#game nav.side-menu .compass-menu-button:hover,
+#game nav.side-menu .compass-menu-button:focus-visible,
+#game nav.side-menu .premium-menu-button:hover,
+#game nav.side-menu .premium-menu-button:focus-visible,
+#game nav.side-menu .tasks-menu-button:hover,
+#game nav.side-menu .tasks-menu-button:focus-visible,
+#game nav.side-menu .help-menu-button:hover,
+#game nav.side-menu .help-menu-button:focus-visible{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+}
+#game nav.side-menu > button:hover > .menu-icon,
+#game nav.side-menu > button:hover > .logout-menu-icon,
+#game nav.side-menu .compass-menu-button:hover .compass-menu-icon,
+#game nav.side-menu .premium-menu-button:hover .premium-menu-icon,
+#game nav.side-menu .tasks-menu-button:hover .tasks-menu-icon,
+#game nav.side-menu .help-menu-button:hover .help-menu-icon,
+#game nav.side-menu > button:focus-visible > .menu-icon,
+#game nav.side-menu > button:focus-visible > .logout-menu-icon,
+#game nav.side-menu .compass-menu-button:focus-visible .compass-menu-icon,
+#game nav.side-menu .premium-menu-button:focus-visible .premium-menu-icon,
+#game nav.side-menu .tasks-menu-button:focus-visible .tasks-menu-icon,
+#game nav.side-menu .help-menu-button:focus-visible .help-menu-icon{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+}
+#game nav.side-menu button:hover .ui-icon,
+#game nav.side-menu button:focus-visible .ui-icon{
+  color:#72965B!important;
+  stroke:#72965B!important;
+}
+#game nav.side-menu button:hover img,
+#game nav.side-menu button:focus-visible img{
+  filter:sepia(1) saturate(2.2) hue-rotate(48deg) brightness(.88)!important;
+}
 </style>
 </head>
 
