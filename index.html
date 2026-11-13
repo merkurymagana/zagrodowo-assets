@@ -6142,6 +6142,36 @@ html,body,#appStage{
   #playerPanel .player-info{grid-column:2!important;grid-row:1!important;gap:3px!important}
 }
 
+
+
+/* HUD: najechanie myszką nie może zmieniać odstępu między nazwą a poziomem. */
+#playerPanel .player-info,
+#playerPanel .player-info:hover,
+#playerPanel .player-name,
+#playerPanel .player-name:hover,
+#playerPanel .player-level,
+#playerPanel .player-level:hover{
+  transform:none!important;
+  position:static!important;
+  margin:0!important;
+  animation:none!important;
+}
+#playerPanel .player-info,
+#playerPanel .player-info:hover{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  gap:3px!important;
+}
+#playerPanel .player-name,
+#playerPanel .player-name:hover,
+#playerPanel .player-level,
+#playerPanel .player-level:hover{
+  line-height:1.15!important;
+  align-self:flex-start!important;
+}
+
 </style>
 </head>
 
