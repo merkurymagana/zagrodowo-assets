@@ -6264,42 +6264,42 @@ html,body,#appStage{
 
 
 
-/* Podświetlenie ikon menu — zielony akcent także na aktualnie otwartej stronie. */
+/* Podświetlenie ikon — zmienia się wyłącznie kolor ikony, bez tła i obramowania. */
 #game > nav.side-menu button:hover,
 #game > nav.side-menu button:focus-visible{
-  background:rgba(114,150,91,.18)!important;
-  border-color:rgba(114,150,91,.62)!important;
-  box-shadow:0 0 0 1px rgba(114,150,91,.16),0 5px 16px rgba(0,0,0,.22)!important;
+  background:transparent!important;
+  border-color:transparent!important;
+  outline:0!important;
+  box-shadow:none!important;
 }
 #game > nav.side-menu button:hover .ui-icon,
+#game > nav.side-menu button:focus-visible .ui-icon,
 #game > nav.side-menu button:hover .menu-icon,
+#game > nav.side-menu button:focus-visible .menu-icon,
 #game > nav.side-menu button:hover .logout-menu-icon,
+#game > nav.side-menu button:focus-visible .logout-menu-icon,
 #game > nav.side-menu button:hover .compass-menu-icon,
+#game > nav.side-menu button:focus-visible .compass-menu-icon,
 #game > nav.side-menu button:hover .premium-menu-icon,
+#game > nav.side-menu button:focus-visible .premium-menu-icon,
 #game > nav.side-menu button:hover .tasks-menu-icon,
+#game > nav.side-menu button:focus-visible .tasks-menu-icon,
 #game > nav.side-menu button:hover .help-menu-icon,
-#game > nav.side-menu button.selected:hover .ui-icon,
-#game > nav.side-menu button.selected:hover .menu-icon,
-#game > nav.side-menu button.selected:hover .logout-menu-icon,
-#game > nav.side-menu button.selected:hover .compass-menu-icon,
-#game > nav.side-menu button.selected:hover .premium-menu-icon,
-#game > nav.side-menu button.selected:hover .tasks-menu-icon,
-#game > nav.side-menu button.selected:hover .help-menu-icon{
+#game > nav.side-menu button:focus-visible .help-menu-icon{
   color:#72965B!important;
   stroke:#72965B!important;
 }
 
-/* Awatar jest klikalny i ma taki sam czarny, półprzezroczysty dymek jak reszta HUD. */
-#playerPanel .avatar-frame{
-  cursor:pointer!important;
-}
-#playerPanel .avatar-frame::after{
-  background:rgba(0,0,0,.5)!important;
+/* Domyślna sylwetka awatara również zmienia sam kolor na zieleń. */
+#playerPanel .avatar-placeholder-icon{
   color:#fff!important;
-  border:0!important;
-  outline:0!important;
-  box-shadow:none!important;
-  font-weight:400!important;
+  stroke:currentColor!important;
+  transition:color .18s ease,stroke .18s ease!important;
+}
+#playerPanel .avatar-frame:hover .avatar-placeholder-icon,
+#playerPanel .avatar-frame:focus-visible .avatar-placeholder-icon{
+  color:#72965B!important;
+  stroke:#72965B!important;
 }
 
 /* Ostateczny kolor separatora walut — zieleń Zagrodowa. */
