@@ -6233,6 +6233,35 @@ html,body,#appStage{
   }
 }
 
+
+/* Ikony walut wyrównane pionowo do środka kwot. */
+#playerPanel .currency-bar .currency-label{
+  height:19px!important;
+  min-height:19px!important;
+  margin:0!important;
+  padding:0!important;
+  line-height:0!important;
+  align-self:center!important;
+}
+#playerPanel .currency-bar .currency-label .ui-icon{
+  display:block!important;
+  margin:0!important;
+  vertical-align:middle!important;
+}
+#playerPanel .currency-bar .currency-value{
+  align-self:center!important;
+  line-height:19px!important;
+}
+@media(max-width:700px){
+  #playerPanel .currency-bar .currency-label{
+    height:16px!important;
+    min-height:16px!important;
+  }
+  #playerPanel .currency-bar .currency-value{
+    line-height:16px!important;
+  }
+}
+
 </style>
 </head>
 
