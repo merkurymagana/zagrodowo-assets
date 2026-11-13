@@ -7493,19 +7493,25 @@ function setAvatar(src){
   const placeholder=document.getElementById("avatarPlaceholder");
 
   if(src){
-    img.onload=()=>{img.style.display="block";placeholder.style.display="none"};
+    img.onload=()=>{
+      img.style.setProperty("display","block","important");
+      placeholder.style.setProperty("display","none","important");
+    };
     img.onerror=()=>{
       img.removeAttribute("src");
-      img.style.display="none";
-      placeholder.style.display="block";
+      img.style.setProperty("display","none","important");
+      placeholder.style.setProperty("display","grid","important");
     };
+    img.style.setProperty("display","none","important");
+    placeholder.style.setProperty("display","grid","important");
     img.src=src;
+    if(img.complete && img.naturalWidth>0) img.onload();
   }else{
     img.onload=null;
     img.onerror=null;
     img.removeAttribute("src");
-    img.style.display="none";
-    placeholder.style.display="block";
+    img.style.setProperty("display","none","important");
+    placeholder.style.setProperty("display","grid","important");
   }
 }
 
@@ -7555,19 +7561,25 @@ function setPreviewAvatar(src){
   const placeholder=document.getElementById("previewPlaceholder");
 
   if(src){
-    img.onload=()=>{img.style.display="block";placeholder.style.display="none"};
+    img.onload=()=>{
+      img.style.setProperty("display","block","important");
+      placeholder.style.setProperty("display","none","important");
+    };
     img.onerror=()=>{
       img.removeAttribute("src");
-      img.style.display="none";
-      placeholder.style.display="block";
+      img.style.setProperty("display","none","important");
+      placeholder.style.setProperty("display","block","important");
     };
+    img.style.setProperty("display","none","important");
+    placeholder.style.setProperty("display","block","important");
     img.src=src;
+    if(img.complete && img.naturalWidth>0) img.onload();
   }else{
     img.onload=null;
     img.onerror=null;
     img.removeAttribute("src");
-    img.style.display="none";
-    placeholder.style.display="block";
+    img.style.setProperty("display","none","important");
+    placeholder.style.setProperty("display","block","important");
   }
 }
 
