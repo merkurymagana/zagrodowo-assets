@@ -3709,12 +3709,29 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   background:linear-gradient(180deg,#a77c50,#89613e)!important;
   box-shadow:0 2px 4px #24150c66!important;color:#fff3dc!important;
 }
+/* Hover: bez kolorowego kwadratu — zielenią podświetla się sama ikona. */
 .side-menu button.compass-menu-button:hover,
 .side-menu button.premium-menu-button:hover,
 .side-menu button.tasks-menu-button:hover,
 .side-menu button.help-menu-button:hover,
 .side-menu > button[data-view="neighbors"]:hover,
-.side-menu > button[data-view="settings"]:hover,
+.side-menu > button[data-view="settings"]:hover{
+  background:transparent!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+  color:#72965B!important;
+}
+.side-menu button.compass-menu-button:hover img,
+.side-menu button.premium-menu-button:hover img,
+.side-menu button.tasks-menu-button:hover img:not(.tasks-wax-seal),
+.side-menu button.help-menu-button:hover img{
+  filter:sepia(1) saturate(2.2) hue-rotate(48deg) brightness(.88)!important;
+}
+.side-menu button.compass-menu-button:hover .compass-dial,
+.side-menu button.compass-menu-button:hover .compass-pointer{
+  color:#72965B!important;
+}
+/* Wybrana pozycja zachowuje dotychczasowy wygląd zaznaczenia. */
 .side-menu button.selected{
   background:linear-gradient(180deg,#d5b47e,#b88c57)!important;
   color:#49331f!important;border-color:#e2c99c!important;
