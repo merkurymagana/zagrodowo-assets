@@ -5873,81 +5873,57 @@ html,body,#appStage{
 }
 
 
-/* JEDEN UKŁAD PROFILU: awatar obejmuje wysokość od nazwy gracza do paska XP. */
+/* HUD — JEDNA SIATKA I JEDEN ROZMIAR IKON. Starsze, nakładające się reguły końcowe usunięte. */
+#playerPanel{
+  box-sizing:border-box!important;
+  padding:8px!important;
+}
 #playerPanel .profile-card{
+  box-sizing:border-box!important;
   display:grid!important;
-  grid-template-columns:46px minmax(0,1fr)!important;
+  grid-template-columns:24px minmax(0,1fr)!important;
   grid-template-rows:auto!important;
-  align-items:stretch!important;
-}
-#playerPanel .avatar-frame{
-  grid-column:1!important;
-  grid-row:1!important;
-  align-self:stretch!important;
-  box-sizing:border-box!important;
-  width:46px!important;
-  height:auto!important;
-  min-height:0!important;
-  max-height:none!important;
-  flex:0 0 46px!important;
-}
-#playerPanel .player-info{
-  grid-column:2!important;
-  grid-row:1!important;
-  align-self:stretch!important;
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:flex-start!important;
-  align-items:stretch!important;
-  gap:4px!important;
-  min-height:0!important;
-}
-#playerPanel .player-name,
-#playerPanel .player-level{
-  margin:0!important;
-  line-height:1.15!important;
-  align-self:flex-start!important;
-}
-#playerPanel .xp-track{
-  display:block!important;
-  width:100%!important;
-  height:4px!important;
-  margin:0!important;
-  flex:0 0 4px!important;
-}
-#playerPanel .player-info,
-#playerPanel .player-name,
-#playerPanel .player-level{
-  transform:none!important;
-  position:static!important;
-  animation:none!important;
-}
-@media(max-width:700px){
-  #playerPanel .profile-card{
-    grid-template-columns:36px minmax(0,1fr)!important;
-  }
-  #playerPanel .avatar-frame{
-    width:36px!important;
-    flex-basis:36px!important;
-  }
-}
-
-/* JEDEN OBOWIĄZUJĄCY UKŁAD PROFILU — odstęp liczony od dolnej krawędzi paska XP. */
-#playerPanel .profile-card{
-  box-sizing:border-box!important;
+  align-items:start!important;
+  gap:8px!important;
   width:286px!important;
   min-width:0!important;
   max-width:286px!important;
   height:auto!important;
   min-height:0!important;
-  max-height:none!important;
   padding:8px!important;
-  display:grid!important;
-  grid-template-columns:46px minmax(0,1fr)!important;
-  grid-template-rows:max-content!important;
-  align-items:start!important;
+  margin:0!important;
+}
+#playerPanel .avatar-frame{
+  box-sizing:border-box!important;
+  grid-column:1!important;
+  grid-row:1!important;
+  align-self:start!important;
+  width:24px!important;
+  height:24px!important;
+  min-width:24px!important;
+  min-height:24px!important;
+  max-width:24px!important;
+  max-height:24px!important;
+  flex:0 0 24px!important;
+  margin:0!important;
+  overflow:hidden!important;
+}
+#playerPanel #playerAvatar,
+#playerPanel #avatarPlaceholder{
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  margin:0!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  border-radius:inherit!important;
 }
 #playerPanel .player-info{
+  box-sizing:border-box!important;
   grid-column:2!important;
   grid-row:1!important;
   display:flex!important;
@@ -5955,11 +5931,11 @@ html,body,#appStage{
   align-items:stretch!important;
   justify-content:flex-start!important;
   gap:4px!important;
-  height:max-content!important;
+  min-width:0!important;
   min-height:0!important;
+  height:auto!important;
   padding:0!important;
   margin:0!important;
-  box-sizing:border-box!important;
 }
 #playerPanel .player-name,
 #playerPanel .player-level{
@@ -5968,238 +5944,200 @@ html,body,#appStage{
 }
 #playerPanel .xp-track{
   display:block!important;
-  grid-row:auto!important;
   width:100%!important;
   height:4px!important;
   min-height:4px!important;
+  flex:0 0 4px!important;
   margin:0!important;
   padding:0!important;
-  flex:0 0 4px!important;
 }
-@media(max-width:700px){
-  #playerPanel .profile-card{
-    width:min(250px,calc(100vw - 16px))!important;
-    min-width:0!important;
-    max-width:250px!important;
-    padding:5px!important;
-    grid-template-columns:36px minmax(0,1fr)!important;
-  }
-  #playerPanel .xp-track{height:4px!important;min-height:4px!important;flex-basis:4px!important}
-}
-
-/* KOŃCOWA REGUŁA MENU — hover zmienia wyłącznie kolor symbolu, nigdy tło kafelka. */
-#game nav.side-menu > button:hover,
-#game nav.side-menu > button:focus-visible,
-#game nav.side-menu .compass-menu-button:hover,
-#game nav.side-menu .compass-menu-button:focus-visible,
-#game nav.side-menu .premium-menu-button:hover,
-#game nav.side-menu .premium-menu-button:focus-visible,
-#game nav.side-menu .tasks-menu-button:hover,
-#game nav.side-menu .tasks-menu-button:focus-visible,
-#game nav.side-menu .help-menu-button:hover,
-#game nav.side-menu .help-menu-button:focus-visible{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border-color:transparent!important;
-  box-shadow:none!important;
-}
-#game nav.side-menu > button:hover > .menu-icon,
-#game nav.side-menu > button:hover > .logout-menu-icon,
-#game nav.side-menu .compass-menu-button:hover .compass-menu-icon,
-#game nav.side-menu .premium-menu-button:hover .premium-menu-icon,
-#game nav.side-menu .tasks-menu-button:hover .tasks-menu-icon,
-#game nav.side-menu .help-menu-button:hover .help-menu-icon,
-#game nav.side-menu > button:focus-visible > .menu-icon,
-#game nav.side-menu > button:focus-visible > .logout-menu-icon,
-#game nav.side-menu .compass-menu-button:focus-visible .compass-menu-icon,
-#game nav.side-menu .premium-menu-button:focus-visible .premium-menu-icon,
-#game nav.side-menu .tasks-menu-button:focus-visible .tasks-menu-icon,
-#game nav.side-menu .help-menu-button:focus-visible .help-menu-icon{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  box-shadow:none!important;
-}
-#game nav.side-menu button:hover .ui-icon,
-#game nav.side-menu button:focus-visible .ui-icon{
-  color:#72965B!important;
-  stroke:#72965B!important;
-}
-#game nav.side-menu button:hover img,
-#game nav.side-menu button:focus-visible img{
-  filter:sepia(1) saturate(2.2) hue-rotate(48deg) brightness(.88)!important;
-}
-
-/* LEWY KONTENER MENU — ten sam standard wizualny i odstępy co pozostałe panele HUD. */
-#game > nav.side-menu{
+#playerPanel .player-level .ui-icon,
+#playerPanel .currency-label,
+#playerPanel .currency-label .ui-icon,
+#game > nav.side-menu .ui-icon{
   box-sizing:border-box!important;
-  position:fixed!important;
-  top:50%!important;
-  left:18px!important;
-  right:auto!important;
-  bottom:auto!important;
-  transform:translateY(-50%)!important;
+  display:block!important;
+  width:24px!important;
+  height:24px!important;
+  min-width:24px!important;
+  min-height:24px!important;
+  max-width:24px!important;
+  max-height:24px!important;
+  flex:0 0 24px!important;
+  margin:0!important;
+}
+#playerPanel .currency-bar{
+  box-sizing:border-box!important;
   display:flex!important;
-  flex-direction:column!important;
-  flex-wrap:nowrap!important;
   align-items:center!important;
   justify-content:center!important;
-  gap:6px!important;
+  gap:8px!important;
   width:max-content!important;
-  min-width:0!important;
-  max-width:calc(100vw - 36px)!important;
-  margin:0!important;
   padding:8px!important;
-  border:1px solid rgba(226,211,180,.24)!important;
-  border-radius:15px!important;
-  background:linear-gradient(145deg,rgba(24,29,27,.94),rgba(37,42,36,.94))!important;
-  background-image:linear-gradient(145deg,rgba(24,29,27,.94),rgba(37,42,36,.94))!important;
-  box-shadow:0 14px 36px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.07)!important;
-  -webkit-backdrop-filter:blur(16px) saturate(1.12)!important;
-  backdrop-filter:blur(16px) saturate(1.12)!important;
+  margin:8px 0 0!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  background:rgba(0,0,0,.5)!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
 }
-@media(max-width:700px){
-  #game > nav.side-menu{
-    top:50%!important;
-    left:8px!important;
-    right:auto!important;
-    width:max-content!important;
-    max-width:calc(100vw - 16px)!important;
-    gap:5px!important;
-    padding:5px!important;
-    border-radius:12px!important;
-  }
+#playerPanel .currency-box{
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:4px!important;
+  padding:0!important;
+  margin:0!important;
 }
-
-/* LEWY PASEK HUD — poziomo u góry, zgodnie z układem pozostałych paneli. */
+#playerPanel .currency-label{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:0!important;
+  line-height:0!important;
+}
+#playerPanel .currency-label .ui-icon{
+  color:inherit!important;
+}
+#playerPanel .currency-value{
+  margin:0!important;
+}
+#playerPanel .currency-divider{
+  height:24px!important;
+  margin:0!important;
+}
 #game > nav.side-menu{
   box-sizing:border-box!important;
-  position:fixed!important;
-  top:18px!important;
-  left:18px!important;
-  right:auto!important;
-  bottom:auto!important;
-  transform:none!important;
   display:flex!important;
   flex-direction:row!important;
   flex-wrap:nowrap!important;
   align-items:center!important;
   justify-content:flex-start!important;
-  gap:4px!important;
+  gap:8px!important;
   width:max-content!important;
   min-width:0!important;
   max-width:calc(100vw - 36px)!important;
   margin:0!important;
   padding:8px!important;
-  border:1px solid rgba(226,211,180,.24)!important;
-  border-radius:15px!important;
-  background:linear-gradient(145deg,rgba(24,29,27,.94),rgba(37,42,36,.94))!important;
-  background-image:linear-gradient(145deg,rgba(24,29,27,.94),rgba(37,42,36,.94))!important;
-  box-shadow:0 14px 36px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.07)!important;
-  -webkit-backdrop-filter:blur(16px) saturate(1.12)!important;
-  backdrop-filter:blur(16px) saturate(1.12)!important;
-}
-#game > nav.side-menu > button.selected,
-#game > nav.side-menu button.compass-menu-button.selected,
-#game > nav.side-menu button.premium-menu-button.selected,
-#game > nav.side-menu button.tasks-menu-button.selected,
-#game > nav.side-menu button.help-menu-button.selected{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  border-color:transparent!important;
-  outline:none!important;
-  box-shadow:none!important;
-  transform:none!important;
-}
-#game > nav.side-menu > button.selected > .menu-icon,
-#game > nav.side-menu > button.selected > .logout-menu-icon,
-#game > nav.side-menu .compass-menu-button.selected .compass-menu-icon,
-#game > nav.side-menu .premium-menu-button.selected .premium-menu-icon,
-#game > nav.side-menu .tasks-menu-button.selected .tasks-menu-icon,
-#game > nav.side-menu .help-menu-button.selected .help-menu-icon{
-  background:transparent!important;
-  background-color:transparent!important;
-  background-image:none!important;
-  box-shadow:none!important;
-}
-#game > nav.side-menu button.selected .ui-icon{
-  color:#d6c39e!important;
-  stroke:#d6c39e!important;
-}
-@media(max-width:700px){
-  #game > nav.side-menu{
-    top:8px!important;
-    left:8px!important;
-    right:auto!important;
-    bottom:auto!important;
-    transform:none!important;
-    flex-direction:row!important;
-    flex-wrap:nowrap!important;
-    gap:3px!important;
-    padding:5px!important;
-    max-width:calc(100vw - 16px)!important;
-    border-radius:12px!important;
-  }
-}
-/* KOREKTA GĘSTOŚCI MENU — bez obramowania i z mniejszymi marginesami. */
-#game > nav.side-menu{
-  padding:2px!important;
   border:0!important;
+  border-radius:12px!important;
+  background:rgba(0,0,0,.5)!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
 }
 #game > nav.side-menu > button,
 #game > nav.side-menu button.compass-menu-button,
 #game > nav.side-menu button.premium-menu-button,
 #game > nav.side-menu button.tasks-menu-button,
 #game > nav.side-menu button.help-menu-button{
-  flex-basis:34px!important;
-  width:34px!important;
-  min-width:34px!important;
-  max-width:34px!important;
-  height:34px!important;
-  min-height:34px!important;
-  max-height:34px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:40px!important;
+  min-width:40px!important;
+  max-width:40px!important;
+  height:40px!important;
+  min-height:40px!important;
+  max-height:40px!important;
+  flex:0 0 40px!important;
+  margin:0!important;
+  padding:8px!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+#game > nav.side-menu .compass-links-row,
+#game > nav.side-menu .compass-premium-stack,
+#game > nav.side-menu .tasks-help-stack,
+#game > nav.side-menu .premium-menu-row,
+#game > nav.side-menu .help-menu-row{
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  margin:0!important;
+  padding:0!important;
+}
+#game > nav.side-menu .menu-icon,
+#game > nav.side-menu .logout-menu-icon,
+#game > nav.side-menu .compass-menu-icon,
+#game > nav.side-menu .premium-menu-icon,
+#game > nav.side-menu .tasks-menu-icon,
+#game > nav.side-menu .help-menu-icon{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:24px!important;
+  height:24px!important;
+  margin:0!important;
+  padding:0!important;
+}
+#game > nav.side-menu button.selected .ui-icon,
+#game > nav.side-menu button:hover .ui-icon,
+#game > nav.side-menu button:focus-visible .ui-icon{
+  color:#fff!important;
+  stroke:#fff!important;
+}
+#game > nav.side-menu button:hover,
+#game > nav.side-menu button:focus-visible,
+#game > nav.side-menu button.selected{
+  background:transparent!important;
+  border:0!important;
+  outline:none!important;
+  box-shadow:none!important;
+  transform:none!important;
 }
 @media(max-width:700px){
+  #playerPanel{
+    padding:8px!important;
+  }
+  #playerPanel .profile-card{
+    width:min(250px,calc(100vw - 16px))!important;
+    max-width:250px!important;
+    grid-template-columns:24px minmax(0,1fr)!important;
+    padding:8px!important;
+    gap:8px!important;
+  }
+  #playerPanel .avatar-frame{
+    width:24px!important;
+    height:24px!important;
+    min-width:24px!important;
+    min-height:24px!important;
+    max-width:24px!important;
+    max-height:24px!important;
+    flex-basis:24px!important;
+  }
+  #playerPanel .currency-bar{
+    gap:8px!important;
+    padding:8px!important;
+  }
   #game > nav.side-menu{
-    padding:2px!important;
-    gap:2px!important;
+    top:8px!important;
+    left:8px!important;
+    right:auto!important;
+    bottom:auto!important;
+    transform:none!important;
+    gap:8px!important;
+    padding:8px!important;
+    max-width:calc(100vw - 16px)!important;
   }
   #game > nav.side-menu > button,
   #game > nav.side-menu button.compass-menu-button,
   #game > nav.side-menu button.premium-menu-button,
   #game > nav.side-menu button.tasks-menu-button,
   #game > nav.side-menu button.help-menu-button{
-    flex-basis:30px!important;
-    width:30px!important;
-    min-width:30px!important;
-    max-width:30px!important;
-    height:30px!important;
-    min-height:30px!important;
-    max-height:30px!important;
+    width:40px!important;
+    min-width:40px!important;
+    max-width:40px!important;
+    height:40px!important;
+    min-height:40px!important;
+    max-height:40px!important;
+    flex-basis:40px!important;
   }
-}
-/* WYGLĄD KOŃCOWY MENU: czarne tło 50% i białe ikony także na aktywnej stronie. */
-#game > nav.side-menu{
-  background:rgba(0,0,0,.5)!important;
-  background-color:rgba(0,0,0,.5)!important;
-  background-image:none!important;
-  opacity:1!important;
-  border:0!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:none!important;
-  backdrop-filter:none!important;
-}
-#game > nav.side-menu button.selected .ui-icon,
-#game > nav.side-menu button.selected .menu-icon,
-#game > nav.side-menu button.selected .logout-menu-icon,
-#game > nav.side-menu button.selected .compass-menu-icon,
-#game > nav.side-menu button.selected .premium-menu-icon,
-#game > nav.side-menu button.selected .tasks-menu-icon,
-#game > nav.side-menu button.selected .help-menu-icon{
-  color:#fff!important;
-  stroke:#fff!important;
 }
 </style>
 </head>
