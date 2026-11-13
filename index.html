@@ -5848,6 +5848,10 @@ html,body,#appStage{
   outline:0!important;
   box-shadow:none!important;
 }
+
+/* Ikona domyślnego awatara — spójna z kreską ikon interfejsu */
+#playerPanel .avatar-placeholder{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:0;color:#fff}
+#playerPanel .avatar-placeholder-icon{display:block;width:42px;height:42px;flex:0 0 42px;stroke-width:1.7}
 </style>
 </head>
 
@@ -6341,7 +6345,7 @@ html,body,#appStage{
         <div class="avatar-row">
           <div class="avatar-frame" role="button" tabindex="0" aria-label="Edytuj profil gracza" title="Edytuj profil" onclick="openProfileEditor()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProfileEditor();}">
             <img id="playerAvatar" src="" alt="Awatar gracza" style="display:none">
-            <span class="avatar-placeholder" id="avatarPlaceholder">👨‍🌾</span>
+            <span class="avatar-placeholder" id="avatarPlaceholder"><svg class="ui-icon avatar-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 21c0-4 3.1-7 7-7s7 3 7 7"/></svg></span>
           </div>
           <div class="player-info">
             <div class="player-name" id="playerName">Nowy gospodarz</div>
