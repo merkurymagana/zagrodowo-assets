@@ -6069,6 +6069,31 @@ html,body,#appStage{
   #playerPanel .xp-track{grid-column:2!important;grid-row:3!important}
 }
 
+
+
+/* OPTYCZNE WYRÓWNANIE ODSTĘPÓW: jednakowa wysokość linii tekstu i jednakowy gap. */
+#playerPanel .profile-card{
+  grid-template-rows:auto auto 4px!important;
+  row-gap:3px!important;
+}
+#playerPanel .player-name,
+#playerPanel .player-level{
+  line-height:1!important;
+  align-self:center!important;
+  margin:0!important;
+}
+#playerPanel .xp-track{
+  height:4px!important;
+  margin:0!important;
+  align-self:center!important;
+}
+@media(max-width:700px){
+  #playerPanel .profile-card{
+    grid-template-rows:auto auto 4px!important;
+    row-gap:3px!important;
+  }
+}
+
 </style>
 </head>
 
