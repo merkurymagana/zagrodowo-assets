@@ -6180,6 +6180,27 @@ html,body,#appStage{
     max-height:30px!important;
   }
 }
+/* WYGLĄD KOŃCOWY MENU: czarne tło 50% i białe ikony także na aktywnej stronie. */
+#game > nav.side-menu{
+  background:rgba(0,0,0,.5)!important;
+  background-color:rgba(0,0,0,.5)!important;
+  background-image:none!important;
+  opacity:1!important;
+  border:0!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+#game > nav.side-menu button.selected .ui-icon,
+#game > nav.side-menu button.selected .menu-icon,
+#game > nav.side-menu button.selected .logout-menu-icon,
+#game > nav.side-menu button.selected .compass-menu-icon,
+#game > nav.side-menu button.selected .premium-menu-icon,
+#game > nav.side-menu button.selected .tasks-menu-icon,
+#game > nav.side-menu button.selected .help-menu-icon{
+  color:#fff!important;
+  stroke:#fff!important;
+}
 </style>
 </head>
 
