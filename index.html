@@ -6272,6 +6272,40 @@ html,body,#appStage{
   z-index:2!important;
 }
 
+
+/* OSTATECZNE WYRÓWNANIE AWATARA: od górnej krawędzi nazwy do dolnej krawędzi paska XP. */
+#playerPanel .profile-card{
+  align-items:stretch!important;
+}
+#playerPanel .avatar-frame{
+  grid-column:1!important;
+  grid-row:1!important;
+  align-self:stretch!important;
+  box-sizing:border-box!important;
+  width:46px!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  flex:0 0 46px!important;
+}
+#playerPanel .player-info{
+  grid-column:2!important;
+  grid-row:1!important;
+  align-self:stretch!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:space-between!important;
+  align-items:flex-start!important;
+  gap:0!important;
+  min-height:0!important;
+}
+@media(max-width:700px){
+  #playerPanel .avatar-frame{
+    width:36px!important;
+    flex-basis:36px!important;
+  }
+  #playerPanel .player-info{gap:0!important}
+}
 </style>
 </head>
 
