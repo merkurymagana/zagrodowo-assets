@@ -7515,22 +7515,89 @@ function setAvatar(src){
   }
 }
 
-function loadDemoProfile(){
+const AVATAR_DB_NAME="zagrodowoProfile";
+const AVATAR_DB_STORE="assets";
+const AVATAR_DB_KEY="playerAvatar";
+
+function openAvatarDatabase(){
+  return new Promise((resolve,reject)=>{
+    if(!("indexedDB" in window)){reject(new Error("IndexedDB niedostępne"));return;}
+    const request=indexedDB.open(AVATAR_DB_NAME,1);
+    request.onupgradeneeded=()=>{
+      const db=request.result;
+      if(!db.objectStoreNames.contains(AVATAR_DB_STORE))db.createObjectStore(AVATAR_DB_STORE);
+    };
+    request.onsuccess=()=>resolve(request.result);
+    request.onerror=()=>reject(request.error||new Error("Nie udało się otworzyć bazy awatara."));
+  });
+}
+
+async function storeAvatarImage(value){
+  const db=await openAvatarDatabase();
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction(AVATAR_DB_STORE,"readwrite");
+    tx.objectStore(AVATAR_DB_STORE).put(value,AVATAR_DB_KEY);
+    tx.oncomplete=()=>{db.close();resolve(true)};
+    tx.onerror=()=>{const error=tx.error;db.close();reject(error||new Error("Nie udało się zapisać zdjęcia."))};
+    tx.onabort=()=>{const error=tx.error;db.close();reject(error||new Error("Zapis zdjęcia został przerwany."))};
+  });
+}
+
+async function readAvatarImage(){
+  const db=await openAvatarDatabase();
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction(AVATAR_DB_STORE,"readonly");
+    const request=tx.objectStore(AVATAR_DB_STORE).get(AVATAR_DB_KEY);
+    request.onsuccess=()=>resolve(request.result||"");
+    request.onerror=()=>reject(request.error||new Error("Nie udało się odczytać zdjęcia."));
+    tx.oncomplete=()=>db.close();
+    tx.onerror=()=>{db.close();reject(tx.error||new Error("Nie udało się odczytać zdjęcia."))};
+  });
+}
+
+async function removeStoredAvatar(){
+  const db=await openAvatarDatabase();
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction(AVATAR_DB_STORE,"readwrite");
+    tx.objectStore(AVATAR_DB_STORE).delete(AVATAR_DB_KEY);
+    tx.oncomplete=()=>{db.close();resolve(true)};
+    tx.onerror=()=>{const error=tx.error;db.close();reject(error||new Error("Nie udało się usunąć poprzedniego zdjęcia."))};
+  });
+}
+
+async function loadDemoProfile(){
   try{
     const saved=localStorage.getItem("zagrodowoDemoProfile");
-    if(saved)player={...player,...JSON.parse(saved)};
+    if(saved){
+      player={...player,...JSON.parse(saved)};
+      if(player.avatar==="__indexeddb_avatar__")player.avatar=await readAvatarImage();
+      else if(typeof player.avatar==="string" && player.avatar.startsWith("data:image/")){
+        const legacyAvatar=player.avatar;
+        await storeAvatarImage(legacyAvatar);
+        player.avatar="__indexeddb_avatar__";
+        localStorage.setItem("zagrodowoDemoProfile",JSON.stringify({...player,avatar:"__indexeddb_avatar__"}));
+        player.avatar=legacyAvatar;
+      }
+    }
   }catch(error){
-    console.warn("Nie udało się odczytać profilu.",error);
+    console.warn("Nie udało się odczytać profilu lub awatara.",error);
   }
   updatePlayerPanel();
 }
 
-function saveDemoProfile(){
+async function saveDemoProfile(){
   try{
-    localStorage.setItem("zagrodowoDemoProfile",JSON.stringify(player));
+    const profileToSave={...player};
+    if(typeof player.avatar==="string" && player.avatar.startsWith("data:image/")){
+      await storeAvatarImage(player.avatar);
+      profileToSave.avatar="__indexeddb_avatar__";
+    }else{
+      await removeStoredAvatar();
+    }
+    localStorage.setItem("zagrodowoDemoProfile",JSON.stringify(profileToSave));
     return true;
   }catch(error){
-    document.getElementById("profileError").textContent="Nie udało się zapisać profilu. Spróbuj użyć mniejszego zdjęcia.";
+    document.getElementById("profileError").textContent="Nie udało się zapisać zdjęcia. Spróbuj ponownie.";
     return false;
   }
 }
@@ -7600,8 +7667,8 @@ document.getElementById("avatarFileInput").addEventListener("change",function(){
     return;
   }
 
-  if(file.size>2*1024*1024){
-    document.getElementById("profileError").textContent="Zdjęcie może mieć maksymalnie 2 MB.";
+  if(file.size>5*1024*1024){
+    document.getElementById("profileError").textContent="Zdjęcie może mieć maksymalnie 5 MB.";
     this.value="";
     return;
   }
@@ -7617,7 +7684,7 @@ document.getElementById("avatarFileInput").addEventListener("change",function(){
   reader.readAsDataURL(file);
 });
 
-function saveProfile(){
+async function saveProfile(){
   const nickname=document.getElementById("nicknameInput").value.trim();
   const url=document.getElementById("avatarUrlInput").value.trim();
   const error=document.getElementById("profileError");
@@ -7649,7 +7716,7 @@ function saveProfile(){
 
   updatePlayerPanel();
 
-  if(!saveDemoProfile()){
+  if(!await saveDemoProfile()){
     player=previous;
     updatePlayerPanel();
     return;
