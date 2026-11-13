@@ -6173,11 +6173,21 @@ html,body,#appStage{
 }
 
 
-/* Sylwetka profilu ma ten sam rozmiar co ikony kompasu, Premium i ustawień. */
+/* Sylwetka profilu: 24 × 24 px, wyśrodkowana w polu awatara. */
+#playerPanel .avatar-placeholder{
+  display:grid!important;
+  place-items:center!important;
+  width:100%!important;
+  height:100%!important;
+}
 #playerPanel .avatar-placeholder-icon{
+  display:block!important;
   width:24px!important;
   height:24px!important;
   flex:0 0 24px!important;
+  justify-self:center!important;
+  align-self:center!important;
+  margin:0!important;
 }
 </style>
 </head>
