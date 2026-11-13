@@ -5852,6 +5852,39 @@ html,body,#appStage{
 /* Ikona domyślnego awatara — spójna z kreską ikon interfejsu */
 #playerPanel .avatar-placeholder{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:0;color:#fff}
 #playerPanel .avatar-placeholder-icon{display:block;width:42px;height:42px;flex:0 0 42px;stroke-width:1.7}
+
+/* Dymek awatara — identyczny styl jak etykiety ikon w panelu menu. */
+#playerPanel .avatar-frame{
+  position:relative;
+  overflow:visible!important;
+}
+#playerPanel .avatar-frame::after{
+  content:"Edytuj Profil";
+  position:absolute;
+  top:calc(100% + 8px);
+  bottom:auto;
+  left:50%;
+  z-index:150;
+  padding:5px 8px;
+  border:1px solid rgba(112,87,55,.22);
+  border-radius:7px;
+  background:#faf4e8;
+  color:#604b31;
+  box-shadow:0 3px 10px rgba(47,38,25,.14);
+  font:700 11px 'Nunito',Arial,sans-serif;
+  white-space:nowrap;
+  pointer-events:none;
+  opacity:0;
+  visibility:hidden;
+  transform:translate(-50%,4px);
+  transition:opacity .16s ease,transform .16s ease,visibility .16s ease;
+}
+#playerPanel .avatar-frame:hover::after,
+#playerPanel .avatar-frame:focus-visible::after{
+  opacity:1;
+  visibility:visible;
+  transform:translate(-50%,0);
+}
 </style>
 </head>
 
@@ -6343,7 +6376,7 @@ html,body,#appStage{
     <aside id="playerPanel">
       <section class="profile-card">
         <div class="avatar-row">
-          <div class="avatar-frame" role="button" tabindex="0" aria-label="Edytuj profil gracza" title="Edytuj profil" onclick="openProfileEditor()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProfileEditor();}">
+          <div class="avatar-frame" role="button" tabindex="0" aria-label="Edytuj profil gracza"  onclick="openProfileEditor()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProfileEditor();}">
             <img id="playerAvatar" src="" alt="Awatar gracza" style="display:none">
             <span class="avatar-placeholder" id="avatarPlaceholder"><svg class="ui-icon avatar-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 21c0-4 3.1-7 7-7s7 3 7 7"/></svg></span>
           </div>
