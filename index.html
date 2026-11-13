@@ -5853,37 +5853,38 @@ html,body,#appStage{
 #playerPanel .avatar-placeholder{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:0;color:#fff}
 #playerPanel .avatar-placeholder-icon{display:block;width:42px;height:42px;flex:0 0 42px;stroke-width:1.7}
 
-/* Dymek awatara — dopasowany do etykiet menu (ciepła paleta Zagrodowa). */
+/* Dymek awatara — ten sam nowoczesny styl co etykiety ikon menu. */
 #playerPanel .avatar-frame{
-  position:relative;
+  position:relative!important;
   overflow:visible!important;
 }
 #playerPanel .avatar-frame::after{
   content:"Edytuj Profil";
-  position:absolute;
-  left:50%;
-  top:calc(100% + 8px);
-  z-index:150;
-  padding:6px 12px;
-  border:2px solid #8b633d;
-  border-radius:5px;
-  background:linear-gradient(180deg,#f8edcf 0%,#e8d2a7 100%);
-  box-shadow:0 2px 5px rgba(48,30,14,.35),inset 0 0 0 1px rgba(255,255,255,.55);
-  color:#573c26!important;
-  font:700 14px/1.2 "Bree Serif",Georgia,serif;
-  letter-spacing:.3px;
-  white-space:nowrap;
-  pointer-events:none;
-  opacity:0;
-  visibility:hidden;
-  transform:translate(-50%,4px);
-  transition:opacity .16s ease,transform .16s ease,visibility .16s ease;
+  position:absolute!important;
+  top:calc(100% + 9px)!important;
+  bottom:auto!important;
+  left:50%!important;
+  right:auto!important;
+  z-index:10000!important;
+  padding:5px 9px!important;
+  border:1px solid rgba(222,210,187,.28)!important;
+  border-radius:7px!important;
+  background:rgba(27,32,29,.96)!important;
+  color:#f1e8d8!important;
+  box-shadow:0 5px 14px rgba(0,0,0,.28)!important;
+  font:700 11px 'Nunito',Arial,sans-serif!important;
+  white-space:nowrap!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transform:translate(-50%,4px)!important;
+  transition:opacity .16s ease,transform .16s ease,visibility .16s ease!important;
 }
 #playerPanel .avatar-frame:hover::after,
 #playerPanel .avatar-frame:focus-visible::after{
-  opacity:1;
-  visibility:visible;
-  transform:translate(-50%,0);
+  opacity:1!important;
+  visibility:visible!important;
+  transform:translate(-50%,0)!important;
 }
 </style>
 </head>
