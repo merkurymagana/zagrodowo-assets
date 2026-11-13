@@ -6019,6 +6019,56 @@ html,body,#appStage{
   #playerPanel .xp-track{margin-top:0!important}
 }
 
+
+
+/* RÓWNE ODSTĘPY W PANELU GRACZA — nazwa, poziom i pasek XP jako osobne wiersze. */
+#playerPanel .profile-card{
+  grid-template-columns:46px minmax(0,1fr)!important;
+  grid-template-rows:auto auto 4px!important;
+  row-gap:2px!important;
+}
+#playerPanel .avatar-frame{
+  grid-column:1!important;
+  grid-row:1 / 4!important;
+}
+#playerPanel .player-info{
+  display:contents!important;
+}
+#playerPanel .player-name{
+  grid-column:2!important;
+  grid-row:1!important;
+  align-self:center!important;
+  margin:0!important;
+}
+#playerPanel .player-level{
+  grid-column:2!important;
+  grid-row:2!important;
+  align-self:center!important;
+  margin:0!important;
+}
+#playerPanel .xp-track{
+  grid-column:2!important;
+  grid-row:3!important;
+  align-self:center!important;
+  width:100%!important;
+  height:4px!important;
+  margin:0!important;
+}
+@media(max-width:700px){
+  #playerPanel .profile-card{
+    grid-template-columns:36px minmax(75px,1fr)!important;
+    grid-template-rows:auto auto 4px!important;
+    row-gap:2px!important;
+  }
+  #playerPanel .avatar-frame{
+    grid-column:1!important;
+    grid-row:1 / 4!important;
+  }
+  #playerPanel .player-name{grid-column:2!important;grid-row:1!important}
+  #playerPanel .player-level{grid-column:2!important;grid-row:2!important}
+  #playerPanel .xp-track{grid-column:2!important;grid-row:3!important}
+}
+
 </style>
 </head>
 
