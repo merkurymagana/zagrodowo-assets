@@ -5939,244 +5939,6 @@ html,body,#appStage{
 
 
 
-/* ZWARTY PANEL GRACZA — zachowuje ustaloną typografię, kolory i elementy HUD. */
-#playerPanel .profile-card{
-  padding:8px 11px!important;
-  grid-template-columns:46px minmax(0,1fr)!important;
-  grid-template-rows:auto auto!important;
-  column-gap:9px!important;
-  row-gap:3px!important;
-}
-#playerPanel .avatar-frame{
-  grid-column:1!important;
-  grid-row:1 / 3!important;
-}
-#playerPanel .player-info{
-  grid-column:2!important;
-  grid-row:1!important;
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:flex-start!important;
-  justify-content:center!important;
-  gap:1px!important;
-  min-width:0!important;
-}
-#playerPanel .player-name{
-  margin:0!important;
-  line-height:1.15!important;
-}
-#playerPanel .player-level{
-  margin:0!important;
-  line-height:1.15!important;
-}
-#playerPanel .xp-track{
-  grid-column:2!important;
-  grid-row:2!important;
-  width:100%!important;
-  height:4px!important;
-  margin:1px 0 0!important;
-}
-@media(max-width:700px){
-  #playerPanel .profile-card{
-    padding:6px 8px!important;
-    grid-template-columns:36px minmax(75px,1fr)!important;
-    grid-template-rows:auto auto!important;
-    column-gap:7px!important;
-    row-gap:2px!important;
-  }
-  #playerPanel .avatar-frame{
-    grid-column:1!important;
-    grid-row:1 / 3!important;
-    width:36px!important;
-    height:36px!important;
-    min-width:36px!important;
-    min-height:36px!important;
-  }
-  #playerPanel .player-info{
-    grid-column:2!important;
-    grid-row:1!important;
-    gap:0!important;
-  }
-  #playerPanel .player-level{
-    line-height:1.1!important;
-  }
-  #playerPanel .xp-track{
-    grid-column:2!important;
-    grid-row:2!important;
-    height:4px!important;
-    margin:1px 0 0!important;
-  }
-}
-
-
-
-
-/* Drobne wyrównanie odstępu: pasek XP bliżej wiersza nazwy i poziomu. */
-#playerPanel .profile-card{
-  row-gap:0!important;
-}
-#playerPanel .xp-track{
-  margin-top:0!important;
-}
-@media(max-width:700px){
-  #playerPanel .profile-card{row-gap:0!important}
-  #playerPanel .xp-track{margin-top:0!important}
-}
-
-
-
-/* RÓWNE ODSTĘPY W PANELU GRACZA — nazwa, poziom i pasek XP jako osobne wiersze. */
-#playerPanel .profile-card{
-  grid-template-columns:46px minmax(0,1fr)!important;
-  grid-template-rows:auto auto 4px!important;
-  row-gap:2px!important;
-}
-#playerPanel .avatar-frame{
-  grid-column:1!important;
-  grid-row:1 / 4!important;
-}
-#playerPanel .player-info{
-  display:contents!important;
-}
-#playerPanel .player-name{
-  grid-column:2!important;
-  grid-row:1!important;
-  align-self:center!important;
-  margin:0!important;
-}
-#playerPanel .player-level{
-  grid-column:2!important;
-  grid-row:2!important;
-  align-self:center!important;
-  margin:0!important;
-}
-#playerPanel .xp-track{
-  grid-column:2!important;
-  grid-row:3!important;
-  align-self:center!important;
-  width:100%!important;
-  height:4px!important;
-  margin:0!important;
-}
-@media(max-width:700px){
-  #playerPanel .profile-card{
-    grid-template-columns:36px minmax(75px,1fr)!important;
-    grid-template-rows:auto auto 4px!important;
-    row-gap:2px!important;
-  }
-  #playerPanel .avatar-frame{
-    grid-column:1!important;
-    grid-row:1 / 4!important;
-  }
-  #playerPanel .player-name{grid-column:2!important;grid-row:1!important}
-  #playerPanel .player-level{grid-column:2!important;grid-row:2!important}
-  #playerPanel .xp-track{grid-column:2!important;grid-row:3!important}
-}
-
-
-
-/* OPTYCZNE WYRÓWNANIE ODSTĘPÓW: jednakowa wysokość linii tekstu i jednakowy gap. */
-#playerPanel .profile-card{
-  grid-template-rows:auto auto 4px!important;
-  row-gap:3px!important;
-}
-#playerPanel .player-name,
-#playerPanel .player-level{
-  line-height:1!important;
-  align-self:center!important;
-  margin:0!important;
-}
-#playerPanel .xp-track{
-  height:4px!important;
-  margin:0!important;
-  align-self:center!important;
-}
-@media(max-width:700px){
-  #playerPanel .profile-card{
-    grid-template-rows:auto auto 4px!important;
-    row-gap:3px!important;
-  }
-}
-
-
-
-/* RÓWNE ODSTĘPY HUD: wszystkie trzy elementy są dziećmi jednego flex-kontenera. */
-#playerPanel .profile-card{
-  display:grid!important;
-  grid-template-columns:46px minmax(0,1fr)!important;
-  grid-template-rows:auto!important;
-  align-items:center!important;
-  row-gap:0!important;
-}
-#playerPanel .avatar-frame{
-  grid-column:1!important;
-  grid-row:1!important;
-  align-self:center!important;
-}
-#playerPanel .player-info{
-  grid-column:2!important;
-  grid-row:1!important;
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:flex-start!important;
-  justify-content:center!important;
-  gap:3px!important;
-  min-width:0!important;
-}
-#playerPanel .player-name,
-#playerPanel .player-level{
-  margin:0!important;
-  align-self:flex-start!important;
-}
-#playerPanel .xp-track{
-  display:block!important;
-  width:100%!important;
-  height:4px!important;
-  margin:0!important;
-  flex:0 0 4px!important;
-  box-sizing:border-box!important;
-}
-@media(max-width:700px){
-  #playerPanel .profile-card{
-    grid-template-columns:36px minmax(75px,1fr)!important;
-    grid-template-rows:auto!important;
-    row-gap:0!important;
-  }
-  #playerPanel .avatar-frame{grid-column:1!important;grid-row:1!important}
-  #playerPanel .player-info{grid-column:2!important;grid-row:1!important;gap:3px!important}
-}
-
-
-
-/* HUD: najechanie myszką nie może zmieniać odstępu między nazwą a poziomem. */
-#playerPanel .player-info,
-#playerPanel .player-info:hover,
-#playerPanel .player-name,
-#playerPanel .player-name:hover,
-#playerPanel .player-level,
-#playerPanel .player-level:hover{
-  transform:none!important;
-  position:static!important;
-  margin:0!important;
-  animation:none!important;
-}
-#playerPanel .player-info,
-#playerPanel .player-info:hover{
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:flex-start!important;
-  justify-content:center!important;
-  gap: 5px!important;
-}
-#playerPanel .player-name,
-#playerPanel .player-name:hover,
-#playerPanel .player-level,
-#playerPanel .player-level:hover{
-  line-height:1.15!important;
-  align-self:flex-start!important;
-}
-
-
 /* Sylwetka profilu: 24 × 24 px, wyśrodkowana w polu awatara. */
 #playerPanel .avatar-placeholder{
   display:grid!important;
@@ -6273,8 +6035,11 @@ html,body,#appStage{
 }
 
 
-/* OSTATECZNE WYRÓWNANIE AWATARA: od górnej krawędzi nazwy do dolnej krawędzi paska XP. */
+/* JEDEN UKŁAD PROFILU: awatar obejmuje wysokość od nazwy gracza do paska XP. */
 #playerPanel .profile-card{
+  display:grid!important;
+  grid-template-columns:46px minmax(0,1fr)!important;
+  grid-template-rows:auto!important;
   align-items:stretch!important;
 }
 #playerPanel .avatar-frame{
@@ -6299,12 +6064,34 @@ html,body,#appStage{
   gap:0!important;
   min-height:0!important;
 }
+#playerPanel .player-name,
+#playerPanel .player-level{
+  margin:0!important;
+  line-height:1.15!important;
+  align-self:flex-start!important;
+}
+#playerPanel .xp-track{
+  display:block!important;
+  width:100%!important;
+  height:4px!important;
+  margin:0!important;
+  flex:0 0 4px!important;
+}
+#playerPanel .player-info,
+#playerPanel .player-name,
+#playerPanel .player-level{
+  transform:none!important;
+  position:static!important;
+  animation:none!important;
+}
 @media(max-width:700px){
+  #playerPanel .profile-card{
+    grid-template-columns:36px minmax(0,1fr)!important;
+  }
   #playerPanel .avatar-frame{
     width:36px!important;
     flex-basis:36px!important;
   }
-  #playerPanel .player-info{gap:0!important}
 }
 </style>
 </head>
