@@ -6157,6 +6157,21 @@ html,body,#appStage{
 @media(max-width:700px){
   #playerPanel .profile-card{padding-bottom:5px!important;}
 }
+
+
+/* PROFIL: awatar nie może narzucać wysokości wiersza — wysokość wyznacza treść z paskiem XP. */
+#playerPanel .avatar-frame{
+  contain:size!important;
+  min-height:0!important;
+}
+#playerPanel .profile-card{
+  grid-template-rows:minmax(0,max-content)!important;
+}
+#playerPanel .player-info{
+  min-height:0!important;
+  height:max-content!important;
+  align-self:start!important;
+}
 </style>
 </head>
 
