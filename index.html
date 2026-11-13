@@ -6201,6 +6201,39 @@ html,body,#appStage{
   color:#fff!important;
   stroke:#fff!important;
 }
+
+
+/* Edytor położenia elementów HUD — aktywowany skrótem Ctrl+Shift+E. */
+body.hud-layout-editing [data-hud-edit-id]{
+  outline:2px dashed rgba(114,150,91,.95)!important;
+  outline-offset:3px!important;
+  cursor:grab!important;
+  touch-action:none!important;
+  user-select:none!important;
+}
+body.hud-layout-editing [data-hud-edit-id]:active{cursor:grabbing!important}
+#hudLayoutToolbar{
+  position:fixed;top:12px;left:50%;transform:translateX(-50%);
+  z-index:2147483000;display:none;align-items:center;gap:8px;
+  padding:9px 12px;border:1px solid rgba(255,255,255,.18);border-radius:12px;
+  background:rgba(27,32,29,.96);box-shadow:0 8px 28px rgba(0,0,0,.32);
+  color:#F5F1E7;font:600 12px 'Nunito',Arial,sans-serif;
+  white-space:nowrap;max-width:calc(100vw - 20px);
+}
+body.hud-layout-editing #hudLayoutToolbar{display:flex}
+#hudLayoutToolbar button{
+  border:1px solid rgba(245,241,231,.22);border-radius:7px;
+  padding:7px 10px;background:rgba(245,241,231,.1);
+  color:#F5F1E7;font:600 12px 'Nunito',Arial,sans-serif;cursor:pointer;
+}
+#hudLayoutToolbar button.primary{background:#72965B;border-color:#72965B;color:#fff}
+#hudLayoutToolbar button:hover{filter:brightness(1.12)}
+#hudLayoutToolbar .hud-layout-hint{opacity:.78}
+@media(max-width:560px){
+  #hudLayoutToolbar{top:6px;gap:5px;padding:7px 8px;font-size:10px}
+  #hudLayoutToolbar button{padding:6px 7px;font-size:10px}
+  #hudLayoutToolbar .hud-layout-hint{display:none}
+}
 </style>
 </head>
 
@@ -8755,5 +8788,96 @@ renderNeighbors();
   fit();
 })();
 </script>
+
+<script>
+/* Lokalny edytor rozmieszczenia HUD-u. Zmiany zapisują się w tej przeglądarce. */
+(()=>{
+  const STORE='zagrodowo_hud_layout_v1';
+  const selectors=[
+    ['profile-card','#playerPanel .profile-card'],
+    ['avatar','#playerPanel .avatar-frame'],
+    ['player-info','#playerPanel .player-info'],
+    ['currency-bar','#playerPanel .currency-grid'],
+    ['cash','#playerPanel .currency-box[aria-label="Gotówka"]'],
+    ['diamonds','#playerPanel .currency-box[aria-label="Diamenty"]'],
+    ['main-menu','#game > nav.side-menu'],
+    ['logout','#playerPanel .panel-bottom']
+  ];
+  const toolbar=document.createElement('div');
+  toolbar.id='hudLayoutToolbar';
+  toolbar.innerHTML='<span class="hud-layout-hint">Przeciągnij obramowane elementy</span><button class="primary" type="button" data-action="save">Zapisz układ</button><button type="button" data-action="reset">Przywróć domyślny</button><button type="button" data-action="close">Zamknij</button>';
+  document.body.appendChild(toolbar);
+  let active=false,drag=null,positions={};
+  const storageKey=()=>STORE+(matchMedia('(max-width: 700px)').matches?'_mobile':'_desktop');
+  function read(){
+    try{positions=JSON.parse(localStorage.getItem(storageKey())||'{}')||{}}
+    catch(_){positions={}}
+  }
+  function apply(){
+    selectors.forEach(([id,selector])=>{
+      const el=document.querySelector(selector);if(!el)return;
+      el.dataset.hudEditId=id;
+      const p=positions[id];
+      el.style.translate=p? p.x+'px '+p.y+'px':'';
+    });
+  }
+  function save(){
+    try{localStorage.setItem(storageKey(),JSON.stringify(positions))}
+    catch(_){alert('Nie udało się zapisać układu w tej przeglądarce.')}
+  }
+  function setMode(on){
+    active=on;document.body.classList.toggle('hud-layout-editing',on);
+    if(on){read();apply()}
+    else{drag=null}
+  }
+  function close(){setMode(false)}
+  toolbar.addEventListener('click',e=>{
+    const action=e.target.closest('button')?.dataset.action;if(!action)return;
+    if(action==='save'){save();const b=toolbar.querySelector('[data-action="save"]');b.textContent='Zapisano ✓';setTimeout(()=>{b.textContent='Zapisz układ'},1300)}
+    if(action==='reset'){
+      if(!confirm('Przywrócić domyślne położenie wszystkich elementów HUD-u?'))return;
+      positions={};try{localStorage.removeItem(storageKey())}catch(_){}
+      apply();
+    }
+    if(action==='close')close();
+  });
+  document.addEventListener('pointerdown',e=>{
+    if(!active||e.button!==0)return;
+    const el=e.target.closest('[data-hud-edit-id]');
+    if(!el)return;
+    e.preventDefault();e.stopPropagation();
+    const id=el.dataset.hudEditId,p=positions[id]||{x:0,y:0};
+    drag={el,id,pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,x:p.x,y:p.y};
+    try{el.setPointerCapture(e.pointerId)}catch(_){}
+  },true);
+  document.addEventListener('pointermove',e=>{
+    if(!drag||e.pointerId!==drag.pointerId)return;
+    e.preventDefault();
+    const x=Math.round(drag.x+e.clientX-drag.startX);
+    const y=Math.round(drag.y+e.clientY-drag.startY);
+    positions[drag.id]={x,y};
+    drag.el.style.translate=x+'px '+y+'px';
+  },{capture:true,passive:false});
+  function finish(e){
+    if(!drag||e.pointerId!==drag.pointerId)return;
+    save();drag=null;
+  }
+  document.addEventListener('pointerup',finish,true);
+  document.addEventListener('pointercancel',finish,true);
+  window.addEventListener('keydown',e=>{
+    if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='e'){
+      e.preventDefault();setMode(!active);
+    }
+    if(active&&e.key==='Escape')close();
+  });
+  window.addEventListener('resize',()=>{
+    if(active){read();apply()}
+  },{passive:true});
+  read();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});
+  else apply();
+})();
+</script>
+
 </body>
 </html>
