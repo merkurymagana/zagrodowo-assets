@@ -6141,6 +6141,22 @@ html,body,#appStage{
 @media(max-width:700px){
   #playerPanel .profile-card{padding:5px!important}
 }
+
+
+/* PROFIL: wymuś wysokość karty z rzeczywistej zawartości tekstu i paska XP. */
+/* Wiersz karty kończy się dokładnie na końcu .player-info; dolny luz daje wyłącznie karta. */
+#playerPanel .profile-card{
+  grid-template-rows:min-content!important;
+  padding-bottom:8px!important;
+}
+#playerPanel .player-info{
+  align-self:start!important;
+  height:max-content!important;
+  min-height:0!important;
+}
+@media(max-width:700px){
+  #playerPanel .profile-card{padding-bottom:5px!important;}
+}
 </style>
 </head>
 
