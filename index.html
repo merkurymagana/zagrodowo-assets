@@ -5829,6 +5829,16 @@ html,body,#appStage{
   backdrop-filter:none!important;
   -webkit-backdrop-filter:none!important;
 }
+
+/* Punktacja XP obok poziomu gracza */
+#playerPanel .player-level .xp-inline{
+  display:inline-block!important;
+  margin-left:10px!important;
+  color:#c9c2b4!important;
+  font:inherit!important;
+  font-weight:400!important;
+  white-space:nowrap!important;
+}
 </style>
 </head>
 
@@ -6326,11 +6336,11 @@ html,body,#appStage{
           </div>
           <div class="player-info">
             <div class="player-name" id="playerName">Nowy gospodarz</div>
-            <div class="player-level"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg> Poziom <span id="level">1</span></div>
+            <div class="player-level"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg> Poziom <span id="level">1</span> <span id="xpText" class="xp-inline">0 / 100 XP</span></div>
           </div>
         </div>
 
-        <div class="xp-label"><span>Doświadczenie</span><span id="xpText">0 / 100 XP</span></div>
+        
         <div class="xp-track"><div id="xpFill"></div></div>
 
       </section>
