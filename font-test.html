@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zagrodowo — laboratorium typografii</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Bree+Serif&family=Exo+2:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&family=Nunito:wght@300;400;600;700;800&family=Oxanium:wght@300;400;500;600;700;800&family=Rajdhani:wght@300;400;500;600;700&family=Saira:wght@300;400;500;600;700;800&family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F5F1E7;--green:#72965B;--yellow:#E9C342;--brown:#76513A;--ink:#202820;--muted:#bdb8aa}
+*{box-sizing:border-box}
+body{margin:0;padding:28px 18px 48px;background:radial-gradient(ellipse at 50% 0%,#465a3e 0,#263629 48%,#18221b 100%);color:var(--cream);font-family:Nunito,sans-serif}
+main{max-width:1120px;margin:auto}
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:0 0 22px}
+h1{font:400 30px 'Bree Serif',serif;margin:0 0 5px}
+header p{margin:0;color:#d5d0c4;font-size:14px}
+.note{font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid #ffffff30;padding:7px 10px;border-radius:30px;color:#e4dece}
+.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:#101710a8;border:1px solid #ffffff20;border-radius:12px;padding:12px 14px;margin-bottom:16px}
+.controls label{font-size:12px;color:#e4dece}
+select{background:#273328;color:var(--cream);border:1px solid #ffffff35;border-radius:7px;padding:7px 10px;font:600 12px Nunito,sans-serif}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:#121914eF;border:1px solid #e8dfc525;border-radius:13px;padding:18px 20px;box-shadow:0 8px 24px #0003;min-width:0}
+.cardhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}
+.card h2{font-size:16px;margin:0;font-weight:800}
+.tag{font:700 10px Nunito,sans-serif;color:#d8cfbb;background:#ffffff12;padding:4px 7px;border-radius:5px;white-space:nowrap}
+.preview{--font:Nunito;font-family:var(--font),sans-serif}
+.moneyrow{display:flex;align-items:center;gap:9px;margin:0 0 12px}
+.coin{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#d5a52f;color:#50390e;font:800 16px Nunito,sans-serif}
+.gem{width:27px;text-align:center;color:#62bde0;font:700 24px Nunito,sans-serif}
+.amount{font-size:29px;font-weight:500;letter-spacing:.01em;color:#fff;font-variant-numeric:tabular-nums;line-height:1.1}
+.heading{font-size:24px;line-height:1.15;font-weight:700;margin:12px 0 5px;color:var(--cream)}
+.bodycopy{font-size:14px;line-height:1.5;color:#e4dece;margin:0 0 13px}
+.samples{display:flex;gap:7px;flex-wrap:wrap}
+.sample{border:1px solid #ffffff27;border-radius:6px;padding:6px 8px;font-size:12px;color:#e8e1d2}
+.sample b{font-weight:700}
+.mini{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding:9px 10px;background:#0005;border-radius:8px;font-size:12px}
+.level{color:#e9c342;font-weight:700}
+.bar{height:5px;background:#ffffff22;border-radius:8px;margin-top:7px;overflow:hidden}
+.bar span{display:block;width:68%;height:100%;background:var(--green);border-radius:8px}
+.footer{font-size:11px;color:#c4bdad;margin:15px 2px 0}
+@media(max-width:700px){body{padding:20px 12px 36px}.grid{grid-template-columns:1fr}.card{padding:16px}.heading{font-size:22px}h1{font-size:26px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div><h1>Laboratorium typografii</h1><p>Porównajmy cyfry i tekst w klimacie nowoczesnej gry — z charakterem Zagrodowa.</p></div>
+<span class="note">Podgląd · bez zmian w grze</span>
+</header>
+<section class="controls">
+<label for="weight">Grubość tekstu</label>
+<select id="weight"><option value="300">Lekka 300</option><option value="400">Regular 400</option><option value="500" selected>Średnia 500</option><option value="600">Półgruba 600</option><option value="700">Pogrubiona 700</option></select>
+<label for="size">Rozmiar salda</label>
+<select id="size"><option value="25">25 px</option><option value="29" selected>29 px</option><option value="33">33 px</option></select>
+</section>
+<section class="grid" id="grid">
+<article class="card" data-font="Rajdhani"><div class="cardhead"><h2>Rajdhani</h2><span class="tag">Wąska · dynamiczna</span></div><div class="preview"><div class="moneyrow"><span class="coin">●</span><span class="amount">125 450</span></div><div class="moneyrow"><span class="gem">◆</span><span class="amount">10 000 000</span></div><div class="heading">Zagrodowo — Twoje gospodarstwo</div><p class="bodycopy">Rozwijaj farmę, opiekuj się zwierzętami i odkrywaj nowe możliwości.</p><div class="samples"><span class="sample">Poziom <b>24</b></span><span class="sample">Doświadczenie <b>8 450 / 12 000</b></span><span class="sample">Zadania</span></div><div class="mini"><span>Postęp gospodarstwa</span><span class="level">68%</span></div><div class="bar"><span></span></div></div></article>
+<article class="card" data-font="Teko"><div class="cardhead"><h2>Teko</h2><span class="tag">Mocna · wysoka</span></div><div class="preview"><div class="moneyrow"><span class="coin">●</span><span class="amount">125 450</span></div><div class="moneyrow"><span class="gem">◆</span><span class="amount">10 000 000</span></div><div class="heading">Zagrodowo — Twoje gospodarstwo</div><p class="bodycopy">Rozwijaj farmę, opiekuj się zwierzętami i odkrywaj nowe możliwości.</p><div class="samples"><span class="sample">Poziom <b>24</b></span><span class="sample">Doświadczenie <b>8 450 / 12 000</b></span><span class="sample">Zadania</span></div><div class="mini"><span>Postęp gospodarstwa</span><span class="level">68%</span></div><div class="bar"><span></span></div></div></article>
+<article class="card" data-font="Oxanium"><div class="cardhead"><h2>Oxanium</h2><span class="tag">Geometryczna · futurystyczna</span></div><div class="preview"><div class="moneyrow"><span class="coin">●</span><span class="amount">125 450</span></div><div class="moneyrow"><span class="gem">◆</span><span class="amount">10 000 000</span></div><div class="heading">Zagrodowo — Twoje gospodarstwo</div><p class="bodycopy">Rozwijaj farmę, opiekuj się zwierzętami i odkrywaj nowe możliwości.</p><div class="samples"><span class="sample">Poziom <b>24</b></span><span class="sample">Doświadczenie <b>8 450 / 12 000</b></span><span class="sample">Zadania</span></div><div class="mini"><span>Postęp gospodarstwa</span><span class="level">68%</span></div><div class="bar"><span></span></div></div></article>
+<article class="card" data-font="Exo 2"><div class="cardhead"><h2>Exo 2</h2><span class="tag">Sportowa · czytelna</span></div><div class="preview"><div class="moneyrow"><span class="coin">●</span><span class="amount">125 450</span></div><div class="moneyrow"><span class="gem">◆</span><span class="amount">10 000 000</span></div><div class="heading">Zagrodowo — Twoje gospodarstwo</div><p class="bodycopy">Rozwijaj farmę, opiekuj się zwierzętami i odkrywaj nowe możliwości.</p><div class="samples"><span class="sample">Poziom <b>24</b></span><span class="sample">Doświadczenie <b>8 450 / 12 000</b></span><span class="sample">Zadania</span></div><div class="mini"><span>Postęp gospodarstwa</span><span class="level">68%</span></div><div class="bar"><span></span></div></div></article>
+<article class="card" data-font="Saira"><div class="cardhead"><h2>Saira</h2><span class="tag">Techniczna · nowoczesna</span></div><div class="preview"><div class="moneyrow"><span class="coin">●</span><span class="amount">125 450</span></div><div class="moneyrow"><span class="gem">◆</span><span class="amount">10 000 000</span></div><div class="heading">Zagrodowo — Twoje gospodarstwo</div><p class="bodycopy">Rozwijaj farmę, opiekuj się zwierzętami i odkrywaj nowe możliwości.</p><div class="samples"><span class="sample">Poziom <b>24</b></span><span class="sample">Doświadczenie <b>8 450 / 12 000</b></span><span class="sample">Zadania</span></div><div class="mini"><span>Postęp gospodarstwa</span><span class="level">68%</span></div><div class="bar"><span></span></div></div></article>
+<article class="card" data-font="Audiowide"><div class="cardhead"><h2>Audiowide</h2><span class="tag">Wyrazista · futurystyczna</span></div><div class="preview"><div class="moneyrow"><span class="coin">●</span><span class="amount">125 450</span></div><div class="moneyrow"><span class="gem">◆</span><span class="amount">10 000 000</span></div><div class="heading">Zagrodowo — Twoje gospodarstwo</div><p class="bodycopy">Rozwijaj farmę, opiekuj się zwierzętami i odkrywaj nowe możliwości.</p><div class="samples"><span class="sample">Poziom <b>24</b></span><span class="sample">Doświadczenie <b>8 450 / 12 000</b></span><span class="sample">Zadania</span></div><div class="mini"><span>Postęp gospodarstwa</span><span class="level">68%</span></div><div class="bar"><span></span></div></div></article>
+</section>
+<p class="footer">Dla porównania: obecne kroje w projekcie to Nunito i Bree Serif. Fonty wczytują się z Google Fonts — przy pierwszym otwarciu daj stronie chwilę na załadowanie.</p>
+</main>
+<script>
+const weight=document.getElementById('weight'),size=document.getElementById('size');
+function update(){document.querySelectorAll('.card').forEach(card=>{const p=card.querySelector('.preview');p.style.fontFamily="'"+card.dataset.font+"',sans-serif";p.querySelectorAll('.amount').forEach(el=>{el.style.fontWeight=weight.value;el.style.fontSize=size.value+'px'});p.querySelectorAll('.heading').forEach(el=>el.style.fontWeight=weight.value);p.querySelectorAll('.bodycopy,.sample,.mini').forEach(el=>el.style.fontWeight=weight.value)})}
+weight.addEventListener('change',update);size.addEventListener('change',update);update();
+</script>
+</body>
+</html>
