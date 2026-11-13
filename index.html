@@ -6109,6 +6109,34 @@ html,body,#appStage{
     padding:3px!important;
   }
 }
+
+/* PROFIL: wysokość wiersza wynika z treści, bez dodatkowej wysokości narzucanej przez kwadratowy awatar. */
+#playerPanel .profile-card{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  padding:6px!important;
+  grid-template-rows:min-content!important;
+  align-items:stretch!important;
+}
+#playerPanel .avatar-frame{
+  aspect-ratio:auto!important;
+  height:100%!important;
+  min-height:0!important;
+  align-self:stretch!important;
+}
+#playerPanel .player-info{
+  height:auto!important;
+  min-height:0!important;
+  justify-content:flex-start!important;
+  gap:4px!important;
+}
+#playerPanel .xp-track{
+  margin:0!important;
+}
+@media(max-width:700px){
+  #playerPanel .profile-card{padding:3px!important}
+}
 </style>
 </head>
 
