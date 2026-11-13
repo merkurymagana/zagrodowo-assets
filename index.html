@@ -5886,6 +5886,18 @@ html,body,#appStage{
   visibility:visible!important;
   transform:translate(-50%,0)!important;
 }
+
+/* Pasek doświadczenia bez pustego wiersza — bliżej nazwy i poziomu gracza. */
+#playerPanel .xp-track{
+  grid-row:2!important;
+  margin-top:4px!important;
+}
+@media(max-width:700px){
+  #playerPanel .xp-track{
+    grid-row:2!important;
+    margin-top:4px!important;
+  }
+}
 </style>
 </head>
 
