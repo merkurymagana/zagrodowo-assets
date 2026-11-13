@@ -6207,6 +6207,32 @@ html,body,#appStage{
 }
 
 
+/* Waluty: szerokość dopasowuje się do długości salda. */
+#playerPanel .currency-bar{
+  grid-template-columns:minmax(max-content,1fr) 1px minmax(max-content,1fr)!important;
+  column-gap:14px!important;
+  min-width:0!important;
+  width:max-content!important;
+  padding:6px 12px!important;
+}
+#playerPanel .currency-bar .currency-box{
+  width:auto!important;
+  min-width:0!important;
+  justify-content:center!important;
+}
+#playerPanel .currency-bar .currency-label{
+  width:auto!important;
+}
+#playerPanel .currency-divider{
+  background:#72965B!important;
+}
+@media(max-width:700px){
+  #playerPanel .currency-bar{
+    column-gap:10px!important;
+    padding:4px 9px!important;
+  }
+}
+
 </style>
 </head>
 
@@ -8767,28 +8793,4 @@ renderNeighbors();
 </body>
 </html>
 
-/* Waluty: szerokość dopasowuje się do długości salda. */
-#playerPanel .currency-bar{
-  grid-template-columns:max-content 1px max-content!important;
-  column-gap:14px!important;
-  min-width:0!important;
-  width:max-content!important;
-  padding:6px 12px!important;
-}
-#playerPanel .currency-bar .currency-box{
-  width:auto!important;
-  min-width:0!important;
-  justify-content:center!important;
-}
-#playerPanel .currency-bar .currency-label{
-  width:auto!important;
-}
-#playerPanel .currency-divider{
-  background:#72965B!important;
-}
-@media(max-width:700px){
-  #playerPanel .currency-bar{
-    column-gap:10px!important;
-    padding:4px 9px!important;
-  }
-}
+
