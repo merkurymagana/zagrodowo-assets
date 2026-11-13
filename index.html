@@ -6096,52 +6096,50 @@ html,body,#appStage{
 
 
 
-/* POPRAWKA STRUKTURY: avatar-row był dodatkowym elementem siatki,
-   przez co nazwa i poziom nie uczestniczyły w tym samym układzie co pasek XP. */
+/* RÓWNE ODSTĘPY HUD: wszystkie trzy elementy są dziećmi jednego flex-kontenera. */
 #playerPanel .profile-card{
   display:grid!important;
   grid-template-columns:46px minmax(0,1fr)!important;
-  grid-template-rows:auto auto 4px!important;
-  row-gap:3px!important;
-}
-#playerPanel .avatar-row,
-#playerPanel .player-info{
-  display:contents!important;
+  grid-template-rows:auto!important;
+  align-items:center!important;
+  row-gap:0!important;
 }
 #playerPanel .avatar-frame{
   grid-column:1!important;
-  grid-row:1 / 4!important;
-}
-#playerPanel .player-name{
-  grid-column:2!important;
   grid-row:1!important;
   align-self:center!important;
-  margin:0!important;
 }
-#playerPanel .player-level{
+#playerPanel .player-info{
   grid-column:2!important;
-  grid-row:2!important;
-  align-self:center!important;
+  grid-row:1!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  gap:3px!important;
+  min-width:0!important;
+}
+#playerPanel .player-name,
+#playerPanel .player-level{
   margin:0!important;
+  align-self:flex-start!important;
 }
 #playerPanel .xp-track{
-  grid-column:2!important;
-  grid-row:3!important;
-  align-self:center!important;
+  display:block!important;
   width:100%!important;
   height:4px!important;
   margin:0!important;
+  flex:0 0 4px!important;
+  box-sizing:border-box!important;
 }
 @media(max-width:700px){
   #playerPanel .profile-card{
     grid-template-columns:36px minmax(75px,1fr)!important;
-    grid-template-rows:auto auto 4px!important;
-    row-gap:3px!important;
+    grid-template-rows:auto!important;
+    row-gap:0!important;
   }
-  #playerPanel .avatar-frame{grid-column:1!important;grid-row:1 / 4!important}
-  #playerPanel .player-name{grid-column:2!important;grid-row:1!important}
-  #playerPanel .player-level{grid-column:2!important;grid-row:2!important}
-  #playerPanel .xp-track{grid-column:2!important;grid-row:3!important}
+  #playerPanel .avatar-frame{grid-column:1!important;grid-row:1!important}
+  #playerPanel .player-info{grid-column:2!important;grid-row:1!important;gap:3px!important}
 }
 
 </style>
@@ -6634,19 +6632,15 @@ html,body,#appStage{
 
     <aside id="playerPanel">
       <section class="profile-card">
-        <div class="avatar-row">
-          <div class="avatar-frame" role="button" tabindex="0" aria-label="Edytuj profil gracza"  onclick="openProfileEditor()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProfileEditor();}">
-            <img id="playerAvatar" src="" alt="Awatar gracza" style="display:none">
-            <span class="avatar-placeholder" id="avatarPlaceholder"><svg class="ui-icon avatar-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 21c0-4 3.1-7 7-7s7 3 7 7"/></svg></span>
-          </div>
-          <div class="player-info">
-            <div class="player-name" id="playerName">Nowy gospodarz</div>
-            <div class="player-level"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg> Poziom <span id="level">1</span> <span id="xpText" class="xp-inline">0 / 100 XP</span></div>
-          </div>
+        <div class="avatar-frame" role="button" tabindex="0" aria-label="Edytuj profil gracza"  onclick="openProfileEditor()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProfileEditor();}">
+          <img id="playerAvatar" src="" alt="Awatar gracza" style="display:none">
+          <span class="avatar-placeholder" id="avatarPlaceholder"><svg class="ui-icon avatar-placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 21c0-4 3.1-7 7-7s7 3 7 7"/></svg></span>
         </div>
-
-        
-        <div class="xp-track"><div id="xpFill"></div></div>
+        <div class="player-info">
+          <div class="player-name" id="playerName">Nowy gospodarz</div>
+          <div class="player-level"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg> Poziom <span id="level">1</span> <span id="xpText" class="xp-inline">0 / 100 XP</span></div>
+          <div class="xp-track"><div id="xpFill"></div></div>
+        </div>
 
       </section>
 
