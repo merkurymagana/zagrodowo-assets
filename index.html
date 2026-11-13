@@ -6241,6 +6241,32 @@ html,body,#appStage{
   box-shadow:none!important;
 }
 
+
+/* Zdjęcie awatara wypełnia całe dostępne pole profilu. */
+#playerPanel .avatar-frame{
+  position:relative!important;
+}
+#playerPanel #playerAvatar{
+  position:absolute!important;
+  inset:0!important;
+  display:block;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  border:0!important;
+  border-radius:inherit!important;
+  margin:0!important;
+  z-index:1!important;
+}
+#playerPanel #avatarPlaceholder{
+  position:absolute!important;
+  inset:0!important;
+  z-index:2!important;
+}
+
 </style>
 </head>
 
