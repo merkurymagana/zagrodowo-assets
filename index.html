@@ -5898,10 +5898,26 @@ html,body,#appStage{
 }
 
 
-/* PANEL GRACZA — jedna, spójna definicja typografii i koloru.
-   Nazwa ma taki sam krój, grubość i biel jak saldo waluty. */
+/* PANEL GRACZA I WALUTY — wspólna typografia.
+   Oba teksty korzystają z identycznego rozmiaru, kroju i grubości. */
 #playerPanel .player-name,
 #playerPanel .player-name:hover,
+#playerPanel .currency-bar .currency-value,
+#playerPanel .currency-bar .currency-value:hover{
+  font-family:'Nunito',Arial,sans-serif!important;
+  font-size:15px!important;
+  font-style:normal!important;
+  font-weight:300!important;
+  font-stretch:normal!important;
+  letter-spacing:normal!important;
+  line-height:1.15!important;
+  text-shadow:none!important;
+  filter:none!important;
+  opacity:1!important;
+  mix-blend-mode:normal!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  color:#FFFFFF!important;
+}
 #playerPanel .player-level,
 #playerPanel .player-level .xp-inline,
 #playerPanel .xp-label,
@@ -5915,15 +5931,6 @@ html,body,#appStage{
   filter:none!important;
   opacity:1!important;
   mix-blend-mode:normal!important;
-}
-#playerPanel .player-name,
-#playerPanel .player-name:hover{
-  font-family:'Nunito',Arial,sans-serif!important;
-  font-size:19px!important;
-  font-style:normal!important;
-  font-weight:300!important;
-  letter-spacing:normal!important;
-  line-height:1.2!important;
 }
 
 </style>
