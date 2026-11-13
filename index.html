@@ -5918,6 +5918,9 @@ html,body,#appStage{
 /* JEDEN OBOWIĄZUJĄCY UKŁAD PROFILU — odstęp liczony od dolnej krawędzi paska XP. */
 #playerPanel .profile-card{
   box-sizing:border-box!important;
+  width:286px!important;
+  min-width:0!important;
+  max-width:286px!important;
   height:auto!important;
   min-height:0!important;
   max-height:none!important;
@@ -5957,8 +5960,13 @@ html,body,#appStage{
   flex:0 0 4px!important;
 }
 @media(max-width:700px){
-  #playerPanel .profile-card{padding:5px!important}
-  #playerPanel .profile-card{grid-template-columns:36px minmax(0,1fr)!important}
+  #playerPanel .profile-card{
+    width:min(250px,calc(100vw - 16px))!important;
+    min-width:0!important;
+    max-width:250px!important;
+    padding:5px!important;
+    grid-template-columns:36px minmax(0,1fr)!important;
+  }
   #playerPanel .xp-track{height:4px!important;min-height:4px!important;flex-basis:4px!important}
 }
 </style>
