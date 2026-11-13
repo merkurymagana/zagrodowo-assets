@@ -4071,8 +4071,8 @@ html,body,#appStage{
   padding:10px 13px!important;
   display:grid!important;
   grid-template-columns:48px minmax(125px,1fr) auto;
-  grid-template-rows:auto auto;
-  align-items:center;
+  grid-template-rows:auto;
+  align-items:stretch;
   column-gap:11px;
   row-gap:3px;
   position:relative;
@@ -4087,9 +4087,12 @@ html,body,#appStage{
 #playerPanel .avatar-row{display:contents}
 #playerPanel .avatar-frame{
   grid-column:1;
-  grid-row:1 / 3;
+  grid-row:1;
+  align-self:stretch;
   width:46px!important;
-  height:46px!important;
+  height:auto!important;
+  min-height:0!important;
+  aspect-ratio:1 / 1;
   flex:0 0 46px!important;
   border:2px solid #b99b6c!important;
   border-radius:50%!important;
@@ -4101,9 +4104,11 @@ html,body,#appStage{
   grid-row:1;
   min-width:0;
   display:flex;
-  align-items:baseline;
-  flex-wrap:wrap;
-  gap:7px;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:space-between;
+  flex-wrap:nowrap;
+  gap:3px;
 }
 #playerPanel .player-name{
   font-size:15px!important;
@@ -4137,7 +4142,7 @@ html,body,#appStage{
 }
 #playerPanel .currency-grid{
   grid-column:3;
-  grid-row:1 / 4;
+  grid-row:1;
   display:flex!important;
   align-items:center;
   gap:13px!important;
