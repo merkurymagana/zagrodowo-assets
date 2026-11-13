@@ -4571,9 +4571,10 @@ html,body,#appStage{
     grid-column:1!important;grid-row:1 / 4!important;align-self:stretch!important;
     box-sizing:border-box;width:46px!important;height:auto!important;min-height:58px!important;flex-basis:46px!important;
     border-radius:10px!important;
-    cursor:pointer!important;transition:box-shadow .16s ease,transform .16s ease;
+    cursor:pointer!important;transition:box-shadow .16s ease;
   }
-  #playerPanel .avatar-frame:hover{transform:scale(1.04);box-shadow:0 3px 9px rgba(67,48,26,.24)}
+  /* Najechanie na awatar nie może zmieniać jego geometrii ani poruszać układem profilu. */
+  #playerPanel .avatar-frame:hover{transform:none!important;box-shadow:0 3px 9px rgba(67,48,26,.24)!important}
   #playerPanel .avatar-frame:focus-visible{outline:2px solid #8b7048;outline-offset:3px}
   #playerPanel .avatar-placeholder{font-size:27px!important}
   #playerPanel .player-name{font-size:15px!important}
