@@ -6094,6 +6094,21 @@ html,body,#appStage{
     flex-basis:36px!important;
   }
 }
+
+/* RÓWNE MARGINESY WEWNĘTRZNE WSZYSTKICH GŁÓWNYCH KONTENERÓW HUD. */
+#game > nav.side-menu,
+#playerPanel .profile-card,
+#playerPanel .currency-bar{
+  box-sizing:border-box!important;
+  padding:6px!important;
+}
+@media(max-width:700px){
+  #game > nav.side-menu,
+  #playerPanel .profile-card,
+  #playerPanel .currency-bar{
+    padding:3px!important;
+  }
+}
 </style>
 </head>
 
