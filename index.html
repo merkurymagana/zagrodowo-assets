@@ -6110,13 +6110,14 @@ html,body,#appStage{
   }
 }
 
-/* PROFIL: dolny margines jest liczony bezpośrednio od dolnej krawędzi paska XP. */
+/* PROFIL: równy odstęp od krawędzi karty do treści, w tym od paska XP. */
 #playerPanel .profile-card{
   height:auto!important;
   min-height:0!important;
   max-height:none!important;
-  padding:8px 8px 0!important;
-  grid-template-rows:min-content!important;
+  padding:8px!important;
+  box-sizing:border-box!important;
+  grid-template-rows:auto!important;
   align-items:stretch!important;
 }
 #playerPanel .avatar-frame{
@@ -6128,8 +6129,8 @@ html,body,#appStage{
 #playerPanel .player-info{
   height:auto!important;
   min-height:0!important;
-  padding:0 0 8px!important;
-  box-sizing:content-box!important;
+  padding:0!important;
+  box-sizing:border-box!important;
   justify-content:flex-start!important;
   gap:4px!important;
 }
@@ -6138,8 +6139,7 @@ html,body,#appStage{
   margin:0!important;
 }
 @media(max-width:700px){
-  #playerPanel .profile-card{padding:5px 5px 0!important}
-  #playerPanel .player-info{padding-bottom:5px!important}
+  #playerPanel .profile-card{padding:5px!important}
 }
 </style>
 </head>
