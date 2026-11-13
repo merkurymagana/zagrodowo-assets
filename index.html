@@ -4455,10 +4455,11 @@ html,body,#appStage{
   right:auto!important;
   z-index:125!important;
   transform:translateX(-50%)!important;
-  display:flex!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 1px minmax(0,1fr)!important;
   align-items:center!important;
-  justify-content:center!important;
-  gap:20px!important;
+  justify-items:stretch!important;
+  column-gap:0!important;
   width:max-content!important;
   min-width:250px!important;
   margin:0!important;
@@ -4471,11 +4472,13 @@ html,body,#appStage{
   -webkit-backdrop-filter:blur(12px);
 }
 #playerPanel .currency-bar .currency-box{
-  flex:1 1 0!important;
+  width:100%!important;
   min-width:0!important;
   display:flex!important;
-  flex-direction:column!important;
+  flex-direction:row!important;
   align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
   padding:0!important;
   border:0!important;
   background:transparent!important;
@@ -4505,9 +4508,10 @@ html,body,#appStage{
   white-space:nowrap;
 }
 #playerPanel .currency-divider{
-  width:1px;
-  height:29px;
-  background:rgba(137,113,78,.24);
+  width:1px!important;
+  height:29px!important;
+  justify-self:center!important;
+  background:rgba(137,113,78,.24)!important;
 }
 @media(max-width:700px){
   #playerPanel .currency-bar{
