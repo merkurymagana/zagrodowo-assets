@@ -8479,11 +8479,16 @@ function openMiniAvatarEditor(){
     document.getElementById("profileError").textContent="Najpierw wgraj zdjęcie awatara.";
     return;
   }
+  const editor=document.getElementById("miniAvatarEditor");
   const img=document.getElementById("miniAvatarPreview");
-  img.onload=updateMiniAvatarCropPreview;
+  /* Najpierw pokazujemy modal, aby ramka miała rzeczywiste wymiary.
+     Wcześniej obraz był mierzony, gdy rodzic miał display:none — wtedy
+     clientWidth/clientHeight wynosiły 0 i zakres przeciągania znikał. */
+  editor.classList.add("visible");
+  const refreshPreview=()=>requestAnimationFrame(()=>updateMiniAvatarCropPreview());
+  img.onload=refreshPreview;
   img.src=pendingAvatar||player.avatar;
-  if(img.complete&&img.naturalWidth)updateMiniAvatarCropPreview();
-  document.getElementById("miniAvatarEditor").classList.add("visible");
+  if(img.complete&&img.naturalWidth)refreshPreview();
 }
 function closeMiniAvatarEditor(){
   document.getElementById("miniAvatarEditor").classList.remove("visible");
