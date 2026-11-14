@@ -8432,12 +8432,16 @@ function updateAvatarCropPosition(){
   if(preview)preview.style.setProperty("object-position",value,"important");
 }
 function getMiniAvatarCropMetrics(img,frame,zoom){
-  const rect=frame.getBoundingClientRect();
-  const baseScale=Math.max(rect.width/img.naturalWidth,rect.height/img.naturalHeight);
+  /* Rozmiary obrazu i ramki muszą być liczone w tym samym układzie CSS.
+     getBoundingClientRect() zwraca wymiary po transformacji całej gry,
+     co zaniżało/zmieniało zakres przesuwania przy skalowanym interfejsie. */
+  const frameWidth=frame.clientWidth;
+  const frameHeight=frame.clientHeight;
+  const baseScale=Math.max(frameWidth/img.naturalWidth,frameHeight/img.naturalHeight);
   const scale=baseScale*Math.max(1,Math.min(3,Number(zoom)||1));
   const width=img.naturalWidth*scale;
   const height=img.naturalHeight*scale;
-  return {width,height,overflowX:Math.max(0,width-rect.width),overflowY:Math.max(0,height-rect.height)};
+  return {width,height,overflowX:Math.max(0,width-frameWidth),overflowY:Math.max(0,height-frameHeight)};
 }
 function applyMiniAvatarCrop(img,position,zoom){
   if(!img||!img.naturalWidth)return;
@@ -8503,7 +8507,9 @@ function startMiniAvatarCropDrag(event){
 function moveMiniAvatarCrop(event){
   if(!miniAvatarCropDrag)return;
   if(miniAvatarCropDrag.pointerId!==undefined&&event.pointerId!==miniAvatarCropDrag.pointerId)return;
-  if(event.pointerType==="mouse"&&event.buttons===0){endMiniAvatarCropDrag();return;}
+  /* Nie przerywamy przeciągania na podstawie event.buttons:
+     przy pointer capture niektóre przeglądarki raportują tu 0 mimo
+     aktywnego przeciągania. Zakończenie obsługują pointerup/pointercancel. */
   const drag=miniAvatarCropDrag;
   const deltaX=(event.clientX-drag.startX)/(drag.coordinateScaleX||1);
   const deltaY=(event.clientY-drag.startY)/(drag.coordinateScaleY||1);
