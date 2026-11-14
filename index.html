@@ -6365,6 +6365,32 @@ body.profile-editor-open #appStage{
 }
 
 
+
+/* Duży podgląd awatara — wykorzystuje prawie całą dostępną szerokość karty. */
+#profileOverlay .profile-avatar-card{
+  min-height:0!important;
+}
+#profileOverlay .profile-preview{
+  flex:1 1 auto!important;
+  width:100%!important;
+  min-height:0!important;
+  align-items:center!important;
+  margin:8px 0 14px!important;
+}
+#profileOverlay .profile-preview .avatar-frame{
+  width:min(100%,420px)!important;
+  height:auto!important;
+  aspect-ratio:1 / 1!important;
+  max-height:100%!important;
+  flex:0 1 auto!important;
+  box-sizing:border-box!important;
+}
+#profileOverlay #previewAvatar{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+
 /* Obie karty zajmują dokładnie ten sam wiersz siatki. */
 #profileOverlay .profile-layout{
   display:grid!important;
