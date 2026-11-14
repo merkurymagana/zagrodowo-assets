@@ -8385,8 +8385,10 @@ function updateAvatarCropPosition(){
   const value=Math.max(0,Math.min(100,Number(position.x)||50))+"% "+Math.max(0,Math.min(100,Number(position.y)||50))+"%";
   const preview=document.getElementById("previewAvatar");
   const playerImage=document.getElementById("playerAvatar");
-  if(preview)preview.style.objectPosition=value;
-  if(playerImage)playerImage.style.objectPosition=value;
+  /* Reguły CSS podglądu używają !important, dlatego pozycję kadru
+     również ustawiamy z priorytetem — zwykły styl inline był ignorowany. */
+  if(preview)preview.style.setProperty("object-position",value,"important");
+  if(playerImage)playerImage.style.setProperty("object-position",value,"important");
 }
 
 function startAvatarCropDrag(event){
