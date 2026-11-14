@@ -3307,6 +3307,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .profile-form-card .field input{min-height:48px;margin-top:8px;padding:12px 14px}
 .profile-form-card input[type="file"]{padding:9px}
 .profile-hint{margin-top:2px;color:#bdb4a4;font-size:12px;line-height:1.55}
+.profile-processing-status{min-height:16px;margin:-10px 0 8px;color:#a9c98a;font-size:12px;line-height:1.4}
 .profile-error{min-height:18px;margin-top:10px;color:#f0a39a;font-size:13px}
 .profile-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:22px}
 .profile-actions button{min-width:150px;min-height:46px;padding:10px 18px;border-radius:9px;font-weight:800}
@@ -6992,7 +6993,8 @@ body.profile-editor-open #appStage{
           <label class="field">Nazwa gracza<input id="nicknameInput" type="text" maxlength="20" minlength="3" placeholder="Wpisz nazwę gracza"></label>
           <label class="field">Link do zdjęcia<input id="avatarUrlInput" type="url" placeholder="https://adres-zdjecia.jpg"></label>
           <label class="field">Lub wgraj zdjęcie z urządzenia<input id="avatarFileInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
-          <div class="profile-hint">Zdjęcie zostanie dopasowane do kwadratowej ramki. Wersja demonstracyjna zapamiętuje wybrany awatar w tej przeglądarce.</div>
+          <div class="profile-processing-status" id="avatarProcessingStatus" aria-live="polite"></div>
+          <div class="profile-hint">Zdjęcie zostanie automatycznie poprawione przez AI (powiększenie 4×), a następnie dopasowane do podglądu. Przetwarzanie odbywa się w przeglądarce.</div>
           <div class="profile-error" id="profileError" aria-live="polite"></div>
           <div class="profile-actions">
             <button type="button" onclick="saveProfile()">Zapisz zmiany</button>
@@ -7818,31 +7820,91 @@ document.getElementById("avatarUrlInput").addEventListener("input",function(){
   else setPreviewAvatar(player.avatar);
 });
 
-document.getElementById("avatarFileInput").addEventListener("change",function(){
+let avatarEnhanceRequestId=0;
+let crispixSdkPromise=null;
+
+async function getAvatarUpscaler(){
+  if(!crispixSdkPromise){
+    crispixSdkPromise=import("https://crispix.nibies.space/sdk.js")
+      .then(module=>{
+        if(typeof module.CrispixSDK!=="function")throw new Error("Nie udało się załadować modułu AI.");
+        return new module.CrispixSDK({baseUrl:"https://crispix.nibies.space"});
+      })
+      .catch(error=>{
+        crispixSdkPromise=null;
+        throw error;
+      });
+  }
+  return crispixSdkPromise;
+}
+
+function readAvatarFile(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(reader.result);
+    reader.onerror=()=>reject(new Error("Nie udało się odczytać zdjęcia."));
+    reader.readAsDataURL(file);
+  });
+}
+
+document.getElementById("avatarFileInput").addEventListener("change",async function(){
   const file=this.files[0];
   if(!file)return;
+  const requestId=++avatarEnhanceRequestId;
+  const error=document.getElementById("profileError");
+  const status=document.getElementById("avatarProcessingStatus");
+  error.textContent="";
+  status.textContent="Przygotowuję poprawę jakości zdjęcia…";
 
   if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
-    document.getElementById("profileError").textContent="Wybierz zdjęcie JPG, PNG lub WEBP.";
+    error.textContent="Wybierz zdjęcie JPG, PNG lub WEBP.";
+    status.textContent="";
     this.value="";
     return;
   }
 
   if(file.size>5*1024*1024){
-    document.getElementById("profileError").textContent="Zdjęcie może mieć maksymalnie 5 MB.";
+    error.textContent="Zdjęcie może mieć maksymalnie 5 MB.";
+    status.textContent="";
     this.value="";
     return;
   }
 
-  const reader=new FileReader();
-  reader.onload=()=>{
-    pendingAvatar=reader.result;
+  try{
+    const upscaler=await getAvatarUpscaler();
+    if(requestId!==avatarEnhanceRequestId)return;
+    status.textContent="AI poprawia jakość awatara…";
+    const result=await upscaler.enhance(file,{
+      model:"general",
+      scale:4,
+      filters:{sharpen:12,denoise:8},
+      outputFormat:"image/webp",
+      quality:.94,
+      onProgress:percent=>{
+        if(requestId===avatarEnhanceRequestId){
+          status.textContent="AI poprawia jakość awatara… "+Math.round(percent*100)+"%";
+        }
+      }
+    });
+    if(requestId!==avatarEnhanceRequestId)return;
+    pendingAvatar=result.dataUrl;
     setPreviewAvatar(pendingAvatar);
     document.getElementById("avatarUrlInput").value="";
-    document.getElementById("profileError").textContent="";
-  };
-  reader.onerror=()=>{document.getElementById("profileError").textContent="Nie udało się odczytać zdjęcia."};
-  reader.readAsDataURL(file);
+    status.textContent="Gotowe — awatar został poprawiony przez AI.";
+  }catch(upscaleError){
+    console.warn("Nie udało się uruchomić poprawiania AI awatara; używam oryginału.",upscaleError);
+    if(requestId!==avatarEnhanceRequestId)return;
+    try{
+      pendingAvatar=await readAvatarFile(file);
+      if(requestId!==avatarEnhanceRequestId)return;
+      setPreviewAvatar(pendingAvatar);
+      document.getElementById("avatarUrlInput").value="";
+      status.textContent="Nie udało się uruchomić AI. Wczytano oryginalne zdjęcie bez zmian.";
+    }catch(readError){
+      status.textContent="";
+      error.textContent=readError.message||"Nie udało się odczytać zdjęcia.";
+    }
+  }
 });
 
 async function saveProfile(){
