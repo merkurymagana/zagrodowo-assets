@@ -6508,13 +6508,6 @@ body.profile-editor-open #appStage{
   border:1px solid #72965B!important;
 }
 
-/* Pole nazwy gracza — bez dodatkowej obwódki po kliknięciu i fokusie. */
-#profileOverlay #nicknameInput:focus,
-#profileOverlay #nicknameInput:focus-visible{
-  outline:none!important;
-  box-shadow:none!important;
-}
-
 
 /* Karta danych gracza — uporządkowane wiersze zamiast wyglądu formularza. */
 #profileOverlay .profile-form-card{
@@ -7173,7 +7166,6 @@ body.profile-editor-open #appStage{
         <section class="profile-form-card" aria-label="Dane profilu">
           <h3 class="profile-section-title">Dane gracza</h3>
           <p class="profile-section-description"></p>
-          <label class="field">Nazwa gracza<input id="nicknameInput" type="text" maxlength="20" minlength="3" placeholder="Wpisz nazwę gracza"></label>
           <div class="field profile-data-row">Kraj połączenia internetowego
             <div id="profileCountry" class="profile-country-value" aria-live="polite">Ustalanie kraju…</div>
           </div>
@@ -8041,7 +8033,6 @@ function updateProfileMetadata(){
 document.addEventListener("visibilitychange",updateProfileMetadata);
 
 function openProfileEditor(){
-  document.getElementById("nicknameInput").value=player.nickname;
   updateCountryDisplay();
   document.getElementById("playerTitleSelect").value=player.playerTitle||"";
   updateProfileMetadata();
@@ -8136,18 +8127,11 @@ document.getElementById("avatarFileInput").addEventListener("change",async funct
 });
 
 async function saveProfile(){
-  const nickname=document.getElementById("nicknameInput").value.trim();
   const playerTitle=document.getElementById("playerTitleSelect").value||"";
   const error=document.getElementById("profileError");
   error.textContent="";
 
-  if(nickname.length<3){
-    error.textContent="Nazwa gracza musi mieć co najmniej 3 znaki.";
-    return;
-  }
-
   const previous={...player};
-  player.nickname=nickname;
   player.playerTitle=playerTitle;
   if(!player.joinedAt)player.joinedAt=new Date().toISOString();
 
