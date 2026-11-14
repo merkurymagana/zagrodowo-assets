@@ -4582,7 +4582,20 @@ html,body,#appStage{
 #game input,#game textarea,#profileOverlay input{background:rgba(16,21,18,.72)!important;color:#f4eee3!important;border:1px solid rgba(218,199,160,.3)!important;border-radius:9px!important}
 #game input::placeholder,#game textarea::placeholder,#profileOverlay input::placeholder{color:#aaa291!important}
 #game .social-avatar{border:1px solid rgba(222,198,151,.45)!important;background:#394238!important}
-#profileOverlay{background:radial-gradient(ellipse at 18% 12%,rgba(114,150,91,.16),transparent 38%),radial-gradient(ellipse at 88% 90%,rgba(118,81,58,.22),transparent 42%),linear-gradient(135deg,#1b241d 0%,#202820 52%,#171e19 100%)!important;backdrop-filter:none!important}
+/* Pełna czerń także poza planszą gry — boczne marginesy ekranu. */
+html.profile-editor-open,
+body.profile-editor-open,
+body.profile-editor-open #appStage{
+  background:#000!important;
+  background-image:none!important;
+  box-shadow:none!important;
+}
+#profileOverlay{
+  background:#000!important;
+  background-image:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
 #profileOverlay .profile-window{background:transparent!important;color:#f5f1e7!important;border:0!important;border-radius:0!important;box-shadow:none!important}
 #profileOverlay .profile-heading-copy h2{color:#f5f1e7!important}
 #profileOverlay .profile-window .field{color:#e9dfce!important}
@@ -7719,11 +7732,15 @@ function openProfileEditor(){
   document.getElementById("profileError").textContent="";
   pendingAvatar="";
   setPreviewAvatar(player.avatar);
+  document.documentElement.classList.add("profile-editor-open");
+  document.body.classList.add("profile-editor-open");
   document.getElementById("profileOverlay").classList.add("visible");
 }
 
 function closeProfileEditor(){
   document.getElementById("profileOverlay").classList.remove("visible");
+  document.documentElement.classList.remove("profile-editor-open");
+  document.body.classList.remove("profile-editor-open");
   pendingAvatar="";
 }
 
