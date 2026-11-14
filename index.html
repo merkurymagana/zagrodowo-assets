@@ -6837,6 +6837,24 @@ body.profile-editor-open #appStage{
   -webkit-user-drag:none!important;
 }
 #profileOverlay .profile-avatar-crop-hint{color:rgba(245,241,231,.9)!important;font:500 11px/1.35 'Nunito',Arial,sans-serif!important}
+.profile-mini-avatar-button{border:1px solid #72965B;border-radius:8px;padding:7px 13px;background:rgba(0,0,0,.7);color:#F5F1E7;font:600 12px 'Nunito',Arial,sans-serif;cursor:pointer}
+.profile-mini-avatar-button:hover{background:rgba(114,150,91,.3)}
+.mini-avatar-editor{display:none;position:absolute;inset:0;z-index:10020;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.78)}
+.mini-avatar-editor.visible{display:flex}
+.mini-avatar-editor-panel{width:min(390px,100%);padding:22px;border:1px solid #72965B;border-radius:14px;background:#151a13;color:#F5F1E7;box-shadow:0 14px 44px #0009;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
+.mini-avatar-editor-panel h3{margin:0;font:300 19px 'Exo 2',Arial,sans-serif}
+.mini-avatar-editor-panel p{margin:0;color:#F5F1E7;font:500 12px/1.45 'Nunito',Arial,sans-serif}
+.mini-avatar-crop-frame{position:relative;width:148px;height:148px;flex:0 0 148px;overflow:hidden;border:2px solid #72965B;border-radius:12px;background:#000;cursor:grab;touch-action:none;user-select:none}
+.mini-avatar-crop-frame.is-cropping{cursor:grabbing}
+.mini-avatar-crop-frame img{position:absolute;display:block;max-width:none;max-height:none;pointer-events:none;-webkit-user-drag:none}
+.mini-avatar-zoom-control{width:100%;display:flex;flex-direction:column;gap:7px;text-align:left;font:500 12px 'Nunito',Arial,sans-serif}
+.mini-avatar-zoom-control label{display:flex;justify-content:space-between}
+.mini-avatar-zoom-control input{width:100%;accent-color:#72965B}
+.mini-avatar-editor-hint{font:500 11px/1.4 'Nunito',Arial,sans-serif;color:rgba(245,241,231,.78)}
+.mini-avatar-editor-actions{display:flex;justify-content:center;gap:10px;width:100%}
+.mini-avatar-editor-actions button{border:1px solid #72965B;border-radius:8px;padding:9px 16px;background:#72965B;color:#fff;font:600 12px 'Nunito',Arial,sans-serif;cursor:pointer}
+.mini-avatar-editor-actions button.secondary{background:transparent;color:#F5F1E7}
+
 
 </style>
 </head>
@@ -7440,6 +7458,7 @@ body.profile-editor-open #appStage{
             <label class="profile-avatar-change" for="avatarFileInput">Zmień awatar</label>
             <input id="avatarFileInput" class="profile-avatar-file-input" type="file" accept="image/gif,image/png,image/jpeg,image/webp" aria-label="Wybierz nowy awatar">
             <div class="profile-avatar-crop-hint">Przeciągnij zdjęcie, aby wybrać widoczny fragment</div>
+            <button type="button" class="profile-mini-avatar-button" onclick="openMiniAvatarEditor()">Dopasuj mini awatar</button>
             <div class="profile-avatar-format">GIF, JPG, PNG lub WEBP · maks. 10 MB</div>
             <div class="profile-processing-status" id="avatarProcessingStatus" aria-live="polite"></div>
           </div>
@@ -7469,6 +7488,22 @@ body.profile-editor-open #appStage{
         </section>
       </div>
     </div>
+  <div class="mini-avatar-editor" id="miniAvatarEditor" aria-hidden="true">
+    <div class="mini-avatar-editor-panel" role="dialog" aria-modal="true" aria-labelledby="miniAvatarEditorTitle">
+      <h3 id="miniAvatarEditorTitle">Dopasuj mini awatar</h3>
+      <p>Ustaw, który fragment zdjęcia ma być widoczny w małym kwadracie przy nazwie gracza.</p>
+      <div class="mini-avatar-crop-frame" id="miniAvatarCropFrame" aria-label="Przeciągnij zdjęcie, aby ustawić kadr mini awatara"><img id="miniAvatarPreview" alt="Podgląd mini awatara"></div>
+      <div class="mini-avatar-zoom-control">
+        <label for="miniAvatarZoom">Przybliżenie <strong id="miniAvatarZoomValue">100%</strong></label>
+        <input id="miniAvatarZoom" type="range" min="1" max="3" step="0.05" value="1">
+      </div>
+      <div class="mini-avatar-editor-hint">Przeciągnij zdjęcie myszką lub palcem, aby zmienić kadr.</div>
+      <div class="mini-avatar-editor-actions">
+        <button type="button" class="secondary" onclick="closeMiniAvatarEditor()">Anuluj</button>
+        <button type="button" onclick="saveMiniAvatarCrop()">Zapisz kadr</button>
+      </div>
+    </div>
+  </div>
   </div>
 
 </div>
@@ -8096,12 +8131,17 @@ let player={
   xpNeeded:100,
   money:1,
   diamonds:0,
-  avatar:""
+  avatar:"",
+  miniAvatarPosition:{x:50,y:50},
+  miniAvatarZoom:1
 };
 
 let pendingAvatar="";
 let pendingAvatarPosition={x:50,y:50};
+let pendingMiniAvatarPosition={x:50,y:50};
+let pendingMiniAvatarZoom=1;
 let avatarCropDrag=null;
+let miniAvatarCropDrag=null;
 
 function formatMoney(value){
   return new Intl.NumberFormat("pl-PL",{minimumFractionDigits:2,maximumFractionDigits:2}).format(Number(value)||0);
@@ -8127,13 +8167,11 @@ function updatePlayerPanel(){
 function setAvatar(src){
   const img=document.getElementById("playerAvatar");
   const placeholder=document.getElementById("avatarPlaceholder");
-  const position=player.avatarPosition||{x:50,y:50};
-  img.style.objectPosition=(Number(position.x)||50)+"% "+(Number(position.y)||50)+"%";
-
   if(src){
     img.onload=()=>{
       img.style.setProperty("display","block","important");
       placeholder.style.setProperty("display","none","important");
+      applyMiniAvatarCrop(img,player.miniAvatarPosition||{x:50,y:50},player.miniAvatarZoom||1);
     };
     img.onerror=()=>{
       img.removeAttribute("src");
@@ -8324,6 +8362,9 @@ function openProfileEditor(){
   document.getElementById("profileError").textContent="";
   pendingAvatar="";
   pendingAvatarPosition={...(player.avatarPosition||{x:50,y:50})};
+  pendingMiniAvatarPosition={...(player.miniAvatarPosition||{x:50,y:50})};
+  pendingMiniAvatarZoom=Number(player.miniAvatarZoom)||1;
+  closeMiniAvatarEditor();
   setPreviewAvatar(player.avatar);
   updateAvatarCropPosition();
   document.documentElement.classList.add("profile-editor-open");
@@ -8384,11 +8425,86 @@ function updateAvatarCropPosition(){
   const position=pendingAvatarPosition||{x:50,y:50};
   const value=Math.max(0,Math.min(100,Number(position.x)||50))+"% "+Math.max(0,Math.min(100,Number(position.y)||50))+"%";
   const preview=document.getElementById("previewAvatar");
-  const playerImage=document.getElementById("playerAvatar");
-  /* Reguły CSS podglądu używają !important, dlatego pozycję kadru
-     również ustawiamy z priorytetem — zwykły styl inline był ignorowany. */
   if(preview)preview.style.setProperty("object-position",value,"important");
-  if(playerImage)playerImage.style.setProperty("object-position",value,"important");
+}
+function applyMiniAvatarCrop(img,position,zoom){
+  if(!img||!img.naturalWidth||!img.naturalHeight)return;
+  const frame=img.parentElement;
+  if(!frame)return;
+  const rect=frame.getBoundingClientRect();
+  if(!rect.width||!rect.height)return;
+  const scale=Math.max(rect.width/img.naturalWidth,rect.height/img.naturalHeight)*(Number(zoom)||1);
+  const width=img.naturalWidth*scale,height=img.naturalHeight*scale;
+  const x=Math.max(0,Math.min(100,Number(position?.x??50)));
+  const y=Math.max(0,Math.min(100,Number(position?.y??50)));
+  img.style.setProperty("position","absolute","important");
+  img.style.setProperty("width",width+"px","important");
+  img.style.setProperty("height",height+"px","important");
+  img.style.setProperty("max-width","none","important");
+  img.style.setProperty("max-height","none","important");
+  img.style.setProperty("left",(-Math.max(0,width-rect.width)*x/100)+"px","important");
+  img.style.setProperty("top",(-Math.max(0,height-rect.height)*y/100)+"px","important");
+  img.style.setProperty("right","auto","important");
+  img.style.setProperty("bottom","auto","important");
+  img.style.setProperty("object-fit","fill","important");
+}
+function updateMiniAvatarCropPreview(){
+  const img=document.getElementById("miniAvatarPreview");
+  const zoomInput=document.getElementById("miniAvatarZoom");
+  const zoomLabel=document.getElementById("miniAvatarZoomValue");
+  if(zoomInput)zoomInput.value=String(pendingMiniAvatarZoom);
+  if(zoomLabel)zoomLabel.textContent=Math.round(pendingMiniAvatarZoom*100)+"%";
+  if(img)applyMiniAvatarCrop(img,pendingMiniAvatarPosition,pendingMiniAvatarZoom);
+}
+function openMiniAvatarEditor(){
+  if(!pendingAvatar&&!player.avatar){
+    document.getElementById("profileError").textContent="Najpierw wgraj zdjęcie awatara.";
+    return;
+  }
+  pendingMiniAvatarPosition={...(player.miniAvatarPosition||{x:50,y:50})};
+  pendingMiniAvatarZoom=Number(player.miniAvatarZoom)||1;
+  const img=document.getElementById("miniAvatarPreview");
+  img.onload=updateMiniAvatarCropPreview;
+  img.src=pendingAvatar||player.avatar;
+  if(img.complete&&img.naturalWidth)updateMiniAvatarCropPreview();
+  document.getElementById("miniAvatarEditor").classList.add("visible");
+}
+function closeMiniAvatarEditor(){
+  document.getElementById("miniAvatarEditor").classList.remove("visible");
+  miniAvatarCropDrag=null;
+}
+function startMiniAvatarCropDrag(event){
+  if(event.button!==undefined&&event.button!==0)return;
+  const frame=document.getElementById("miniAvatarCropFrame"),img=document.getElementById("miniAvatarPreview");
+  if(!frame||!img||!img.naturalWidth)return;
+  const rect=frame.getBoundingClientRect();
+  const scale=Math.max(rect.width/img.naturalWidth,rect.height/img.naturalHeight)*pendingMiniAvatarZoom;
+  miniAvatarCropDrag={startX:event.clientX,startY:event.clientY,startPosition:{...pendingMiniAvatarPosition},overflowX:Math.max(0,img.naturalWidth*scale-rect.width),overflowY:Math.max(0,img.naturalHeight*scale-rect.height)};
+  frame.classList.add("is-cropping");
+  event.preventDefault();
+}
+function moveMiniAvatarCrop(event){
+  if(!miniAvatarCropDrag)return;
+  if(event.pointerType==="mouse"&&event.buttons===0){endMiniAvatarCropDrag();return;}
+  const drag=miniAvatarCropDrag;
+  pendingMiniAvatarPosition={
+    x:drag.overflowX>0?Math.max(0,Math.min(100,drag.startPosition.x-(event.clientX-drag.startX)/drag.overflowX*100)):drag.startPosition.x,
+    y:drag.overflowY>0?Math.max(0,Math.min(100,drag.startPosition.y-(event.clientY-drag.startY)/drag.overflowY*100)):drag.startPosition.y
+  };
+  updateMiniAvatarCropPreview();
+  event.preventDefault?.();
+}
+function endMiniAvatarCropDrag(){
+  if(!miniAvatarCropDrag)return;
+  miniAvatarCropDrag=null;
+  document.getElementById("miniAvatarCropFrame")?.classList.remove("is-cropping");
+}
+function saveMiniAvatarCrop(){
+  player.miniAvatarPosition={...pendingMiniAvatarPosition};
+  player.miniAvatarZoom=pendingMiniAvatarZoom;
+  const img=document.getElementById("playerAvatar");
+  if(img?.naturalWidth)applyMiniAvatarCrop(img,player.miniAvatarPosition,player.miniAvatarZoom);
+  closeMiniAvatarEditor();
 }
 
 function startAvatarCropDrag(event){
@@ -8443,6 +8559,18 @@ document.addEventListener("pointercancel",endAvatarCropDrag);
 avatarCropFrame?.addEventListener("mousedown",startAvatarCropDrag);
 document.addEventListener("mousemove",moveAvatarCrop);
 document.addEventListener("mouseup",endAvatarCropDrag);
+const miniAvatarCropFrame=document.getElementById("miniAvatarCropFrame");
+miniAvatarCropFrame?.addEventListener("pointerdown",startMiniAvatarCropDrag);
+document.addEventListener("pointermove",moveMiniAvatarCrop,{passive:false});
+document.addEventListener("pointerup",endMiniAvatarCropDrag);
+document.addEventListener("pointercancel",endMiniAvatarCropDrag);
+miniAvatarCropFrame?.addEventListener("mousedown",startMiniAvatarCropDrag);
+document.addEventListener("mousemove",moveMiniAvatarCrop);
+document.addEventListener("mouseup",endMiniAvatarCropDrag);
+document.getElementById("miniAvatarZoom")?.addEventListener("input",function(){
+  pendingMiniAvatarZoom=Number(this.value)||1;
+  updateMiniAvatarCropPreview();
+});
 
 document.getElementById("avatarFileInput").addEventListener("change",async function(){
   const file=this.files[0];
@@ -8487,6 +8615,8 @@ async function saveProfile(){
 
   if(pendingAvatar)player.avatar=pendingAvatar;
   player.avatarPosition={...pendingAvatarPosition};
+  player.miniAvatarPosition={...pendingMiniAvatarPosition};
+  player.miniAvatarZoom=pendingMiniAvatarZoom;
 
   updatePlayerPanel();
 
