@@ -8447,7 +8447,9 @@ function applyMiniAvatarCrop(img,position,zoom){
   img.style.setProperty("object-fit","cover","important");
   img.style.setProperty("object-position",x+"% "+y+"%","important");
   img.style.setProperty("transform","scale("+scale+")","important");
-  img.style.setProperty("transform-origin","center center","important");
+  /* Przybliżenie zakotwiczamy u góry, aby górna część zdjęcia
+     (np. głowa postaci) nie znikała poza kadrem podczas zoomowania. */
+  img.style.setProperty("transform-origin","center top","important");
 }
 function updateMiniAvatarCropPreview(){
   const img=document.getElementById("miniAvatarPreview");
