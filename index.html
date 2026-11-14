@@ -3306,6 +3306,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .profile-form-card .field{margin-bottom:20px;color:#e9dfce;font-size:15px}
 .profile-form-card .field input{min-height:48px;margin-top:8px;padding:12px 14px}
 .profile-form-card input[type="file"]{padding:9px}
+.profile-form-card .field select{display:block;width:100%;min-height:48px;margin-top:8px;padding:12px 14px;border:1px solid #8d9b7b;border-radius:9px;background:#f5f1e7;color:#493d2c;font:600 14px Nunito,Arial,sans-serif}
+.profile-meta-panel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:2px 0 18px;padding:13px;border:1px solid rgba(224,199,142,.2);border-radius:11px;background:rgba(15,22,17,.28)}
+.profile-meta-item{min-width:0;display:flex;flex-direction:column;gap:5px}
+.profile-meta-item span{color:#bdb7a8;font-size:11px;line-height:1.3}
+.profile-meta-item strong{color:#f5f1e7;font-size:13px;overflow-wrap:anywhere}
+.profile-meta-item strong.is-online{color:#9fd28e}
+.profile-meta-item strong.is-offline{color:#c5b9a8}
 .profile-hint{margin-top:2px;color:#bdb4a4;font-size:12px;line-height:1.55}
 .profile-processing-status{min-height:16px;margin:-10px 0 8px;color:#a9c98a;font-size:12px;line-height:1.4}
 .profile-error{min-height:18px;margin-top:10px;color:#f0a39a;font-size:13px}
@@ -7015,6 +7022,36 @@ body.profile-editor-open #appStage{
           <h3 class="profile-section-title">Dane gracza</h3>
           <p class="profile-section-description">Ustaw nazwę i wybierz obraz, który będzie wyświetlany przy Twoim profilu.</p>
           <label class="field">Nazwa gracza<input id="nicknameInput" type="text" maxlength="20" minlength="3" placeholder="Wpisz nazwę gracza"></label>
+          <label class="field">Kraj
+            <select id="countrySelect">
+              <option value="PL">🇵🇱 PL · Polska</option>
+              <option value="DE">🇩🇪 DE · Niemcy</option>
+              <option value="GB">🇬🇧 GB · Wielka Brytania</option>
+              <option value="CZ">🇨🇿 CZ · Czechy</option>
+              <option value="SK">🇸🇰 SK · Słowacja</option>
+              <option value="UA">🇺🇦 UA · Ukraina</option>
+              <option value="FR">🇫🇷 FR · Francja</option>
+              <option value="ES">🇪🇸 ES · Hiszpania</option>
+              <option value="IT">🇮🇹 IT · Włochy</option>
+              <option value="NL">🇳🇱 NL · Holandia</option>
+              <option value="US">🇺🇸 US · Stany Zjednoczone</option>
+              <option value="CA">🇨🇦 CA · Kanada</option>
+            </select>
+          </label>
+          <label class="field">Tytuł gracza
+            <select id="playerTitleSelect">
+              <option value="">Bez tytułu</option>
+              <option value="Początkujący farmer">Początkujący farmer</option>
+              <option value="Młody gospodarz">Młody gospodarz</option>
+              <option value="Miłośnik zwierząt">Miłośnik zwierząt</option>
+              <option value="Mistrz plonów">Mistrz plonów</option>
+            </select>
+          </label>
+          <div class="profile-meta-panel" aria-label="Informacje automatyczne o graczu">
+            <div class="profile-meta-item"><span>Data dołączenia</span><strong id="profileJoinDate">—</strong></div>
+            <div class="profile-meta-item"><span>Status</span><strong id="profileOnlineStatus">—</strong></div>
+            <div class="profile-meta-item"><span>Liczba dni w grze</span><strong id="profileDaysPlayed">—</strong></div>
+          </div>
           <label class="field">Link do zdjęcia<input id="avatarUrlInput" type="url" placeholder="https://adres-zdjecia.jpg"></label>
           <label class="field">Lub wgraj zdjęcie z urządzenia<input id="avatarFileInput" type="file" accept="image/gif,image/png,image/jpeg,image/webp"></label>
           <div class="profile-processing-status" id="avatarProcessingStatus" aria-live="polite"></div>
@@ -7643,6 +7680,9 @@ document.addEventListener("keydown",event=>{
 
 let player={
   nickname:"Nowy gospodarz",
+  countryCode:"PL",
+  playerTitle:"",
+  joinedAt:"",
   level:1,
   xp:0,
   xpNeeded:100,
@@ -7663,6 +7703,7 @@ function formatDiamonds(value){
 
 function updatePlayerPanel(){
   document.getElementById("playerName").textContent=player.nickname;
+  updateProfileMetadata();
   document.getElementById("level").textContent=player.level;
   document.getElementById("xpText").textContent=player.xp+" / "+player.xpNeeded+" XP";
   document.getElementById("xpFill").style.width=Math.min(100,player.xp/player.xpNeeded*100)+"%";
@@ -7765,6 +7806,9 @@ async function loadDemoProfile(){
   }catch(error){
     console.warn("Nie udało się odczytać profilu lub awatara.",error);
   }
+  if(!player.joinedAt)player.joinedAt=new Date().toISOString();
+  if(!player.countryCode)player.countryCode="PL";
+  if(typeof player.playerTitle!=="string")player.playerTitle="";
   updatePlayerPanel();
 }
 
@@ -7787,8 +7831,46 @@ async function saveDemoProfile(){
 
 /* EDYCJA PROFILU */
 
+function getCountryFlag(code){
+  return String(code||"PL").toUpperCase().replace(/[A-Z]/g,char=>String.fromCodePoint(127397+char.charCodeAt(0)));
+}
+
+function formatJoinDate(value){
+  const date=new Date(value);
+  if(!value||Number.isNaN(date.getTime()))return "—";
+  return new Intl.DateTimeFormat("pl-PL",{day:"2-digit",month:"2-digit",year:"numeric"}).format(date);
+}
+
+function getDaysInGame(){
+  if(!player.joinedAt)return 1;
+  const joined=new Date(player.joinedAt);
+  const today=new Date();
+  joined.setHours(0,0,0,0);
+  today.setHours(0,0,0,0);
+  return Math.max(1,Math.floor((today-joined)/86400000)+1);
+}
+
+function updateProfileMetadata(){
+  const joined=document.getElementById("profileJoinDate");
+  const days=document.getElementById("profileDaysPlayed");
+  const status=document.getElementById("profileOnlineStatus");
+  if(joined)joined.textContent=formatJoinDate(player.joinedAt);
+  if(days)days.textContent=getDaysInGame()+" "+(getDaysInGame()===1?"dzień":"dni");
+  if(status){
+    const online=document.visibilityState==="visible";
+    status.textContent=online?"🟢 Online":"⚫ Offline";
+    status.classList.toggle("is-online",online);
+    status.classList.toggle("is-offline",!online);
+  }
+}
+
+document.addEventListener("visibilitychange",updateProfileMetadata);
+
 function openProfileEditor(){
   document.getElementById("nicknameInput").value=player.nickname;
+  document.getElementById("countrySelect").value=player.countryCode||"PL";
+  document.getElementById("playerTitleSelect").value=player.playerTitle||"";
+  updateProfileMetadata();
   document.getElementById("avatarUrlInput").value="";
   document.getElementById("avatarFileInput").value="";
   document.getElementById("profileError").textContent="";
@@ -7889,6 +7971,8 @@ document.getElementById("avatarFileInput").addEventListener("change",async funct
 
 async function saveProfile(){
   const nickname=document.getElementById("nicknameInput").value.trim();
+  const countryCode=document.getElementById("countrySelect").value||"PL";
+  const playerTitle=document.getElementById("playerTitleSelect").value||"";
   const url=document.getElementById("avatarUrlInput").value.trim();
   const error=document.getElementById("profileError");
   error.textContent="";
@@ -7913,6 +7997,9 @@ async function saveProfile(){
 
   const previous={...player};
   player.nickname=nickname;
+  player.countryCode=countryCode;
+  player.playerTitle=playerTitle;
+  if(!player.joinedAt)player.joinedAt=new Date().toISOString();
 
   if(pendingAvatar)player.avatar=pendingAvatar;
   else if(url)player.avatar=url;
