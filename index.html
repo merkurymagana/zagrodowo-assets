@@ -6822,9 +6822,18 @@ body.profile-editor-open #appStage{
 }
 
 
-#profileOverlay #avatarCropFrame{cursor:grab!important;touch-action:none!important;user-select:none!important}
+#profileOverlay #avatarCropFrame{
+  cursor:grab!important;
+  touch-action:none!important;
+  user-select:none!important;
+  -webkit-user-select:none!important;
+  -webkit-user-drag:none!important;
+}
 #profileOverlay #avatarCropFrame.is-cropping{cursor:grabbing!important}
-#profileOverlay #avatarCropFrame #previewAvatar{pointer-events:none!important}
+#profileOverlay #avatarCropFrame #previewAvatar{
+  pointer-events:none!important;
+  -webkit-user-drag:none!important;
+}
 #profileOverlay .profile-avatar-crop-hint{color:rgba(245,241,231,.9)!important;font:500 11px/1.35 'Nunito',Arial,sans-serif!important}
 
 </style>
@@ -8393,15 +8402,27 @@ function startAvatarCropDrag(event){
 function moveAvatarCrop(event){
   if(!avatarCropDrag||event.pointerId!==avatarCropDrag.pointerId)return;
   const drag=avatarCropDrag;
-  const x=drag.overflowX>0?drag.startPosition.x-(event.clientX-drag.startX)/drag.overflowX*100:50;
-  const y=drag.overflowY>0?drag.startPosition.y-(event.clientY-drag.startY)/drag.overflowY*100:50;
-  pendingAvatarPosition={x:Math.max(0,Math.min(100,x)),y:Math.max(0,Math.min(100,y))};
+  /* Większa czułość: użytkownik może przesunąć kadr krótszym ruchem,
+     bez zmiany zakresu dostępnego obrazu. */
+  const sensitivity=2.5;
+  const x=drag.overflowX>0
+    ?drag.startPosition.x-(event.clientX-drag.startX)/drag.overflowX*100*sensitivity
+    :drag.startPosition.x;
+  const y=drag.overflowY>0
+    ?drag.startPosition.y-(event.clientY-drag.startY)/drag.overflowY*100*sensitivity
+    :drag.startPosition.y;
+  pendingAvatarPosition={
+    x:Math.max(0,Math.min(100,x)),
+    y:Math.max(0,Math.min(100,y))
+  };
   updateAvatarCropPosition();
 }
 function endAvatarCropDrag(event){
   if(!avatarCropDrag||event.pointerId!==avatarCropDrag.pointerId)return;
+  const frame=document.getElementById("avatarCropFrame");
+  try{if(frame?.hasPointerCapture(event.pointerId))frame.releasePointerCapture(event.pointerId)}catch(_){}
   avatarCropDrag=null;
-  document.getElementById("avatarCropFrame")?.classList.remove("is-cropping");
+  frame?.classList.remove("is-cropping");
 }
 const avatarCropFrame=document.getElementById("avatarCropFrame");
 avatarCropFrame?.addEventListener("pointerdown",startAvatarCropDrag);
