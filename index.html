@@ -6481,6 +6481,32 @@ body.profile-editor-open #appStage{
   line-height:1.2!important;
   color:#FFFFFF!important;
 }
+
+/* Pola i ramki w kontenerze „Dane gracza” — czarne tło i nasza zieleń. */
+#profileOverlay .profile-form-card .field input:not([type="file"]),
+#profileOverlay .profile-form-card .field select,
+#profileOverlay .profile-form-card .profile-country-value,
+#profileOverlay .profile-form-card input[type="file"]{
+  background:#000000!important;
+  background-image:none!important;
+  color:#FFFFFF!important;
+  border:1px solid #72965B!important;
+  border-radius:9px!important;
+  box-shadow:none!important;
+}
+#profileOverlay .profile-form-card .field input::placeholder{
+  color:rgba(255,255,255,.58)!important;
+}
+#profileOverlay .profile-form-card .field input:focus,
+#profileOverlay .profile-form-card .field select:focus,
+#profileOverlay .profile-form-card input[type="file"]:focus{
+  outline:2px solid #72965B!important;
+  outline-offset:2px!important;
+}
+#profileOverlay .profile-form-card .profile-meta-panel{
+  background:#000000!important;
+  border:1px solid #72965B!important;
+}
 </style>
 </head>
 
