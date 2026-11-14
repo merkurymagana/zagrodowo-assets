@@ -8522,24 +8522,24 @@ function startAvatarCropDrag(event){
   const frame=document.getElementById("avatarCropFrame");
   const image=document.getElementById("previewAvatar");
   if(!frame||!image||!image.getAttribute("src")||image.naturalWidth===0)return;
-  const rect=frame.getBoundingClientRect();
-  const scale=Math.max(rect.width/image.naturalWidth,rect.height/image.naturalHeight);
+  const width=frame.clientWidth;
+  const height=frame.clientHeight;
+  if(!width||!height)return;
+  const scale=Math.max(width/image.naturalWidth,height/image.naturalHeight);
   avatarCropDrag={
+    pointerId:event.pointerId,
     lastX:event.clientX,
     lastY:event.clientY,
     position:{...pendingAvatarPosition},
-    overflowX:Math.max(0,image.naturalWidth*scale-rect.width),
-    overflowY:Math.max(0,image.naturalHeight*scale-rect.height)
+    overflowX:Math.max(0,image.naturalWidth*scale-width),
+    overflowY:Math.max(0,image.naturalHeight*scale-height)
   };
+  try{frame.setPointerCapture(event.pointerId);}catch(_){}
   frame.classList.add("is-cropping");
   event.preventDefault();
 }
 function moveAvatarCrop(event){
-  if(!avatarCropDrag)return;
-  if(event.pointerType==="mouse"&&event.buttons===0){
-    endAvatarCropDrag();
-    return;
-  }
+  if(!avatarCropDrag||event.pointerId!==avatarCropDrag.pointerId)return;
   const drag=avatarCropDrag;
   const deltaX=event.clientX-drag.lastX;
   const deltaY=event.clientY-drag.lastY;
@@ -8550,9 +8550,6 @@ function moveAvatarCrop(event){
     ?Math.max(0,Math.min(100,drag.position.y-deltaY/drag.overflowY*100))
     :drag.position.y;
   pendingAvatarPosition={x:nextX,y:nextY};
-  /* Aktualizujemy punkt odniesienia przy każdym ruchu. Gdy kadr dojdzie
-     do krawędzi, nadmiar ruchu nie kumuluje się i nie powoduje odbicia
-     po zmianie kierunku przeciągania. */
   drag.lastX=event.clientX;
   drag.lastY=event.clientY;
   drag.position={...pendingAvatarPosition};
@@ -8569,10 +8566,6 @@ avatarCropFrame?.addEventListener("pointerdown",startAvatarCropDrag);
 document.addEventListener("pointermove",moveAvatarCrop,{passive:false});
 document.addEventListener("pointerup",endAvatarCropDrag);
 document.addEventListener("pointercancel",endAvatarCropDrag);
-/* Zapasowa obsługa klasycznego przeciągania myszą w przeglądarkach desktopowych. */
-avatarCropFrame?.addEventListener("mousedown",startAvatarCropDrag);
-document.addEventListener("mousemove",moveAvatarCrop);
-document.addEventListener("mouseup",endAvatarCropDrag);
 const miniAvatarCropFrame=document.getElementById("miniAvatarCropFrame");
 miniAvatarCropFrame?.addEventListener("pointerdown",startMiniAvatarCropDrag);
 miniAvatarCropFrame?.addEventListener("pointermove",moveMiniAvatarCrop,{passive:false});
