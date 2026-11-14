@@ -7499,7 +7499,7 @@ body.profile-editor-open #appStage{
         <label for="miniAvatarZoom">Przybliżenie <strong id="miniAvatarZoomValue">100%</strong></label>
         <input id="miniAvatarZoom" type="range" min="1" max="3" step="0.05" value="1">
       </div>
-      <div class="mini-avatar-editor-hint">Przeciągnij zdjęcie myszką lub palcem, aby zmienić kadr.</div>
+      <div class="mini-avatar-editor-hint">Przeciągnij zdjęcie myszką lub palcem. Następnie kliknij „Zapisz zmiany” w profilu, aby zachować kadr.</div>
       <div class="mini-avatar-editor-actions">
         <button type="button" class="secondary" onclick="closeMiniAvatarEditor()">Anuluj</button>
         <button type="button" onclick="saveMiniAvatarCrop()">Zapisz kadr</button>
@@ -8174,7 +8174,7 @@ function setAvatar(src){
     img.onload=()=>{
       img.style.setProperty("display","block","important");
       placeholder.style.setProperty("display","none","important");
-      applyMiniAvatarCrop(img,player.miniAvatarPosition||{x:50,y:50},player.miniAvatarZoom||1);
+      applyMiniAvatarCrop(img,player.miniAvatarPosition||{x:50,y:50},player.miniAvatarZoom||1,img.closest(".avatar-frame"));
     };
     img.onerror=()=>{
       img.removeAttribute("src");
@@ -8443,10 +8443,12 @@ function getMiniAvatarCropMetrics(img,frame,zoom){
   const height=img.naturalHeight*scale;
   return {width,height,overflowX:Math.max(0,width-frameWidth),overflowY:Math.max(0,height-frameHeight)};
 }
-function applyMiniAvatarCrop(img,position,zoom){
+function applyMiniAvatarCrop(img,position,zoom,frame){
   if(!img||!img.naturalWidth)return;
-  const frame=document.getElementById("miniAvatarCropFrame");
-  if(!frame)return;
+  /* Podgląd korzysta z kwadratu edytora, a miniatura w HUD z własnej,
+     rzeczywistej ramki. Nie wolno mierzyć ukrytego edytora przy renderowaniu HUD. */
+  frame=frame||document.getElementById("miniAvatarCropFrame");
+  if(!frame||!frame.clientWidth||!frame.clientHeight)return;
   const x=Math.max(0,Math.min(100,Number(position?.x??50)));
   const y=Math.max(0,Math.min(100,Number(position?.y??50)));
   const metrics=getMiniAvatarCropMetrics(img,frame,zoom);
@@ -8472,7 +8474,7 @@ function updateMiniAvatarCropPreview(){
   const zoomLabel=document.getElementById("miniAvatarZoomValue");
   if(zoomInput)zoomInput.value=String(pendingMiniAvatarZoom);
   if(zoomLabel)zoomLabel.textContent=Math.round(pendingMiniAvatarZoom*100)+"%";
-  if(img)applyMiniAvatarCrop(img,pendingMiniAvatarPosition,pendingMiniAvatarZoom);
+  if(img)applyMiniAvatarCrop(img,pendingMiniAvatarPosition,pendingMiniAvatarZoom,document.getElementById("miniAvatarCropFrame"));
 }
 function openMiniAvatarEditor(){
   if(!pendingAvatar&&!player.avatar){
@@ -8588,22 +8590,22 @@ avatarCropFrame?.addEventListener("mousedown",startAvatarCropDrag);
 document.addEventListener("mousemove",moveAvatarCrop);
 document.addEventListener("mouseup",endAvatarCropDrag);
 const miniAvatarCropFrame=document.getElementById("miniAvatarCropFrame");
-/* Jeden spójny mechanizm Pointer Events dla myszy, dotyku i rysika.
-   Przechwycenie wskaźnika na ramce gwarantuje odbieranie ruchu także wtedy,
-   gdy kursor wyjdzie poza kwadrat podczas przeciągania. */
-miniAvatarCropFrame?.addEventListener("pointerdown",event=>{
-  if(!event.isPrimary||event.button!==0)return;
+/* Delegacja w fazie capture: odbieramy zdarzenia niezależnie od tego,
+   który element wewnątrz kwadratu został wskazany przez przeglądarkę. */
+window.addEventListener("pointerdown",event=>{
+  const frame=event.target instanceof Element?event.target.closest("#miniAvatarCropFrame"):null;
+  if(!frame||!event.isPrimary||event.button!==0)return;
   startMiniAvatarCropDrag(event);
   if(miniAvatarCropDrag){
-    try{miniAvatarCropFrame.setPointerCapture(event.pointerId)}catch(_){}
+    try{frame.setPointerCapture(event.pointerId)}catch(_){}
   }
-});
-miniAvatarCropFrame?.addEventListener("pointermove",event=>{
+},{capture:true});
+window.addEventListener("pointermove",event=>{
   if(miniAvatarCropDrag)moveMiniAvatarCrop(event);
-},{passive:false});
-miniAvatarCropFrame?.addEventListener("pointerup",endMiniAvatarCropDrag);
-miniAvatarCropFrame?.addEventListener("pointercancel",endMiniAvatarCropDrag);
-miniAvatarCropFrame?.addEventListener("lostpointercapture",endMiniAvatarCropDrag);
+},{capture:true,passive:false});
+window.addEventListener("pointerup",endMiniAvatarCropDrag,{capture:true});
+window.addEventListener("pointercancel",endMiniAvatarCropDrag,{capture:true});
+window.addEventListener("lostpointercapture",endMiniAvatarCropDrag,{capture:true});
 document.getElementById("miniAvatarZoom")?.addEventListener("input",function(){
   pendingMiniAvatarZoom=Number(this.value)||1;
   updateMiniAvatarCropPreview();
