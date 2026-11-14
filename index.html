@@ -8490,7 +8490,13 @@ function startMiniAvatarCropDrag(event){
   const frame=document.getElementById("miniAvatarCropFrame"),img=document.getElementById("miniAvatarPreview");
   if(!frame||!img||!img.naturalWidth)return;
   const metrics=getMiniAvatarCropMetrics(img,frame,pendingMiniAvatarZoom);
-  miniAvatarCropDrag={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startPosition:{...pendingMiniAvatarPosition},overflowX:metrics.overflowX,overflowY:metrics.overflowY};
+  const frameRect=frame.getBoundingClientRect();
+  /* Cały interfejs Zagrodowa może być skalowany transformacją (szczególnie
+     na ekranach dotykowych). Współrzędne pointer są wtedy ekranowe, a zakres
+     kadru jest liczony w pikselach układu strony — przeliczamy obie osie. */
+  const coordinateScaleX=frame.offsetWidth?frameRect.width/frame.offsetWidth:1;
+  const coordinateScaleY=frame.offsetHeight?frameRect.height/frame.offsetHeight:1;
+  miniAvatarCropDrag={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startPosition:{...pendingMiniAvatarPosition},overflowX:metrics.overflowX,overflowY:metrics.overflowY,coordinateScaleX:coordinateScaleX||1,coordinateScaleY:coordinateScaleY||1};
   frame.classList.add("is-cropping");
   event.preventDefault();
 }
@@ -8499,9 +8505,11 @@ function moveMiniAvatarCrop(event){
   if(miniAvatarCropDrag.pointerId!==undefined&&event.pointerId!==miniAvatarCropDrag.pointerId)return;
   if(event.pointerType==="mouse"&&event.buttons===0){endMiniAvatarCropDrag();return;}
   const drag=miniAvatarCropDrag;
+  const deltaX=(event.clientX-drag.startX)/(drag.coordinateScaleX||1);
+  const deltaY=(event.clientY-drag.startY)/(drag.coordinateScaleY||1);
   pendingMiniAvatarPosition={
-    x:drag.overflowX>0?Math.max(0,Math.min(100,drag.startPosition.x-(event.clientX-drag.startX)/drag.overflowX*100)):drag.startPosition.x,
-    y:drag.overflowY>0?Math.max(0,Math.min(100,drag.startPosition.y-(event.clientY-drag.startY)/drag.overflowY*100)):drag.startPosition.y
+    x:drag.overflowX>0?Math.max(0,Math.min(100,drag.startPosition.x-deltaX/drag.overflowX*100)):drag.startPosition.x,
+    y:drag.overflowY>0?Math.max(0,Math.min(100,drag.startPosition.y-deltaY/drag.overflowY*100)):drag.startPosition.y
   };
   updateMiniAvatarCropPreview();
   event.preventDefault?.();
