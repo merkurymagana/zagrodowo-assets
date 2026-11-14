@@ -6689,6 +6689,23 @@ body.profile-editor-open #appStage{
   }
 }
 
+
+/* USTAWIENIA — WYGLĄD PROFILU */
+.settings-profile-panel{width:min(680px,calc(100% - 32px));margin:24px auto;padding:24px;border:1px solid #72965B;border-radius:12px;background:#111a;color:#F5F1E7}
+.settings-section-heading{margin:0 0 8px;font:300 22px 'Exo 2',sans-serif;color:#F5F1E7}
+.settings-section-description{margin:0 0 22px;font:500 13px 'Nunito',sans-serif;color:#F5F1E7;line-height:1.5}
+.settings-profile-card{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.settings-profile-field{display:flex;flex-direction:column;gap:8px;font:500 13px 'Nunito',sans-serif;color:#F5F1E7}
+.settings-profile-field select{width:100%;min-height:40px;padding:8px 10px;border:1px solid #72965B;border-radius:6px;background:#050505;color:#F5F1E7;font:500 13px 'Nunito',sans-serif}
+.settings-badge-preview{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:14px;border:1px solid #72965B;border-radius:8px;background:#050505}
+.settings-preview-label{font:500 12px 'Nunito',sans-serif;color:#F5F1E7}
+.player-title-badge{display:inline-flex;align-items:center;justify-content:center;padding:5px 12px;border:1px solid transparent;border-radius:999px;font:700 12px 'Nunito',sans-serif;line-height:1.2}
+.title-style-green{background:#72965B;color:#F5F1E7;border-color:#91b477}
+.title-style-chestnut{background:#76513A;color:#F5F1E7;border-color:#a77b5e}
+.title-style-gold{background:#E9C342;color:#493d2c;border-color:#f5dc79}
+.settings-profile-status{grid-column:1/-1;min-height:18px;margin:0;color:#F5F1E7;font:500 12px 'Nunito',sans-serif}
+.settings-profile-actions{grid-column:1/-1;display:flex;justify-content:flex-end}
+@media(max-width:620px){.settings-profile-panel{width:calc(100% - 20px);margin:14px auto;padding:16px}.settings-profile-card{grid-template-columns:1fr}.settings-badge-preview,.settings-profile-status,.settings-profile-actions{grid-column:1}}
 </style>
 </head>
 
@@ -7118,6 +7135,37 @@ body.profile-editor-open #appStage{
                 <div class="premium-note">Szczegóły pakietów diamentów, ceny oraz czas trwania konta Premium zostaną ustalone później.</div>
               </div>
 
+              <section class="settings-profile-panel" id="settingsContent" style="display:none" aria-label="Wygląd profilu">
+                <h2 class="settings-section-heading">Wygląd profilu</h2>
+                <p class="settings-section-description">Wybierz tytuł, który będzie Cię reprezentował, i dostosuj wygląd jego odznaki.</p>
+                <div class="settings-profile-card">
+                  <label class="settings-profile-field">Tytuł gracza
+                    <select id="settingsPlayerTitleSelect">
+                      <option value="">Bez tytułu</option>
+                      <option value="Początkujący farmer">Początkujący farmer</option>
+                      <option value="Młody gospodarz">Młody gospodarz</option>
+                      <option value="Miłośnik zwierząt">Miłośnik zwierząt</option>
+                      <option value="Mistrz plonów">Mistrz plonów</option>
+                    </select>
+                  </label>
+                  <label class="settings-profile-field">Wygląd odznaki
+                    <select id="settingsTitleStyleSelect">
+                      <option value="green">Zielona</option>
+                      <option value="chestnut">Kasztanowa</option>
+                      <option value="gold">Złota</option>
+                    </select>
+                  </label>
+                  <div class="settings-badge-preview">
+                    <span class="settings-preview-label">Podgląd odznaki</span>
+                    <span id="settingsTitleBadgePreview" class="player-title-badge title-style-green">Bez tytułu</span>
+                  </div>
+                  <p id="settingsProfileStatus" class="settings-profile-status" aria-live="polite"></p>
+                  <div class="settings-profile-actions">
+                    <button type="button" onclick="saveProfileAppearance()">Zapisz zmiany</button>
+                  </div>
+                </div>
+              </section>
+
               <div class="view-placeholder" id="genericViewContent">
                 <div class="big-icon" id="viewIcon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12C7 12 4 9 4 4c5 0 8 3 8 8Z"/><path d="M12 15c0-4 3-7 8-7 0 5-3 8-8 8"/></svg></div>
                 <h2 id="viewSubTitle">Twoja przygoda dopiero się zaczyna</h2>
@@ -7269,15 +7317,9 @@ body.profile-editor-open #appStage{
           <div class="field profile-data-row">Kraj połączenia internetowego
             <div id="profileCountry" class="profile-country-value" aria-live="polite">Ustalanie kraju…</div>
           </div>
-          <label class="field profile-data-row">Tytuł gracza
-            <select id="playerTitleSelect">
-              <option value="">Bez tytułu</option>
-              <option value="Początkujący farmer">Początkujący farmer</option>
-              <option value="Młody gospodarz">Młody gospodarz</option>
-              <option value="Miłośnik zwierząt">Miłośnik zwierząt</option>
-              <option value="Mistrz plonów">Mistrz plonów</option>
-            </select>
-          </label>
+          <div class="field profile-data-row">Tytuł gracza
+            <strong id="profilePlayerTitle" class="profile-data-value">Bez tytułu</strong>
+          </div>
           <div class="profile-meta-panel" aria-label="Informacje automatyczne o graczu">
             <div class="profile-meta-item"><span>Data dołączenia</span><strong id="profileJoinDate">—</strong></div>
             <div class="profile-meta-item"><span>Status</span><strong id="profileOnlineStatus">—</strong></div>
@@ -7914,6 +7956,7 @@ let player={
   countryName:"",
   deviceLanguage:(navigator.languages&&navigator.languages[0])||navigator.language||"pl",
   playerTitle:"",
+  titleBadgeStyle:"green",
   joinedAt:"",
   level:1,
   xp:0,
@@ -7936,6 +7979,8 @@ function formatDiamonds(value){
 function updatePlayerPanel(){
   document.getElementById("playerName").textContent=player.nickname;
   updateProfileMetadata();
+  const profileTitle=document.getElementById("profilePlayerTitle");
+  if(profileTitle)profileTitle.textContent=player.playerTitle||"Bez tytułu";
   document.getElementById("level").textContent=player.level;
   document.getElementById("xpText").textContent=player.xp+" / "+player.xpNeeded+" XP";
   document.getElementById("xpFill").style.width=Math.min(100,player.xp/player.xpNeeded*100)+"%";
@@ -8043,6 +8088,7 @@ async function loadDemoProfile(){
   if(typeof player.countryName!=="string")player.countryName="";
   player.deviceLanguage=(navigator.languages&&navigator.languages[0])||navigator.language||"pl";
   if(typeof player.playerTitle!=="string")player.playerTitle="";
+  if(typeof player.titleBadgeStyle!=="string")player.titleBadgeStyle="green";
   updatePlayerPanel();
 }
 
@@ -8136,7 +8182,6 @@ document.addEventListener("visibilitychange",updateProfileMetadata);
 
 function openProfileEditor(){
   updateCountryDisplay();
-  document.getElementById("playerTitleSelect").value=player.playerTitle||"";
   updateProfileMetadata();
   document.getElementById("avatarFileInput").value="";
   document.getElementById("profileError").textContent="";
@@ -8229,12 +8274,10 @@ document.getElementById("avatarFileInput").addEventListener("change",async funct
 });
 
 async function saveProfile(){
-  const playerTitle=document.getElementById("playerTitleSelect").value||"";
   const error=document.getElementById("profileError");
   error.textContent="";
 
   const previous={...player};
-  player.playerTitle=playerTitle;
   if(!player.joinedAt)player.joinedAt=new Date().toISOString();
 
   if(pendingAvatar)player.avatar=pendingAvatar;
@@ -8248,6 +8291,43 @@ async function saveProfile(){
   }
 
   closeProfileEditor();
+}
+
+function renderProfileAppearanceSettings(){
+  const titleSelect=document.getElementById("settingsPlayerTitleSelect");
+  const styleSelect=document.getElementById("settingsTitleStyleSelect");
+  if(!titleSelect||!styleSelect)return;
+  titleSelect.value=player.playerTitle||"";
+  styleSelect.value=player.titleBadgeStyle||"green";
+  updateTitleBadgePreview();
+}
+
+function updateTitleBadgePreview(){
+  const title=document.getElementById("settingsPlayerTitleSelect")?.value||"";
+  const style=document.getElementById("settingsTitleStyleSelect")?.value||"green";
+  const preview=document.getElementById("settingsTitleBadgePreview");
+  if(!preview)return;
+  preview.textContent=title||"Bez tytułu";
+  preview.className="player-title-badge title-style-"+style;
+}
+
+document.getElementById("settingsPlayerTitleSelect")?.addEventListener("change",updateTitleBadgePreview);
+document.getElementById("settingsTitleStyleSelect")?.addEventListener("change",updateTitleBadgePreview);
+
+async function saveProfileAppearance(){
+  const status=document.getElementById("settingsProfileStatus");
+  const previous={...player};
+  player.playerTitle=document.getElementById("settingsPlayerTitleSelect").value||"";
+  player.titleBadgeStyle=document.getElementById("settingsTitleStyleSelect").value||"green";
+  if(!await saveDemoProfile()){
+    player=previous;
+    status.textContent="Nie udało się zapisać zmian. Spróbuj ponownie.";
+    renderProfileAppearanceSettings();
+    return;
+  }
+  updatePlayerPanel();
+  status.textContent="Zmiany zostały zapisane.";
+  updateTitleBadgePreview();
 }
 
 /* KAMERA WYŁĄCZONA */
@@ -8372,10 +8452,13 @@ function openGameView(name,button){
 
     document.getElementById("mapContent").style.display=isMap?"block":"none";
     document.getElementById("premiumContent").style.display=isPremium?"block":"none";
-    document.getElementById("genericViewContent").style.display=(!isMap&&!isNeighbors&&!isPremium)?"block":"none";
+    const isSettings=name==="settings";
+    document.getElementById("genericViewContent").style.display=(!isMap&&!isNeighbors&&!isPremium&&!isSettings)?"block":"none";
+    document.getElementById("settingsContent").style.display=isSettings?"block":"none";
     document.getElementById("neighborsContent").style.display=isNeighbors?"block":"none";
+    if(isSettings)renderProfileAppearanceSettings();
 
-    if(!isMap&&!isNeighbors&&!isPremium){
+    if(!isMap&&!isNeighbors&&!isPremium&&!isSettings){
       document.getElementById("viewIcon").textContent=view.icon;
       document.getElementById("viewSubTitle").textContent=view.sub;
       document.getElementById("viewText").textContent=view.text;
