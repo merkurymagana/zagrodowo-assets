@@ -7052,7 +7052,6 @@ body.profile-editor-open #appStage{
             <div class="profile-meta-item"><span>Status</span><strong id="profileOnlineStatus">—</strong></div>
             <div class="profile-meta-item"><span>Liczba dni w grze</span><strong id="profileDaysPlayed">—</strong></div>
           </div>
-          <label class="field">Link do zdjęcia<input id="avatarUrlInput" type="url" placeholder="https://adres-zdjecia.jpg"></label>
           <label class="field">Lub wgraj zdjęcie z urządzenia<input id="avatarFileInput" type="file" accept="image/gif,image/png,image/jpeg,image/webp"></label>
           <div class="profile-processing-status" id="avatarProcessingStatus" aria-live="polite"></div>
           <div class="profile-hint">Zdjęcie zostanie dopasowane do podglądu awatara. Obsługiwane formaty: GIF, JPG, PNG i WEBP (maks. 10 MB).</div>
@@ -7871,7 +7870,6 @@ function openProfileEditor(){
   document.getElementById("countrySelect").value=player.countryCode||"PL";
   document.getElementById("playerTitleSelect").value=player.playerTitle||"";
   updateProfileMetadata();
-  document.getElementById("avatarUrlInput").value="";
   document.getElementById("avatarFileInput").value="";
   document.getElementById("profileError").textContent="";
   pendingAvatar="";
@@ -7918,13 +7916,6 @@ function setPreviewAvatar(src){
     placeholder.style.setProperty("display","block","important");
   }
 }
-
-document.getElementById("avatarUrlInput").addEventListener("input",function(){
-  const value=this.value.trim();
-  pendingAvatar="";
-  if(value)setPreviewAvatar(value);
-  else setPreviewAvatar(player.avatar);
-});
 
 function readAvatarFile(file){
   return new Promise((resolve,reject)=>{
@@ -7973,26 +7964,12 @@ async function saveProfile(){
   const nickname=document.getElementById("nicknameInput").value.trim();
   const countryCode=document.getElementById("countrySelect").value||"PL";
   const playerTitle=document.getElementById("playerTitleSelect").value||"";
-  const url=document.getElementById("avatarUrlInput").value.trim();
   const error=document.getElementById("profileError");
   error.textContent="";
 
   if(nickname.length<3){
     error.textContent="Nazwa gracza musi mieć co najmniej 3 znaki.";
     return;
-  }
-
-  if(url){
-    try{
-      const parsed=new URL(url);
-      if(!["http:","https:"].includes(parsed.protocol)){
-        error.textContent="Link musi zaczynać się od https:// lub http://.";
-        return;
-      }
-    }catch(e){
-      error.textContent="Wklej poprawny adres zdjęcia.";
-      return;
-    }
   }
 
   const previous={...player};
@@ -8002,7 +7979,6 @@ async function saveProfile(){
   if(!player.joinedAt)player.joinedAt=new Date().toISOString();
 
   if(pendingAvatar)player.avatar=pendingAvatar;
-  else if(url)player.avatar=url;
 
   updatePlayerPanel();
 
