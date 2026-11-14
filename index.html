@@ -6344,7 +6344,6 @@ body.profile-editor-open #appStage{
 #playerPanel .player-level .xp-inline,
 #playerPanel .xp-label,
 #playerPanel .xp-label *,
-#profileOverlay .profile-heading-copy p,
 #game .side-menu button::after,
 #game > nav.side-menu button::after,
 #playerPanel .side-menu button::after,
@@ -6353,6 +6352,18 @@ body.profile-editor-open #appStage{
   font:500 13px/1.2 'Nunito',Arial,sans-serif!important;
   font-style:normal!important;
   letter-spacing:normal!important;
+}
+
+/* Edytor profilu jest poza skalowaną planszą gry, dlatego dopasowujemy
+   rozmiar opisu do rzeczywistej skali tekstów HUD-u. */
+#profileOverlay .profile-heading-copy p{
+  font-family:'Nunito',Arial,sans-serif!important;
+  font-size:calc(13px * var(--stage-scale,1))!important;
+  font-weight:500!important;
+  font-style:normal!important;
+  line-height:1.2!important;
+  letter-spacing:normal!important;
+  color:#FFFFFF!important;
 }
 </style>
 </head>
@@ -8911,7 +8922,9 @@ renderNeighbors();
       const scale=portrait
         ? width/DESIGN_WIDTH
         : Math.min(width/DESIGN_WIDTH,height/DESIGN_HEIGHT);
-      stage.style.setProperty("--stage-scale",String(Math.max(.1,scale)));
+      const stageScale=Math.max(.1,scale);
+       stage.style.setProperty("--stage-scale",String(stageScale));
+       document.documentElement.style.setProperty("--stage-scale",String(stageScale));
     });
   }
   window.addEventListener("resize",fit,{passive:true});
