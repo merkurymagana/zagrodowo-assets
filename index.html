@@ -6592,6 +6592,15 @@ body.profile-editor-open #appStage{
   }
 }
 
+
+#profileOverlay .profile-form-card .profile-data-value{
+  display:block!important;
+  max-width:58%!important;
+  color:#FFFFFF!important;
+  font:500 13px/1.2 'Nunito',Arial,sans-serif!important;
+  text-align:right!important;
+  overflow-wrap:anywhere!important;
+}
 </style>
 </head>
 
@@ -7166,6 +7175,9 @@ body.profile-editor-open #appStage{
         <section class="profile-form-card" aria-label="Dane profilu">
           <h3 class="profile-section-title">Dane gracza</h3>
           <p class="profile-section-description"></p>
+          <div class="field profile-data-row">Nazwa gracza
+            <strong id="profilePlayerName" class="profile-data-value">—</strong>
+          </div>
           <div class="field profile-data-row">Kraj połączenia internetowego
             <div id="profileCountry" class="profile-country-value" aria-live="polite">Ustalanie kraju…</div>
           </div>
@@ -8017,7 +8029,9 @@ function getDaysInGame(){
 }
 
 function updateProfileMetadata(){
+  const name=document.getElementById("profilePlayerName");
   const joined=document.getElementById("profileJoinDate");
+  if(name)name.textContent=player.nickname||"—";
   const days=document.getElementById("profileDaysPlayed");
   const status=document.getElementById("profileOnlineStatus");
   if(joined)joined.textContent=formatJoinDate(player.joinedAt);
