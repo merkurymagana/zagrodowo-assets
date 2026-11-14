@@ -6601,6 +6601,94 @@ body.profile-editor-open #appStage{
   text-align:right!important;
   overflow-wrap:anywhere!important;
 }
+
+
+/* Ujednolicenie układu danych — wartości tworzą jedną, równą kolumnę. */
+#profileOverlay .profile-form-card{
+  padding:30px 34px!important;
+}
+#profileOverlay .profile-form-card > .profile-section-title{
+  margin:0 0 12px!important;
+  padding-bottom:14px!important;
+  border-bottom:1px solid rgba(114,150,91,.55)!important;
+}
+#profileOverlay .profile-form-card > .field.profile-data-row,
+#profileOverlay .profile-form-card .profile-meta-item{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  align-items:center!important;
+  column-gap:20px!important;
+  min-height:46px!important;
+  margin:0!important;
+  padding:9px 2px!important;
+  border-bottom:1px solid rgba(114,150,91,.28)!important;
+  box-sizing:border-box!important;
+}
+#profileOverlay .profile-form-card > .field.profile-data-row{
+  border-radius:0!important;
+}
+#profileOverlay .profile-form-card .profile-meta-panel{
+  margin:0!important;
+  padding:0!important;
+}
+#profileOverlay .profile-form-card .profile-meta-item:last-child{
+  border-bottom:0!important;
+}
+#profileOverlay .profile-form-card .profile-data-value,
+#profileOverlay .profile-form-card .profile-country-value,
+#profileOverlay .profile-form-card .profile-data-row select,
+#profileOverlay .profile-form-card .profile-meta-item strong{
+  justify-self:end!important;
+  width:auto!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:#FFFFFF!important;
+  font:500 13px/1.25 'Nunito',Arial,sans-serif!important;
+  text-align:right!important;
+}
+#profileOverlay .profile-form-card .profile-country-value{
+  display:flex!important;
+  align-items:center!important;
+  min-height:0!important;
+  white-space:nowrap!important;
+}
+#profileOverlay .profile-form-card .profile-data-row select{
+  appearance:auto!important;
+  -webkit-appearance:menulist!important;
+  cursor:pointer!important;
+  text-align-last:right!important;
+}
+#profileOverlay .profile-form-card .profile-meta-item span{
+  min-width:0!important;
+}
+#profileOverlay .profile-form-card > .field:not(.profile-data-row){
+  margin-top:18px!important;
+  padding-top:16px!important;
+  border-top:1px solid rgba(114,150,91,.55)!important;
+}
+@media(max-width:700px){
+  #profileOverlay .profile-form-card{padding:20px!important}
+  #profileOverlay .profile-form-card > .field.profile-data-row,
+  #profileOverlay .profile-form-card .profile-meta-item{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    column-gap:10px!important;
+    min-height:42px!important;
+    padding:8px 1px!important;
+  }
+  #profileOverlay .profile-form-card .profile-data-value,
+  #profileOverlay .profile-form-card .profile-country-value,
+  #profileOverlay .profile-form-card .profile-data-row select,
+  #profileOverlay .profile-form-card .profile-meta-item strong{
+    font-size:12px!important;
+  }
+}
+
 </style>
 </head>
 
