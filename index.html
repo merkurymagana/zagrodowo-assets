@@ -8525,9 +8525,9 @@ function startAvatarCropDrag(event){
   const rect=frame.getBoundingClientRect();
   const scale=Math.max(rect.width/image.naturalWidth,rect.height/image.naturalHeight);
   avatarCropDrag={
-    startX:event.clientX,
-    startY:event.clientY,
-    startPosition:{...pendingAvatarPosition},
+    lastX:event.clientX,
+    lastY:event.clientY,
+    position:{...pendingAvatarPosition},
     overflowX:Math.max(0,image.naturalWidth*scale-rect.width),
     overflowY:Math.max(0,image.naturalHeight*scale-rect.height)
   };
@@ -8541,17 +8541,21 @@ function moveAvatarCrop(event){
     return;
   }
   const drag=avatarCropDrag;
-  const sensitivity=2.5;
-  const x=drag.overflowX>0
-    ?drag.startPosition.x-(event.clientX-drag.startX)/drag.overflowX*100*sensitivity
-    :drag.startPosition.x;
-  const y=drag.overflowY>0
-    ?drag.startPosition.y-(event.clientY-drag.startY)/drag.overflowY*100*sensitivity
-    :drag.startPosition.y;
-  pendingAvatarPosition={
-    x:Math.max(0,Math.min(100,x)),
-    y:Math.max(0,Math.min(100,y))
-  };
+  const deltaX=event.clientX-drag.lastX;
+  const deltaY=event.clientY-drag.lastY;
+  const nextX=drag.overflowX>0
+    ?Math.max(0,Math.min(100,drag.position.x-deltaX/drag.overflowX*100))
+    :drag.position.x;
+  const nextY=drag.overflowY>0
+    ?Math.max(0,Math.min(100,drag.position.y-deltaY/drag.overflowY*100))
+    :drag.position.y;
+  pendingAvatarPosition={x:nextX,y:nextY};
+  /* Aktualizujemy punkt odniesienia przy każdym ruchu. Gdy kadr dojdzie
+     do krawędzi, nadmiar ruchu nie kumuluje się i nie powoduje odbicia
+     po zmianie kierunku przeciągania. */
+  drag.lastX=event.clientX;
+  drag.lastY=event.clientY;
+  drag.position={...pendingAvatarPosition};
   updateAvatarCropPosition();
   event.preventDefault?.();
 }
