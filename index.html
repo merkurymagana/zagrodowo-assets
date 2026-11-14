@@ -5828,6 +5828,8 @@ body.profile-editor-open #appStage{
 #playerPanel .avatar-frame{
   position:relative!important;
 }
+#playerPanel .avatar-frame{overflow:hidden!important;}
+.mini-avatar-crop-frame{overflow:hidden!important;}
 #playerPanel #playerAvatar{
   position:absolute!important;
   inset:0!important;
@@ -8430,25 +8432,22 @@ function updateAvatarCropPosition(){
   if(preview)preview.style.setProperty("object-position",value,"important");
 }
 function applyMiniAvatarCrop(img,position,zoom){
-  if(!img||!img.naturalWidth||!img.naturalHeight)return;
-  const frame=img.parentElement;
-  if(!frame)return;
-  const rect=frame.getBoundingClientRect();
-  if(!rect.width||!rect.height)return;
-  const scale=Math.max(rect.width/img.naturalWidth,rect.height/img.naturalHeight)*(Number(zoom)||1);
-  const width=img.naturalWidth*scale,height=img.naturalHeight*scale;
+  if(!img)return;
   const x=Math.max(0,Math.min(100,Number(position?.x??50)));
   const y=Math.max(0,Math.min(100,Number(position?.y??50)));
+  const scale=Math.max(1,Math.min(3,Number(zoom)||1));
+  /* Nie zmieniamy naturalnych wymiarów obrazka. Powiększamy go wewnątrz
+     ramki z overflow:hidden, więc nie może wyjść poza mini awatar. */
   img.style.setProperty("position","absolute","important");
-  img.style.setProperty("width",width+"px","important");
-  img.style.setProperty("height",height+"px","important");
-  img.style.setProperty("max-width","none","important");
-  img.style.setProperty("max-height","none","important");
-  img.style.setProperty("left",(-Math.max(0,width-rect.width)*x/100)+"px","important");
-  img.style.setProperty("top",(-Math.max(0,height-rect.height)*y/100)+"px","important");
-  img.style.setProperty("right","auto","important");
-  img.style.setProperty("bottom","auto","important");
-  img.style.setProperty("object-fit","fill","important");
+  img.style.setProperty("inset","0","important");
+  img.style.setProperty("width","100%","important");
+  img.style.setProperty("height","100%","important");
+  img.style.setProperty("max-width","100%","important");
+  img.style.setProperty("max-height","100%","important");
+  img.style.setProperty("object-fit","cover","important");
+  img.style.setProperty("object-position",x+"% "+y+"%","important");
+  img.style.setProperty("transform","scale("+scale+")","important");
+  img.style.setProperty("transform-origin","center center","important");
 }
 function updateMiniAvatarCropPreview(){
   const img=document.getElementById("miniAvatarPreview");
