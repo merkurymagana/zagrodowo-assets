@@ -8393,19 +8393,26 @@ function startAvatarCropDrag(event){
   if(event.button!==undefined&&event.button!==0)return;
   const frame=document.getElementById("avatarCropFrame");
   const image=document.getElementById("previewAvatar");
-  if(!frame||!image||!image.getAttribute("src")||image.style.display==="none")return;
+  if(!frame||!image||!image.getAttribute("src")||image.naturalWidth===0)return;
   const rect=frame.getBoundingClientRect();
   const scale=Math.max(rect.width/image.naturalWidth,rect.height/image.naturalHeight);
-  avatarCropDrag={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startPosition:{...pendingAvatarPosition},overflowX:image.naturalWidth*scale-rect.width,overflowY:image.naturalHeight*scale-rect.height};
-  frame.setPointerCapture(event.pointerId);
+  avatarCropDrag={
+    startX:event.clientX,
+    startY:event.clientY,
+    startPosition:{...pendingAvatarPosition},
+    overflowX:Math.max(0,image.naturalWidth*scale-rect.width),
+    overflowY:Math.max(0,image.naturalHeight*scale-rect.height)
+  };
   frame.classList.add("is-cropping");
   event.preventDefault();
 }
 function moveAvatarCrop(event){
-  if(!avatarCropDrag||event.pointerId!==avatarCropDrag.pointerId)return;
+  if(!avatarCropDrag)return;
+  if(event.pointerType==="mouse"&&event.buttons===0){
+    endAvatarCropDrag();
+    return;
+  }
   const drag=avatarCropDrag;
-  /* Większa czułość: użytkownik może przesunąć kadr krótszym ruchem,
-     bez zmiany zakresu dostępnego obrazu. */
   const sensitivity=2.5;
   const x=drag.overflowX>0
     ?drag.startPosition.x-(event.clientX-drag.startX)/drag.overflowX*100*sensitivity
@@ -8418,21 +8425,22 @@ function moveAvatarCrop(event){
     y:Math.max(0,Math.min(100,y))
   };
   updateAvatarCropPosition();
+  event.preventDefault?.();
 }
-function endAvatarCropDrag(event){
-  if(!avatarCropDrag||event.pointerId!==avatarCropDrag.pointerId)return;
-  const frame=document.getElementById("avatarCropFrame");
-  try{if(frame?.hasPointerCapture(event.pointerId))frame.releasePointerCapture(event.pointerId)}catch(_){}
+function endAvatarCropDrag(){
+  if(!avatarCropDrag)return;
   avatarCropDrag=null;
-  frame?.classList.remove("is-cropping");
+  document.getElementById("avatarCropFrame")?.classList.remove("is-cropping");
 }
 const avatarCropFrame=document.getElementById("avatarCropFrame");
 avatarCropFrame?.addEventListener("pointerdown",startAvatarCropDrag);
-/* Ruch śledzimy na całym oknie — przeciąganie nie urywa się,
-   gdy kursor na chwilę wyjdzie poza obszar zdjęcia. */
-window.addEventListener("pointermove",moveAvatarCrop);
-window.addEventListener("pointerup",endAvatarCropDrag);
-window.addEventListener("pointercancel",endAvatarCropDrag);
+document.addEventListener("pointermove",moveAvatarCrop,{passive:false});
+document.addEventListener("pointerup",endAvatarCropDrag);
+document.addEventListener("pointercancel",endAvatarCropDrag);
+/* Zapasowa obsługa klasycznego przeciągania myszą w przeglądarkach desktopowych. */
+avatarCropFrame?.addEventListener("mousedown",startAvatarCropDrag);
+document.addEventListener("mousemove",moveAvatarCrop);
+document.addEventListener("mouseup",endAvatarCropDrag);
 
 document.getElementById("avatarFileInput").addEventListener("change",async function(){
   const file=this.files[0];
