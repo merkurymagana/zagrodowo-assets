@@ -7821,21 +7821,59 @@ document.getElementById("avatarUrlInput").addEventListener("input",function(){
 });
 
 let avatarEnhanceRequestId=0;
-let crispixSdkPromise=null;
+let avatarUpscalerPromise=null;
+let avatarUpscalerInstance=null;
+
+function loadAvatarScript(src){
+  return new Promise((resolve,reject)=>{
+    const existing=[...document.scripts].find(script=>script.src===src);
+    if(existing?.dataset.loaded==="true"){resolve();return;}
+    const script=existing||document.createElement("script");
+    const onLoad=()=>{script.dataset.loaded="true";resolve();};
+    const onError=()=>reject(new Error("Nie udało się pobrać biblioteki AI: "+src));
+    script.addEventListener("load",onLoad,{once:true});
+    script.addEventListener("error",onError,{once:true});
+    if(!existing){
+      script.src=src;
+      script.async=true;
+      document.head.appendChild(script);
+    }
+  });
+}
 
 async function getAvatarUpscaler(){
-  if(!crispixSdkPromise){
-    crispixSdkPromise=import("https://crispix.nibies.space/sdk.js")
-      .then(module=>{
-        if(typeof module.CrispixSDK!=="function")throw new Error("Nie udało się załadować modułu AI.");
-        return new module.CrispixSDK({baseUrl:"https://crispix.nibies.space"});
-      })
-      .catch(error=>{
-        crispixSdkPromise=null;
-        throw error;
-      });
+  if(avatarUpscalerInstance)return avatarUpscalerInstance;
+  if(!avatarUpscalerPromise){
+    avatarUpscalerPromise=(async()=>{
+      // Oficjalna wersja przeglądarkowa UpscalerJS + model 2×.
+      await loadAvatarScript("https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js");
+      await loadAvatarScript("https://cdn.jsdelivr.net/npm/@upscalerjs/default-model@latest/dist/umd/index.min.js");
+      await loadAvatarScript("https://cdn.jsdelivr.net/npm/upscaler@latest/dist/browser/umd/upscaler.min.js");
+      if(typeof window.Upscaler!=="function"||!window.DefaultUpscalerJSModel){
+        throw new Error("Biblioteka UpscalerJS nie udostępniła modelu.");
+      }
+      avatarUpscalerInstance=new window.Upscaler({model:window.DefaultUpscalerJSModel});
+      return avatarUpscalerInstance;
+    })().catch(error=>{
+      avatarUpscalerPromise=null;
+      avatarUpscalerInstance=null;
+      throw error;
+    });
   }
-  return crispixSdkPromise;
+  return avatarUpscalerPromise;
+}
+
+function loadAvatarImage(file){
+  return new Promise((resolve,reject)=>{
+    const objectUrl=URL.createObjectURL(file);
+    const image=new Image();
+    image.onload=()=>resolve({image,objectUrl});
+    image.onerror=()=>{
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error("Nie udało się odczytać zdjęcia."));
+    };
+    image.src=objectUrl;
+  });
 }
 
 function readAvatarFile(file){
@@ -7854,7 +7892,7 @@ document.getElementById("avatarFileInput").addEventListener("change",async funct
   const error=document.getElementById("profileError");
   const status=document.getElementById("avatarProcessingStatus");
   error.textContent="";
-  status.textContent="Przygotowuję poprawę jakości zdjęcia…";
+  status.textContent="Ładuję bibliotekę poprawiania obrazu…";
 
   if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
     error.textContent="Wybierz zdjęcie JPG, PNG lub WEBP.";
@@ -7870,40 +7908,42 @@ document.getElementById("avatarFileInput").addEventListener("change",async funct
     return;
   }
 
+  let loadedImage=null;
   try{
-    const upscaler=await getAvatarUpscaler();
+    const [upscaler,imageData]=await Promise.all([
+      getAvatarUpscaler(),
+      loadAvatarImage(file)
+    ]);
+    loadedImage=imageData;
     if(requestId!==avatarEnhanceRequestId)return;
     status.textContent="AI poprawia jakość awatara…";
-    const result=await upscaler.enhance(file,{
-      model:"general",
-      scale:4,
-      filters:{sharpen:12,denoise:8},
-      outputFormat:"image/webp",
-      quality:.94,
-      onProgress:percent=>{
-        if(requestId===avatarEnhanceRequestId){
-          status.textContent="AI poprawia jakość awatara… "+Math.round(percent*100)+"%";
-        }
-      }
+    const enhancedDataUrl=await upscaler.upscale(imageData.image,{
+      patchSize:64,
+      padding:5
     });
     if(requestId!==avatarEnhanceRequestId)return;
-    pendingAvatar=result.dataUrl;
+    if(typeof enhancedDataUrl!=="string"||!enhancedDataUrl.startsWith("data:image/")){
+      throw new Error("Model AI zwrócił nieprawidłowy obraz.");
+    }
+    pendingAvatar=enhancedDataUrl;
     setPreviewAvatar(pendingAvatar);
     document.getElementById("avatarUrlInput").value="";
-    status.textContent="Gotowe — awatar został poprawiony przez AI.";
+    status.textContent="Gotowe — AI powiększyło i poprawiło awatar 2×.";
   }catch(upscaleError){
-    console.warn("Nie udało się uruchomić poprawiania AI awatara; używam oryginału.",upscaleError);
+    console.warn("Poprawianie AI awatara nie powiodło się; wczytuję oryginał.",upscaleError);
     if(requestId!==avatarEnhanceRequestId)return;
     try{
       pendingAvatar=await readAvatarFile(file);
       if(requestId!==avatarEnhanceRequestId)return;
       setPreviewAvatar(pendingAvatar);
       document.getElementById("avatarUrlInput").value="";
-      status.textContent="Nie udało się uruchomić AI. Wczytano oryginalne zdjęcie bez zmian.";
+      status.textContent="AI jest niedostępne. Wczytano oryginalne zdjęcie bez zmian.";
     }catch(readError){
       status.textContent="";
       error.textContent=readError.message||"Nie udało się odczytać zdjęcia.";
     }
+  }finally{
+    if(loadedImage?.objectUrl)URL.revokeObjectURL(loadedImage.objectUrl);
   }
 });
 
