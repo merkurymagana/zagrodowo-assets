@@ -6401,6 +6401,30 @@ body.profile-editor-open #appStage{
   object-fit:cover!important;
 }
 
+/* Zdjęcie awatara wypełnia cały podgląd, niezależnie od proporcji pliku. */
+#profileOverlay .profile-preview .avatar-frame{
+  position:relative!important;
+  overflow:hidden!important;
+}
+#profileOverlay #previewAvatar{
+  position:absolute!important;
+  inset:0!important;
+  display:block;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:cover!important;
+  object-position:center!important;
+}
+#profileOverlay #previewPlaceholder{
+  position:absolute!important;
+  inset:0!important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
 /* Obie karty zajmują dokładnie ten sam wiersz siatki. */
 #profileOverlay .profile-layout{
   display:grid!important;
