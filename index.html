@@ -3279,32 +3279,42 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   to{transform:rotate(360deg)}
 }
 
-/* EDYCJA PROFILU */
-
-.profile-window{
-  position:relative;
-  width:min(390px,100%);
-  max-height:calc(100% - 10px);
-  overflow-y:auto;
-  padding:25px 22px 20px;
-  border:2px solid #b18b5d;
-  border-radius:12px;
-  background:linear-gradient(145deg,#f5e7c9,#e3cba2);
-  color:#59432c;
-  box-shadow:0 12px 40px #0009;
+/* EDYCJA PROFILU — PEŁNOEKRANOWY WIDOK GRY */
+#profileOverlay{
+  position:absolute;inset:0;z-index:200;padding:0;
+  align-items:stretch;justify-content:center;overflow:auto;
+  background:radial-gradient(ellipse at 18% 12%,rgba(114,150,91,.16),transparent 38%),radial-gradient(ellipse at 88% 90%,rgba(118,81,58,.22),transparent 42%),linear-gradient(135deg,#1b241d 0%,#202820 52%,#171e19 100%);
+  backdrop-filter:none;-webkit-backdrop-filter:none;
 }
-
-.profile-window h2{margin:0 25px 15px;text-align:center;font:normal 23px 'Bree Serif',serif}
-.profile-window .field{color:#59432c}
-.profile-window .field input{background:#fffaf0;border-color:#c3a77c}
-.profile-preview{display:flex;justify-content:center;margin:10px 0}
-.profile-preview .avatar-frame{width:105px;height:105px;flex-basis:105px}
-
-.profile-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.profile-actions button{flex:1;min-height:40px;padding:9px 6px;border:1px solid #967248;border-radius:6px;background:#a77c50;color:white;font-weight:800}
-.profile-actions button.secondary{background:#e8d6b5;color:#60462c}
-.profile-hint{font-size:11px;line-height:1.4;color:#806748;margin-top:9px}
-.profile-error{font-size:12px;color:#a12d20;margin-top:8px;min-height:16px}
+#profileOverlay .profile-window{
+  position:relative;display:flex;flex-direction:column;gap:28px;
+  width:min(1320px,100%);height:100%;max-height:none;overflow:auto;
+  margin:0 auto;padding:42px 54px;border:0;border-radius:0;
+  background:transparent;color:#f5f1e7;box-shadow:none;
+}
+.profile-screen-header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-bottom:22px;border-bottom:1px solid rgba(224,207,169,.2)}
+.profile-heading-copy h2{margin:0;color:#f5f1e7;text-align:left;font:normal 34px 'Bree Serif',Georgia,serif;letter-spacing:.2px}
+.profile-heading-copy p{margin:7px 0 0;color:#bdb7a8;font-size:15px;line-height:1.5}
+.profile-back-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:10px 16px;border:1px solid rgba(224,199,142,.3);border-radius:10px;background:rgba(255,255,255,.055);color:#eee6d6;font-weight:800;transition:background .18s,border-color .18s,transform .18s}
+.profile-back-btn:hover{background:rgba(114,150,91,.18);border-color:rgba(174,198,139,.55);transform:translateY(-1px)}
+.profile-back-btn .ui-icon{width:18px;height:18px}
+.profile-layout{display:grid;grid-template-columns:minmax(270px,.78fr) minmax(440px,1.22fr);gap:24px;flex:1;min-height:0}
+.profile-avatar-card,.profile-form-card{min-width:0;padding:30px;border:1px solid rgba(224,199,142,.22);border-radius:18px;background:linear-gradient(145deg,rgba(52,64,52,.88),rgba(32,41,34,.94));box-shadow:0 12px 32px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.035)}
+.profile-avatar-card{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.profile-section-title{margin:0 0 8px;color:#f2e7d1;font:normal 23px 'Bree Serif',Georgia,serif}
+.profile-section-description{max-width:360px;margin:0 0 24px;color:#bdb7a8;font-size:14px;line-height:1.55}
+.profile-preview{display:flex;justify-content:center;margin:8px 0 18px}
+.profile-preview .avatar-frame{width:180px;height:180px;flex-basis:180px;border:3px solid #b99a67;border-radius:22px;box-shadow:0 8px 24px #0005;overflow:hidden}
+.profile-avatar-caption{margin:0;color:#d9cfbb;font-size:13px}
+.profile-form-card{display:flex;flex-direction:column;justify-content:center}
+.profile-form-card .field{margin-bottom:20px;color:#e9dfce;font-size:15px}
+.profile-form-card .field input{min-height:48px;margin-top:8px;padding:12px 14px}
+.profile-form-card input[type="file"]{padding:9px}
+.profile-hint{margin-top:2px;color:#bdb4a4;font-size:12px;line-height:1.55}
+.profile-error{min-height:18px;margin-top:10px;color:#f0a39a;font-size:13px}
+.profile-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:22px}
+.profile-actions button{min-width:150px;min-height:46px;padding:10px 18px;border-radius:9px;font-weight:800}
+.profile-actions button.secondary{min-width:120px}
 
 /* SĄSIEDZI */
 
@@ -4572,14 +4582,18 @@ html,body,#appStage{
 #game input,#game textarea,#profileOverlay input{background:rgba(16,21,18,.72)!important;color:#f4eee3!important;border:1px solid rgba(218,199,160,.3)!important;border-radius:9px!important}
 #game input::placeholder,#game textarea::placeholder,#profileOverlay input::placeholder{color:#aaa291!important}
 #game .social-avatar{border:1px solid rgba(222,198,151,.45)!important;background:#394238!important}
-#profileOverlay{background:rgba(8,12,10,.78)!important;backdrop-filter:blur(8px)}
-#profileOverlay .profile-window{background:linear-gradient(145deg,#29312b,#1c231f)!important;color:#f0e8d9!important;border:1px solid rgba(224,199,142,.34)!important;border-radius:18px!important;box-shadow:0 24px 70px #0008!important}
-#profileOverlay .profile-window h2{color:#f3e8d4!important}
-#profileOverlay .profile-window .field{color:#ddd2bf!important}
+#profileOverlay{background:radial-gradient(ellipse at 18% 12%,rgba(114,150,91,.16),transparent 38%),radial-gradient(ellipse at 88% 90%,rgba(118,81,58,.22),transparent 42%),linear-gradient(135deg,#1b241d 0%,#202820 52%,#171e19 100%)!important;backdrop-filter:none!important}
+#profileOverlay .profile-window{background:transparent!important;color:#f5f1e7!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+#profileOverlay .profile-heading-copy h2{color:#f5f1e7!important}
+#profileOverlay .profile-window .field{color:#e9dfce!important}
 #profileOverlay .profile-window .field input{background:rgba(10,15,12,.72)!important}
 #profileOverlay .profile-hint{color:#bdb4a4!important}
-#profileOverlay .close-btn{display:grid!important;place-items:center;background:rgba(255,255,255,.07)!important;color:#e8dfd0!important;border:1px solid var(--hud-line)!important;border-radius:9px!important}
-#profileOverlay .close-btn .ui-icon{width:17px;height:17px}
+#profileOverlay .profile-back-btn{display:inline-flex!important;place-items:center;background:rgba(255,255,255,.055)!important;color:#eee6d6!important;border:1px solid rgba(224,199,142,.3)!important;border-radius:10px!important}
+#profileOverlay .profile-avatar-card,#profileOverlay .profile-form-card{background:linear-gradient(145deg,rgba(52,64,52,.88),rgba(32,41,34,.94))!important;border:1px solid rgba(224,199,142,.22)!important;border-radius:18px!important}
+#profileOverlay .profile-section-title{color:#f2e7d1!important}
+#profileOverlay .profile-section-description,#profileOverlay .profile-avatar-caption{color:#bdb7a8!important}
+#profileOverlay .profile-preview .avatar-frame{border:3px solid #b99a67!important;border-radius:22px!important}
+#profileOverlay .profile-error{color:#f0a39a!important}
 @media(prefers-reduced-motion:reduce){#game button,#profileOverlay button{transition:none!important}}
 
 
@@ -6320,6 +6334,33 @@ html,body,#appStage{
   background-image:none!important;
 }
 
+
+/* Dostosowanie pełnoekranowej edycji profilu do mniejszych ekranów. */
+@media(max-width:700px){
+  #profileOverlay .profile-window{width:100%;padding:28px 24px;gap:18px}
+  #profileOverlay .profile-screen-header{align-items:flex-start;padding-bottom:16px}
+  #profileOverlay .profile-heading-copy h2{font-size:27px}
+  #profileOverlay .profile-heading-copy p{font-size:13px}
+  #profileOverlay .profile-back-btn{min-height:40px;padding:8px 11px;font-size:12px}
+  #profileOverlay .profile-layout{grid-template-columns:minmax(190px,.72fr) minmax(0,1.28fr);gap:14px}
+  #profileOverlay .profile-avatar-card,#profileOverlay .profile-form-card{padding:20px}
+  #profileOverlay .profile-preview .avatar-frame{width:130px;height:130px;flex-basis:130px}
+  #profileOverlay .profile-section-title{font-size:20px}
+  #profileOverlay .profile-section-description{font-size:12px;margin-bottom:14px}
+  #profileOverlay .profile-form-card .field{font-size:13px;margin-bottom:13px}
+  #profileOverlay .profile-form-card .field input{min-height:42px;padding:9px 11px;font-size:13px}
+  #profileOverlay .profile-actions{margin-top:14px}
+  #profileOverlay .profile-actions button{min-width:110px;min-height:40px;padding:8px 12px;font-size:13px}
+}
+@media(max-height:620px){
+  #profileOverlay .profile-window{padding-top:20px;padding-bottom:20px;gap:14px}
+  #profileOverlay .profile-screen-header{padding-bottom:12px}
+  #profileOverlay .profile-avatar-card,#profileOverlay .profile-form-card{padding:16px}
+  #profileOverlay .profile-preview .avatar-frame{width:110px;height:110px;flex-basis:110px}
+  #profileOverlay .profile-section-description{margin-bottom:10px}
+  #profileOverlay .profile-form-card .field{margin-bottom:10px}
+}
+
 </style>
 </head>
 
@@ -6871,30 +6912,44 @@ html,body,#appStage{
       </nav>
   </div>
 
-  <!-- EDYCJA PROFILU -->
-
-  <div class="profile-overlay" id="profileOverlay" onclick="profileOverlayClick(event)">
+  <!-- EDYCJA PROFILU — PEŁNOEKRANOWY EKRAN GRY -->
+  <div class="profile-overlay" id="profileOverlay" role="dialog" aria-modal="true" aria-labelledby="profileScreenTitle">
     <div class="profile-window">
-      <button class="close-btn" type="button" onclick="closeProfileEditor()" aria-label="Zamknij"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
-      <h2>Edytuj swój profil</h2>
-
-      <div class="profile-preview">
-        <div class="avatar-frame">
-          <img id="previewAvatar" src="" alt="Podgląd awatara" style="display:none">
-          <span class="avatar-placeholder" id="previewPlaceholder">👨‍🌾</span>
+      <header class="profile-screen-header">
+        <div class="profile-heading-copy">
+          <h2 id="profileScreenTitle">Edytuj swój profil</h2>
+          <p>Dostosuj informacje, które będą widoczne dla innych graczy.</p>
         </div>
-      </div>
-
-      <label class="field">Nazwa gracza<input id="nicknameInput" type="text" maxlength="20" minlength="3" placeholder="Wpisz nazwę gracza"></label>
-      <label class="field">Link do zdjęcia<input id="avatarUrlInput" type="url" placeholder="https://adres-zdjecia.jpg"></label>
-      <label class="field">Lub wgraj zdjęcie z urządzenia<input id="avatarFileInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
-
-      <div class="profile-hint">Zdjęcie zostanie dopasowane do kwadratowej ramki. Wersja demonstracyjna zapamiętuje wybrany awatar w tej przeglądarce.</div>
-      <div class="profile-error" id="profileError"></div>
-
-      <div class="profile-actions">
-        <button type="button" onclick="saveProfile()">Zapisz</button>
-        <button class="secondary" type="button" onclick="closeProfileEditor()">Anuluj</button>
+        <button class="profile-back-btn" type="button" onclick="closeProfileEditor()" aria-label="Wróć do gry">
+          <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Wróć do gry
+        </button>
+      </header>
+      <div class="profile-layout">
+        <section class="profile-avatar-card" aria-label="Podgląd awatara">
+          <h3 class="profile-section-title">Twój awatar</h3>
+          <p class="profile-section-description">To właśnie ten obrazek będzie reprezentował Cię w Zagrodowie.</p>
+          <div class="profile-preview">
+            <div class="avatar-frame">
+              <img id="previewAvatar" src="" alt="Podgląd awatara" style="display:none">
+              <span class="avatar-placeholder" id="previewPlaceholder">👨‍🌾</span>
+            </div>
+          </div>
+          <p class="profile-avatar-caption">Podgląd aktualnie wybranego zdjęcia</p>
+        </section>
+        <section class="profile-form-card" aria-label="Dane profilu">
+          <h3 class="profile-section-title">Dane gracza</h3>
+          <p class="profile-section-description">Ustaw nazwę i wybierz obraz, który będzie wyświetlany przy Twoim profilu.</p>
+          <label class="field">Nazwa gracza<input id="nicknameInput" type="text" maxlength="20" minlength="3" placeholder="Wpisz nazwę gracza"></label>
+          <label class="field">Link do zdjęcia<input id="avatarUrlInput" type="url" placeholder="https://adres-zdjecia.jpg"></label>
+          <label class="field">Lub wgraj zdjęcie z urządzenia<input id="avatarFileInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
+          <div class="profile-hint">Zdjęcie zostanie dopasowane do kwadratowej ramki. Wersja demonstracyjna zapamiętuje wybrany awatar w tej przeglądarce.</div>
+          <div class="profile-error" id="profileError" aria-live="polite"></div>
+          <div class="profile-actions">
+            <button type="button" onclick="saveProfile()">Zapisz zmiany</button>
+            <button class="secondary" type="button" onclick="closeProfileEditor()">Anuluj</button>
+          </div>
+        </section>
       </div>
     </div>
   </div>
