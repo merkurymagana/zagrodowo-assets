@@ -7018,7 +7018,7 @@ body.profile-editor-open #appStage{
           <label class="field">Link do zdjęcia<input id="avatarUrlInput" type="url" placeholder="https://adres-zdjecia.jpg"></label>
           <label class="field">Lub wgraj zdjęcie z urządzenia<input id="avatarFileInput" type="file" accept="image/gif,image/png,image/jpeg,image/webp"></label>
           <div class="profile-processing-status" id="avatarProcessingStatus" aria-live="polite"></div>
-          <div class="profile-hint">Zdjęcie zostanie dopasowane do podglądu awatara. Obsługiwane formaty: GIF, JPG, PNG i WEBP (maks. 5 MB).</div>
+          <div class="profile-hint">Zdjęcie zostanie dopasowane do podglądu awatara. Obsługiwane formaty: GIF, JPG, PNG i WEBP (maks. 10 MB).</div>
           <div class="profile-error" id="profileError" aria-live="polite"></div>
           <div class="profile-actions">
             <button type="button" onclick="saveProfile()">Zapisz zmiany</button>
@@ -7868,8 +7868,8 @@ document.getElementById("avatarFileInput").addEventListener("change",async funct
     return;
   }
 
-  if(file.size>5*1024*1024){
-    error.textContent="Zdjęcie może mieć maksymalnie 5 MB.";
+  if(file.size>10*1024*1024){
+    error.textContent="Zdjęcie może mieć maksymalnie 10 MB.";
     status.textContent="";
     this.value="";
     return;
