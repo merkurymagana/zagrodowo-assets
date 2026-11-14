@@ -8427,7 +8427,13 @@ function readAvatarFile(file){
 
 function updateAvatarCropPosition(){
   const position=pendingAvatarPosition||{x:50,y:50};
-  const value=Math.max(0,Math.min(100,Number(position.x)||50))+"% "+Math.max(0,Math.min(100,Number(position.y)||50))+"%";
+  const rawX=Number(position.x);
+  const rawY=Number(position.y);
+  /* Zero jest prawidłową pozycją skrajną. Nie wolno używać || 50,
+     bo zamieniałoby 0% na 50% i powodowało skok kadru przy prawej/dolnej krawędzi. */
+  const x=Number.isFinite(rawX)?Math.max(0,Math.min(100,rawX)):50;
+  const y=Number.isFinite(rawY)?Math.max(0,Math.min(100,rawY)):50;
+  const value=x+"% "+y+"%";
   const preview=document.getElementById("previewAvatar");
   if(preview)preview.style.setProperty("object-position",value,"important");
 }
