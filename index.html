@@ -8588,26 +8588,22 @@ avatarCropFrame?.addEventListener("mousedown",startAvatarCropDrag);
 document.addEventListener("mousemove",moveAvatarCrop);
 document.addEventListener("mouseup",endAvatarCropDrag);
 const miniAvatarCropFrame=document.getElementById("miniAvatarCropFrame");
-/* Na komputerze używamy klasycznych zdarzeń myszy — tak samo jak
-   w działającym, dużym kadrze awatara. Pointer Events pozostają dla dotyku
-   i rysika, bez podwójnego uruchamiania przeciągania myszą. */
+/* Jeden spójny mechanizm Pointer Events dla myszy, dotyku i rysika.
+   Przechwycenie wskaźnika na ramce gwarantuje odbieranie ruchu także wtedy,
+   gdy kursor wyjdzie poza kwadrat podczas przeciągania. */
 miniAvatarCropFrame?.addEventListener("pointerdown",event=>{
-  if(!event.isPrimary||event.pointerType==="mouse")return;
+  if(!event.isPrimary||event.button!==0)return;
   startMiniAvatarCropDrag(event);
-  try{miniAvatarCropFrame.setPointerCapture(event.pointerId)}catch(_){}
+  if(miniAvatarCropDrag){
+    try{miniAvatarCropFrame.setPointerCapture(event.pointerId)}catch(_){}
+  }
 });
-document.addEventListener("pointermove",event=>{
-  if(event.pointerType!=="mouse")moveMiniAvatarCrop(event);
+miniAvatarCropFrame?.addEventListener("pointermove",event=>{
+  if(miniAvatarCropDrag)moveMiniAvatarCrop(event);
 },{passive:false});
-document.addEventListener("pointerup",event=>{
-  if(event.pointerType!=="mouse")endMiniAvatarCropDrag();
-});
-document.addEventListener("pointercancel",event=>{
-  if(event.pointerType!=="mouse")endMiniAvatarCropDrag();
-});
-miniAvatarCropFrame?.addEventListener("mousedown",startMiniAvatarCropDrag);
-document.addEventListener("mousemove",moveMiniAvatarCrop);
-document.addEventListener("mouseup",endMiniAvatarCropDrag);
+miniAvatarCropFrame?.addEventListener("pointerup",endMiniAvatarCropDrag);
+miniAvatarCropFrame?.addEventListener("pointercancel",endMiniAvatarCropDrag);
+miniAvatarCropFrame?.addEventListener("lostpointercapture",endMiniAvatarCropDrag);
 document.getElementById("miniAvatarZoom")?.addEventListener("input",function(){
   pendingMiniAvatarZoom=Number(this.value)||1;
   updateMiniAvatarCropPreview();
