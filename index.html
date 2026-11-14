@@ -7016,9 +7016,9 @@ body.profile-editor-open #appStage{
           <p class="profile-section-description">Ustaw nazwę i wybierz obraz, który będzie wyświetlany przy Twoim profilu.</p>
           <label class="field">Nazwa gracza<input id="nicknameInput" type="text" maxlength="20" minlength="3" placeholder="Wpisz nazwę gracza"></label>
           <label class="field">Link do zdjęcia<input id="avatarUrlInput" type="url" placeholder="https://adres-zdjecia.jpg"></label>
-          <label class="field">Lub wgraj zdjęcie z urządzenia<input id="avatarFileInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
+          <label class="field">Lub wgraj zdjęcie z urządzenia<input id="avatarFileInput" type="file" accept="image/gif,image/png,image/jpeg,image/webp"></label>
           <div class="profile-processing-status" id="avatarProcessingStatus" aria-live="polite"></div>
-          <div class="profile-hint">Zdjęcie zostanie dopasowane do podglądu awatara. Obsługiwane formaty: JPG, PNG i WEBP (maks. 5 MB).</div>
+          <div class="profile-hint">Zdjęcie zostanie dopasowane do podglądu awatara. Obsługiwane formaty: GIF, JPG, PNG i WEBP (maks. 5 MB).</div>
           <div class="profile-error" id="profileError" aria-live="polite"></div>
           <div class="profile-actions">
             <button type="button" onclick="saveProfile()">Zapisz zmiany</button>
@@ -7861,8 +7861,8 @@ document.getElementById("avatarFileInput").addEventListener("change",async funct
   error.textContent="";
   status.textContent="Wczytuję zdjęcie…";
 
-  if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
-    error.textContent="Wybierz zdjęcie JPG, PNG lub WEBP.";
+  if(!["image/gif","image/jpeg","image/png","image/webp"].includes(file.type)){
+    error.textContent="Wybierz zdjęcie GIF, JPG, PNG lub WEBP.";
     status.textContent="";
     this.value="";
     return;
