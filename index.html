@@ -8446,8 +8446,24 @@ function applyMiniAvatarCrop(img,position,zoom,frame){
   if(!m)return;
   const x=Math.max(0,Math.min(100,Number(position?.x??50)));
   const y=Math.max(0,Math.min(100,Number(position?.y??50)));
+  /* Reguły CSS panelu gracza mają !important, więc kadr również musi
+     być ustawiany z !important. Najpierw zerujemy inset, a dopiero potem
+     wpisujemy left/top — inaczej skrót inset nadpisuje przesunięcie. */
   img.draggable=false;
-  Object.assign(img.style,{position:"absolute",display:"block",width:m.width+"px",height:m.height+"px",maxWidth:"none",maxHeight:"none",objectFit:"fill",left:(-m.overflowX*x/100)+"px",top:(-m.overflowY*y/100)+"px",right:"auto",bottom:"auto",inset:"auto",transform:"none",pointerEvents:"none",userSelect:"none"});
+  img.style.setProperty("position","absolute","important");
+  img.style.setProperty("inset","auto","important");
+  img.style.setProperty("right","auto","important");
+  img.style.setProperty("bottom","auto","important");
+  img.style.setProperty("width",m.width+"px","important");
+  img.style.setProperty("height",m.height+"px","important");
+  img.style.setProperty("max-width","none","important");
+  img.style.setProperty("max-height","none","important");
+  img.style.setProperty("object-fit","fill","important");
+  img.style.setProperty("transform","none","important");
+  img.style.setProperty("left",(-m.overflowX*x/100)+"px","important");
+  img.style.setProperty("top",(-m.overflowY*y/100)+"px","important");
+  img.style.setProperty("pointer-events","none","important");
+  img.style.setProperty("user-select","none","important");
 }
 function updateMiniAvatarCropPreview(){
   const img=document.getElementById("miniAvatarPreview");
