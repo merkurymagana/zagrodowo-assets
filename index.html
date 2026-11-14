@@ -3295,9 +3295,6 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 .profile-screen-header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-bottom:22px;border-bottom:1px solid rgba(224,207,169,.2)}
 .profile-heading-copy h2{margin:0;color:#f5f1e7;text-align:left;font:normal 34px 'Bree Serif',Georgia,serif;letter-spacing:.2px}
 .profile-heading-copy p{margin:7px 0 0;color:#bdb7a8;font-size:15px;line-height:1.5}
-.profile-back-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:10px 16px;border:1px solid rgba(224,199,142,.3);border-radius:10px;background:rgba(255,255,255,.055);color:#eee6d6;font-weight:800;transition:background .18s,border-color .18s,transform .18s}
-.profile-back-btn:hover{background:rgba(114,150,91,.18);border-color:rgba(174,198,139,.55);transform:translateY(-1px)}
-.profile-back-btn .ui-icon{width:18px;height:18px}
 .profile-layout{display:grid;grid-template-columns:minmax(270px,.78fr) minmax(440px,1.22fr);gap:24px;flex:1;min-height:0}
 .profile-avatar-card,.profile-form-card{min-width:0;padding:30px;border:1px solid rgba(224,199,142,.22);border-radius:18px;background:linear-gradient(145deg,rgba(52,64,52,.88),rgba(32,41,34,.94));box-shadow:0 12px 32px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.035)}
 .profile-avatar-card{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
@@ -6951,10 +6948,6 @@ body.profile-editor-open #appStage{
           <h2 id="profileScreenTitle">Edytuj swój profil</h2>
           <p>Dostosuj informacje, które będą widoczne dla innych graczy.</p>
         </div>
-        <button class="profile-back-btn" type="button" onclick="closeProfileEditor()" aria-label="Wróć do gry">
-          <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          Wróć do gry
-        </button>
       </header>
       <div class="profile-layout">
         <section class="profile-avatar-card" aria-label="Podgląd awatara">
