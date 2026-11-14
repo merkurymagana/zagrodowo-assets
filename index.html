@@ -8490,12 +8490,13 @@ function startMiniAvatarCropDrag(event){
   const frame=document.getElementById("miniAvatarCropFrame"),img=document.getElementById("miniAvatarPreview");
   if(!frame||!img||!img.naturalWidth)return;
   const metrics=getMiniAvatarCropMetrics(img,frame,pendingMiniAvatarZoom);
-  miniAvatarCropDrag={startX:event.clientX,startY:event.clientY,startPosition:{...pendingMiniAvatarPosition},overflowX:metrics.overflowX,overflowY:metrics.overflowY};
+  miniAvatarCropDrag={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startPosition:{...pendingMiniAvatarPosition},overflowX:metrics.overflowX,overflowY:metrics.overflowY};
   frame.classList.add("is-cropping");
   event.preventDefault();
 }
 function moveMiniAvatarCrop(event){
   if(!miniAvatarCropDrag)return;
+  if(miniAvatarCropDrag.pointerId!==undefined&&event.pointerId!==miniAvatarCropDrag.pointerId)return;
   if(event.pointerType==="mouse"&&event.buttons===0){endMiniAvatarCropDrag();return;}
   const drag=miniAvatarCropDrag;
   pendingMiniAvatarPosition={
@@ -8568,13 +8569,17 @@ avatarCropFrame?.addEventListener("mousedown",startAvatarCropDrag);
 document.addEventListener("mousemove",moveAvatarCrop);
 document.addEventListener("mouseup",endAvatarCropDrag);
 const miniAvatarCropFrame=document.getElementById("miniAvatarCropFrame");
-miniAvatarCropFrame?.addEventListener("pointerdown",startMiniAvatarCropDrag);
+/* Mini awatar korzysta wyłącznie z Pointer Events. Nie dublujemy
+   przeciągania równoległymi zdarzeniami mouse*, które potrafią nadpisywać
+   punkt startowy ruchu podczas pracy na maksymalnym zoomie. */
+miniAvatarCropFrame?.addEventListener("pointerdown",event=>{
+  if(!event.isPrimary)return;
+  startMiniAvatarCropDrag(event);
+  try{miniAvatarCropFrame.setPointerCapture(event.pointerId)}catch(_){}
+});
 document.addEventListener("pointermove",moveMiniAvatarCrop,{passive:false});
 document.addEventListener("pointerup",endMiniAvatarCropDrag);
 document.addEventListener("pointercancel",endMiniAvatarCropDrag);
-miniAvatarCropFrame?.addEventListener("mousedown",startMiniAvatarCropDrag);
-document.addEventListener("mousemove",moveMiniAvatarCrop);
-document.addEventListener("mouseup",endMiniAvatarCropDrag);
 document.getElementById("miniAvatarZoom")?.addEventListener("input",function(){
   pendingMiniAvatarZoom=Number(this.value)||1;
   updateMiniAvatarCropPreview();
