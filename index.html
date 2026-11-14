@@ -6364,6 +6364,19 @@ body.profile-editor-open #appStage{
   border:1px solid #72965B!important;
 }
 
+
+/* Równa wysokość obu kart w edytorze profilu. */
+#profileOverlay .profile-layout{
+  align-items:stretch!important;
+  grid-template-rows:minmax(0,1fr)!important;
+}
+#profileOverlay .profile-avatar-card,
+#profileOverlay .profile-form-card{
+  align-self:stretch!important;
+  height:100%!important;
+  min-height:0;
+  box-sizing:border-box!important;
+}
 </style>
 </head>
 
