@@ -8588,17 +8588,26 @@ avatarCropFrame?.addEventListener("mousedown",startAvatarCropDrag);
 document.addEventListener("mousemove",moveAvatarCrop);
 document.addEventListener("mouseup",endAvatarCropDrag);
 const miniAvatarCropFrame=document.getElementById("miniAvatarCropFrame");
-/* Mini awatar korzysta wyłącznie z Pointer Events. Nie dublujemy
-   przeciągania równoległymi zdarzeniami mouse*, które potrafią nadpisywać
-   punkt startowy ruchu podczas pracy na maksymalnym zoomie. */
+/* Na komputerze używamy klasycznych zdarzeń myszy — tak samo jak
+   w działającym, dużym kadrze awatara. Pointer Events pozostają dla dotyku
+   i rysika, bez podwójnego uruchamiania przeciągania myszą. */
 miniAvatarCropFrame?.addEventListener("pointerdown",event=>{
-  if(!event.isPrimary)return;
+  if(!event.isPrimary||event.pointerType==="mouse")return;
   startMiniAvatarCropDrag(event);
   try{miniAvatarCropFrame.setPointerCapture(event.pointerId)}catch(_){}
 });
-document.addEventListener("pointermove",moveMiniAvatarCrop,{passive:false});
-document.addEventListener("pointerup",endMiniAvatarCropDrag);
-document.addEventListener("pointercancel",endMiniAvatarCropDrag);
+document.addEventListener("pointermove",event=>{
+  if(event.pointerType!=="mouse")moveMiniAvatarCrop(event);
+},{passive:false});
+document.addEventListener("pointerup",event=>{
+  if(event.pointerType!=="mouse")endMiniAvatarCropDrag();
+});
+document.addEventListener("pointercancel",event=>{
+  if(event.pointerType!=="mouse")endMiniAvatarCropDrag();
+});
+miniAvatarCropFrame?.addEventListener("mousedown",startMiniAvatarCropDrag);
+document.addEventListener("mousemove",moveMiniAvatarCrop);
+document.addEventListener("mouseup",endMiniAvatarCropDrag);
 document.getElementById("miniAvatarZoom")?.addEventListener("input",function(){
   pendingMiniAvatarZoom=Number(this.value)||1;
   updateMiniAvatarCropPreview();
