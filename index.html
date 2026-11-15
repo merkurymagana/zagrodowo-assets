@@ -8102,6 +8102,36 @@ html.profile-editor-open .side-menu{
     margin:24px 0!important;
   }
 }
+
+/* USTAWIENIA — kontrolki działające lokalnie w wersji demonstracyjnej. */
+.settings-toggle{position:relative;display:inline-flex;flex:0 0 42px;width:42px;height:23px;cursor:pointer}
+.settings-toggle input{position:absolute;opacity:0;width:1px;height:1px}
+.settings-toggle-track{position:absolute;inset:0;border:1px solid #72965B;border-radius:20px;background:#171717;transition:background .18s}
+.settings-toggle-track:after{content:"";position:absolute;top:3px;left:3px;width:15px;height:15px;border-radius:50%;background:#aaa;transition:transform .18s,background .18s}
+.settings-toggle input:checked+.settings-toggle-track{background:rgba(114,150,91,.4)}
+.settings-toggle input:checked+.settings-toggle-track:after{transform:translateX(19px);background:#72965B}
+.settings-toggle input:focus-visible+.settings-toggle-track{outline:2px solid #fff;outline-offset:3px}
+.settings-control-select{flex:0 0 190px;max-width:48%;min-height:36px;padding:7px 10px;border:1px solid #72965B;border-radius:3px;background:#050505;color:#fff;font:500 12px 'Nunito',sans-serif}
+.settings-range{display:flex;align-items:center;gap:10px;flex:0 1 230px;min-width:120px}
+.settings-range input{width:100%;accent-color:#72965B}
+.settings-range output{flex:0 0 38px;color:#fff;font:500 12px 'Nunito',sans-serif;text-align:right}
+.settings-time-row input:disabled{opacity:.35}
+.settings-reset-row{display:flex;justify-content:flex-end;margin-top:25px;padding-top:16px;border-top:1px solid rgba(114,150,91,.55)}
+.settings-reset-button,.settings-secondary-button,.settings-danger-button{min-height:34px;padding:7px 12px;border:1px solid #72965B;border-radius:3px;background:transparent;color:#fff;font:500 12px 'Nunito',sans-serif}
+.settings-reset-button:hover,.settings-secondary-button:not(:disabled):hover{background:rgba(114,150,91,.16)}
+.settings-secondary-button:disabled,.settings-danger-button:disabled{opacity:.48;cursor:not-allowed}
+.settings-danger-button{border-color:#a65b5b;color:#e5aaaa}
+.settings-inline-note{margin:16px 0 0;color:rgba(255,255,255,.62);font:400 11px/1.5 'Nunito',sans-serif}
+.settings-general-section h3W{display:block;margin:0 0 8px;color:#fff;font:600 15px 'Nunito',sans-serif}
+.settings-general-row input[type="color"]{width:54px;height:34px;padding:2px;border:1px solid #72965B;border-radius:3px;background:#050505}
+.settings-nav-item{white-space:normal}
+@media(max-width:700px){
+ .settings-control-select{flex-basis:130px;max-width:46%}
+ .settings-range{flex-basis:145px}
+ .settings-reset-row{margin-top:18px}
+ .settings-nav-item{font-size:11px;gap:6px}
+}
+
 </style>
 </head>
 
@@ -8538,98 +8568,99 @@ html.profile-editor-open .side-menu{
                   <button type="button" class="settings-nav-item" data-settings-tab="sound" onclick="showSettingsTab('sound')"><span>♫</span> Dźwięk</button>
                   <button type="button" class="settings-nav-item" data-settings-tab="notifications" onclick="showSettingsTab('notifications')"><span>◎</span> Powiadomienia</button>
                   <button type="button" class="settings-nav-item" data-settings-tab="profile" onclick="showSettingsTab('profile')"><span>◈</span> Wygląd profilu</button>
+                  <button type="button" class="settings-nav-item" data-settings-tab="gameappearance" onclick="showSettingsTab('gameappearance')"><span>✧</span> Wygląd gry</button>
+                  <button type="button" class="settings-nav-item" data-settings-tab="account" onclick="showSettingsTab('account')"><span>♙</span> Konto i bezpieczeństwo</button>
+                  <button type="button" class="settings-nav-item" data-settings-tab="privacy" onclick="showSettingsTab('privacy')"><span>⌑</span> Prywatność i bezpieczeństwo</button>
                 </nav>
                 <div class="settings-main-panel">
-                  <section class="settings-tab-panel active" data-settings-panel="general">
-                    <h2 class="settings-section-heading">Ogólne</h2>
-                    <p class="settings-section-description">Podstawowe ustawienia Twojej rozgrywki w Zagrodowie.</p>
-
+                  <section class="settings-tab-panel" data-settings-panel="general"><h2 class="settings-section-heading">Ogólne</h2><p class="settings-section-description">Podstawowe ustawienia działania Zagrodowa i komfortu korzystania z gry.</p>
                     <div class="settings-general-content">
-                      <section class="settings-general-section" aria-labelledby="settingsGeneralRegion">
-                        <h3 id="settingsGeneralRegion">Ustawienia regionalne</h3>
-                        <div class="settings-general-row">
-                          <div class="settings-general-copy">
-                            <span class="settings-general-label">Język gry</span>
-                            <span class="settings-general-help">Wybierz język wyświetlania Zagrodowa.</span>
-                          </div>
-                          <select class="settings-general-select" aria-label="Język gry" disabled>
-                            <option selected>Polski</option>
-                          </select>
-                        </div>
-                        <div class="settings-general-row">
-                          <div class="settings-general-copy">
-                            <span class="settings-general-label">Format godziny</span>
-                            <span class="settings-general-help">Wybierz sposób wyświetlania godzin.</span>
-                          </div>
-                          <select class="settings-general-select" aria-label="Format godziny" disabled>
-                            <option selected>24-godzinny</option>
-                            <option>12-godzinny</option>
-                          </select>
-                        </div>
+                      <section class="settings-general-section"><h3>Obsługa i ekran</h3>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Automatyczne rozpoznawanie multi-touch</span><span class="settings-general-help">Dopasuj obsługę dotyku do liczby palców używanych jednocześnie.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="multiTouch" checked><span class="settings-toggle-track"></span></label></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Jasność ekranu</span><span class="settings-general-help">Dostosuj jasność obrazu w grze.</span></div><label class="settings-range"><input type="range" min="0" max="100" value="100" data-setting="brightness"><output>100%</output></label></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Kontrast</span><span class="settings-general-help">Dostosuj różnicę między jasnymi i ciemnymi elementami.</span></div><label class="settings-range"><input type="range" min="0" max="100" value="100" data-setting="contrast"><output>100%</output></label></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Nie wygaszaj ekranu podczas gry</span><span class="settings-general-help">Utrzymuj ekran aktywny, gdy korzystasz z aplikacji.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="keepAwake" ><span class="settings-toggle-track"></span></label></div>
                       </section>
-
-                      <section class="settings-general-section" aria-labelledby="settingsGeneralConfirmations">
-                        <h3 id="settingsGeneralConfirmations">Potwierdzenia</h3>
-                        <div class="settings-general-row">
-                          <div class="settings-general-copy">
-                            <span class="settings-general-label">Potwierdzaj wydawanie diamentów</span>
-                            <span class="settings-general-help">Wyświetl dodatkowe pytanie przed wydaniem diamentów.</span>
-                          </div>
-                          <span class="settings-general-switch-preview" aria-label="Włączone"><span></span></span>
-                        </div>
-                        <div class="settings-general-row">
-                          <div class="settings-general-copy">
-                            <span class="settings-general-label">Potwierdzaj usuwanie budynków</span>
-                            <span class="settings-general-help">Chroń się przed przypadkowym usunięciem budynku i jego zawartości.</span>
-                          </div>
-                          <span class="settings-general-switch-preview" aria-label="Włączone"><span></span></span>
-                        </div>
+                      <section class="settings-general-section"><h3W>Wydajność</h3W>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Tryb oszczędzania baterii</span><span class="settings-general-help">Ogranicza wybrane animacje i efekty. Nie zmienia tempa produkcji ani wzrostu roślin.</span></div><select class="settings-control-select" data-setting="batteryMode"><option value="off">Wyłączony</option><option value="auto">Automatyczny</option><option value="on">Włączony</option></select></div>
                       </section>
-                    </div>
-                  </section>
-                  <section class="settings-tab-panel" data-settings-panel="gameplay">
-                    <h2 class="settings-section-heading">Rozgrywka</h2>
-                    <p class="settings-section-description">Dostosuj sposób wyświetlania i obsługi gry.</p>
-                    <div class="settings-placeholder-card"><h3>Ustawienia rozgrywki</h3><p>Opcje ułatwiające codzienną grę pojawią się tutaj.</p><span>W przygotowaniu</span></div>
-                  </section>
-                  <section class="settings-tab-panel" data-settings-panel="sound">
-                    <h2 class="settings-section-heading">Dźwięk</h2>
-                    <p class="settings-section-description">Zarządzaj dźwiękami i muzyką w grze.</p>
-                    <div class="settings-placeholder-card"><h3>Dźwięk gry</h3><p>Regulacja głośności i pozostałe opcje audio zostaną dodane później.</p><span>W przygotowaniu</span></div>
-                  </section>
-                  <section class="settings-tab-panel" data-settings-panel="notifications">
-                    <h2 class="settings-section-heading">Powiadomienia</h2>
-                    <p class="settings-section-description">Wybierz, o czym chcesz otrzymywać informacje.</p>
-                    <div class="settings-placeholder-card"><h3>Powiadomienia</h3><p>Ustawienia powiadomień przygotujemy w kolejnym etapie.</p><span>W przygotowaniu</span></div>
-                  </section>
-                  <section class="settings-tab-panel" data-settings-panel="profile">
-                    <h2 class="settings-section-heading">Wygląd profilu</h2>
-                    <p class="settings-section-description">Wybierz tytuł, który będzie Cię reprezentował, i dostosuj wygląd jego odznaki.</p>
+                    </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="general">Przywróć ustawienia domyślne</button></div></section>
+                  <section class="settings-tab-panel" data-settings-panel="gameplay"><h2 class="settings-section-heading">Rozgrywka</h2><p class="settings-section-description">Dostosuj sposób wykonywania czynności w gospodarstwie.</p>
+                    <div class="settings-general-content">
+                      <section class="settings-general-section"><h3>Wskaźniki</h3>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Wskaźnik pola działania</span><span class="settings-general-help">Podświetl miejsce, na które wskazuje kursor lub które dotykasz.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="actionIndicator" checked><span class="settings-toggle-track"></span></label></div>
+                      </section>
+                      <section class="settings-general-section"><h3>Potwierdzenia</h3>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Potwierdzaj wydawanie diamentów</span><span class="settings-general-help">Zapytaj przed każdą czynnością wymagającą waluty premium.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="confirmPremium" checked><span class="settings-toggle-track"></span></label></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Potwierdzaj przerywanie produkcji</span><span class="settings-general-help">Ostrzeż przed wyrwaniem niedojrzałej rośliny lub przerwaniem produkcji.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="confirmCancelProduction" checked><span class="settings-toggle-track"></span></label></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Potwierdzaj usuwanie budynków</span><span class="settings-general-help">Chroń budynek i jego zawartość przed przypadkowym usunięciem.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="confirmBuildingRemoval" checked><span class="settings-toggle-track"></span></label></div>
+                      </section>
+                    </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="gameplay">Przywróć ustawienia domyślne</button></div></section>
+                  <section class="settings-tab-panel" data-settings-panel="sound"><h2 class="settings-section-heading">Dźwięk</h2><p class="settings-section-description">Ustaw osobno głośność muzyki, efektów i odgłosów otoczenia.</p>
+                    <div class="settings-general-content">
+                      <section class="settings-general-section"><h3>Poziomy głośności</h3>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Głośność muzyki</span><span class="settings-general-help">Muzyka towarzysząca rozgrywce.</span></div><label class="settings-range"><input type="range" min="0" max="100" value="70" data-setting="musicVolume"><output>70%</output></label></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Głośność efektów dźwiękowych</span><span class="settings-general-help">Dźwięki zwierząt, zbiorów, maszyn i interfejsu.</span></div><label class="settings-range"><input type="range" min="0" max="100" value="80" data-setting="effectsVolume"><output>80%</output></label></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Głośność odgłosów otoczenia</span><span class="settings-general-help">Wiatr, deszcz, ptaki i pozostałe dźwięki natury.</span></div><label class="settings-range"><input type="range" min="0" max="100" value="65" data-setting="ambienceVolume"><output>65%</output></label></div>
+                      </section>
+                      <section class="settings-general-section"><h3>Zachowanie dźwięku</h3>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Wyciszaj w tle</span><span class="settings-general-help">Wycisz dźwięki, gdy aplikacja zostanie zminimalizowana lub utraci aktywność.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="muteInBackground" checked><span class="settings-toggle-track"></span></label></div>
+                      </section>
+                    </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="sound">Przywróć ustawienia domyślne</button></div></section>
+                  <section class="settings-tab-panel" data-settings-panel="notifications"><h2 class="settings-section-heading">Powiadomienia</h2><p class="settings-section-description">Zdecyduj, w jaki sposób Zagrodowo może przekazywać Ci informacje.</p>
+                    <div class="settings-general-content">
+                      <section class="settings-general-section"><h3>Sposób powiadamiania</h3>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Powiadomienia w grze</span><span class="settings-general-help">Komunikaty wyświetlane podczas aktywnej rozgrywki.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="inGameNotifications" checked><span class="settings-toggle-track"></span></label></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Powiadomienia Push</span><span class="settings-general-help">Powiadomienia systemowe poza grą. Wymagają zgody systemu i obsługi przez aplikację.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="pushNotifications" ><span class="settings-toggle-track"></span></label></div>
+                      </section>
+                      <section class="settings-general-section"><h3>Ciche godziny</h3>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Włącz ciche godziny</span><span class="settings-general-help">W wybranym przedziale nie wysyłaj powiadomień Push.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="quietHours" ><span class="settings-toggle-track"></span></label></div>
+                        <div class="settings-general-row settings-time-row"><div class="settings-general-copy"><span class="settings-general-label">Od</span></div><input type="time" class="settings-control-select" data-setting="quietStart" value="22:00" disabled></div>
+                        <div class="settings-general-row settings-time-row"><div class="settings-general-copy"><span class="settings-general-label">Do</span></div><input type="time" class="settings-control-select" data-setting="quietEnd" value="08:00" disabled></div>
+                      </section>
+                      <p class="settings-inline-note">Wybór zdarzeń, o których chcesz otrzymywać powiadomienia, będzie dostępny po uruchomieniu systemu powiadomień.</p>
+                    </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="notifications">Przywróć ustawienia domyślne</button></div></section>
+                  <section class="settings-tab-panel" data-settings-panel="profile"><h2 class="settings-section-heading">Wygląd profilu</h2><p class="settings-section-description">Wybierz tytuł, który będzie Cię reprezentował, i dostosuj wygląd jego odznaki.</p>
                     <div class="settings-profile-card">
                       <label class="settings-profile-field">Tytuł gracza
-                        <select id="settingsPlayerTitleSelect">
-                          <option value="">Bez tytułu</option>
-                          <option value="Początkujący farmer">Początkujący farmer</option>
-                          <option value="Młody gospodarz">Młody gospodarz</option>
-                          <option value="Miłośnik zwierząt">Miłośnik zwierząt</option>
-                          <option value="Mistrz plonów">Mistrz plonów</option>
-                        </select>
+                        <select id="settingsPlayerTitleSelect"><option value="">Bez tytułu</option><option value="Początkujący farmer">Początkujący farmer</option><option value="Młody gospodarz">Młody gospodarz</option><option value="Miłośnik zwierząt">Miłośnik zwierząt</option><option value="Mistrz plonów">Mistrz plonów</option></select>
                       </label>
                       <label class="settings-profile-field">Wygląd odznaki
-                        <select id="settingsTitleStyleSelect">
-                          <option value="green">Zielona</option>
-                          <option value="chestnut">Kasztanowa</option>
-                          <option value="gold">Złota</option>
-                        </select>
+                        <select id="settingsTitleStyleSelect"><option value="green">Zielona</option><option value="chestnut">Kasztanowa</option><option value="gold">Złota</option></select>
                       </label>
-                      <div class="settings-badge-preview">
-                        <span class="settings-preview-label">Podgląd odznaki</span>
-                        <span id="settingsTitleBadgePreview" class="player-title-badge title-style-green">Bez tytułu</span>
-                      </div>
+                      <div class="settings-badge-preview"><span class="settings-preview-label">Podgląd odznaki</span><span id="settingsTitleBadgePreview" class="player-title-badge title-style-green">Bez tytułu</span></div>
                       <p id="settingsProfileStatus" class="settings-profile-status" aria-live="polite"></p>
                       <div class="settings-profile-actions"><button type="button" onclick="saveProfileAppearance()">Zapisz zmiany</button></div>
-                    </div>
-                  </section>
+                    </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="profile">Przywróć ustawienia domyślne</button></div></section>
+                  <section class="settings-tab-panel" data-settings-panel="gameappearance"><h2 class="settings-section-heading">Wygląd gry</h2><p class="settings-section-description">Dostosuj akcenty i wskaźniki interfejsu do własnego gustu.</p>
+                    <div class="settings-general-content">
+                      <section class="settings-general-section"><h3>Kolor interfejsu</h3>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Kolor przewodni</span><span class="settings-general-help">Wybierz gotowy kolor, własny odcień lub płynnie zmieniające się barwy.</span></div><select class="settings-control-select" data-setting="accentMode"><option value="green">Zielony</option><option value="blue">Niebieski</option><option value="lavender">Lawendowy</option><option value="pink">Różowy</option><option value="amber">Bursztynowy</option><option value="brick">Ceglasty</option><option value="mint">Miętowy</option><option value="custom">Własny kolor</option><option value="rainbow">Kolorowy 🌈</option></select></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Własny odcień</span><span class="settings-general-help">Wybierz kolor akcentowy. Czerń i biel interfejsu pozostają bez zmian.</span></div><input type="color" value="#72965B" data-setting="customAccent" aria-label="Wybierz własny kolor"></div>
+                      </section>
+                      <section class="settings-general-section"><h3>Kursor i kafelki</h3>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Wygląd kursora</span><span class="settings-general-help">Wybierz styl kursora na komputerze.</span></div><select class="settings-control-select" data-setting="cursorStyle"><option value="classic">Klasyczny</option><option value="farm">Wiejski</option><option value="simple">Prosty</option></select></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Podświetlenie kafelka</span><span class="settings-general-help">Wybierz sposób zaznaczania pola pod kursorem lub palcem.</span></div><select class="settings-control-select" data-setting="tileHighlight"><option value="outline">Delikatna ramka</option><option value="soft">Miękkie podświetlenie</option><option value="strong">Wyraźne podświetlenie</option></select></div>
+                      </section>
+                    </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="gameappearance">Przywróć ustawienia domyślne</button></div></section>
+                  <section class="settings-tab-panel" data-settings-panel="account"><h2 class="settings-section-heading">Konto i bezpieczeństwo</h2><p class="settings-section-description">Zarządzaj dostępem do konta i jego statusem.</p>
+                    <div class="settings-general-content">
+                      <section class="settings-general-section"><h3>Dostęp do konta</h3>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Zmiana hasła</span><span class="settings-general-help">Zmień hasło zabezpieczające Twoje konto.</span></div><button type="button" class="settings-secondary-button" disabled>Zmiana hasła — w przygotowaniu</button></div>
+                      </section>
+                      <section class="settings-general-section"><h3>Status konta</h3>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Dezaktywacja konta</span><span class="settings-general-help">Tymczasowo zawieś konto. Twoje postępy powinny pozostać zachowane.</span></div><button type="button" class="settings-secondary-button" disabled>Dezaktywuj konto</button></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Usunięcie konta</span><span class="settings-general-help">Trwale usuń konto i powiązane z nim dane po dodatkowym potwierdzeniu.</span></div><button type="button" class="settings-danger-button" disabled>Usuń konto</button></div>
+                      </section>
+                      <p class="settings-inline-note">Operacje konta wymagają działającego systemu kont i bezpiecznej obsługi po stronie serwera. Przyciski są na razie nieaktywne.</p>
+                    </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="account">Przywróć ustawienia domyślne</button></div></section>
+                  <section class="settings-tab-panel" data-settings-panel="privacy"><h2 class="settings-section-heading">Prywatność i bezpieczeństwo</h2><p class="settings-section-description">Zarządzaj kontaktami i bezpieczeństwem w społeczności Zagrodowa.</p>
+                    <div class="settings-general-content">
+                      <section class="settings-general-section"><h3>Kontakty</h3>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Zablokowani gracze</span><span class="settings-general-help">Przeglądaj zablokowanych użytkowników i w razie potrzeby ich odblokuj.</span></div><button type="button" class="settings-secondary-button" disabled>Lista zablokowanych</button></div>
+                      </section>
+                      <p class="settings-inline-note">Zgłaszanie graczy będzie dostępne bezpośrednio z ich profilu, czatu i innych miejsc interakcji. Blokowanie i zgłoszenia wymagają jeszcze systemu społeczności po stronie serwera.</p>
+                    </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="privacy">Przywróć ustawienia domyślne</button></div></section>
                 </div>
               </section>
 
@@ -10197,6 +10228,7 @@ async function saveProfile(){
 
 
 function showSettingsTab(name){
+  initGameSettings();
   document.querySelectorAll('#settingsContent [data-settings-tab]').forEach(button=>button.classList.toggle('active',button.dataset.settingsTab===name));
   document.querySelectorAll('#settingsContent [data-settings-panel]').forEach(panel=>panel.classList.toggle('active',panel.dataset.settingsPanel===name));
   if(name==='profile')renderProfileAppearanceSettings();
@@ -10238,6 +10270,65 @@ async function saveProfileAppearance(){
   status.textContent="Zmiany zostały zapisane.";
   updateTitleBadgePreview();
 }
+
+
+/* USTAWIENIA — lokalne preferencje demonstracyjne. */
+const SETTINGS_DEFAULTS={
+ multiTouch:true,brightness:100,contrast:100,keepAwake:false,batteryMode:"auto",
+ actionIndicator:true,confirmPremium:true,confirmCancelProduction:true,confirmBuildingRemoval:true,
+ musicVolume:70,effectsVolume:80,ambienceVolume:65,muteInBackground:true,
+ inGameNotifications:true,pushNotifications:false,quietHours:false,quietStart:"22:00",quietEnd:"08:00",
+ accentMode:"green",customAccent:"#72965B",cursorStyle:"classic",tileHighlight:"outline"
+};
+let gameSettings={...SETTINGS_DEFAULTS};
+try{const saved=JSON.parse(localStorage.getItem("zagrodowoSettings")||"{}");gameSettings={...gameSettings,...saved};}catch(e){}
+function saveGameSettings(){try{localStorage.setItem("zagrodowoSettings",JSON.stringify(gameSettings));}catch(e){}}
+function applyGameAccent(){
+ const palette={green:"#72965B",blue:"#6599D0",lavender:"#9A83C7",pink:"#CE83A7",amber:"#D3A34A",brick:"#B96F5B",mint:"#72B7A0",custom:gameSettings.customAccent};
+ const color=palette[gameSettings.accentMode]||palette.green;
+ document.documentElement.style.setProperty("--settings-accent",color);
+ document.querySelectorAll("#settingsContent .settings-navigation,#settingsContent .settings-main-panel").forEach(el=>el.style.borderColor=color);
+ document.querySelectorAll("#settingsContent .settings-nav-item.active,#settingsContent .settings-nav-item:hover").forEach(el=>el.style.borderColor=color);
+ document.querySelectorAll("#settingsContent .settings-nav-item span,#settingsContent .settings-general-section+ .settings-general-section,#settingsContent .settings-general-row,#settingsContent .settings-reset-row").forEach(el=>{if(el.classList.contains("settings-general-section")||el.classList.contains("settings-reset-row"))el.style.borderColor=color;});
+ document.querySelectorAll("#settingsContent input[type=range],#settingsContent .settings-toggle-track").forEach(el=>el.style.accentColor=color);
+ document.documentElement.classList.toggle("settings-rainbow",gameSettings.accentMode==="rainbow");
+}
+function syncSettingsControls(){
+ document.querySelectorAll("#settingsContent [data-setting]").forEach(el=>{
+  const key=el.dataset.setting;if(!(key in gameSettings))return;
+  if(el.type==="checkbox")el.checked=!!gameSettings[key];else el.value=gameSettings[key];
+  const out=el.closest(".settings-range")?.querySelector("output");if(out)out.textContent=el.value+"%";
+ });
+ const quiet=!!gameSettings.quietHours;
+ ["quietStart","quietEnd"].forEach(k=>{const el=document.querySelector('[data-setting="'+k+'"]');if(el)el.disabled=!quiet;});
+ const custom=document.querySelector('[data-setting="customAccent"]');if(custom)custom.disabled=gameSettings.accentMode!=="custom";
+ applyGameAccent();
+}
+function initGameSettings(){
+ const root=document.getElementById("settingsContent");if(!root||root.dataset.initialized)return;root.dataset.initialized="1";
+ syncSettingsControls();
+ root.querySelectorAll("[data-setting]").forEach(el=>el.addEventListener("input",()=>{
+  const key=el.dataset.setting;gameSettings[key]=el.type==="checkbox"?el.checked:el.value;
+  const out=el.closest(".settings-range")?.querySelector("output");if(out)out.textContent=el.value+"%";
+  if(key==="quietHours")syncSettingsControls();
+  if(key==="accentMode"||key==="customAccent"){const custom=root.querySelector('[data-setting="customAccent"]');if(custom)custom.disabled=gameSettings.accentMode!=="custom";applyGameAccent();}
+  saveGameSettings();
+ }));
+ root.querySelectorAll("[data-reset-category]").forEach(button=>button.addEventListener("click",()=>{
+  const category=button.dataset.resetCategory;
+  const groups={
+   general:["multiTouch","brightness","contrast","keepAwake","batteryMode"],
+   gameplay:["actionIndicator","confirmPremium","confirmCancelProduction","confirmBuildingRemoval"],
+   sound:["musicVolume","effectsVolume","ambienceVolume","muteInBackground"],
+   notifications:["inGameNotifications","pushNotifications","quietHours","quietStart","quietEnd"],
+   gameappearance:["accentMode","customAccent","cursorStyle","tileHighlight"]
+  };
+  const keys=groups[category]||[];if(!keys.length)return;
+  if(!window.confirm("Przywrócić domyślne ustawienia tej kategorii?"))return;
+  keys.forEach(k=>gameSettings[k]=SETTINGS_DEFAULTS[k]);saveGameSettings();syncSettingsControls();
+ }));
+}
+initGameSettings();
 
 /* KAMERA WYŁĄCZONA */
 
