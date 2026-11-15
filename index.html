@@ -9632,22 +9632,43 @@ function returnToGameFromProfile(){
   fitGame();
 }
 
+let pendingProfileNavigation=null;
+
+function showProfileExitConfirmation(nextAction=null){
+  pendingProfileNavigation=nextAction;
+  const dialog=document.getElementById("profileExitConfirm");
+  dialog.classList.add("visible");
+  dialog.setAttribute("aria-hidden","false");
+}
+
 function requestProfileExit(){
   const overlay=document.getElementById("profileOverlay");
   if(!overlay?.classList.contains("visible"))return;
   if(!hasPendingProfileChanges()){
+    pendingProfileNavigation=null;
     returnToGameFromProfile();
     return;
   }
-  const dialog=document.getElementById("profileExitConfirm");
-  dialog.classList.add("visible");
-  dialog.setAttribute("aria-hidden","false");
+  showProfileExitConfirmation(null);
 }
 
 function cancelProfileExit(){
   const dialog=document.getElementById("profileExitConfirm");
   dialog?.classList.remove("visible");
   dialog?.setAttribute("aria-hidden","true");
+  pendingProfileNavigation=null;
+}
+
+function finishProfileExit(){
+  const nextAction=pendingProfileNavigation;
+  pendingProfileNavigation=null;
+  closeProfileEditor();
+  if(nextAction && nextAction.isConnected){
+    nextAction.click();
+    return;
+  }
+  openGameView("farm");
+  fitGame();
 }
 
 async function saveAndExitProfile(){
@@ -9664,12 +9685,25 @@ async function saveAndExitProfile(){
     cancelProfileExit();
     return;
   }
-  returnToGameFromProfile();
+  finishProfileExit();
 }
 
 function discardAndExitProfile(){
-  returnToGameFromProfile();
+  finishProfileExit();
 }
+
+/* Ikony nawigacyjne zachowują własne akcje, ale najpierw rozstrzygają
+   niezapisane zmiany awatara. Po zapisie/odrzuceniu kliknięcie jest ponawiane. */
+document.addEventListener("click",event=>{
+  const overlay=document.getElementById("profileOverlay");
+  if(!overlay?.classList.contains("visible") || !hasPendingProfileChanges())return;
+  const control=event.target.closest("#game .side-menu button, #game .logout-menu-button, #game [data-profile-navigation]");
+  if(!control || overlay.contains(control))return;
+  if(control.matches(".profile-back-button"))return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  showProfileExitConfirmation(control);
+},true);
 
 
 
