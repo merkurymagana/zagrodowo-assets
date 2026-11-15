@@ -7302,6 +7302,41 @@ body.profile-editor-open #appStage{
   }
 }
 
+/* WSPÓLNY SYSTEM KSZTAŁTÓW UI — prostokątne elementy mają jeden promień narożników. */
+:root{
+  --ui-radius:3px;
+}
+/* Przyciski i kontrolki formularzy — bez wpływu na suwaki, checkboxy i przełączniki radiowe. */
+#appStage button,
+#appStage input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+#appStage select,
+#appStage textarea,
+#profileOverlay button,
+#profileOverlay input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+#profileOverlay select,
+#profileOverlay textarea{
+  border-radius:var(--ui-radius)!important;
+}
+/* Powierzchnie, panele, karty, okna i komunikaty interfejsu. */
+#appStage :is(
+  .auth-window,.message,.farm-land,.farm-area,.farm-home,.game-notice,
+  .view-placeholder,#premiumContent,.premium-card,.premium-note,#mapContent,
+  .map-farm-button,.map-note,.profile-card,.currency-box,.side-menu,
+  .logout-button,.neighbors-content,.social-tab,.social-card,.social-empty,
+  .social-note,.conversation-list,.conversation-choice,.conversation-window,
+  .chat-message,.settings-profile-panel,.settings-badge-preview,
+  .mini-avatar-editor-panel,.mini-avatar-crop-frame,.profile-exit-dialog,
+  .profile-back-tooltip
+),
+#profileOverlay :is(
+  .profile-avatar-card,.profile-form-card,.profile-back-btn,
+  .profile-avatar-change,.profile-avatar-start-button,
+  .profile-mini-avatar-button,.profile-exit-dialog
+){
+  border-radius:var(--ui-radius)!important;
+}
+/* Okrągłe awatary, flagi, znaczniki statusu i elementy dekoracyjne zachowują swój kształt. */
+
 /* Miniaturka awatara — bez obwódki wokół pola przesuwania kadru. */
 #miniAvatarEditor .mini-avatar-crop-frame{
   border:0!important;
