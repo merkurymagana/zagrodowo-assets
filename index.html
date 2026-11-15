@@ -6929,15 +6929,15 @@ body.profile-editor-open #appStage{
 #profileOverlay .profile-mini-avatar-button:focus-visible,
 #profileOverlay .avatar-profile-actions button:focus-visible{outline:2px solid #e9c342!important;outline-offset:3px!important}
 
-/* Dwa przyciski wyboru i kadrowania pozostają w jednym rzędzie. */
+/* Przyciski awatara są ustawione pionowo i zajmują 90% szerokości kontenera. */
 #profileOverlay .profile-avatar-button-row{
-  display:flex!important;flex-direction:row!important;align-items:stretch!important;
-  justify-content:center!important;gap:10px!important;width:100%!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;
+  justify-content:center!important;gap:9px!important;width:100%!important;
 }
 #profileOverlay .profile-avatar-button-row .profile-avatar-change,
 #profileOverlay .profile-avatar-button-row .profile-mini-avatar-button{
-  display:inline-flex!important;flex:1 1 0!important;min-width:0!important;
-  max-width:none!important;min-height:42px!important;padding:10px 12px!important;
+  display:inline-flex!important;flex:0 0 auto!important;width:90%!important;min-width:0!important;
+  max-width:90%!important;min-height:42px!important;padding:10px 12px!important;
   align-items:center!important;justify-content:center!important;box-sizing:border-box!important;
   border:1px solid #72965B!important;border-radius:9px!important;
   background:rgba(0,0,0,.72)!important;color:#F5F1E7!important;
