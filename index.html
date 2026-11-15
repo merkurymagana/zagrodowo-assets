@@ -7124,7 +7124,11 @@ body.profile-editor-open #appStage{
 }
 #profileOverlay .profile-back-button:hover,
 #profileOverlay .profile-back-button:focus-visible{
-  background:transparent;color:#72965B;
+  background:transparent!important;color:#72965B!important;
+}
+#profileOverlay .profile-back-button:hover .profile-back-icon .ui-icon,
+#profileOverlay .profile-back-button:focus-visible .profile-back-icon .ui-icon{
+  color:#72965B!important;stroke:#72965B!important;
 }
 #profileOverlay .profile-back-button:focus-visible{outline:2px solid #72965B;outline-offset:3px}
 #profileOverlay .profile-back-tooltip{
