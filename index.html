@@ -7732,6 +7732,30 @@ body.profile-editor-open #appStage{
   transform:translate(-50%,0)!important;
 }
 
+
+/* Na urządzeniach dotykowych etykiety są stale widoczne — nie wymagają hovera. */
+@media(pointer:coarse){
+  #playerPanel .profile-card::after{
+    display:block!important;
+    opacity:1!important;
+    visibility:visible!important;
+  }
+  #profileOverlay .profile-back-tooltip{
+    display:block!important;
+    opacity:1!important;
+    visibility:visible!important;
+    transform:translate(-50%,0)!important;
+  }
+}
+@media(max-width:700px){
+  #profileOverlay .profile-back-tooltip{
+    display:block!important;
+    opacity:1!important;
+    visibility:visible!important;
+    transform:translate(-50%,0)!important;
+  }
+}
+
 </style>
 </head>
 
