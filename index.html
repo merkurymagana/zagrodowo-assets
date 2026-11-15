@@ -6724,6 +6724,22 @@ body.profile-editor-open #appStage{
 
 .settings-profile-status{grid-column:1/-1;min-height:18px;margin:0;color:#F5F1E7;font:500 12px 'Nunito',sans-serif}
 
+
+
+/* Cała przestrzeń gry przy widoku Ustawień ma jednolite, czarne tło. */
+#game.settings-page-active #gameMain,
+#game.settings-page-active #gameViewport,
+#game.settings-page-active #gameCanvas,
+#game.settings-page-active .game-content,
+#game.settings-page-active #otherView{
+  background:#000!important;
+}
+#game.settings-page-active #gameCanvas,
+#game.settings-page-active .game-content,
+#game.settings-page-active #otherView{
+  min-height:100%;
+}
+
 /* USTAWIENIA — roboczy układ pełnego widoku, spójny z ekranem „Twój profil”. */
 .settings-screen{
   display:grid;grid-template-columns:230px minmax(0,1fr);gap:22px;
@@ -10065,6 +10081,7 @@ function openGameView(name,button){
     document.getElementById("mapContent").style.display=isMap?"block":"none";
     document.getElementById("premiumContent").style.display=isPremium?"block":"none";
     const isSettings=name==="settings";
+    document.getElementById("game").classList.toggle("settings-page-active",isSettings);
     document.getElementById("genericViewContent").style.display=(!isMap&&!isNeighbors&&!isPremium&&!isSettings)?"block":"none";
     document.getElementById("settingsContent").style.display=isSettings?"grid":"none";
     document.getElementById("neighborsContent").style.display=isNeighbors?"block":"none";
