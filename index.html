@@ -7117,21 +7117,37 @@ body.profile-editor-open #appStage{
 }
 .profile-exit-confirm.visible{display:flex}
 .profile-exit-dialog{
-  width:min(440px,100%);padding:30px 28px;border:1px solid rgba(224,199,142,.28);
-  border-radius:18px;background:linear-gradient(145deg,rgba(52,64,52,.98),rgba(32,41,34,.99));
-  box-shadow:0 12px 32px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.035);
-  color:#fff;text-align:center;
+  width:min(440px,100%);padding:30px 28px;border:1px solid #72965B;
+  border-radius:18px;background:#000;
+  box-shadow:0 14px 36px rgba(0,0,0,.42);color:#FFFFFF;text-align:center;
 }
-.profile-exit-dialog h3{margin:0 0 10px;color:#fff;font:300 18px 'Exo 2',sans-serif}
-.profile-exit-dialog p{margin:0 0 22px;color:#fff;font:500 13px/1.5 'Nunito',Arial,sans-serif}
-.profile-exit-actions{display:flex;flex-direction:column;align-items:stretch;gap:9px;width:min(260px,100%);margin:0 auto}
+.profile-exit-dialog h3{
+  margin:0 0 10px;color:#FFFFFF;
+  font:300 18px/1.15 'Exo 2',Arial,sans-serif;letter-spacing:normal;
+}
+.profile-exit-dialog p{
+  margin:0 0 22px;color:#FFFFFF;
+  font:500 13px/1.5 'Nunito',Arial,sans-serif;letter-spacing:normal;
+}
+.profile-exit-actions{
+  display:flex;flex-direction:column;align-items:stretch;gap:9px;
+  width:min(260px,100%);margin:0 auto;
+}
 .profile-exit-actions button{
-  width:100%;min-height:32px;padding:6px 11px;border:1px solid rgba(145,180,119,.78);
-  border-radius:7px;background:#000;color:#fff;font:500 13px/1.2 'Nunito',Arial,sans-serif;cursor:pointer;
+  width:100%;min-height:32px;padding:6px 11px;
+  border:1px solid #72965B;border-radius:7px;background:#000;
+  color:#FFFFFF;font:500 13px/1.2 'Nunito',Arial,sans-serif;
+  letter-spacing:normal;cursor:pointer;transition:background .18s,border-color .18s;
 }
-.profile-exit-actions button:hover{background:#72965B;border-color:#72965B}
-.profile-exit-actions button.secondary{border-color:rgba(255,255,255,.35);background:rgba(0,0,0,.42)}
-.profile-exit-actions button.secondary:hover{background:#72965B;border-color:#72965B}
+.profile-exit-actions button:hover{
+  background:#72965B;border-color:#72965B;
+}
+.profile-exit-actions button.secondary{
+  border-color:#72965B;background:#000;color:#FFFFFF;
+}
+.profile-exit-actions button.secondary:hover{
+  background:#72965B;border-color:#72965B;
+}
 @media(max-width:700px){
   #profileOverlay .profile-window{padding:24px 18px}
   #profileOverlay .profile-screen-header{gap:12px}
