@@ -6859,6 +6859,7 @@ body.profile-editor-open #appStage{
 
 /* Awatar pozostaje wyłącznie do podglądu, dopóki gracz nie uruchomi edycji. */
 #profileOverlay .profile-avatar-start-button{
+  pointer-events:auto!important;position:relative;z-index:5;
   display:inline-flex;align-items:center;justify-content:center;min-width:150px;padding:10px 22px;
   border:1px solid #72965B;border-radius:9px;background:#72965B;color:#fff;
   font:700 13px 'Nunito',Arial,sans-serif;cursor:pointer;box-shadow:0 3px 9px #0003;
