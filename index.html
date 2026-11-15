@@ -7103,6 +7103,42 @@ body.profile-editor-open #appStage{
   padding:6px 14px!important;
 }
 
+
+/* WYJŚCIE Z PROFILU I POTWIERDZENIE NIEZAPISANYCH ZMIAN */
+#profileOverlay .profile-screen-header{align-items:center}
+#profileOverlay .profile-back-button{
+  flex:0 0 auto;min-height:32px;padding:6px 14px;border:1px solid rgba(145,180,119,.78);
+  border-radius:7px;background:#000;color:#fff;font:500 13px/1.2 'Nunito',Arial,sans-serif;cursor:pointer;
+}
+#profileOverlay .profile-back-button:hover{background:#72965B;border-color:#72965B}
+.profile-exit-confirm{
+  position:absolute;inset:0;z-index:30;display:none;align-items:center;justify-content:center;
+  padding:20px;background:rgba(0,0,0,.66);backdrop-filter:blur(3px);
+}
+.profile-exit-confirm.visible{display:flex}
+.profile-exit-dialog{
+  width:min(480px,100%);padding:26px;border:1px solid rgba(145,180,119,.65);
+  border-radius:14px;background:linear-gradient(145deg,#263329,#19221b);
+  box-shadow:0 18px 55px rgba(0,0,0,.48);color:#fff;text-align:center;
+}
+.profile-exit-dialog h3{margin:0 0 10px;color:#fff;font:300 20px 'Exo 2',sans-serif}
+.profile-exit-dialog p{margin:0 0 22px;color:#fff;font:500 13px/1.5 'Nunito',Arial,sans-serif}
+.profile-exit-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:9px}
+.profile-exit-actions button{
+  min-height:32px;padding:6px 11px;border:1px solid rgba(145,180,119,.78);
+  border-radius:7px;background:#000;color:#fff;font:500 13px/1.2 'Nunito',Arial,sans-serif;cursor:pointer;
+}
+.profile-exit-actions button:hover{background:#72965B;border-color:#72965B}
+.profile-exit-actions button.secondary{border-color:rgba(255,255,255,.35);background:rgba(0,0,0,.42)}
+.profile-exit-actions button.secondary:hover{background:#72965B;border-color:#72965B}
+@media(max-width:700px){
+  #profileOverlay .profile-window{padding:24px 18px}
+  #profileOverlay .profile-screen-header{gap:12px}
+  #profileOverlay .profile-heading-copy h2{font-size:26px}
+  .profile-exit-dialog{padding:22px 16px}
+  .profile-exit-actions{flex-direction:column}
+  .profile-exit-actions button{width:100%}
+}
 </style>
 </head>
 
@@ -7692,7 +7728,19 @@ body.profile-editor-open #appStage{
           <h2 id="profileScreenTitle">Twój profil</h2>
           <p>Tutaj znajdziesz informacje o swoim profilu gracza.</p>
         </div>
+        <button type="button" class="profile-back-button" onclick="requestProfileExit()">Powrót</button>
       </header>
+      <div class="profile-exit-confirm" id="profileExitConfirm" aria-hidden="true">
+        <div class="profile-exit-dialog" role="dialog" aria-modal="true" aria-labelledby="profileExitTitle" aria-describedby="profileExitMessage">
+          <h3 id="profileExitTitle">Niezapisane zmiany</h3>
+          <p id="profileExitMessage">Czy chcesz zachować wprowadzone zmiany przed wyjściem z profilu?</p>
+          <div class="profile-exit-actions">
+            <button type="button" onclick="saveAndExitProfile()">Zachowaj zmiany i wyjdź</button>
+            <button type="button" class="secondary" onclick="discardAndExitProfile()">Odrzuć zmiany</button>
+            <button type="button" class="secondary" onclick="cancelProfileExit()">Wróć do profilu</button>
+          </div>
+        </div>
+      </div>
       <div class="profile-layout">
         <section class="profile-avatar-card" aria-label="Awatar gracza — kliknij, aby dostosować" role="button" tabindex="0" onclick="activateAvatarCard(event)" onkeydown="activateAvatarCardKeyboard(event)">
           <div class="profile-preview">
@@ -8355,8 +8403,17 @@ function hideMessage(){
 
 document.addEventListener("keydown",event=>{
   if(event.key==="Escape"){
+    const exitDialog=document.getElementById("profileExitConfirm");
+    if(exitDialog?.classList.contains("visible")){
+      cancelProfileExit();
+      return;
+    }
+    const profileOverlay=document.getElementById("profileOverlay");
+    if(profileOverlay?.classList.contains("visible")){
+      requestProfileExit();
+      return;
+    }
     closeAuth();
-    closeProfileEditor();
   }
 });
 
@@ -8626,13 +8683,66 @@ function closeProfileEditor(){
   avatarEditingEnabled=false;
   document.getElementById("profileOverlay").classList.remove("avatar-editing");
   document.getElementById("profileOverlay").classList.remove("visible");
+  document.getElementById("profileExitConfirm")?.classList.remove("visible");
+  document.getElementById("profileExitConfirm")?.setAttribute("aria-hidden","true");
   document.documentElement.classList.remove("profile-editor-open");
   document.body.classList.remove("profile-editor-open");
   pendingAvatar="";
 }
 
+function hasPendingProfileChanges(){
+  const currentAvatar=player.avatar||"";
+  const nextAvatar=pendingAvatar||currentAvatar;
+  const currentAvatarPosition=player.avatarPosition||{x:50,y:50};
+  const currentMiniPosition=player.miniAvatarPosition||{x:50,y:50};
+  const currentMiniZoom=Number(player.miniAvatarZoom)||1;
+  return nextAvatar!==currentAvatar ||
+    JSON.stringify(pendingAvatarPosition)!==JSON.stringify(currentAvatarPosition) ||
+    JSON.stringify(pendingMiniAvatarPosition)!==JSON.stringify(currentMiniPosition) ||
+    Number(pendingMiniAvatarZoom)!==currentMiniZoom;
+}
+
+function requestProfileExit(){
+  const overlay=document.getElementById("profileOverlay");
+  if(!overlay?.classList.contains("visible"))return;
+  if(!hasPendingProfileChanges()){
+    backToStart();
+    return;
+  }
+  const dialog=document.getElementById("profileExitConfirm");
+  dialog.classList.add("visible");
+  dialog.setAttribute("aria-hidden","false");
+}
+
+function cancelProfileExit(){
+  const dialog=document.getElementById("profileExitConfirm");
+  dialog?.classList.remove("visible");
+  dialog?.setAttribute("aria-hidden","true");
+}
+
+async function saveAndExitProfile(){
+  const previous={...player};
+  if(!player.joinedAt)player.joinedAt=new Date().toISOString();
+  if(pendingAvatar)player.avatar=pendingAvatar;
+  player.avatarPosition={...pendingAvatarPosition};
+  player.miniAvatarPosition={...pendingMiniAvatarPosition};
+  player.miniAvatarZoom=pendingMiniAvatarZoom;
+  updatePlayerPanel();
+  if(!await saveDemoProfile()){
+    player=previous;
+    updatePlayerPanel();
+    cancelProfileExit();
+    return;
+  }
+  backToStart();
+}
+
+function discardAndExitProfile(){
+  backToStart();
+}
+
 function profileOverlayClick(event){
-  if(event.target===document.getElementById("profileOverlay"))closeProfileEditor();
+  if(event.target===document.getElementById("profileOverlay"))requestProfileExit();
 }
 
 function activateAvatarCard(event){
