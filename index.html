@@ -4026,7 +4026,6 @@ html,body,#appStage{
 }
 #farmView > .farm-title,
 #farmView > .farm-subtitle,
-#otherView,
 #playerPanel .side-menu,
 #playerPanel .panel-bottom{
   display:none!important;
@@ -10067,7 +10066,7 @@ function openGameView(name,button){
     document.getElementById("premiumContent").style.display=isPremium?"block":"none";
     const isSettings=name==="settings";
     document.getElementById("genericViewContent").style.display=(!isMap&&!isNeighbors&&!isPremium&&!isSettings)?"block":"none";
-    document.getElementById("settingsContent").style.display=isSettings?"block":"none";
+    document.getElementById("settingsContent").style.display=isSettings?"grid":"none";
     document.getElementById("neighborsContent").style.display=isNeighbors?"block":"none";
     if(isSettings)showSettingsTab("general");
 
