@@ -7337,6 +7337,31 @@ body.profile-editor-open #appStage{
 }
 /* Okrągłe awatary, flagi, znaczniki statusu i elementy dekoracyjne zachowują swój kształt. */
 
+/* Rozszerzenie wspólnego systemu na pozostałe prostokątne elementy interfejsu. */
+#appStage :is(
+  [class*="panel"],[class*="card"],[class*="window"],[class*="dialog"],
+  [class*="modal"],[class*="container"],[class*="notice"],[class*="popup"],
+  [class*="tab"],[class*="field"],[class*="menu"],[class*="button"],
+  [class$="-btn"],[class$="btn"],[class*="list"],[class*="box"],
+  .farm-land,.farm-area,.farm-home,.map-farm-button
+),
+#profileOverlay :is(
+  [class*="panel"],[class*="card"],[class*="window"],[class*="dialog"],
+  [class*="modal"],[class*="container"],[class*="notice"],[class*="popup"],
+  [class*="tab"],[class*="field"],[class*="button"],[class$="-btn"],[class$="btn"]
+){
+  border-radius:var(--ui-radius)!important;
+}
+/* Wyjątki: kształt awatarów, flag, wskaźników statusu i okrągłych ikon pozostaje bez zmian. */
+#appStage :is(.avatar-frame,.social-avatar,.country-flag,.coin-icon,.xp-track>div),
+#profileOverlay :is(.avatar-frame,.country-flag){
+  border-radius:initial;
+}
+#appStage :is(.avatar-frame,.social-avatar,.country-flag,.coin-icon),
+#profileOverlay :is(.avatar-frame,.country-flag){
+  border-radius:revert-layer;
+}
+
 /* Miniaturka awatara — bez obwódki wokół pola przesuwania kadru. */
 #miniAvatarEditor .mini-avatar-crop-frame{
   border:0!important;
