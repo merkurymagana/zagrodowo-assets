@@ -6948,7 +6948,12 @@ body.profile-editor-open #appStage{
 
 
 /* Cała karta awatara uruchamia edycję; podczas edycji kontrolki działają niezależnie. */
-#profileOverlay:not(.avatar-editing) .profile-avatar-card{
+#profileOverlay:not(.avatar-editing) .profile-avatar-card,
+#profileOverlay:not(.avatar-editing) .profile-avatar-card .profile-preview,
+#profileOverlay:not(.avatar-editing) .profile-avatar-card #avatarCropFrame,
+#profileOverlay:not(.avatar-editing) .profile-avatar-card #previewAvatar,
+#profileOverlay:not(.avatar-editing) .profile-avatar-card #previewPlaceholder,
+#profileOverlay:not(.avatar-editing) .profile-avatar-card .profile-avatar-overlay{
   cursor:pointer!important;
 }
 #profileOverlay:not(.avatar-editing) .profile-avatar-card::after{
@@ -6972,16 +6977,16 @@ body.profile-editor-open #appStage{
   left:50%!important;
   z-index:12!important;
   transform:translate(-50%,-50%)!important;
-  padding:9px 14px!important;
+  padding:8px 12px!important;
   max-width:calc(100% - 32px)!important;
-  border:1px solid rgba(245,241,231,.45)!important;
-  border-radius:9px!important;
-  background:rgba(35,49,34,.94)!important;
-  color:#F5F1E7!important;
-  font:700 13px/1.35 'Nunito',Arial,sans-serif!important;
+  border:0!important;
+  border-radius:6px!important;
+  background:rgba(0,0,0,.5)!important;
+  color:#FFFFFF!important;
+  font:500 12px/1.35 'Nunito',Arial,sans-serif!important;
   text-align:center!important;
   white-space:normal!important;
-  box-shadow:0 4px 14px rgba(0,0,0,.3)!important;
+  box-shadow:none!important;
   opacity:0!important;
   pointer-events:none!important;
   transition:opacity .18s ease!important;
