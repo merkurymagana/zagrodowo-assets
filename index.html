@@ -8793,11 +8793,9 @@ document.getElementById("avatarFileInput").addEventListener("change",async funct
   const error=document.getElementById("profileError");
   const status=document.getElementById("avatarProcessingStatus");
   error.textContent="";
-  status.textContent="Wczytuję zdjęcie…";
 
   if(!["image/gif","image/jpeg","image/png","image/webp"].includes(file.type)){
     error.textContent="Wybierz zdjęcie GIF, JPG, PNG lub WEBP.";
-    status.textContent="";
     this.value="";
     return;
   }
