@@ -7107,20 +7107,34 @@ body.profile-editor-open #appStage{
 /* WYJŚCIE Z PROFILU I POTWIERDZENIE NIEZAPISANYCH ZMIAN */
 #profileOverlay .profile-screen-header{align-items:center}
 #profileOverlay .profile-back-button{
-  display:inline-flex;flex:0 0 36px;width:36px;height:36px;min-height:36px;
-  align-items:center;justify-content:center;padding:0;border:1px solid transparent;
-  border-radius:8px;background:transparent;color:#FFFFFF;cursor:pointer;
-  transition:background .18s ease,color .18s ease,border-color .18s ease;
+  position:relative;display:inline-flex;flex:0 0 30px;width:30px;height:30px;min-height:30px;
+  align-items:center;justify-content:center;padding:0;border:0;border-radius:0;
+  background:transparent;color:#D6C39E;cursor:pointer;
+  transition:color .18s ease;
 }
 #profileOverlay .profile-back-button svg{
-  display:block;width:27px;height:27px;fill:none;stroke:currentColor;
-  stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;
+  display:block;width:24px;height:24px;fill:none;stroke:currentColor;
+  stroke-width:2.5;stroke-linecap:square;stroke-linejoin:miter;
 }
 #profileOverlay .profile-back-button:hover,
 #profileOverlay .profile-back-button:focus-visible{
-  background:rgba(114,150,91,.5);border-color:transparent;color:#72965B;
+  background:transparent;border-color:transparent;color:#72965B;
 }
-#profileOverlay .profile-back-button:focus-visible{outline:2px solid #72965B;outline-offset:2px}
+#profileOverlay .profile-back-button:focus-visible{outline:2px solid #72965B;outline-offset:3px}
+#profileOverlay .profile-back-tooltip{
+  position:absolute;right:calc(100% + 10px);top:50%;z-index:200;
+  padding:6px 12px;border:2px solid #8b633d;border-radius:5px;
+  background:linear-gradient(180deg,#f8edcf 0%,#e8d2a7 100%);
+  box-shadow:0 2px 5px rgba(48,30,14,.35),inset 0 0 0 1px rgba(255,255,255,.55);
+  color:#573c26;font:500 13px/1.2 'Nunito',Arial,sans-serif;white-space:nowrap;
+  opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-50%) translateX(4px);
+  transition:opacity .16s ease,transform .16s ease,visibility .16s ease;
+}
+#profileOverlay .profile-back-button:hover .profile-back-tooltip,
+#profileOverlay .profile-back-button:focus-visible .profile-back-tooltip{
+  opacity:1;visibility:visible;transform:translateY(-50%) translateX(0);
+}
+@media(max-width:700px){#profileOverlay .profile-back-tooltip{display:none}}
 .profile-exit-confirm{
   position:absolute;inset:0;z-index:30;display:none;align-items:center;justify-content:center;
   padding:20px;background:rgba(0,0,0,.66);backdrop-filter:blur(3px);
@@ -7757,7 +7771,7 @@ body.profile-editor-open #appStage{
           <h2 id="profileScreenTitle">Twój profil</h2>
           <p>Tutaj znajdziesz informacje o swoim profilu gracza.</p>
         </div>
-        <button type="button" class="profile-back-button" onclick="requestProfileExit()" aria-label="Powrót" title="Powrót"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+        <button type="button" class="profile-back-button" onclick="requestProfileExit()" aria-label="Powrót"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 12H4M11 19l-7-7 7-7"/></svg><span class="profile-back-tooltip" role="tooltip">Powrót</span></button>
       </header>
       <div class="profile-exit-confirm" id="profileExitConfirm" aria-hidden="true">
         <div class="profile-exit-dialog" role="dialog" aria-modal="true" aria-labelledby="profileExitTitle" aria-describedby="profileExitMessage">
