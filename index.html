@@ -7963,6 +7963,55 @@ body:has(#game.settings-page-active),
   visibility:hidden!important;
 }
 
+
+/* WSPÓLNY NAGŁÓWEK EKRANÓW „USTAWIENIA” I „TWÓJ PROFIL”. */
+#profileOverlay .profile-window,
+#game.settings-page-active #otherView{
+  box-sizing:border-box!important;
+  width:min(1440px,100%)!important;
+  margin:0 auto!important;
+  padding:100px 54px 42px!important;
+}
+#profileOverlay .profile-heading-copy h2,
+#game.settings-page-active #otherView > #gameViewTitle{
+  margin:0!important;
+  text-align:left!important;
+  font-family:'Exo 2',Arial,sans-serif!important;
+  font-size:18px!important;
+  font-style:normal!important;
+  font-weight:300!important;
+  font-stretch:normal!important;
+  line-height:1.15!important;
+  letter-spacing:normal!important;
+  text-shadow:none!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  color:#FFFFFF!important;
+}
+#profileOverlay .profile-heading-copy p,
+#game.settings-page-active #otherView > #gameViewDescription{
+  width:auto!important;
+  max-width:none!important;
+  margin:7px 0 0!important;
+  text-align:left!important;
+  font:500 13px/1.2 'Nunito',Arial,sans-serif!important;
+  font-style:normal!important;
+  letter-spacing:normal!important;
+  color:#FFFFFF!important;
+}
+#profileOverlay .profile-screen-header{
+  padding-bottom:12px!important;
+  border-bottom:1px solid #72965B!important;
+}
+#game.settings-page-active #otherView > #gameViewDescription{
+  padding:0 0 12px!important;
+  border-bottom:1px solid #72965B!important;
+}
+@media(max-width:700px){
+  #profileOverlay .profile-window,
+  #game.settings-page-active #otherView{
+    padding:72px 18px 24px!important;
+  }
+}
 </style>
 </head>
 
