@@ -7109,22 +7109,22 @@ body.profile-editor-open #appStage{
 #profileOverlay .profile-back-button{
   position:relative;display:inline-flex;flex:0 0 40px;width:40px;height:40px;min-height:40px;
   align-items:center;justify-content:center;padding:0;border:0;border-radius:0;
-  background:transparent;color:#72965B;cursor:pointer;
-  transition:background-color .18s ease,color .18s ease;
+  background:transparent;color:#FFFFFF;cursor:pointer;
+  transition:color .18s ease;
 }
 #profileOverlay .profile-back-icon{
   display:flex;align-items:center;justify-content:center;
-  width:40px;height:40px;flex:0 0 40px;border-radius:9px;
-  color:#72965B;background:transparent;
-  transition:background-color .18s ease,color .18s ease;
+  width:40px;height:40px;flex:0 0 40px;border-radius:0;
+  color:inherit;background:transparent;
+  transition:color .18s ease;
 }
 #profileOverlay .profile-back-icon .ui-icon{
   display:block;width:24px;height:24px;color:inherit;stroke:currentColor;
   transition:stroke .18s ease;
 }
-#profileOverlay .profile-back-button:hover .profile-back-icon,
-#profileOverlay .profile-back-button:focus-visible .profile-back-icon{
-  background:#72965B;color:#FFFFFF;
+#profileOverlay .profile-back-button:hover,
+#profileOverlay .profile-back-button:focus-visible{
+  background:transparent;color:#72965B;
 }
 #profileOverlay .profile-back-button:focus-visible{outline:2px solid #72965B;outline-offset:3px}
 #profileOverlay .profile-back-tooltip{
