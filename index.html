@@ -6873,6 +6873,27 @@ body.profile-editor-open #appStage{
 #profileOverlay.avatar-editing .profile-actions{display:flex!important}
 #profileOverlay:not(.avatar-editing) .profile-avatar-overlay{gap:0}
 
+
+/* Przyciski zatwierdzania edycji należą do karty awatara, nie do danych gracza. */
+#profileOverlay .avatar-profile-actions{
+  position:relative!important;z-index:6!important;pointer-events:auto!important;
+  display:flex!important;flex-wrap:wrap;justify-content:center;gap:9px;
+  width:100%;margin:8px 0 0!important;
+}
+#profileOverlay .avatar-profile-actions button{
+  min-width:112px!important;min-height:40px!important;padding:8px 13px!important;
+  font-size:12px!important;pointer-events:auto!important;
+}
+#profileOverlay .avatar-profile-error{
+  width:100%;min-height:0!important;margin:4px 0 0!important;
+  text-align:center;pointer-events:none;
+}
+#profileOverlay:not(.avatar-editing) .avatar-profile-actions,
+#profileOverlay:not(.avatar-editing) .avatar-profile-error{display:none!important}
+#profileOverlay.avatar-editing .profile-avatar-overlay{pointer-events:none!important}
+#profileOverlay.avatar-editing .profile-avatar-edit-controls{pointer-events:none!important}
+#profileOverlay.avatar-editing .profile-avatar-edit-controls > *{pointer-events:auto}
+
 </style>
 </head>
 
@@ -7480,6 +7501,11 @@ body.profile-editor-open #appStage{
               <button type="button" class="profile-mini-avatar-button" onclick="openMiniAvatarEditor()">Dostosuj miniaturę</button>
               <div class="profile-avatar-format">GIF, JPG, PNG lub WEBP · maks. 10 MB</div>
               <div class="profile-processing-status" id="avatarProcessingStatus" aria-live="polite"></div>
+              <div class="profile-error avatar-profile-error" id="profileError" aria-live="polite"></div>
+              <div class="profile-actions avatar-profile-actions">
+                <button type="button" onclick="saveProfile()">Zapisz zmiany</button>
+                <button class="secondary" type="button" onclick="closeProfileEditor()">Anuluj</button>
+              </div>
             </div>
           </div>
         </section>
@@ -7499,11 +7525,6 @@ body.profile-editor-open #appStage{
             <div class="profile-meta-item"><span>Data dołączenia</span><strong id="profileJoinDate">—</strong></div>
             <div class="profile-meta-item"><span>Status</span><strong id="profileOnlineStatus">—</strong></div>
             <div class="profile-meta-item"><span>Liczba dni w grze</span><strong id="profileDaysPlayed">—</strong></div>
-          </div>
-          <div class="profile-error" id="profileError" aria-live="polite"></div>
-          <div class="profile-actions">
-            <button type="button" onclick="saveProfile()">Zapisz zmiany</button>
-            <button class="secondary" type="button" onclick="closeProfileEditor()">Anuluj</button>
           </div>
         </section>
       </div>
