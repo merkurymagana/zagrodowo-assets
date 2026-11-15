@@ -6726,6 +6726,15 @@ body.profile-editor-open #appStage{
 
 
 
+/* Zewnętrzne pasy poza kontenerem gry — czarne wyłącznie w widoku Ustawień. */
+html:has(#game.settings-page-active),
+body:has(#game.settings-page-active),
+#appStage:has(#game.settings-page-active){
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+}
+
 /* Cała przestrzeń widoku Ustawień, łącznie z bocznymi pasami, ma być czarna. */
 #game.settings-page-active{
   background:#000!important;
