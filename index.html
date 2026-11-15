@@ -11216,3 +11216,17 @@ renderNeighbors();
 
 </body>
 </html>
+
+/* PODSTAWOWE TŁO GRY — czerń na całej planszy i poza jej krawędziami. */
+html:has(#appStage.game-active),
+body:has(#appStage.game-active),
+#appStage.game-active,
+#appStage.game-active #game,
+#appStage.game-active #gameMain,
+#appStage.game-active #gameViewport,
+#appStage.game-active #gameCanvas,
+#appStage.game-active #gameCanvas > .game-content{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+}
