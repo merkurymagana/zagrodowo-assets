@@ -7826,6 +7826,19 @@ body.profile-editor-open #appStage{
   box-shadow:none!important;
 }
 
+/* Wymuś lawendowy obrys gwiazdki SVG, niezależnie od stylów nadrzędnych. */
+#playerPanel .player-level>svg.ui-icon:first-child{
+  color:#B6A0D5!important;
+  stroke:#B6A0D5!important;
+}
+/* Etykieta „Twój profil” ma być wyłącznie przy miniaturce, nie przy poziomie. */
+#playerPanel .player-level::after{
+  content:none!important;
+  display:none!important;
+  opacity:0!important;
+  visibility:hidden!important;
+}
+
 </style>
 </head>
 
