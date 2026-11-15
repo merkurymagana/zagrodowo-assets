@@ -6740,19 +6740,36 @@ body.profile-editor-open #appStage{
   min-height:100%;
 }
 
-/* Nagłówek Ustawień: ten sam odstęp od górnej i bocznej krawędzi co ekran „Twój profil”. */
+/* Nagłówek Ustawień korzysta z tej samej ramki i tych samych współrzędnych co nagłówek „Twój profil”. */
 #game.settings-page-active #gameCanvas > .game-content{
+  padding:0!important;
+}
+#game.settings-page-active #otherView{
+  box-sizing:border-box!important;
+  width:min(1320px,100%)!important;
+  min-height:100%!important;
+  margin:0 auto!important;
   padding:42px 54px 30px!important;
 }
-#game.settings-page-active #gameViewTitle{
+#game.settings-page-active #otherView > #gameViewTitle{
   margin:0!important;
+  text-align:left!important;
+  font:normal 34px 'Bree Serif',Georgia,serif!important;
+  letter-spacing:.2px!important;
+  line-height:normal!important;
 }
-#game.settings-page-active #gameViewDescription{
+#game.settings-page-active #otherView > #gameViewDescription{
+  width:auto!important;
+  max-width:none!important;
   margin:7px 0 0!important;
+  text-align:left!important;
 }
 @media(max-width:700px){
-  #game.settings-page-active #gameCanvas > .game-content{
-    padding:24px 16px 24px!important;
+  #game.settings-page-active #otherView{
+    padding:28px 24px 24px!important;
+  }
+  #game.settings-page-active #otherView > #gameViewTitle{
+    font-size:27px!important;
   }
 }
 
