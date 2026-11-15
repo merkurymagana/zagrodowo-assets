@@ -3280,7 +3280,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 /* EDYCJA PROFILU — PEŁNOEKRANOWY WIDOK GRY */
 #profileOverlay{
-  position:absolute;inset:0;z-index:200;padding:0;
+  position:absolute;inset:0;z-index:90;padding:0;
   align-items:stretch;justify-content:center;overflow:auto;
   background:radial-gradient(ellipse at 18% 12%,rgba(114,150,91,.16),transparent 38%),radial-gradient(ellipse at 88% 90%,rgba(118,81,58,.22),transparent 42%),linear-gradient(135deg,#1b241d 0%,#202820 52%,#171e19 100%);
   backdrop-filter:none;-webkit-backdrop-filter:none;
@@ -8554,7 +8554,6 @@ body.profile-editor-open #appStage{
         <button data-view="settings" onclick="openGameView('settings',this)"><span class="menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5a2 2 0 0 1 2 1.7l.2 1.2a7 7 0 0 1 1.5.9l1.2-.4a2 2 0 0 1 2.4 1l.6 1a2 2 0 0 1-.5 2.5l-.9.8a7 7 0 0 1 0 1.7l.9.8a2 2 0 0 1 .5 2.5l-.6 1a2 2 0 0 1-2.4 1l-1.2-.4a7 7 0 0 1-1.5.9l-.2 1.2a2 2 0 0 1-2 1.7h-1.2a2 2 0 0 1-2-1.7l-.2-1.2a7 7 0 0 1-1.5-.9l-1.2.4a2 2 0 0 1-2.4-1l-.6-1a2 2 0 0 1 .5-2.5l.9-.8a7 7 0 0 1 0-1.7l-.9-.8a2 2 0 0 1-.5-2.5l.6-1a2 2 0 0 1 2.4-1l1.2.4a7 7 0 0 1 1.5-.9l.2-1.2a2 2 0 0 1 2-1.7z"/><circle cx="11.4" cy="12" r="3.1"/></svg></span>Ustawienia</button>
 <button class="logout-menu-button" type="button" onclick="backToStart()" aria-label="Wyloguj się"><span class="logout-menu-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg></span></button>
       </nav>
-  </div>
 
   <!-- EDYCJA PROFILU — PEŁNOEKRANOWY EKRAN GRY -->
   <div class="profile-overlay" id="profileOverlay" role="dialog" aria-modal="true" aria-labelledby="profileScreenTitle">
@@ -8632,6 +8631,7 @@ body.profile-editor-open #appStage{
         <button type="button" onclick="saveMiniAvatarCrop()">Zatwierdź</button>
       </div>
     </div>
+  </div>
   </div>
   </div>
 
