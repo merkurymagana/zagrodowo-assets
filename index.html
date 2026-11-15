@@ -6895,55 +6895,71 @@ body.profile-editor-open #appStage{
 #profileOverlay.avatar-editing .profile-avatar-edit-controls > *{pointer-events:auto}
 
 
-/* Ujednolicone przyciski edycji awatara — spójne z paletą Zagrodowa. */
+/* Przyciski edycji awatara: czarne tło i zielona obwódka. */
 #profileOverlay .profile-avatar-start-button,
-#profileOverlay .profile-avatar-change,
-#profileOverlay .profile-mini-avatar-button,
 #profileOverlay .avatar-profile-actions button{
   box-sizing:border-box!important;min-height:42px!important;padding:10px 17px!important;
   border:1px solid rgba(145,180,119,.78)!important;border-radius:10px!important;
-  background:linear-gradient(180deg,#789b61 0%,#5f804d 100%)!important;
-  color:#fffaf0!important;font:700 13px/1.15 'Nunito',Arial,sans-serif!important;
-  letter-spacing:.01em!important;text-shadow:0 1px 1px rgba(0,0,0,.18)!important;
-  box-shadow:0 3px 8px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.16)!important;
-  transition:background .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease!important;
+  background:rgba(0,0,0,.72)!important;color:#F5F1E7!important;
+  font:600 13px/1.15 'Nunito',Arial,sans-serif!important;
+  letter-spacing:.01em!important;text-shadow:none!important;
+  box-shadow:none!important;
+  transition:background .18s ease,border-color .18s ease,transform .18s ease!important;
 }
 #profileOverlay .profile-avatar-start-button:hover,
-#profileOverlay .profile-avatar-change:hover,
-#profileOverlay .profile-mini-avatar-button:hover,
 #profileOverlay .avatar-profile-actions button:not(.secondary):hover{
-  background:linear-gradient(180deg,#8aaa70 0%,#6d8e56 100%)!important;
-  border-color:#c1d5a9!important;box-shadow:0 5px 12px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.2)!important;
-  transform:translateY(-1px);
+  background:rgba(114,150,91,.5)!important;border-color:transparent!important;
 }
 #profileOverlay .profile-avatar-start-button:active,
-#profileOverlay .profile-avatar-change:active,
-#profileOverlay .profile-mini-avatar-button:active,
-#profileOverlay .avatar-profile-actions button:active{
-  transform:translateY(0);box-shadow:0 1px 3px rgba(0,0,0,.3),inset 0 2px 4px rgba(0,0,0,.16)!important;
-}
+#profileOverlay .avatar-profile-actions button:active{transform:translateY(0)}
 #profileOverlay .avatar-profile-actions button.secondary{
   border:1px solid rgba(225,215,195,.38)!important;
-  background:linear-gradient(180deg,rgba(76,69,59,.92),rgba(51,47,41,.96))!important;
-  color:#eee7d9!important;box-shadow:0 3px 8px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.08)!important;
+  background:rgba(0,0,0,.58)!important;color:#eee7d9!important;box-shadow:none!important;
 }
 #profileOverlay .avatar-profile-actions button.secondary:hover{
-  border-color:rgba(225,215,195,.7)!important;
-  background:linear-gradient(180deg,rgba(99,88,73,.96),rgba(65,59,49,.98))!important;
-  color:#fffaf0!important;transform:translateY(-1px);
+  border-color:transparent!important;background:rgba(114,150,91,.5)!important;
+  color:#fffaf0!important;
 }
 #profileOverlay .profile-avatar-start-button{min-width:156px!important}
-#profileOverlay .profile-avatar-change{min-width:190px!important;cursor:pointer!important}
-#profileOverlay .profile-mini-avatar-button{min-width:170px!important;cursor:pointer!important}
 #profileOverlay .avatar-profile-actions{gap:10px!important;margin-top:10px!important}
 #profileOverlay .avatar-profile-actions button{min-width:132px!important;min-height:43px!important;font-size:13px!important;cursor:pointer!important}
 #profileOverlay .profile-avatar-start-button:focus-visible,
 #profileOverlay .profile-avatar-change:focus-visible,
 #profileOverlay .profile-mini-avatar-button:focus-visible,
 #profileOverlay .avatar-profile-actions button:focus-visible{outline:2px solid #e9c342!important;outline-offset:3px!important}
+
+/* Dwa przyciski wyboru i kadrowania pozostają w jednym rzędzie. */
+#profileOverlay .profile-avatar-button-row{
+  display:flex!important;flex-direction:row!important;align-items:stretch!important;
+  justify-content:center!important;gap:10px!important;width:100%!important;
+}
+#profileOverlay .profile-avatar-button-row .profile-avatar-change,
+#profileOverlay .profile-avatar-button-row .profile-mini-avatar-button{
+  display:inline-flex!important;flex:1 1 0!important;min-width:0!important;
+  max-width:none!important;min-height:42px!important;padding:10px 12px!important;
+  align-items:center!important;justify-content:center!important;box-sizing:border-box!important;
+  border:1px solid #72965B!important;border-radius:9px!important;
+  background:rgba(0,0,0,.72)!important;color:#F5F1E7!important;
+  font:600 13px/1.2 'Nunito',Arial,sans-serif!important;
+  letter-spacing:0!important;text-shadow:none!important;box-shadow:none!important;
+  cursor:pointer!important;text-align:center!important;
+  transition:background .18s ease,border-color .18s ease!important;
+}
+#profileOverlay .profile-avatar-button-row .profile-avatar-change:hover,
+#profileOverlay .profile-avatar-button-row .profile-mini-avatar-button:hover{
+  background:rgba(114,150,91,.5)!important;border-color:transparent!important;
+}
+#profileOverlay .profile-avatar-button-row .profile-avatar-change:active,
+#profileOverlay .profile-avatar-button-row .profile-mini-avatar-button:active{
+  background:rgba(114,150,91,.62)!important;
+}
 @media(max-width:620px){
   #profileOverlay .avatar-profile-actions button{min-width:0!important;flex:1 1 125px}
-  #profileOverlay .profile-avatar-change,#profileOverlay .profile-mini-avatar-button{max-width:100%}
+  #profileOverlay .profile-avatar-button-row{gap:7px!important}
+  #profileOverlay .profile-avatar-button-row .profile-avatar-change,
+  #profileOverlay .profile-avatar-button-row .profile-mini-avatar-button{
+    padding:9px 7px!important;font-size:12px!important;
+  }
 }
 
 
@@ -7601,10 +7617,12 @@ body.profile-editor-open #appStage{
           <div class="profile-avatar-overlay">
             
             <div class="profile-avatar-edit-controls">
-              <label class="profile-avatar-change" for="avatarFileInput">Wybierz nowy awatar</label>
-              <input id="avatarFileInput" class="profile-avatar-file-input" type="file" accept="image/gif,image/png,image/jpeg,image/webp" aria-label="Wybierz nowy awatar">
+              <div class="profile-avatar-button-row">
+                <label class="profile-avatar-change" for="avatarFileInput">Wybierz nowy awatar</label>
+                <input id="avatarFileInput" class="profile-avatar-file-input" type="file" accept="image/gif,image/png,image/jpeg,image/webp" aria-label="Wybierz nowy awatar">
+                <button type="button" class="profile-mini-avatar-button" onclick="openMiniAvatarEditor()">Dostosuj miniaturę</button>
+              </div>
               <div class="profile-avatar-crop-hint">Przeciągnij zdjęcie, aby ustawić jego położenie</div>
-              <button type="button" class="profile-mini-avatar-button" onclick="openMiniAvatarEditor()">Dostosuj miniaturę</button>
               <div class="profile-avatar-format">GIF, JPG, PNG lub WEBP · maks. 10 MB</div>
               <div class="profile-processing-status" id="avatarProcessingStatus" aria-live="polite"></div>
               <div class="profile-error avatar-profile-error" id="profileError" aria-live="polite"></div>
