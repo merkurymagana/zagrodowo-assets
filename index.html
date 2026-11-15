@@ -6857,6 +6857,20 @@ body.profile-editor-open #appStage{
 .mini-avatar-editor-actions button{border:1px solid #72965B;border-radius:8px;padding:9px 16px;background:#72965B;color:#fff;font:600 12px 'Nunito',Arial,sans-serif;cursor:pointer}
 .mini-avatar-editor-actions button.secondary{background:transparent;color:#F5F1E7}
 
+/* Awatar pozostaje wyłącznie do podglądu, dopóki gracz nie uruchomi edycji. */
+#profileOverlay .profile-avatar-start-button{
+  display:inline-flex;align-items:center;justify-content:center;min-width:150px;padding:10px 22px;
+  border:1px solid #72965B;border-radius:9px;background:#72965B;color:#fff;
+  font:700 13px 'Nunito',Arial,sans-serif;cursor:pointer;box-shadow:0 3px 9px #0003;
+}
+#profileOverlay .profile-avatar-start-button:hover{background:#64864f}
+#profileOverlay .profile-avatar-edit-controls{display:none;width:100%;flex-direction:column;align-items:center;gap:10px}
+#profileOverlay.avatar-editing .profile-avatar-start-button{display:none}
+#profileOverlay.avatar-editing .profile-avatar-edit-controls{display:flex}
+#profileOverlay:not(.avatar-editing) #avatarCropFrame{cursor:default!important;touch-action:auto!important}
+#profileOverlay:not(.avatar-editing) .profile-actions{display:none!important}
+#profileOverlay.avatar-editing .profile-actions{display:flex!important}
+#profileOverlay:not(.avatar-editing) .profile-avatar-overlay{gap:0}
 
 </style>
 </head>
@@ -7457,12 +7471,15 @@ body.profile-editor-open #appStage{
             </div>
           </div>
           <div class="profile-avatar-overlay">
-            <label class="profile-avatar-change" for="avatarFileInput">Zmień awatar</label>
-            <input id="avatarFileInput" class="profile-avatar-file-input" type="file" accept="image/gif,image/png,image/jpeg,image/webp" aria-label="Wybierz nowy awatar">
-            <div class="profile-avatar-crop-hint">Przeciągnij zdjęcie, aby wybrać widoczny fragment</div>
-            <button type="button" class="profile-mini-avatar-button" onclick="openMiniAvatarEditor()">Dopasuj mini awatar</button>
-            <div class="profile-avatar-format">GIF, JPG, PNG lub WEBP · maks. 10 MB</div>
-            <div class="profile-processing-status" id="avatarProcessingStatus" aria-live="polite"></div>
+            <button type="button" class="profile-avatar-start-button" id="avatarEditStart" onclick="enterAvatarEditMode()">Dostosuj</button>
+            <div class="profile-avatar-edit-controls">
+              <label class="profile-avatar-change" for="avatarFileInput">Wybierz nowy awatar</label>
+              <input id="avatarFileInput" class="profile-avatar-file-input" type="file" accept="image/gif,image/png,image/jpeg,image/webp" aria-label="Wybierz nowy awatar">
+              <div class="profile-avatar-crop-hint">Przeciągnij zdjęcie, aby ustawić jego położenie</div>
+              <button type="button" class="profile-mini-avatar-button" onclick="openMiniAvatarEditor()">Dostosuj miniaturę</button>
+              <div class="profile-avatar-format">GIF, JPG, PNG lub WEBP · maks. 10 MB</div>
+              <div class="profile-processing-status" id="avatarProcessingStatus" aria-live="polite"></div>
+            </div>
           </div>
         </section>
         <section class="profile-form-card" aria-label="Dane profilu">
@@ -7501,8 +7518,8 @@ body.profile-editor-open #appStage{
       </div>
       <div class="mini-avatar-editor-hint">Przeciągnij zdjęcie myszką lub palcem. Następnie kliknij „Zapisz zmiany” w profilu, aby zachować kadr.</div>
       <div class="mini-avatar-editor-actions">
-        <button type="button" class="secondary" onclick="closeMiniAvatarEditor()">Anuluj</button>
-        <button type="button" onclick="saveMiniAvatarCrop()">Zapisz kadr</button>
+        <button type="button" class="secondary" onclick="cancelMiniAvatarCrop()">Wróć</button>
+        <button type="button" onclick="saveMiniAvatarCrop()">Gotowe</button>
       </div>
     </div>
   </div>
@@ -8143,6 +8160,8 @@ let pendingAvatarPosition={x:50,y:50};
 let pendingMiniAvatarPosition={x:50,y:50};
 let pendingMiniAvatarZoom=1;
 let miniAvatarCropEdited=false;
+let avatarEditingEnabled=false;
+let miniAvatarCropSnapshot=null;
 let avatarCropDrag=null;
 let miniAvatarCropDrag=null;
 
@@ -8359,6 +8378,8 @@ function updateProfileMetadata(){
 document.addEventListener("visibilitychange",updateProfileMetadata);
 
 function openProfileEditor(){
+  avatarEditingEnabled=false;
+  document.getElementById("profileOverlay").classList.remove("avatar-editing");
   updateCountryDisplay();
   updateProfileMetadata();
   document.getElementById("avatarFileInput").value="";
@@ -8377,6 +8398,8 @@ function openProfileEditor(){
 }
 
 function closeProfileEditor(){
+  avatarEditingEnabled=false;
+  document.getElementById("profileOverlay").classList.remove("avatar-editing");
   document.getElementById("profileOverlay").classList.remove("visible");
   document.documentElement.classList.remove("profile-editor-open");
   document.body.classList.remove("profile-editor-open");
@@ -8385,6 +8408,13 @@ function closeProfileEditor(){
 
 function profileOverlayClick(event){
   if(event.target===document.getElementById("profileOverlay"))closeProfileEditor();
+}
+
+function enterAvatarEditMode(){
+  avatarEditingEnabled=true;
+  document.getElementById("profileOverlay").classList.add("avatar-editing");
+  document.getElementById("avatarCropFrame")?.setAttribute("aria-label","Przeciągnij zdjęcie, aby ustawić jego położenie");
+  document.getElementById("profileError").textContent="";
 }
 
 function setPreviewAvatar(src){
@@ -8480,7 +8510,9 @@ function updateMiniAvatarCropPreview(){
   if(img)applyMiniAvatarCrop(img,pendingMiniAvatarPosition,pendingMiniAvatarZoom,document.getElementById("miniAvatarCropFrame"));
 }
 function openMiniAvatarEditor(){
+  if(!avatarEditingEnabled)return;
   if(!pendingAvatar&&!player.avatar){document.getElementById("profileError").textContent="Najpierw wgraj zdjęcie awatara.";return;}
+  miniAvatarCropSnapshot={position:{...pendingMiniAvatarPosition},zoom:pendingMiniAvatarZoom};
   const editor=document.getElementById("miniAvatarEditor"),img=document.getElementById("miniAvatarPreview");
   editor.classList.add("visible");
   const source=pendingAvatar||player.avatar;
@@ -8491,6 +8523,15 @@ function openMiniAvatarEditor(){
 function closeMiniAvatarEditor(){
   document.getElementById("miniAvatarEditor").classList.remove("visible");
   endMiniAvatarCropDrag();
+}
+function cancelMiniAvatarCrop(){
+  if(miniAvatarCropSnapshot){
+    pendingMiniAvatarPosition={...miniAvatarCropSnapshot.position};
+    pendingMiniAvatarZoom=miniAvatarCropSnapshot.zoom;
+    updateMiniAvatarCropPreview();
+  }
+  miniAvatarCropSnapshot=null;
+  closeMiniAvatarEditor();
 }
 function startMiniAvatarCropDrag(event){
   const frame=document.getElementById("miniAvatarCropFrame"),img=document.getElementById("miniAvatarPreview");
@@ -8520,10 +8561,12 @@ function endMiniAvatarCropDrag(){
 }
 function saveMiniAvatarCrop(){
   miniAvatarCropEdited=true;
+  miniAvatarCropSnapshot=null;
   closeMiniAvatarEditor();
 }
 
 function startAvatarCropDrag(event){
+  if(!avatarEditingEnabled)return;
   if(event.button!==undefined&&event.button!==0)return;
   const frame=document.getElementById("avatarCropFrame");
   const image=document.getElementById("previewAvatar");
@@ -8589,6 +8632,7 @@ document.getElementById("miniAvatarZoom")?.addEventListener("input",function(){
 document.getElementById("avatarFileInput").addEventListener("change",async function(){
   const file=this.files[0];
   if(!file)return;
+  if(!avatarEditingEnabled){this.value="";return;}
   const error=document.getElementById("profileError");
   const status=document.getElementById("avatarProcessingStatus");
   error.textContent="";
