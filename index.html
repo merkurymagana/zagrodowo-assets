@@ -7362,6 +7362,23 @@ body.profile-editor-open #appStage{
   border-radius:revert-layer;
 }
 
+/* Doprecyzowanie wspólnego promienia dla HUD-u walut i wszystkich przycisków gry. */
+#playerPanel .currency-bar,
+#playerPanel .currency-bar .currency-box{
+  border-radius:var(--ui-radius)!important;
+}
+#game button,
+#profileOverlay button{
+  border-radius:var(--ui-radius)!important;
+}
+/* Przyciski i kontrolki, które z założenia są okrągłe, zachowują swój kształt. */
+#game button.profile-edit,
+#profileOverlay .profile-back-button,
+#profileOverlay .profile-back-icon,
+#profileOverlay #profileOnlineStatus::before{
+  border-radius:50%!important;
+}
+
 /* Miniaturka awatara — bez obwódki wokół pola przesuwania kadru. */
 #miniAvatarEditor .mini-avatar-crop-frame{
   border:0!important;
