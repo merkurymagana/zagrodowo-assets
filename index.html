@@ -8610,7 +8610,7 @@ html.profile-editor-open .side-menu{
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Kontrast</span><span class="settings-general-help">Dostosuj różnicę między jasnymi i ciemnymi elementami.</span></div><label class="settings-range"><input type="range" min="0" max="100" value="100" data-setting="contrast"><output>100%</output></label></div>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Nie wygaszaj ekranu podczas gry</span><span class="settings-general-help">Utrzymuj ekran aktywny, gdy korzystasz z aplikacji.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="keepAwake" ><span class="settings-toggle-track"></span></label></div>
                       </section>
-                      <section class="settings-general-section"><h3W>Wydajność</h3W>
+                      <section class="settings-general-section"><h3>Wydajność</h3>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Tryb oszczędzania baterii</span><span class="settings-general-help">Ogranicza wybrane animacje i efekty. Nie zmienia tempa produkcji ani wzrostu roślin.</span></div><select class="settings-control-select" data-setting="batteryMode"><option value="off">Wyłączony</option><option value="auto">Automatyczny</option><option value="on">Włączony</option></select></div>
                       </section>
                     </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="general">Przywróć ustawienia domyślne</button></div></section>
@@ -10343,7 +10343,7 @@ function initGameSettings(){
   if(key==="accentMode"||key==="customAccent"){const custom=root.querySelector('[data-setting="customAccent"]');if(custom)custom.disabled=gameSettings.accentMode!=="custom";applyGameAccent();}
   saveGameSettings();
  }));
- root.querySelectorAll("[data-reset-category]").forEach(button=>button.addEventListener("click",()=>{
+ root.querySelectorAll("[data-reset-category]").forEach(button=>button.addEventListener("click",async()=>{
   const category=button.dataset.resetCategory;
   const groups={
    general:["multiTouch","brightness","contrast","keepAwake","batteryMode"],
@@ -10352,8 +10352,16 @@ function initGameSettings(){
    notifications:["inGameNotifications","pushNotifications","quietHours","quietStart","quietEnd"],
    gameappearance:["accentMode","customAccent","cursorStyle","tileHighlight"]
   };
-  const keys=groups[category]||[];if(!keys.length)return;
   if(!window.confirm("Przywrócić domyślne ustawienia tej kategorii?"))return;
+  const keys=groups[category]||[];
+  if(category==="profile"){
+   document.getElementById("settingsPlayerTitleSelect").value="";
+   document.getElementById("settingsTitleStyleSelect").value="green";
+   updateTitleBadgePreview();
+   await saveProfileAppearance();
+   return;
+  }
+  if(!keys.length)return;
   keys.forEach(k=>gameSettings[k]=SETTINGS_DEFAULTS[k]);saveGameSettings();syncSettingsControls();
  }));
 }
