@@ -7652,6 +7652,27 @@ body.profile-editor-open #appStage{
   }
 }
 
+
+/* WERSJA KOMPUTEROWA: miniaturka awatara ma zachować idealny kwadrat. */
+@media(min-width:701px){
+  #playerPanel .profile-card{
+    grid-template-columns:46px minmax(0,1fr)!important;
+  }
+  #playerPanel .avatar-frame{
+    box-sizing:border-box!important;
+    width:46px!important;
+    min-width:46px!important;
+    max-width:46px!important;
+    height:46px!important;
+    min-height:46px!important;
+    max-height:46px!important;
+    flex:0 0 46px!important;
+    align-self:start!important;
+    overflow:hidden!important;
+    clip-path:inset(0 round 3px)!important;
+  }
+}
+
 </style>
 </head>
 
