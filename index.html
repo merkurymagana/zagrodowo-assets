@@ -9696,10 +9696,18 @@ function discardAndExitProfile(){
    niezapisane zmiany awatara. Po zapisie/odrzuceniu kliknięcie jest ponawiane. */
 document.addEventListener("click",event=>{
   const overlay=document.getElementById("profileOverlay");
-  if(!overlay?.classList.contains("visible") || !hasPendingProfileChanges())return;
+  if(!overlay?.classList.contains("visible"))return;
   const control=event.target.closest("#game .side-menu button, #game .logout-menu-button, #game [data-profile-navigation]");
   if(!control || overlay.contains(control))return;
   if(control.matches(".profile-back-button"))return;
+
+  if(!hasPendingProfileChanges()){
+    /* Bez zmian zamykamy edytor i pozwalamy klikniętej ikonie wykonać
+       jej własną akcję w tym samym zdarzeniu. */
+    closeProfileEditor();
+    return;
+  }
+
   event.preventDefault();
   event.stopImmediatePropagation();
   showProfileExitConfirmation(control);
