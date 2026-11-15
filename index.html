@@ -7714,6 +7714,24 @@ body.profile-editor-open #appStage{
   #playerPanel .profile-card::after{display:none!important;content:none!important}
 }
 
+
+/* Etykiety pod ikonami — wspólne położenie bez naruszania ramek ikon. */
+#playerPanel .profile-card::after{
+  left:31px!important;
+  top:60px!important;
+  right:auto!important;
+  transform:translate(-50%,0)!important;
+}
+#profileOverlay .profile-back-tooltip{
+  top:calc(100% + 6px)!important;
+  left:50%!important;
+  transform:translate(-50%,4px)!important;
+}
+#profileOverlay .profile-back-button:hover .profile-back-tooltip,
+#profileOverlay .profile-back-button:focus-visible .profile-back-tooltip{
+  transform:translate(-50%,0)!important;
+}
+
 </style>
 </head>
 
