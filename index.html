@@ -7400,6 +7400,93 @@ body.profile-editor-open #appStage{
   outline:0!important;
   box-shadow:none!important;
 }
+
+/* Doprecyzowanie profilu: wspólny kształt i widoczne etykiety po najechaniu. */
+#profileOverlay .profile-avatar-button-row .profile-avatar-change,
+#profileOverlay .profile-avatar-button-row .profile-mini-avatar-button,
+#profileOverlay .profile-avatar-start-button,
+#profileOverlay .avatar-profile-actions button,
+#profileOverlay .mini-avatar-editor-actions button{
+  border-radius:var(--ui-radius)!important;
+}
+#profileOverlay .profile-avatar-card::before{
+  border-radius:var(--ui-radius)!important;
+  border:1px solid #72965B!important;
+  background:rgba(0,0,0,.88)!important;
+  padding:8px 12px!important;
+}
+#game [role="tooltip"],
+#profileOverlay [role="tooltip"],
+#game .side-menu button::after,
+#game > nav.side-menu button::after,
+#playerPanel .side-menu button::after,
+#game .help-menu-button::after{
+  border-radius:var(--ui-radius)!important;
+  border:1px solid #72965B!important;
+  background:#000!important;
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  box-shadow:none!important;
+}
+/* Etykieta „Twój profil” pojawia się po najechaniu na miniaturkę lub poziom. */
+#playerPanel .avatar-frame{
+  overflow:visible!important;
+}
+#playerPanel #playerAvatar,
+#playerPanel #avatarPlaceholder{
+  border-radius:inherit!important;
+}
+#playerPanel .avatar-frame::after{
+  content:"Twój profil"!important;
+  position:absolute!important;
+  left:calc(100% + 9px)!important;
+  top:50%!important;
+  z-index:50!important;
+  transform:translateY(-50%)!important;
+  padding:6px 9px!important;
+  border:1px solid #72965B!important;
+  border-radius:var(--ui-radius)!important;
+  background:#000!important;
+  color:#FFFFFF!important;
+  font:500 13px/1.2 'Nunito',Arial,sans-serif!important;
+  white-space:nowrap!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transition:opacity .15s ease,visibility .15s ease!important;
+}
+#playerPanel .avatar-frame:hover::after,
+#playerPanel .avatar-frame:focus-visible::after,
+#playerPanel .player-level:hover::after{
+  opacity:1!important;
+  visibility:visible!important;
+}
+#playerPanel .player-level{
+  position:relative!important;
+}
+#playerPanel .player-level::after{
+  content:"Twój profil"!important;
+  position:absolute!important;
+  left:0!important;
+  top:calc(100% + 6px)!important;
+  z-index:50!important;
+  padding:6px 9px!important;
+  border:1px solid #72965B!important;
+  border-radius:var(--ui-radius)!important;
+  background:#000!important;
+  color:#FFFFFF!important;
+  font:500 13px/1.2 'Nunito',Arial,sans-serif!important;
+  white-space:nowrap!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transition:opacity .15s ease,visibility .15s ease!important;
+}
+#playerPanel .player-level:hover::after{
+  opacity:1!important;
+  visibility:visible!important;
+}
+
 </style>
 </head>
 
