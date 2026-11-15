@@ -6950,10 +6950,20 @@ body.profile-editor-open #appStage{
 /* Cała karta awatara uruchamia edycję; podczas edycji kontrolki działają niezależnie. */
 #profileOverlay:not(.avatar-editing) .profile-avatar-card{
   cursor:pointer!important;
-  transition:background-color .18s ease!important;
 }
-#profileOverlay:not(.avatar-editing) .profile-avatar-card:hover{
-  background-color:rgba(128,128,128,.5)!important;
+#profileOverlay:not(.avatar-editing) .profile-avatar-card::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:10!important;
+  border-radius:inherit!important;
+  background:rgba(128,128,128,.5)!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  transition:opacity .18s ease!important;
+}
+#profileOverlay:not(.avatar-editing) .profile-avatar-card:hover::after{
+  opacity:1!important;
 }
 #profileOverlay .profile-avatar-card:focus-visible{
   outline:2px solid #E9C342!important;
