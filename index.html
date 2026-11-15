@@ -6900,7 +6900,7 @@ body.profile-editor-open #appStage{
 #profileOverlay .avatar-profile-actions button{
   box-sizing:border-box!important;min-height:42px!important;padding:10px 17px!important;
   border:1px solid rgba(145,180,119,.78)!important;border-radius:10px!important;
-  background:rgba(0,0,0,.72)!important;color:#F5F1E7!important;
+  background:#000000!important;color:#F5F1E7!important;
   font:600 13px/1.15 'Nunito',Arial,sans-serif!important;
   letter-spacing:.01em!important;text-shadow:none!important;
   box-shadow:none!important;
@@ -6951,7 +6951,7 @@ body.profile-editor-open #appStage{
 }
 #profileOverlay .profile-avatar-button-row .profile-avatar-change:active,
 #profileOverlay .profile-avatar-button-row .profile-mini-avatar-button:active{
-  background:rgba(114,150,91,.62)!important;
+  background:rgba(114,150,91,.5)!important;border-color:transparent!important;
 }
 @media(max-width:620px){
   #profileOverlay .avatar-profile-actions button{min-width:0!important;flex:1 1 125px}
@@ -7622,8 +7622,6 @@ body.profile-editor-open #appStage{
                 <input id="avatarFileInput" class="profile-avatar-file-input" type="file" accept="image/gif,image/png,image/jpeg,image/webp" aria-label="Wybierz nowy awatar">
                 <button type="button" class="profile-mini-avatar-button" onclick="openMiniAvatarEditor()">Dostosuj miniaturę</button>
               </div>
-              <div class="profile-avatar-crop-hint">Przeciągnij zdjęcie, aby ustawić jego położenie</div>
-              <div class="profile-avatar-format">GIF, JPG, PNG lub WEBP · maks. 10 MB</div>
               <div class="profile-processing-status" id="avatarProcessingStatus" aria-live="polite"></div>
               <div class="profile-error avatar-profile-error" id="profileError" aria-live="polite"></div>
               <div class="profile-actions avatar-profile-actions">
@@ -8819,7 +8817,6 @@ document.getElementById("avatarFileInput").addEventListener("change",async funct
     pendingMiniAvatarZoom=1;
     miniAvatarCropEdited=false;
     setPreviewAvatar(pendingAvatar);
-    status.textContent="Zdjęcie wczytane i dopasowane do podglądu.";
   }catch(readError){
     status.textContent="";
     error.textContent=readError.message||"Nie udało się odczytać zdjęcia.";
