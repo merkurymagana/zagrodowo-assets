@@ -8702,11 +8702,17 @@ function hasPendingProfileChanges(){
     Number(pendingMiniAvatarZoom)!==currentMiniZoom;
 }
 
+function returnToGameFromProfile(){
+  closeProfileEditor();
+  openGameView("farm");
+  fitGame();
+}
+
 function requestProfileExit(){
   const overlay=document.getElementById("profileOverlay");
   if(!overlay?.classList.contains("visible"))return;
   if(!hasPendingProfileChanges()){
-    backToStart();
+    returnToGameFromProfile();
     return;
   }
   const dialog=document.getElementById("profileExitConfirm");
@@ -8734,11 +8740,11 @@ async function saveAndExitProfile(){
     cancelProfileExit();
     return;
   }
-  backToStart();
+  returnToGameFromProfile();
 }
 
 function discardAndExitProfile(){
-  backToStart();
+  returnToGameFromProfile();
 }
 
 function profileOverlayClick(event){
