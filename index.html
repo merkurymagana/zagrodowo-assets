@@ -7017,6 +7017,56 @@ body.profile-editor-open #appStage{
   outline-offset:4px!important;
 }
 #profileOverlay.avatar-editing .profile-avatar-card{cursor:default!important}
+
+
+/* GLOBALNY STANDARD TYPOGRAFII ZAGRODOWA
+   Teksty, etykiety, dymki i przyciski: Nunito 13 px / 500 / #FFFFFF.
+   Wszystkie nagłówki: Exo 2 18 px / 300 / #FFFFFF. */
+#game,
+#profileOverlay,
+#game *,
+#profileOverlay *{
+  font-family:'Nunito',Arial,sans-serif!important;
+  color:#FFFFFF;
+}
+#game,
+#profileOverlay,
+#game :is(p,span,label,strong,b,small,li,a,div),
+#profileOverlay :is(p,span,label,strong,b,small,li,a,div),
+#game button,
+#profileOverlay button,
+#game input,
+#profileOverlay input,
+#game select,
+#profileOverlay select,
+#game textarea,
+#profileOverlay textarea,
+#game button::before,
+#game button::after,
+#profileOverlay button::before,
+#profileOverlay button::after,
+#game [role="tooltip"],
+#profileOverlay [role="tooltip"]{
+  font-family:'Nunito',Arial,sans-serif!important;
+  font-size:13px!important;
+  font-weight:500!important;
+  color:#FFFFFF!important;
+}
+#game :is(h1,h2,h3,h4,h5,h6),
+#profileOverlay :is(h1,h2,h3,h4,h5,h6),
+#game :is(.profile-section-title,.profile-heading-copy h2,.mini-avatar-editor-panel h3),
+#profileOverlay :is(.profile-section-title,.profile-heading-copy h2,.mini-avatar-editor-panel h3){
+  font-family:'Exo 2',Arial,sans-serif!important;
+  font-size:18px!important;
+  font-style:normal!important;
+  font-weight:300!important;
+  line-height:1.15!important;
+  letter-spacing:normal!important;
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  text-shadow:none!important;
+}
+
 </style>
 </head>
 
