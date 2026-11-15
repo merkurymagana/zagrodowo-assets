@@ -7613,6 +7613,40 @@ body.profile-editor-open #appStage{
   }
 }
 
+
+/* MOBILE: twarde przycięcie awatara do wnętrza miniaturki i kolumny profilu. */
+@media(max-width:700px){
+  #playerPanel .profile-card{
+    grid-template-columns:36px minmax(0,1fr)!important;
+  }
+  #playerPanel .avatar-frame{
+    position:relative!important;
+    grid-column:1!important;
+    grid-row:1!important;
+    justify-self:start!important;
+    align-self:start!important;
+    margin:0!important;
+    padding:0!important;
+    box-sizing:border-box!important;
+    width:36px!important;
+    min-width:36px!important;
+    max-width:36px!important;
+    height:36px!important;
+    min-height:36px!important;
+    max-height:36px!important;
+    overflow:hidden!important;
+    clip-path:inset(0 round 3px)!important;
+    contain:paint!important;
+    isolation:isolate!important;
+    transform:none!important;
+  }
+  #playerPanel #playerAvatar,
+  #playerPanel #avatarPlaceholder{
+    border-radius:3px!important;
+  }
+  #playerPanel .avatar-frame::after{display:none!important}
+}
+
 </style>
 </head>
 
