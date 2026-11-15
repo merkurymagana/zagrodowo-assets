@@ -7589,6 +7589,30 @@ body.profile-editor-open #appStage{
   border-bottom:0!important;
 }
 
+
+/* MOBILE: miniaturka awatara pozostaje równo wewnątrz pola 36 × 36 px. */
+@media(max-width:700px){
+  #playerPanel .avatar-frame{
+    box-sizing:border-box!important;
+    width:36px!important;
+    min-width:36px!important;
+    max-width:36px!important;
+    height:36px!important;
+    min-height:36px!important;
+    max-height:36px!important;
+    aspect-ratio:1 / 1!important;
+    align-self:start!important;
+    overflow:hidden!important;
+  }
+  #playerPanel .avatar-frame::after{
+    display:none!important;
+  }
+  #playerPanel #playerAvatar,
+  #playerPanel #avatarPlaceholder{
+    border-radius:3px!important;
+  }
+}
+
 </style>
 </head>
 
