@@ -7756,6 +7756,30 @@ body.profile-editor-open #appStage{
   }
 }
 
+
+/* Poziom i liczba XP w osobnych wierszach — wynik wyrównany do prawej. */
+#playerPanel .player-level{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  column-gap:4px!important;
+  row-gap:3px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+#playerPanel .player-level .xp-inline{
+  display:block!important;
+  flex:0 0 100%!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:right!important;
+  white-space:nowrap!important;
+  box-sizing:border-box!important;
+}
+
 </style>
 </head>
 
