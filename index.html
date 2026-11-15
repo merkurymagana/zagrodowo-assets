@@ -8656,6 +8656,9 @@ document.getElementById("avatarFileInput").addEventListener("change",async funct
     const imageData=await readAvatarFile(file);
     pendingAvatar=imageData;
     pendingAvatarPosition={x:50,y:50};
+    pendingMiniAvatarPosition={x:50,y:50};
+    pendingMiniAvatarZoom=1;
+    miniAvatarCropEdited=false;
     setPreviewAvatar(pendingAvatar);
     status.textContent="Zdjęcie wczytane i dopasowane do podglądu.";
   }catch(readError){
