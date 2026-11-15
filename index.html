@@ -7067,6 +7067,42 @@ body.profile-editor-open #appStage{
   text-shadow:none!important;
 }
 
+
+
+/* PRZYCISKI — kompaktowe jak etykiety interfejsu, bez zmiany celów ikonowych menu. */
+#game button:not(.side-menu button):not(.help-menu-button),
+#profileOverlay button,
+#profileOverlay .profile-avatar-change,
+.mini-avatar-editor-actions button{
+  min-height:32px!important;
+  height:auto!important;
+  padding:6px 11px!important;
+  border-radius:7px!important;
+  font:500 13px/1.2 'Nunito',Arial,sans-serif!important;
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  letter-spacing:normal!important;
+}
+#profileOverlay .profile-avatar-button-row{
+  gap:8px!important;
+}
+#profileOverlay .profile-avatar-button-row .profile-avatar-change,
+#profileOverlay .profile-avatar-button-row .profile-mini-avatar-button{
+  min-height:32px!important;
+  padding:6px 11px!important;
+}
+#profileOverlay .profile-avatar-start-button{
+  min-width:0!important;
+  padding:6px 14px!important;
+}
+.mini-avatar-editor-actions{
+  gap:8px!important;
+}
+.mini-avatar-editor-actions button{
+  min-height:32px!important;
+  padding:6px 14px!important;
+}
+
 </style>
 </head>
 
