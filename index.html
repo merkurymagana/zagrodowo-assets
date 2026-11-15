@@ -6581,6 +6581,27 @@ body.profile-editor-open #appStage{
 #profileOverlay .profile-form-card .profile-meta-item strong{
   text-align:right!important;
 }
+#profileOverlay #profileOnlineStatus{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:7px!important;
+}
+#profileOverlay #profileOnlineStatus::before{
+  content:"";
+  display:inline-block;
+  width:7px;
+  height:7px;
+  flex:0 0 7px;
+  border-radius:50%;
+  background:#929292;
+}
+#profileOverlay #profileOnlineStatus.is-online::before{
+  background:#72965B;
+}
+#profileOverlay #profileOnlineStatus.is-offline::before{
+  background:#929292;
+}
 @media(max-width:700px){
   #profileOverlay .profile-form-card > .field.profile-data-row,
   #profileOverlay .profile-form-card .profile-meta-item{
@@ -6612,7 +6633,7 @@ body.profile-editor-open #appStage{
 #profileOverlay .profile-form-card > .profile-section-title{
   margin:0 0 12px!important;
   padding-bottom:14px!important;
-  border-bottom:1px solid rgba(114,150,91,.55)!important;
+  border-bottom:1px solid #72965B!important;
 }
 #profileOverlay .profile-form-card > .field.profile-data-row,
 #profileOverlay .profile-form-card .profile-meta-item{
@@ -6623,7 +6644,7 @@ body.profile-editor-open #appStage{
   min-height:46px!important;
   margin:0!important;
   padding:9px 2px!important;
-  border-bottom:1px solid rgba(114,150,91,.28)!important;
+  border-bottom:1px solid #72965B!important;
   box-sizing:border-box!important;
 }
 #profileOverlay .profile-form-card > .field.profile-data-row{
@@ -6672,7 +6693,7 @@ body.profile-editor-open #appStage{
 #profileOverlay .profile-form-card > .field:not(.profile-data-row){
   margin-top:18px!important;
   padding-top:16px!important;
-  border-top:1px solid rgba(114,150,91,.55)!important;
+  border-top:1px solid #72965B!important;
 }
 @media(max-width:700px){
   #profileOverlay .profile-form-card{padding:20px!important}
@@ -7838,7 +7859,7 @@ body.profile-editor-open #appStage{
           <div class="profile-meta-panel" aria-label="Informacje automatyczne o graczu">
             <div class="profile-meta-item"><span>Data dołączenia</span><strong id="profileJoinDate">—</strong></div>
             <div class="profile-meta-item"><span>Status</span><strong id="profileOnlineStatus">—</strong></div>
-            <div class="profile-meta-item"><span>Liczba dni w grze</span><strong id="profileDaysPlayed">—</strong></div>
+            <div class="profile-meta-item"><span>Czas w grze</span><strong id="profilePlayTime">—</strong></div>
           </div>
         </section>
       </div>
@@ -8488,6 +8509,8 @@ let player={
   playerTitle:"",
   titleBadgeStyle:"green",
   joinedAt:"",
+  totalPlayTimeMs:0,
+  lastActiveAt:0,
   level:1,
   xp:0,
   xpNeeded:100,
@@ -8498,6 +8521,7 @@ let player={
   miniAvatarZoom:1
 };
 
+let activitySessionStartedAt=0;
 let pendingAvatar="";
 let pendingAvatarPosition={x:50,y:50};
 let pendingMiniAvatarPosition={x:50,y:50};
@@ -8624,12 +8648,22 @@ async function loadDemoProfile(){
     console.warn("Nie udało się odczytać profilu lub awatara.",error);
   }
   if(!player.joinedAt)player.joinedAt=new Date().toISOString();
+  if(!Number.isFinite(Number(player.totalPlayTimeMs)))player.totalPlayTimeMs=0;
+  if(!Number.isFinite(Number(player.lastActiveAt)))player.lastActiveAt=0;
+  player.totalPlayTimeMs=Math.max(0,Number(player.totalPlayTimeMs)||0);
   if(typeof player.countryCode!=="string")player.countryCode="";
   if(typeof player.countryName!=="string")player.countryName="";
   player.deviceLanguage=(navigator.languages&&navigator.languages[0])||navigator.language||"pl";
   if(typeof player.playerTitle!=="string")player.playerTitle="";
   if(typeof player.titleBadgeStyle!=="string")player.titleBadgeStyle="green";
+  if(!player.lastActiveAt)player.lastActiveAt=Date.now();
+  activitySessionStartedAt=Date.now();
   updatePlayerPanel();
+  updateProfileMetadata();
+  persistPlayerActivity();
+  window.setInterval(updateProfileMetadata,15000);
+  document.addEventListener("pagehide",finishActivitySession);
+  document.addEventListener("visibilitychange",handleActivityVisibility);
 }
 
 async function saveDemoProfile(){
@@ -8654,16 +8688,23 @@ async function saveDemoProfile(){
 function updateCountryDisplay(){
   const country=document.getElementById("profileCountry");
   if(!country)return;
-  if(player.countryCode&&/^[A-Z]{2}$/i.test(player.countryCode)){
-    const code=player.countryCode.toLowerCase();
+  const code2=String(player.countryCode||"").toUpperCase();
+  if(/^[A-Z]{2}$/.test(code2)){
+    const code3=String(player.countryCode3||"").toUpperCase();
+    const displayCode=/^[A-Z]{3}$/.test(code3)?code3:code2;
+    let localizedName=player.countryName||code2;
+    try{
+      const names=new Intl.DisplayNames([player.deviceLanguage||navigator.language||"pl"],{type:"region"});
+      localizedName=names.of(code2)||localizedName;
+    }catch(error){}
     const flag=document.createElement("img");
     flag.className="country-flag";
-    flag.src="https://flagcdn.com/24x18/"+code+".png";
-    flag.alt="Flaga kraju "+(player.countryName||player.countryCode.toUpperCase());
+    flag.src="https://flagcdn.com/"+code2.toLowerCase()+".svg";
+    flag.alt="Flaga: "+localizedName;
     flag.width=24;
-    flag.height=18;
-    flag.onerror=()=>{flag.replaceWith(document.createTextNode("🌐 "));};
-    country.replaceChildren(flag,document.createTextNode(player.countryCode.toUpperCase()+(player.countryName?" · "+player.countryName:"")));
+    flag.height=16;
+    flag.onerror=()=>{flag.remove();};
+    country.replaceChildren(flag,document.createTextNode(displayCode+" · "+localizedName));
   }else{
     country.textContent="Nie udało się ustalić kraju";
   }
@@ -8678,6 +8719,7 @@ async function detectCountryByIp(){
     const data=await response.json();
     if(!data.success||!data.country_code)throw new Error("Country lookup unavailable");
     player.countryCode=String(data.country_code).toUpperCase();
+    player.countryCode3=String(data.country_code_iso3||data.country_code3||"").toUpperCase();
     player.countryName=String(data.country||"");
     updateCountryDisplay();
     await saveDemoProfile();
@@ -8693,32 +8735,99 @@ function formatJoinDate(value){
   return new Intl.DateTimeFormat("pl-PL",{day:"2-digit",month:"2-digit",year:"numeric"}).format(date);
 }
 
-function getDaysInGame(){
-  if(!player.joinedAt)return 1;
-  const joined=new Date(player.joinedAt);
+function getTotalPlayTime(){
+  const currentSession=activitySessionStartedAt&&document.visibilityState==="visible"
+    ?Math.max(0,Date.now()-activitySessionStartedAt):0;
+  return Math.max(0,Number(player.totalPlayTimeMs)||0)+currentSession;
+}
+
+function formatPlayTime(milliseconds){
+  const totalMinutes=Math.floor(milliseconds/60000);
+  if(totalMinutes<1)return "Mniej niż minutę";
+  const days=Math.floor(totalMinutes/1440);
+  const hours=Math.floor((totalMinutes%1440)/60);
+  const minutes=totalMinutes%60;
+  if(days>0)return days+" "+(days===1?"dzień":days<5?"dni":"dni")+(hours?" "+hours+" godz.":"");
+  if(hours>0)return hours+" godz."+(minutes?" "+minutes+" min":"");
+  return totalMinutes+" min";
+}
+
+function formatLastActive(timestamp){
+  if(!timestamp)return "Brak danych o aktywności";
+  const elapsed=Math.max(0,Date.now()-Number(timestamp));
+  const minutes=Math.floor(elapsed/60000);
+  if(minutes<1)return "Aktywny teraz";
+  if(minutes===1)return "Aktywny minutę temu";
+  if(minutes<5)return "Aktywny "+minutes+" minuty temu";
+  if(minutes<60)return "Aktywny "+minutes+" minut temu";
+  const hours=Math.floor(minutes/60);
+  if(hours===1)return "Aktywny godzinę temu";
+  if(hours<5)return "Aktywny "+hours+" godziny temu";
+  if(hours<24)return "Aktywny "+hours+" godzin temu";
+  const lastDate=new Date(Number(timestamp));
   const today=new Date();
-  joined.setHours(0,0,0,0);
-  today.setHours(0,0,0,0);
-  return Math.max(1,Math.floor((today-joined)/86400000)+1);
+  const yesterday=new Date(today);
+  yesterday.setDate(today.getDate()-1);
+  if(lastDate.toDateString()===yesterday.toDateString())return "Aktywny wczoraj";
+  const days=Math.floor(hours/24);
+  if(days===1)return "Aktywny dzień temu";
+  if(days<5)return "Aktywny "+days+" dni temu";
+  return "Aktywny "+days+" dni temu";
+}
+
+function persistPlayerActivity(){
+  try{
+    const saved=JSON.parse(localStorage.getItem("zagrodowoDemoProfile")||"{}");
+    saved.totalPlayTimeMs=Math.max(0,Number(player.totalPlayTimeMs)||0);
+    saved.lastActiveAt=Number(player.lastActiveAt)||Date.now();
+    localStorage.setItem("zagrodowoDemoProfile",JSON.stringify(saved));
+  }catch(error){}
+}
+
+function finishActivitySession(){
+  if(activitySessionStartedAt&&document.visibilityState==="visible"){
+    player.totalPlayTimeMs=Math.max(0,Number(player.totalPlayTimeMs)||0)+Math.max(0,Date.now()-activitySessionStartedAt);
+  }
+  activitySessionStartedAt=0;
+  player.lastActiveAt=Date.now();
+  persistPlayerActivity();
+}
+
+function handleActivityVisibility(){
+  if(document.visibilityState==="hidden"){
+    finishActivitySession();
+  }else{
+    activitySessionStartedAt=Date.now();
+  }
+  updateProfileMetadata();
 }
 
 function updateProfileMetadata(){
   const name=document.getElementById("profilePlayerName");
   const joined=document.getElementById("profileJoinDate");
   if(name)name.textContent=player.nickname||"—";
-  const days=document.getElementById("profileDaysPlayed");
+  const playTime=document.getElementById("profilePlayTime");
   const status=document.getElementById("profileOnlineStatus");
   if(joined)joined.textContent=formatJoinDate(player.joinedAt);
-  if(days)days.textContent=getDaysInGame()+" "+(getDaysInGame()===1?"dzień":"dni");
+  if(playTime)playTime.textContent=formatPlayTime(getTotalPlayTime());
   if(status){
     const online=document.visibilityState==="visible";
-    status.textContent=online?"🟢 Online":"⚫ Offline";
+    status.textContent=online?"Aktywny teraz":formatLastActive(player.lastActiveAt);
     status.classList.toggle("is-online",online);
     status.classList.toggle("is-offline",!online);
   }
 }
 
-document.addEventListener("visibilitychange",updateProfileMetadata);
+window.setInterval(()=>{
+  if(document.visibilityState==="visible"&&activitySessionStartedAt){
+    player.totalPlayTimeMs=getTotalPlayTime();
+    player.totalPlayTimeMs=Math.max(0,player.totalPlayTimeMs);
+    activitySessionStartedAt=Date.now();
+    player.lastActiveAt=Date.now();
+    persistPlayerActivity();
+  }
+  updateProfileMetadata();
+},15000);
 
 function openProfileEditor(){
   avatarEditingEnabled=false;
