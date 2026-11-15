@@ -7757,7 +7757,7 @@ body.profile-editor-open #appStage{
 }
 
 
-/* Poziom i liczba XP w osobnych wierszach — wynik wyrównany do prawej. */
+/* Poziom i liczba XP w osobnych wierszach — punktacja wyrównana do lewej. */
 #playerPanel .player-level{
   display:flex!important;
   flex-wrap:wrap!important;
@@ -7775,9 +7775,17 @@ body.profile-editor-open #appStage{
   min-width:0!important;
   margin:0!important;
   padding:0!important;
-  text-align:right!important;
+  text-align:left!important;
   white-space:nowrap!important;
   box-sizing:border-box!important;
+}
+
+/* Delikatne wyrównanie miniaturki i etykiety względem danych w kontenerze. */
+#playerPanel .avatar-frame{
+  transform:translateY(2px)!important;
+}
+#playerPanel .profile-card::after{
+  top:62px!important;
 }
 
 </style>
