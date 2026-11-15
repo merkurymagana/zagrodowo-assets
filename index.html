@@ -7673,6 +7673,47 @@ body.profile-editor-open #appStage{
   }
 }
 
+
+/* Etykieta „Twój profil” poza przycinaną ramką miniaturki. */
+#playerPanel .profile-card{
+  position:relative!important;
+}
+#playerPanel .avatar-frame::after{
+  content:none!important;
+  display:none!important;
+}
+#playerPanel .profile-card::after{
+  content:"Twój profil"!important;
+  position:absolute!important;
+  left:63px!important;
+  top:31px!important;
+  z-index:100000!important;
+  transform:translateY(-50%)!important;
+  display:block!important;
+  padding:6px 9px!important;
+  border:0!important;
+  border-radius:var(--ui-radius)!important;
+  background:rgba(0,0,0,.5)!important;
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  font:500 13px/1.2 'Nunito',Arial,sans-serif!important;
+  white-space:nowrap!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transition:opacity .15s ease,visibility .15s ease!important;
+}
+#playerPanel .profile-card:has(.avatar-frame:hover)::after,
+#playerPanel .profile-card:has(.avatar-frame:focus-visible)::after{
+  opacity:1!important;
+  visibility:visible!important;
+}
+@media(pointer:coarse){
+  #playerPanel .profile-card::after{display:none!important;content:none!important}
+}
+
 </style>
 </head>
 
