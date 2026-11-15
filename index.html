@@ -6726,7 +6726,11 @@ body.profile-editor-open #appStage{
 
 
 
-/* Cała przestrzeń gry przy widoku Ustawień ma jednolite, czarne tło. */
+/* Cała przestrzeń widoku Ustawień, łącznie z bocznymi pasami, ma być czarna. */
+#game.settings-page-active{
+  background:#000!important;
+  background-image:none!important;
+}
 #game.settings-page-active #gameMain,
 #game.settings-page-active #gameViewport,
 #game.settings-page-active #gameCanvas,
