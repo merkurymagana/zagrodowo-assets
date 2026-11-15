@@ -6946,6 +6946,22 @@ body.profile-editor-open #appStage{
   #profileOverlay .profile-avatar-change,#profileOverlay .profile-mini-avatar-button{max-width:100%}
 }
 
+
+/* Cała karta awatara uruchamia edycję; podczas edycji kontrolki działają niezależnie. */
+#profileOverlay:not(.avatar-editing) .profile-avatar-card{
+  cursor:pointer!important;
+  transition:border-color .18s ease,box-shadow .18s ease,filter .18s ease!important;
+}
+#profileOverlay:not(.avatar-editing) .profile-avatar-card:hover{
+  border-color:#E9C342!important;
+  box-shadow:0 0 0 2px rgba(233,195,66,.2),0 12px 32px rgba(0,0,0,.28)!important;
+  filter:brightness(1.06);
+}
+#profileOverlay .profile-avatar-card:focus-visible{
+  outline:2px solid #E9C342!important;
+  outline-offset:4px!important;
+}
+#profileOverlay.avatar-editing .profile-avatar-card{cursor:default!important}
 </style>
 </head>
 
@@ -7537,7 +7553,7 @@ body.profile-editor-open #appStage{
         </div>
       </header>
       <div class="profile-layout">
-        <section class="profile-avatar-card" aria-label="Awatar gracza">
+        <section class="profile-avatar-card" aria-label="Awatar gracza — kliknij, aby dostosować" role="button" tabindex="0" onclick="activateAvatarCard(event)" onkeydown="activateAvatarCardKeyboard(event)">
           <div class="profile-preview">
             <div class="avatar-frame" id="avatarCropFrame" aria-label="Przeciągnij zdjęcie, aby wybrać widoczny fragment">
               <img id="previewAvatar" src="" alt="Podgląd awatara" style="display:none">
@@ -7545,7 +7561,7 @@ body.profile-editor-open #appStage{
             </div>
           </div>
           <div class="profile-avatar-overlay">
-            <button type="button" class="profile-avatar-start-button" id="avatarEditStart" onclick="enterAvatarEditMode()">Dostosuj</button>
+            
             <div class="profile-avatar-edit-controls">
               <label class="profile-avatar-change" for="avatarFileInput">Wybierz nowy awatar</label>
               <input id="avatarFileInput" class="profile-avatar-file-input" type="file" accept="image/gif,image/png,image/jpeg,image/webp" aria-label="Wybierz nowy awatar">
@@ -8482,6 +8498,19 @@ function closeProfileEditor(){
 
 function profileOverlayClick(event){
   if(event.target===document.getElementById("profileOverlay"))closeProfileEditor();
+}
+
+function activateAvatarCard(event){
+  if(avatarEditingEnabled)return;
+  if(event.target.closest("button,a,input,label,select,textarea"))return;
+  enterAvatarEditMode();
+}
+
+function activateAvatarCardKeyboard(event){
+  if(avatarEditingEnabled)return;
+  if(event.key!=="Enter" && event.key!==" ")return;
+  event.preventDefault();
+  enterAvatarEditMode();
 }
 
 function enterAvatarEditMode(){
