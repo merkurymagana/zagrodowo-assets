@@ -7117,15 +7117,16 @@ body.profile-editor-open #appStage{
 }
 .profile-exit-confirm.visible{display:flex}
 .profile-exit-dialog{
-  width:min(480px,100%);padding:26px;border:1px solid rgba(145,180,119,.65);
-  border-radius:14px;background:linear-gradient(145deg,#263329,#19221b);
-  box-shadow:0 18px 55px rgba(0,0,0,.48);color:#fff;text-align:center;
+  width:min(440px,100%);padding:30px 28px;border:1px solid rgba(224,199,142,.28);
+  border-radius:18px;background:linear-gradient(145deg,rgba(52,64,52,.98),rgba(32,41,34,.99));
+  box-shadow:0 12px 32px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.035);
+  color:#fff;text-align:center;
 }
-.profile-exit-dialog h3{margin:0 0 10px;color:#fff;font:300 20px 'Exo 2',sans-serif}
+.profile-exit-dialog h3{margin:0 0 10px;color:#fff;font:300 18px 'Exo 2',sans-serif}
 .profile-exit-dialog p{margin:0 0 22px;color:#fff;font:500 13px/1.5 'Nunito',Arial,sans-serif}
-.profile-exit-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:9px}
+.profile-exit-actions{display:flex;flex-direction:column;align-items:stretch;gap:9px;width:min(260px,100%);margin:0 auto}
 .profile-exit-actions button{
-  min-height:32px;padding:6px 11px;border:1px solid rgba(145,180,119,.78);
+  width:100%;min-height:32px;padding:6px 11px;border:1px solid rgba(145,180,119,.78);
   border-radius:7px;background:#000;color:#fff;font:500 13px/1.2 'Nunito',Arial,sans-serif;cursor:pointer;
 }
 .profile-exit-actions button:hover{background:#72965B;border-color:#72965B}
@@ -7733,11 +7734,11 @@ body.profile-editor-open #appStage{
       <div class="profile-exit-confirm" id="profileExitConfirm" aria-hidden="true">
         <div class="profile-exit-dialog" role="dialog" aria-modal="true" aria-labelledby="profileExitTitle" aria-describedby="profileExitMessage">
           <h3 id="profileExitTitle">Niezapisane zmiany</h3>
-          <p id="profileExitMessage">Czy chcesz zachować wprowadzone zmiany przed wyjściem z profilu?</p>
+          <p id="profileExitMessage">Czy chcesz zapisać wprowadzone zmiany?</p>
           <div class="profile-exit-actions">
-            <button type="button" onclick="saveAndExitProfile()">Zachowaj zmiany i wyjdź</button>
+            <button type="button" onclick="saveAndExitProfile()">Zapisz zmiany</button>
             <button type="button" class="secondary" onclick="discardAndExitProfile()">Odrzuć zmiany</button>
-            <button type="button" class="secondary" onclick="cancelProfileExit()">Wróć do profilu</button>
+            <button type="button" class="secondary" onclick="cancelProfileExit()">Wróć</button>
           </div>
         </div>
       </div>
