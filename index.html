@@ -7119,8 +7119,11 @@ body.profile-editor-open #appStage{
   transition:color .18s ease;
 }
 #profileOverlay .profile-back-icon .ui-icon{
-  display:block;width:24px;height:24px;color:inherit;stroke:currentColor;
+  display:block;width:27px;height:27px;color:inherit;stroke:currentColor;
   transition:stroke .18s ease;
+}
+@media(max-width:700px){
+  #profileOverlay .profile-back-icon .ui-icon{width:24px;height:24px}
 }
 #profileOverlay .profile-back-button:hover,
 #profileOverlay .profile-back-button:focus-visible{
