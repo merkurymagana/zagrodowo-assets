@@ -7432,6 +7432,30 @@ body.profile-editor-open #appStage{
 #playerPanel .player-level::after{
   background:rgba(0,0,0,.5)!important;
 }
+
+/* Etykiety: czarne tło 50%, bez obwódki i bez cienia. */
+#game [role="tooltip"],
+#profileOverlay [role="tooltip"],
+#game .side-menu button::after,
+#game > nav.side-menu button::after,
+#playerPanel .side-menu button::after,
+#game .help-menu-button::after,
+#playerPanel .avatar-frame::after,
+#playerPanel .player-level::after{
+  border:0!important;
+  background:rgba(0,0,0,.5)!important;
+  box-shadow:none!important;
+}
+/* „Personalizuj awatar” — zgodnie ze wspólnym stylem etykiet. */
+#profileOverlay:not(.avatar-editing) .profile-avatar-card::before{
+  border:0!important;
+  border-radius:var(--ui-radius)!important;
+  background:rgba(0,0,0,.5)!important;
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  font:500 13px/1.35 'Nunito',Arial,sans-serif!important;
+  box-shadow:none!important;
+}
 /* Etykieta „Twój profil” pojawia się po najechaniu na miniaturkę lub poziom. */
 #playerPanel .avatar-frame{
   overflow:visible!important;
