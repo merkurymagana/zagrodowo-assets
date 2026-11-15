@@ -7412,7 +7412,7 @@ body.profile-editor-open #appStage{
 #profileOverlay .profile-avatar-card::before{
   border-radius:var(--ui-radius)!important;
   border:1px solid #72965B!important;
-  background:rgba(0,0,0,.88)!important;
+  background:rgba(0,0,0,.18)!important;
   padding:8px 12px!important;
 }
 #game [role="tooltip"],
@@ -7423,10 +7423,14 @@ body.profile-editor-open #appStage{
 #game .help-menu-button::after{
   border-radius:var(--ui-radius)!important;
   border:1px solid #72965B!important;
-  background:#000!important;
+  background:rgba(0,0,0,.18)!important;
   color:#FFFFFF!important;
   -webkit-text-fill-color:#FFFFFF!important;
   box-shadow:none!important;
+}
+#playerPanel .avatar-frame::after,
+#playerPanel .player-level::after{
+  background:rgba(0,0,0,.18)!important;
 }
 /* Etykieta „Twój profil” pojawia się po najechaniu na miniaturkę lub poziom. */
 #playerPanel .avatar-frame{
