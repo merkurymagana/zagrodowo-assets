@@ -714,7 +714,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{
   opacity:.95;
   will-change:transform,opacity;
 }
-#start.summer-morning .summerButterfly{display:block}
+
 #summerButterfly1{
   left:7%;top:43%;
   animation:summerButterflyFlight1 200s ease-in-out -11s infinite;
@@ -4311,11 +4311,7 @@ html,body,#appStage{
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
 }
-#playerPanel .side-menu .compass-links-row,
-#playerPanel .side-menu .compass-premium-stack,
-#playerPanel .side-menu .tasks-help-stack,
-#playerPanel .side-menu .premium-menu-row,
-#playerPanel .side-menu .help-menu-row{display:contents!important}
+
 #playerPanel .side-menu button.compass-menu-button,
 #playerPanel .side-menu button.premium-menu-button,
 #playerPanel .side-menu button.tasks-menu-button,
@@ -6575,9 +6571,7 @@ body.profile-editor-open #appStage{
   border-bottom:1px solid rgba(114,150,91,.42)!important;
   box-sizing:border-box!important;
 }
-#profileOverlay .profile-form-card .profile-meta-item:last-child{
-  border-bottom:0!important;
-}
+
 #profileOverlay .profile-form-card .profile-meta-item strong{
   text-align:right!important;
 }
@@ -6651,10 +6645,7 @@ body.profile-editor-open #appStage{
 #profileOverlay .profile-form-card > .field.profile-data-row{
   border-radius:0!important;
 }
-#profileOverlay .profile-form-card > .achievements-data-row{
-  border-top:1px solid #72965B!important;
-  border-bottom:0!important;
-}
+
 #profileOverlay .profile-form-card > .achievements-data-row .achievements-count{
   justify-self:end!important;
   color:#FFFFFF!important;
@@ -6686,12 +6677,7 @@ body.profile-editor-open #appStage{
   font:500 13px/1.25 'Nunito',Arial,sans-serif!important;
   text-align:right!important;
 }
-#profileOverlay .profile-form-card .profile-country-value{
-  display:flex!important;
-  align-items:center!important;
-  min-height:0!important;
-  white-space:nowrap!important;
-}
+
 #profileOverlay .profile-form-card .profile-data-row select{
   appearance:auto!important;
   -webkit-appearance:menulist!important;
@@ -7590,28 +7576,7 @@ body.profile-editor-open #appStage{
 }
 
 
-/* MOBILE: miniaturka awatara pozostaje równo wewnątrz pola 36 × 36 px. */
-@media(max-width:700px){
-  #playerPanel .avatar-frame{
-    box-sizing:border-box!important;
-    width:36px!important;
-    min-width:36px!important;
-    max-width:36px!important;
-    height:36px!important;
-    min-height:36px!important;
-    max-height:36px!important;
-    aspect-ratio:1 / 1!important;
-    align-self:start!important;
-    overflow:hidden!important;
-  }
-  #playerPanel .avatar-frame::after{
-    display:none!important;
-  }
-  #playerPanel #playerAvatar,
-  #playerPanel #avatarPlaceholder{
-    border-radius:3px!important;
-  }
-}
+
 
 
 /* MOBILE: twarde przycięcie awatara do wnętrza miniaturki i kolumny profilu. */
@@ -9343,9 +9308,7 @@ function discardAndExitProfile(){
   returnToGameFromProfile();
 }
 
-function profileOverlayClick(event){
-  if(event.target===document.getElementById("profileOverlay"))requestProfileExit();
-}
+
 
 function activateAvatarCard(event){
   if(avatarEditingEnabled)return;
@@ -9474,15 +9437,7 @@ function closeMiniAvatarEditor(){
   document.getElementById("miniAvatarEditor").classList.remove("visible");
   endMiniAvatarCropDrag();
 }
-function cancelMiniAvatarCrop(){
-  if(miniAvatarCropSnapshot){
-    pendingMiniAvatarPosition={...miniAvatarCropSnapshot.position};
-    pendingMiniAvatarZoom=miniAvatarCropSnapshot.zoom;
-    updateMiniAvatarCropPreview();
-  }
-  miniAvatarCropSnapshot=null;
-  closeMiniAvatarEditor();
-}
+
 function startMiniAvatarCropDrag(event){
   const frame=document.getElementById("miniAvatarCropFrame"),img=document.getElementById("miniAvatarPreview");
   if(!frame||!img||!img.naturalWidth||event.button!==0)return;
