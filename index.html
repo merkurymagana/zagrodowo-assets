@@ -8661,7 +8661,6 @@ async function loadDemoProfile(){
   updatePlayerPanel();
   updateProfileMetadata();
   persistPlayerActivity();
-  window.setInterval(updateProfileMetadata,15000);
   document.addEventListener("pagehide",finishActivitySession);
   document.addEventListener("visibilitychange",handleActivityVisibility);
 }
