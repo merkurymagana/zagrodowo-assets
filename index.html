@@ -6740,9 +6740,20 @@ body.profile-editor-open #appStage{
   min-height:100%;
 }
 
-/* Nagłówek i opis Ustawień zaczynają się na tej samej wysokości co nagłówek ekranu „Twój profil”. */
-#game.settings-page-active .game-content{
-  padding-top:42px!important;
+/* Nagłówek Ustawień: ten sam odstęp od górnej i bocznej krawędzi co ekran „Twój profil”. */
+#game.settings-page-active #gameCanvas > .game-content{
+  padding:42px 54px 30px!important;
+}
+#game.settings-page-active #gameViewTitle{
+  margin:0!important;
+}
+#game.settings-page-active #gameViewDescription{
+  margin:7px 0 0!important;
+}
+@media(max-width:700px){
+  #game.settings-page-active #gameCanvas > .game-content{
+    padding:24px 16px 24px!important;
+  }
 }
 
 /* USTAWIENIA — roboczy układ pełnego widoku, spójny z ekranem „Twój profil”. */
