@@ -6837,6 +6837,35 @@ body:has(#game.settings-page-active),
 .settings-placeholder-card h3{margin:0;color:#fff;font:600 16px 'Nunito',sans-serif}
 .settings-placeholder-card p{margin:0;color:#fff;font:400 13px 'Nunito',sans-serif}
 .settings-placeholder-card>span{margin-top:5px;color:#72965B;font:600 11px 'Nunito',sans-serif;text-transform:uppercase;letter-spacing:.7px}
+
+/* USTAWIENIA OGÓLNE — pojedynczy panel z sekcjami oddzielonymi separatorami. */
+.settings-general-content{display:flex;flex-direction:column;gap:26px}
+.settings-general-section{display:flex;flex-direction:column;gap:0}
+.settings-general-section+ .settings-general-section{padding-top:22px;border-top:1px solid #72965B}
+.settings-general-section>h3{margin:0 0 8px;color:#fff;font:600 15px 'Nunito',sans-serif}
+.settings-general-row{
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  min-height:68px;padding:13px 0;border-bottom:1px solid rgba(114,150,91,.55);
+}
+.settings-general-row:last-child{border-bottom:0}
+.settings-general-copy{display:flex;flex-direction:column;gap:5px;min-width:0}
+.settings-general-label{color:#fff;font:600 13px 'Nunito',sans-serif}
+.settings-general-help{color:rgba(255,255,255,.7);font:400 12px/1.45 'Nunito',sans-serif}
+.settings-general-select{
+  flex:0 0 190px;min-height:36px;padding:7px 10px;
+  border:1px solid #72965B;border-radius:3px;background:#050505;color:#fff;
+  font:500 12px 'Nunito',sans-serif;opacity:.75;
+}
+.settings-general-switch-preview{
+  position:relative;flex:0 0 42px;width:42px;height:23px;
+  border:1px solid #72965B;border-radius:20px;background:rgba(114,150,91,.35);
+  opacity:.8;
+}
+.settings-general-switch-preview>span{
+  position:absolute;top:3px;right:3px;width:15px;height:15px;
+  border-radius:50%;background:#72965B;
+}
+
 .settings-main-panel .settings-profile-card{max-width:760px}
 .settings-main-panel .settings-profile-field{color:#fff}
 .settings-main-panel .settings-profile-field select{border-radius:3px}
@@ -6846,6 +6875,11 @@ body:has(#game.settings-page-active),
   .settings-navigation{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:7px}
   .settings-nav-item{min-height:42px;padding:8px;font-size:12px}
   .settings-main-panel{min-height:360px;padding:20px}
+  .settings-general-content{gap:20px}
+  .settings-general-section+ .settings-general-section{padding-top:18px}
+  .settings-general-row{gap:12px;min-height:64px;padding:12px 0}
+  .settings-general-help{max-width:250px}
+  .settings-general-select{flex-basis:130px;max-width:42%;}
 }
 
 .settings-profile-actions{grid-column:1/-1;display:flex;justify-content:flex-end}
@@ -8509,10 +8543,48 @@ html.profile-editor-open .side-menu{
                   <section class="settings-tab-panel active" data-settings-panel="general">
                     <h2 class="settings-section-heading">Ogólne</h2>
                     <p class="settings-section-description">Podstawowe ustawienia Twojej rozgrywki w Zagrodowie.</p>
-                    <div class="settings-placeholder-card">
-                      <h3>Ustawienia ogólne</h3>
-                      <p>W tej sekcji pojawią się podstawowe opcje konta i gry.</p>
-                      <span>W przygotowaniu</span>
+
+                    <div class="settings-general-content">
+                      <section class="settings-general-section" aria-labelledby="settingsGeneralRegion">
+                        <h3 id="settingsGeneralRegion">Ustawienia regionalne</h3>
+                        <div class="settings-general-row">
+                          <div class="settings-general-copy">
+                            <span class="settings-general-label">Język gry</span>
+                            <span class="settings-general-help">Wybierz język wyświetlania Zagrodowa.</span>
+                          </div>
+                          <select class="settings-general-select" aria-label="Język gry" disabled>
+                            <option selected>Polski</option>
+                          </select>
+                        </div>
+                        <div class="settings-general-row">
+                          <div class="settings-general-copy">
+                            <span class="settings-general-label">Format godziny</span>
+                            <span class="settings-general-help">Wybierz sposób wyświetlania godzin.</span>
+                          </div>
+                          <select class="settings-general-select" aria-label="Format godziny" disabled>
+                            <option selected>24-godzinny</option>
+                            <option>12-godzinny</option>
+                          </select>
+                        </div>
+                      </section>
+
+                      <section class="settings-general-section" aria-labelledby="settingsGeneralConfirmations">
+                        <h3 id="settingsGeneralConfirmations">Potwierdzenia</h3>
+                        <div class="settings-general-row">
+                          <div class="settings-general-copy">
+                            <span class="settings-general-label">Potwierdzaj wydawanie diamentów</span>
+                            <span class="settings-general-help">Wyświetl dodatkowe pytanie przed wydaniem diamentów.</span>
+                          </div>
+                          <span class="settings-general-switch-preview" aria-label="Włączone"><span></span></span>
+                        </div>
+                        <div class="settings-general-row">
+                          <div class="settings-general-copy">
+                            <span class="settings-general-label">Potwierdzaj usuwanie budynków</span>
+                            <span class="settings-general-help">Chroń się przed przypadkowym usunięciem budynku i jego zawartości.</span>
+                          </div>
+                          <span class="settings-general-switch-preview" aria-label="Włączone"><span></span></span>
+                        </div>
+                      </section>
                     </div>
                   </section>
                   <section class="settings-tab-panel" data-settings-panel="gameplay">
