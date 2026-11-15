@@ -7241,6 +7241,66 @@ body.profile-editor-open #appStage{
   box-shadow:none!important;
   background-image:none!important;
 }
+
+/* Dane gracza — jeden wspólny układ i równe odstępy dla wszystkich siedmiu wierszy. */
+#profileOverlay .profile-form-card > .field.profile-data-row,
+#profileOverlay .profile-form-card .profile-meta-panel > .profile-meta-item{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  align-items:center!important;
+  column-gap:20px!important;
+  min-height:48px!important;
+  margin:0!important;
+  padding:10px 2px!important;
+  border:0!important;
+  border-bottom:1px solid #72965B!important;
+  border-radius:0!important;
+  box-sizing:border-box!important;
+}
+#profileOverlay .profile-form-card .profile-meta-panel{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+}
+#profileOverlay .profile-form-card .profile-meta-panel > .profile-meta-item:last-child{
+  border-bottom:0!important;
+}
+#profileOverlay .profile-form-card > .achievements-data-row{
+  border-top:1px solid #72965B!important;
+  border-bottom:0!important;
+}
+#profileOverlay .profile-form-card .profile-data-value,
+#profileOverlay .profile-form-card .profile-country-value,
+#profileOverlay .profile-form-card .profile-data-row select,
+#profileOverlay .profile-form-card .profile-meta-item strong,
+#profileOverlay .profile-form-card .achievements-count{
+  justify-self:end!important;
+  width:auto!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  color:#FFFFFF!important;
+  font:500 13px/1.25 'Nunito',Arial,sans-serif!important;
+  text-align:right!important;
+}
+#profileOverlay .profile-form-card .profile-country-value{
+  display:flex!important;
+  align-items:center!important;
+  min-height:0!important;
+  white-space:nowrap!important;
+}
+@media(max-width:700px){
+  #profileOverlay .profile-form-card > .field.profile-data-row,
+  #profileOverlay .profile-form-card .profile-meta-panel > .profile-meta-item{
+    column-gap:10px!important;
+    min-height:48px!important;
+    padding:10px 1px!important;
+  }
+}
 </style>
 </head>
 
