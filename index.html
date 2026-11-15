@@ -6655,6 +6655,12 @@ body.profile-editor-open #appStage{
   border-top:1px solid #72965B!important;
   border-bottom:0!important;
 }
+#profileOverlay .profile-form-card > .achievements-data-row .achievements-count{
+  justify-self:end!important;
+  color:#FFFFFF!important;
+  font:500 13px/1.25 'Nunito',Arial,sans-serif!important;
+  text-align:right!important;
+}
 #profileOverlay .profile-form-card .profile-meta-panel{
   margin:0!important;
   padding:0!important;
@@ -7866,7 +7872,7 @@ body.profile-editor-open #appStage{
             <div class="profile-meta-item"><span>Status</span><strong id="profileOnlineStatus">—</strong></div>
             <div class="profile-meta-item"><span>Czas w grze</span><strong id="profilePlayTime">—</strong></div>
           </div>
-          <div class="field profile-data-row achievements-data-row">Osiągnięcia</div>
+          <div class="field profile-data-row achievements-data-row"><span>Osiągnięcia</span><strong id="profileAchievementsCount" class="achievements-count" aria-live="polite"></strong></div>
         </section>
       </div>
     </div>
