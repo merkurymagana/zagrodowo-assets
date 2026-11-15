@@ -8012,6 +8012,45 @@ body:has(#game.settings-page-active),
     padding:72px 18px 24px!important;
   }
 }
+
+/* PODSTAWOWE TŁO GRY — czerń na całej planszy. */
+#appStage.game-active{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+}
+#appStage.game-active #game,
+#appStage.game-active #gameMain,
+#appStage.game-active #gameViewport,
+#appStage.game-active #gameCanvas,
+#appStage.game-active #gameCanvas > .game-content{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+}
+
+/* Widok „Twój profil” korzysta z takiego samego czarnego tła jak Ustawienia. */
+html.profile-editor-open,
+body.profile-editor-open,
+body.profile-editor-open #appStage,
+html.profile-editor-open #game,
+html.profile-editor-open #gameMain,
+html.profile-editor-open #gameViewport,
+html.profile-editor-open #gameCanvas,
+html.profile-editor-open #gameCanvas > .game-content,
+html.profile-editor-open #profileOverlay{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+}
+html.profile-editor-open #playerPanel,
+html.profile-editor-open .side-menu{
+  background:#000!important;
+  background-color:#000!important;
+  background-image:none!important;
+  border-color:#000!important;
+  box-shadow:none!important;
+}
 </style>
 </head>
 
@@ -11216,17 +11255,3 @@ renderNeighbors();
 
 </body>
 </html>
-
-/* PODSTAWOWE TŁO GRY — czerń na całej planszy i poza jej krawędziami. */
-html:has(#appStage.game-active),
-body:has(#appStage.game-active),
-#appStage.game-active,
-#appStage.game-active #game,
-#appStage.game-active #gameMain,
-#appStage.game-active #gameViewport,
-#appStage.game-active #gameCanvas,
-#appStage.game-active #gameCanvas > .game-content{
-  background:#000!important;
-  background-color:#000!important;
-  background-image:none!important;
-}
