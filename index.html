@@ -6813,11 +6813,12 @@ body:has(#game.settings-page-active),
   min-width:0;min-height:460px;padding:30px 34px;
   border:1px solid #72965B;border-radius:3px;background:#000;color:#fff;
 }
-/* Ustawienia „Ogólne” i „Rozgrywka”: wysokość panelu dopasowana do treści. */
+/* Panele ustawień dopasowują wysokość do zawartości aktywnej kategorii. */
 .settings-main-panel:has(.settings-tab-panel[data-settings-panel="general"].active),
 .settings-main-panel:has(.settings-tab-panel[data-settings-panel="gameplay"].active),
 .settings-main-panel:has(.settings-tab-panel[data-settings-panel="sound"].active),
-.settings-main-panel:has(.settings-tab-panel[data-settings-panel="notifications"].active){min-height:0;align-self:start;height:auto}
+.settings-main-panel:has(.settings-tab-panel[data-settings-panel="notifications"].active),
+.settings-main-panel:has(.settings-tab-panel[data-settings-panel="account"].active){min-height:0;align-self:start;height:auto}
 .settings-tab-panel{display:none}
 .settings-tab-panel.active{display:block}
 .settings-section-heading{margin:0 0 8px;font:300 24px 'Exo 2',sans-serif;color:#fff}
