@@ -8224,6 +8224,32 @@ html.profile-editor-open .side-menu{
   border-radius:3px!important;
 }
 
+/* Ten sam standard obejmuje pełnoekranowy profil, który jest poza #appStage. */
+#profileOverlay button:not(.profile-mini-avatar-button):not(.profile-edit):not(.profile-back-btn):not(.profile-back-icon):not(.close-btn):not(.eye-btn),
+#profileOverlay input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+#profileOverlay select,
+#profileOverlay textarea{
+  border-radius:3px!important;
+}
+#profileOverlay .profile-avatar-card,
+#profileOverlay .profile-form-card,
+#profileOverlay .profile-meta-panel,
+#profileOverlay .profile-country-value,
+#profileOverlay .profile-form-card .field select,
+#profileOverlay .profile-exit-dialog{
+  border-radius:3px!important;
+}
+#profileOverlay .profile-actions{
+  flex-wrap:wrap!important;
+  justify-content:center!important;
+}
+#profileOverlay button:not(.profile-mini-avatar-button):not(.profile-edit):not(.profile-back-btn):not(.profile-back-icon):not(.close-btn):not(.eye-btn):not(.profile-avatar-start-button):not(.avatar-profile-actions button){
+  width:90%!important;
+  max-width:90%!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  box-sizing:border-box!important;
+}
 /* Wspólny promień 3px dla prostokątnych powierzchni i kontenerów UI.
    Przyciski ikonowe i okrągłe elementy pozostają bez zmian. */
 #appStage :is(
