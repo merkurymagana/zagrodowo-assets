@@ -8211,6 +8211,16 @@ html.profile-editor-open .side-menu{
   padding:6px 0;
 }
 
+
+/* Wspólna szerokość zwykłych przycisków w grze — 90% kontenera.
+   Menu startowe przed zalogowaniem i przyciski ikonowe pozostają bez zmian. */
+#game button:not([aria-label]):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-mini-avatar-button){
+  width:90%!important;
+  max-width:90%!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
 </style>
 </head>
 
