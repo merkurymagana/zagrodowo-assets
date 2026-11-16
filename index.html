@@ -8578,7 +8578,7 @@ html.profile-editor-open .side-menu{
 
               <section class="settings-screen" id="settingsContent" style="display:none" aria-label="Ustawienia gry">
                 <nav class="settings-navigation" aria-label="Kategorie ustawień">
-                  <button type="button" class="settings-nav-item active" data-settings-tab="general" onclick="showSettingsTab('general')">Ogólne</button>
+                  <button type="button" class="settings-nav-item" data-settings-tab="general" onclick="showSettingsTab('general')">Ogólne</button>
                   <button type="button" class="settings-nav-item" data-settings-tab="gameplay" onclick="showSettingsTab('gameplay')">Rozgrywka</button>
                   <button type="button" class="settings-nav-item" data-settings-tab="sound" onclick="showSettingsTab('sound')">Dźwięk</button>
                   <button type="button" class="settings-nav-item" data-settings-tab="notifications" onclick="showSettingsTab('notifications')">Powiadomienia</button>
@@ -10215,7 +10215,7 @@ async function saveProfile(){
 
 function showSettingsTab(name){
   initGameSettings();
-  document.querySelectorAll('#settingsContent [data-settings-tab]').forEach(button=>button.classList.toggle('active',button.dataset.settingsTab===name));
+  // Kategoria nie otrzymuje klasy active — wybór zmienia wyłącznie zawartość panelu.
   document.querySelectorAll('#settingsContent [data-settings-panel]').forEach(panel=>panel.classList.toggle('active',panel.dataset.settingsPanel===name));
 }
 
