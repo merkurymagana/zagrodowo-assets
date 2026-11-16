@@ -8597,6 +8597,29 @@ html.profile-editor-open .side-menu{
   }
 }
 
+
+/* Konto — zielone obramowanie i stałe zakotwiczenie pól przy prawej krawędzi. */
+.settings-tab-panel[data-settings-panel="account"] .settings-account-input{
+  margin-left:auto!important;
+  flex:0 0 auto!important;
+  border:1px solid #72965B!important;
+  border-color:#72965B!important;
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  background:#050505!important;
+  max-width:48%!important;
+  min-width:120px!important;
+}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-input:focus{
+  border-color:#E9C342!important;
+}
+@media(max-width:700px){
+  .settings-tab-panel[data-settings-panel="account"] .settings-account-input{
+    max-width:58%!important;
+    min-width:110px!important;
+  }
+}
+
 </style>
 </head>
 
@@ -9099,7 +9122,7 @@ html.profile-editor-open .side-menu{
                   <section class="settings-tab-panel" data-settings-panel="account"><h2 class="settings-section-heading">Konto</h2>
                     <div class="settings-general-content">
                       <section class="settings-general-section settings-account-section">
-                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><label class="settings-general-label" for="accountNickname">Nazwa gracza</label></div><input type="text" id="accountNickname" class="settings-account-input" maxlength="24" autocomplete="nickname" value="Nowy gospodarz"></div>
+                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><label class="settings-general-label" for="accountNickname">Nazwa gracza</label></div><input type="text" id="accountNickname" class="settings-account-input" maxlength="16" autocomplete="nickname" value="Nowy gospodarz"></div>
                         <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><label class="settings-general-label" for="accountEmail">Adres e-mail</label></div><input type="email" id="accountEmail" class="settings-account-input" autocomplete="email" placeholder="Wpisz adres e-mail"></div>
                         <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Zmiana hasła</span></div><label class="settings-toggle settings-account-switch" aria-label="Otwórz zmianę hasła"><input type="checkbox" data-account-dialog="password"><span class="settings-toggle-track"></span></label></div>
                         <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Reset konta</span></div><label class="settings-toggle settings-account-switch" aria-label="Otwórz reset konta"><input type="checkbox" data-account-dialog="reset"><span class="settings-toggle-track"></span></label></div>
@@ -10679,11 +10702,19 @@ async function saveProfile(){
 
 
 
+function resizeAccountField(input){
+  if(!input)return;
+  const minWidth=230;
+  const maxWidth=Math.min(420,Math.floor(input.parentElement.clientWidth*.48));
+  const estimatedWidth=Math.ceil((input.value||input.placeholder||"").length*8+28);
+  input.style.width=Math.max(Math.min(minWidth,maxWidth),Math.min(estimatedWidth,maxWidth))+"px";
+}
 function saveAccountFields(){
   const nickname=document.getElementById("accountNickname");
   const email=document.getElementById("accountEmail");
   if(!nickname||!email)return;
-  const nextNickname=nickname.value.trim();
+  const nextNickname=nickname.value.trim().slice(0,16);
+  nickname.value=nextNickname;
   if(nextNickname)player.nickname=nextNickname;
   player.email=email.value.trim();
   updatePlayerPanel();
@@ -10697,8 +10728,8 @@ function showSettingsTab(name){
   if(name==="account"){
     const nickname=document.getElementById("accountNickname");
     const email=document.getElementById("accountEmail");
-    if(nickname)nickname.value=player.nickname||"";
-    if(email)email.value=player.email||"";
+    if(nickname){nickname.value=player.nickname||"";resizeAccountField(nickname);}
+    if(email){email.value=player.email||"";resizeAccountField(email);}
   }
 }
 function openAccountDialog(type){
@@ -10726,6 +10757,14 @@ function closeAccountDialog(){
   dialog.classList.remove("visible");dialog.setAttribute("aria-hidden","true");
   document.querySelectorAll('[data-account-dialog]').forEach(input=>input.checked=false);
 }
+["accountNickname","accountEmail"].forEach(id=>{
+  const field=document.getElementById(id);
+  field?.addEventListener("input",()=>resizeAccountField(field));
+});
+window.addEventListener("resize",()=>{
+  resizeAccountField(document.getElementById("accountNickname"));
+  resizeAccountField(document.getElementById("accountEmail"));
+});
 document.querySelectorAll('[data-account-dialog]').forEach(input=>input.addEventListener("change",()=>{
   if(input.checked)openAccountDialog(input.dataset.accountDialog);
 }));
