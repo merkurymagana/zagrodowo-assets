@@ -6816,7 +6816,8 @@ body:has(#game.settings-page-active),
 /* Ustawienia „Ogólne” i „Rozgrywka”: wysokość panelu dopasowana do treści. */
 .settings-main-panel:has(.settings-tab-panel[data-settings-panel="general"].active),
 .settings-main-panel:has(.settings-tab-panel[data-settings-panel="gameplay"].active),
-.settings-main-panel:has(.settings-tab-panel[data-settings-panel="sound"].active){min-height:0;align-self:start;height:auto}
+.settings-main-panel:has(.settings-tab-panel[data-settings-panel="sound"].active),
+.settings-main-panel:has(.settings-tab-panel[data-settings-panel="notifications"].active){min-height:0;align-self:start;height:auto}
 .settings-tab-panel{display:none}
 .settings-tab-panel.active{display:block}
 .settings-section-heading{margin:0 0 8px;font:300 24px 'Exo 2',sans-serif;color:#fff}
@@ -8214,7 +8215,8 @@ html.profile-editor-open .side-menu{
 }
 .settings-tab-panel[data-settings-panel="general"] .settings-general-reset-row,
 .settings-tab-panel[data-settings-panel="gameplay"] .settings-general-reset-row,
-.settings-tab-panel[data-settings-panel="sound"] .settings-general-reset-row{
+.settings-tab-panel[data-settings-panel="sound"] .settings-general-reset-row,
+.settings-tab-panel[data-settings-panel="notifications"] .settings-general-reset-row{
   min-height:48px;
   margin-top:0;
   padding:15px 0 6px;
@@ -8225,12 +8227,14 @@ html.profile-editor-open .side-menu{
 
 /* „Rozgrywka” — taki sam zwarty rytm wierszy jak w „Ogólne”. */
 .settings-tab-panel[data-settings-panel="gameplay"] .settings-general-row,
-.settings-tab-panel[data-settings-panel="sound"] .settings-general-row{
+.settings-tab-panel[data-settings-panel="sound"] .settings-general-row,
+.settings-tab-panel[data-settings-panel="notifications"] .settings-general-row{
   min-height:48px;
   padding:6px 0;
 }
 .settings-tab-panel[data-settings-panel="gameplay"] .settings-gameplay-last-row,
-.settings-tab-panel[data-settings-panel="sound"] .settings-sound-last-row{
+.settings-tab-panel[data-settings-panel="sound"] .settings-sound-last-row,
+.settings-tab-panel[data-settings-panel="notifications"] .settings-notifications-last-row{
   border-bottom:1px solid rgba(114,150,91,.55);
 }
 
@@ -8811,19 +8815,18 @@ html.profile-editor-open .side-menu{
                         <div class="settings-general-row settings-sound-last-row"><div class="settings-general-copy"><span class="settings-general-label">Odtwarzaj dźwięk przy uruchomieniu gry</span></div><label class="settings-toggle"><input type="checkbox" data-setting="playSoundOnStart" checked><span class="settings-toggle-track"></span></label></div>
                       </section>
                     </div><div class="settings-reset-row settings-general-reset-row"><button type="button" class="settings-reset-button" data-reset-category="sound">Przywróć ustawienia domyślne</button></div></section>
-                  <section class="settings-tab-panel" data-settings-panel="notifications"><h2 class="settings-section-heading">Powiadomienia</h2><p class="settings-section-description">Zdecyduj, w jaki sposób Zagrodowo może przekazywać Ci informacje.</p>
+                  <section class="settings-tab-panel" data-settings-panel="notifications"><h2 class="settings-section-heading">Powiadomienia</h2>
                     <div class="settings-general-content">
-                      <section class="settings-general-section"><h3>Sposób powiadamiania</h3>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Powiadomienia w grze</span><span class="settings-general-help">Komunikaty wyświetlane podczas aktywnej rozgrywki.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="inGameNotifications" checked><span class="settings-toggle-track"></span></label></div>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Powiadomienia Push</span><span class="settings-general-help">Powiadomienia systemowe poza grą. Wymagają zgody systemu i obsługi przez aplikację.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="pushNotifications" ><span class="settings-toggle-track"></span></label></div>
-                      </section>
-                      <section class="settings-general-section"><h3>Ciche godziny</h3>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Włącz ciche godziny</span><span class="settings-general-help">W wybranym przedziale nie wysyłaj powiadomień Push.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="quietHours" ><span class="settings-toggle-track"></span></label></div>
+                      <section class="settings-general-section">
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Powiadomienia w grze</span></div><label class="settings-toggle"><input type="checkbox" data-setting="inGameNotifications" checked><span class="settings-toggle-track"></span></label></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Powiadomienia Push</span></div><label class="settings-toggle"><input type="checkbox" data-setting="pushNotifications"><span class="settings-toggle-track"></span></label></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Włącz ciche godziny</span></div><label class="settings-toggle"><input type="checkbox" data-setting="quietHours"><span class="settings-toggle-track"></span></label></div>
                         <div class="settings-general-row settings-time-row"><div class="settings-general-copy"><span class="settings-general-label">Od</span></div><input type="time" class="settings-control-select" data-setting="quietStart" value="22:00" disabled></div>
-                        <div class="settings-general-row settings-time-row"><div class="settings-general-copy"><span class="settings-general-label">Do</span></div><input type="time" class="settings-control-select" data-setting="quietEnd" value="08:00" disabled></div>
+                        <div class="settings-general-row settings-time-row settings-notifications-last-row"><div class="settings-general-copy"><span class="settings-general-label">Do</span></div><input type="time" class="settings-control-select" data-setting="quietEnd" value="08:00" disabled></div>
                       </section>
-                      <p class="settings-inline-note">Wybór zdarzeń, o których chcesz otrzymywać powiadomienia, będzie dostępny po uruchomieniu systemu powiadomień.</p>
-                    </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="notifications">Przywróć ustawienia domyślne</button></div></section>
+                    </div>
+                    <p class="settings-inline-note">Wybór konkretnych zdarzeń będzie dostępny po uruchomieniu systemu powiadomień.</p>
+                    <div class="settings-reset-row settings-general-reset-row"><button type="button" class="settings-reset-button" data-reset-category="notifications">Przywróć ustawienia domyślne</button></div></section>
                   <section class="settings-tab-panel" data-settings-panel="account"><h2 class="settings-section-heading">Konto i prywatność</h2><p class="settings-section-description">Zarządzaj swoim kontem, prywatnością i kontaktami w społeczności Zagrodowa.</p>
                     <div class="settings-general-content">
                       <section class="settings-general-section"><h3>Dostęp do konta</h3>
