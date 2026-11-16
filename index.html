@@ -6815,7 +6815,8 @@ body:has(#game.settings-page-active),
 }
 /* Ustawienia „Ogólne” i „Rozgrywka”: wysokość panelu dopasowana do treści. */
 .settings-main-panel:has(.settings-tab-panel[data-settings-panel="general"].active),
-.settings-main-panel:has(.settings-tab-panel[data-settings-panel="gameplay"].active){min-height:0;align-self:start;height:auto}
+.settings-main-panel:has(.settings-tab-panel[data-settings-panel="gameplay"].active),
+.settings-main-panel:has(.settings-tab-panel[data-settings-panel="sound"].active){min-height:0;align-self:start;height:auto}
 .settings-tab-panel{display:none}
 .settings-tab-panel.active{display:block}
 .settings-section-heading{margin:0 0 8px;font:300 24px 'Exo 2',sans-serif;color:#fff}
@@ -8212,7 +8213,8 @@ html.profile-editor-open .side-menu{
   padding:6px 0;
 }
 .settings-tab-panel[data-settings-panel="general"] .settings-general-reset-row,
-.settings-tab-panel[data-settings-panel="gameplay"] .settings-general-reset-row{
+.settings-tab-panel[data-settings-panel="gameplay"] .settings-general-reset-row,
+.settings-tab-panel[data-settings-panel="sound"] .settings-general-reset-row{
   min-height:48px;
   margin-top:0;
   padding:15px 0 6px;
@@ -8222,11 +8224,13 @@ html.profile-editor-open .side-menu{
 }
 
 /* „Rozgrywka” — taki sam zwarty rytm wierszy jak w „Ogólne”. */
-.settings-tab-panel[data-settings-panel="gameplay"] .settings-general-row{
+.settings-tab-panel[data-settings-panel="gameplay"] .settings-general-row,
+.settings-tab-panel[data-settings-panel="sound"] .settings-general-row{
   min-height:48px;
   padding:6px 0;
 }
-.settings-tab-panel[data-settings-panel="gameplay"] .settings-gameplay-last-row{
+.settings-tab-panel[data-settings-panel="gameplay"] .settings-gameplay-last-row,
+.settings-tab-panel[data-settings-panel="sound"] .settings-sound-last-row{
   border-bottom:1px solid rgba(114,150,91,.55);
 }
 
@@ -8806,9 +8810,9 @@ html.profile-editor-open .side-menu{
                       <section class="settings-general-section">
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Wycisz wszystkie dźwięki</span></div><label class="settings-toggle"><input type="checkbox" data-setting="muteAllSounds"><span class="settings-toggle-track"></span></label></div>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Wyciszaj w tle</span></div><label class="settings-toggle"><input type="checkbox" data-setting="muteInBackground" checked><span class="settings-toggle-track"></span></label></div>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Odtwarzaj dźwięk przy uruchomieniu gry</span></div><label class="settings-toggle"><input type="checkbox" data-setting="playSoundOnStart" checked><span class="settings-toggle-track"></span></label></div>
+                        <div class="settings-general-row settings-sound-last-row"><div class="settings-general-copy"><span class="settings-general-label">Odtwarzaj dźwięk przy uruchomieniu gry</span></div><label class="settings-toggle"><input type="checkbox" data-setting="playSoundOnStart" checked><span class="settings-toggle-track"></span></label></div>
                       </section>
-                    </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="sound">Przywróć ustawienia domyślne</button></div></section>
+                    </div><div class="settings-reset-row settings-general-reset-row"><button type="button" class="settings-reset-button" data-reset-category="sound">Przywróć ustawienia domyślne</button></div></section>
                   <section class="settings-tab-panel" data-settings-panel="notifications"><h2 class="settings-section-heading">Powiadomienia</h2><p class="settings-section-description">Zdecyduj, w jaki sposób Zagrodowo może przekazywać Ci informacje.</p>
                     <div class="settings-general-content">
                       <section class="settings-general-section"><h3>Sposób powiadamiania</h3>
