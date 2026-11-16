@@ -8620,6 +8620,33 @@ html.profile-editor-open .side-menu{
   }
 }
 
+
+/* Konto — wymuszenie naszej zieleni na całej ramce pól, także po fokusie. */
+#appStage .settings-tab-panel[data-settings-panel="account"] input.settings-account-input,
+#appStage .settings-tab-panel[data-settings-panel="account"] input.settings-account-input:hover,
+#appStage .settings-tab-panel[data-settings-panel="account"] input.settings-account-input:focus,
+#appStage .settings-tab-panel[data-settings-panel="account"] input.settings-account-input:active{
+  border:1px solid #72965B!important;
+  border-top-color:#72965B!important;
+  border-right-color:#72965B!important;
+  border-bottom-color:#72965B!important;
+  border-left-color:#72965B!important;
+  outline:none!important;
+  box-shadow:none!important;
+}
+/* Pola zajmują prawą kolumnę i rozszerzają się w lewo od stałej prawej krawędzi. */
+#appStage .settings-tab-panel[data-settings-panel="account"] .settings-account-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(120px,48%)!important;
+  column-gap:24px!important;
+}
+#appStage .settings-tab-panel[data-settings-panel="account"] input.settings-account-input{
+  justify-self:end!important;
+  box-sizing:border-box!important;
+  min-width:0!important;
+  max-width:100%!important;
+}
+
 </style>
 </head>
 
@@ -10704,10 +10731,16 @@ async function saveProfile(){
 
 function resizeAccountField(input){
   if(!input)return;
-  const minWidth=230;
-  const maxWidth=Math.min(420,Math.floor(input.parentElement.clientWidth*.48));
-  const estimatedWidth=Math.ceil((input.value||input.placeholder||"").length*8+28);
-  input.style.width=Math.max(Math.min(minWidth,maxWidth),Math.min(estimatedWidth,maxWidth))+"px";
+  const row=input.closest(".settings-account-row");
+  const label=row?.querySelector(".settings-general-copy");
+  const available=Math.max(120,(row?.clientWidth||input.parentElement.clientWidth)-(label?.offsetWidth||0)-24);
+  const minWidth=Math.min(230,available);
+  const maxWidth=Math.min(420,available);
+  const text=(input.value||input.placeholder||"");
+  const estimatedWidth=Math.ceil(text.length*8+32);
+  const width=Math.max(minWidth,Math.min(estimatedWidth,maxWidth));
+  input.style.setProperty("width",width+"px","important");
+  input.style.setProperty("flex-basis",width+"px","important");
 }
 function saveAccountFields(){
   const nickname=document.getElementById("accountNickname");
