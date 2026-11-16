@@ -8110,6 +8110,12 @@ html.profile-editor-open .side-menu{
 .settings-inline-note{margin:16px 0 0;color:rgba(255,255,255,.62);font:400 11px/1.5 'Nunito',sans-serif}
 .settings-general-section h3W{display:block;margin:0 0 8px;color:#fff;font:600 15px 'Nunito',sans-serif}
 .settings-general-row input[type="color"]{width:54px;height:34px;padding:2px;border:1px solid #72965B;border-radius:3px;background:#050505}
+/* Wszystkie przyciski i kontenery ustawień mają promień 3px. */
+#game .settings-navigation,
+#game .settings-main-panel,
+#game button.settings-nav-item:not(.side-menu button):not(.help-menu-button){
+  border-radius:3px!important;
+}
 /* Kategorie ustawień — ten sam styl i układ przycisków co w edytorze awatara. */
 #game .settings-navigation{
   display:flex!important;flex-direction:column!important;align-items:center!important;
