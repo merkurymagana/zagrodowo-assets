@@ -8802,10 +8802,11 @@ html.profile-editor-open .side-menu{
                       <section class="settings-general-section"><h3>Poziomy głośności</h3>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Głośność muzyki</span></div><label class="settings-range"><input type="range" min="0" max="100" value="70" data-setting="musicVolume"><output>70%</output></label></div>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Głośność efektów dźwiękowych</span></div><label class="settings-range"><input type="range" min="0" max="100" value="80" data-setting="effectsVolume"><output>80%</output></label></div>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Głośność odgłosów otoczenia</span></div><label class="settings-range"><input type="range" min="0" max="100" value="65" data-setting="ambienceVolume"><output>65%</output></label></div>
                       </section>
                       <section class="settings-general-section"><h3>Zachowanie dźwięku</h3>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Wycisz wszystkie dźwięki</span></div><label class="settings-toggle"><input type="checkbox" data-setting="muteAllSounds"><span class="settings-toggle-track"></span></label></div>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Wyciszaj w tle</span></div><label class="settings-toggle"><input type="checkbox" data-setting="muteInBackground" checked><span class="settings-toggle-track"></span></label></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Odtwarzaj dźwięk przy uruchomieniu gry</span></div><label class="settings-toggle"><input type="checkbox" data-setting="playSoundOnStart" checked><span class="settings-toggle-track"></span></label></div>
                       </section>
                     </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="sound">Przywróć ustawienia domyślne</button></div></section>
                   <section class="settings-tab-panel" data-settings-panel="notifications"><h2 class="settings-section-heading">Powiadomienia</h2><p class="settings-section-description">Zdecyduj, w jaki sposób Zagrodowo może przekazywać Ci informacje.</p>
@@ -10412,7 +10413,7 @@ function showSettingsTab(name){
 const SETTINGS_DEFAULTS={
  brightness:100,contrast:100,keepAwake:false,batteryMode:"auto",
  actionIndicator:true,confirmPremium:true,confirmUnripeRemoval:true,confirmCancelProduction:true,confirmBuildingRemoval:true,
- musicVolume:70,effectsVolume:80,ambienceVolume:65,muteInBackground:true,
+ musicVolume:70,effectsVolume:80,muteAllSounds:false,muteInBackground:true,playSoundOnStart:true,
  inGameNotifications:true,pushNotifications:false,quietHours:false,quietStart:"22:00",quietEnd:"08:00",
 };
 let gameSettings={...SETTINGS_DEFAULTS};
@@ -10476,7 +10477,7 @@ function initGameSettings(){
   const groups={
    general:["brightness","contrast","keepAwake","batteryMode"],
    gameplay:["actionIndicator","confirmPremium","confirmUnripeRemoval","confirmCancelProduction","confirmBuildingRemoval"],
-   sound:["musicVolume","effectsVolume","ambienceVolume","muteInBackground"],
+   sound:["musicVolume","effectsVolume","muteAllSounds","muteInBackground","playSoundOnStart"],
    notifications:["inGameNotifications","pushNotifications","quietHours","quietStart","quietEnd"],
   };
   const keys=groups[category]||[];
