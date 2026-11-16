@@ -8169,9 +8169,14 @@ html.profile-editor-open .side-menu{
 }
 
 
-/* Wyrównanie położenia pierwszej etykiety w „Ogólne” do danych profilu. */
-.settings-general-section > .settings-general-row:first-child .settings-general-copy{
-  transform:translateY(-4px);
+/* „Ogólne” — taki sam rytm wierszy jak w „Dane gracza” (48 px). */
+.settings-tab-panel[data-settings-panel="general"] .settings-general-row{
+  min-height:48px;
+  padding:6px 0;
+}
+.settings-tab-panel[data-settings-panel="general"] .settings-general-reset-row{
+  min-height:48px;
+  padding:6px 0;
 }
 
 </style>
