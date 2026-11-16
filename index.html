@@ -8664,27 +8664,44 @@ html.profile-editor-open .side-menu{
 
 
 
-/* Okno zmiany hasła — odstępy i zielone obramowanie pól. */
+/* Okno zmiany hasła — wyraźne odstępy i spójne zielone obramowanie pól. */
 #settingsAccountDialogFields{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  margin:0 0 20px;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:16px!important;
+  margin:0 0 22px!important;
 }
-#settingsAccountDialogFields .settings-account-dialog-input{
-  width:100%;
-  min-height:38px;
-  box-sizing:border-box;
+#settingsAccountDialogFields input.settings-account-dialog-input,
+#settingsAccountDialogFields input.settings-account-dialog-input:hover,
+#settingsAccountDialogFields input.settings-account-dialog-input:focus,
+#settingsAccountDialogFields input.settings-account-dialog-input:active{
+  display:block!important;
+  width:100%!important;
+  min-height:40px!important;
+  box-sizing:border-box!important;
+  padding:9px 12px!important;
   border:1px solid #72965B!important;
-  border-radius:3px;
-  background:#050505;
-  color:#F5F1E7;
-  outline:none;
+  border-top-color:#72965B!important;
+  border-right-color:#72965B!important;
+  border-bottom-color:#72965B!important;
+  border-left-color:#72965B!important;
+  border-radius:3px!important;
+  background:#050505!important;
+  color:#F5F1E7!important;
+  -webkit-text-fill-color:#F5F1E7!important;
+  outline:none!important;
+  box-shadow:none!important;
+  font:500 13px 'Nunito',Arial,sans-serif!important;
 }
-#settingsAccountDialogFields .settings-account-dialog-input:focus{
+#settingsAccountDialogFields input.settings-account-dialog-input:focus{
   border-color:#72965B!important;
-  outline:1px solid rgba(114,150,91,.35);
-  box-shadow:0 0 0 1px rgba(114,150,91,.18);
+  outline:1px solid rgba(114,150,91,.4)!important;
+  outline-offset:1px!important;
+  box-shadow:0 0 0 1px rgba(114,150,91,.18)!important;
+}
+#settingsAccountDialogFields input.settings-account-dialog-input::placeholder{
+  color:rgba(245,241,231,.55)!important;
+  -webkit-text-fill-color:rgba(245,241,231,.55)!important;
 }
 </style>
 </head>
