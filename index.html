@@ -8498,6 +8498,32 @@ html.profile-editor-open .side-menu{
   }
 }
 
+
+/* Konto — pola danych i przełączniki otwierające okna modalne. */
+.settings-tab-panel[data-settings-panel="account"] .settings-account-input{
+  box-sizing:border-box;width:min(280px,52%);min-width:150px;min-height:34px;padding:7px 10px;
+  border:1px solid rgba(245,241,231,.32);border-radius:1px;background:rgba(15,14,12,.92);
+  color:#F5F1E7;font:500 12px 'Nunito',Arial,sans-serif;outline:none;
+}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-input:focus{
+  border-color:#E9C342;box-shadow:0 0 0 1px rgba(233,195,66,.2);
+}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-input::placeholder{color:rgba(245,241,231,.42)}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-switch{flex:0 0 42px}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-switch input:checked+.settings-toggle-track{background:#171717}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-switch input:checked+.settings-toggle-track:after{transform:translateX(0);background:#aaa}
+.settings-account-dialog-fields{display:flex;flex-direction:column;gap:9px;margin:0 0 18px}
+.settings-account-dialog-input{
+  box-sizing:border-box;width:100%;min-height:36px;padding:8px 10px;
+  border:1px solid rgba(245,241,231,.3);border-radius:1px;background:#111;color:#F5F1E7;
+  font:500 12px 'Nunito',Arial,sans-serif;
+}
+.settings-account-dialog-input:focus{outline:1px solid #E9C342;border-color:#E9C342}
+.settings-account-dialog .settings-reset-confirm-actions button:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:700px){
+  .settings-tab-panel[data-settings-panel="account"] .settings-account-input{width:min(58%,230px);min-width:120px}
+}
+
 </style>
 </head>
 
@@ -8938,6 +8964,17 @@ html.profile-editor-open .side-menu{
                     </div>
                   </div>
                 </div>
+                <div class="settings-reset-confirm settings-account-dialog" id="settingsAccountDialog" aria-hidden="true">
+                  <div class="settings-reset-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="settingsAccountDialogTitle" aria-describedby="settingsAccountDialogMessage">
+                    <h3 id="settingsAccountDialogTitle">Zmiana hasła</h3>
+                    <p id="settingsAccountDialogMessage"></p>
+                    <div id="settingsAccountDialogFields"></div>
+                    <div class="settings-reset-confirm-actions">
+                      <button type="button" id="settingsAccountDialogConfirm" disabled>Potwierdź</button>
+                      <button type="button" id="settingsAccountDialogCancel">Anuluj</button>
+                    </div>
+                  </div>
+                </div>
                 <nav class="settings-navigation" aria-label="Kategorie ustawień">
                   <button type="button" class="settings-nav-item" data-settings-tab="general" onclick="showSettingsTab('general')">Ogólne</button>
                   <button type="button" class="settings-nav-item" data-settings-tab="gameplay" onclick="showSettingsTab('gameplay')">Rozgrywka</button>
@@ -8989,12 +9026,11 @@ html.profile-editor-open .side-menu{
                   <section class="settings-tab-panel" data-settings-panel="account"><h2 class="settings-section-heading">Konto</h2>
                     <div class="settings-general-content">
                       <section class="settings-general-section settings-account-section">
-                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Nazwa gracza</span></div><button type="button" class="settings-secondary-button settings-account-action" disabled>Dane profilu</button></div>
-                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Adres e-mail</span></div><button type="button" class="settings-secondary-button settings-account-action" disabled>Dane konta</button></div>
-                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Zmiana hasła</span></div><button type="button" class="settings-secondary-button settings-account-action" disabled>Zmień hasło</button></div>
-
-                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Dezaktywacja konta</span></div><button type="button" class="settings-secondary-button settings-account-action" disabled>Dezaktywuj konto</button></div>
-                        <div class="settings-general-row settings-account-row settings-account-last-row"><div class="settings-general-copy"><span class="settings-general-label">Usunięcie konta</span></div><button type="button" class="settings-danger-button settings-account-action" disabled>Usuń konto</button></div>
+                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><label class="settings-general-label" for="accountNickname">Nazwa gracza</label></div><input type="text" id="accountNickname" class="settings-account-input" maxlength="24" autocomplete="nickname" value="Nowy gospodarz"></div>
+                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><label class="settings-general-label" for="accountEmail">Adres e-mail</label></div><input type="email" id="accountEmail" class="settings-account-input" autocomplete="email" placeholder="Wpisz adres e-mail"></div>
+                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Zmiana hasła</span></div><label class="settings-toggle settings-account-switch" aria-label="Otwórz zmianę hasła"><input type="checkbox" data-account-dialog="password"><span class="settings-toggle-track"></span></label></div>
+                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Reset konta</span></div><label class="settings-toggle settings-account-switch" aria-label="Otwórz reset konta"><input type="checkbox" data-account-dialog="reset"><span class="settings-toggle-track"></span></label></div>
+                        <div class="settings-general-row settings-account-row settings-account-last-row"><div class="settings-general-copy"><span class="settings-general-label">Usunięcie konta</span></div><label class="settings-toggle settings-account-switch" aria-label="Otwórz usunięcie konta"><input type="checkbox" data-account-dialog="delete"><span class="settings-toggle-track"></span></label></div>
                       </section>
                     </div></section>
                 </div>
@@ -10570,11 +10606,63 @@ async function saveProfile(){
 
 
 
+function saveAccountFields(){
+  const nickname=document.getElementById("accountNickname");
+  const email=document.getElementById("accountEmail");
+  if(!nickname||!email)return;
+  const nextNickname=nickname.value.trim();
+  if(nextNickname)player.nickname=nextNickname;
+  player.email=email.value.trim();
+  updatePlayerPanel();
+  saveDemoProfile();
+}
 function showSettingsTab(name){
   initGameSettings();
+  if(document.querySelector('#settingsContent [data-settings-panel="account"].active') && name!=="account")saveAccountFields();
   // Kategoria nie otrzymuje klasy active — wybór zmienia wyłącznie zawartość panelu.
   document.querySelectorAll('#settingsContent [data-settings-panel]').forEach(panel=>panel.classList.toggle('active',panel.dataset.settingsPanel===name));
+  if(name==="account"){
+    const nickname=document.getElementById("accountNickname");
+    const email=document.getElementById("accountEmail");
+    if(nickname)nickname.value=player.nickname||"";
+    if(email)email.value=player.email||"";
+  }
 }
+function openAccountDialog(type){
+  const dialog=document.getElementById("settingsAccountDialog");
+  const title=document.getElementById("settingsAccountDialogTitle");
+  const message=document.getElementById("settingsAccountDialogMessage");
+  const fields=document.getElementById("settingsAccountDialogFields");
+  const confirm=document.getElementById("settingsAccountDialogConfirm");
+  if(!dialog||!title||!message||!fields||!confirm)return;
+  const content={
+    password:{title:"Zmiana hasła",message:"W tym miejscu będzie można bezpiecznie zmienić hasło do konta.",fields:'<input class="settings-account-dialog-input" type="password" placeholder="Obecne hasło" autocomplete="current-password"><input class="settings-account-dialog-input" type="password" placeholder="Nowe hasło" autocomplete="new-password"><input class="settings-account-dialog-input" type="password" placeholder="Powtórz nowe hasło" autocomplete="new-password">'},
+    reset:{title:"Reset konta",message:"Reset rozpocznie grę od początku. Twoje gospodarstwa, postępy, waluty i przedmioty zostaną wyzerowane. Dane logowania pozostaną bez zmian.",fields:""},
+    delete:{title:"Usunięcie konta",message:"Usunięcie konta będzie trwałe i obejmie konto oraz powiązane z nim dane. Tej operacji nie będzie można cofnąć.",fields:""}
+  }[type];
+  if(!content)return;
+  title.textContent=content.title;message.textContent=content.message;fields.innerHTML=content.fields;
+  confirm.disabled=true;
+  dialog.dataset.dialogType=type;
+  dialog.classList.add("visible");dialog.setAttribute("aria-hidden","false");
+  document.getElementById("settingsAccountDialogCancel")?.focus();
+}
+function closeAccountDialog(){
+  const dialog=document.getElementById("settingsAccountDialog");
+  if(!dialog)return;
+  dialog.classList.remove("visible");dialog.setAttribute("aria-hidden","true");
+  document.querySelectorAll('[data-account-dialog]').forEach(input=>input.checked=false);
+}
+document.querySelectorAll('[data-account-dialog]').forEach(input=>input.addEventListener("change",()=>{
+  if(input.checked)openAccountDialog(input.dataset.accountDialog);
+}));
+document.getElementById("settingsAccountDialogCancel")?.addEventListener("click",closeAccountDialog);
+document.getElementById("settingsAccountDialog")?.addEventListener("click",event=>{
+  if(event.target.id==="settingsAccountDialog")closeAccountDialog();
+});
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape" && document.getElementById("settingsAccountDialog")?.classList.contains("visible"))closeAccountDialog();
+});
 
 /* USTAWIENIA — lokalne preferencje demonstracyjne. */
 const SETTINGS_DEFAULTS={
