@@ -8265,6 +8265,51 @@ html.profile-editor-open .side-menu{
   border-radius:revert-layer;
 }
 
+
+/* KOŃCOWE UJEDNOLICENIE: prostokątne narożniki 3 px oraz rozmieszczenie zwykłych przycisków. */
+/* Dotyczy także warstw backdrop/overlay, okien, paneli, kart i pozostałych prostokątnych powierzchni. */
+#appStage :is(
+  [class*="backdrop"],[class*="overlay"],[class*="panel"],[class*="card"],
+  [class*="window"],[class*="dialog"],[class*="modal"],[class*="container"],
+  [class*="notice"],[class*="popup"],[class*="tab"],[class*="field"],
+  [class*="menu"],[class*="button"],[class$="-btn"],[class$="btn"],
+  [class*="list"],[class*="box"],[role="dialog"],[role="tooltip"]
+):not(.avatar-frame):not(.social-avatar):not(.country-flag):not(.coin-icon):not(.settings-toggle-track):not(.settings-toggle-track::after):not(.xp-track > div){
+  border-radius:3px!important;
+}
+#profileOverlay,
+#profileOverlay :is(
+  [class*="backdrop"],[class*="overlay"],[class*="panel"],[class*="card"],
+  [class*="window"],[class*="dialog"],[class*="modal"],[class*="container"],
+  [class*="notice"],[class*="popup"],[class*="tab"],[class*="field"],
+  [class*="button"],[class$="-btn"],[class$="btn"],[role="dialog"],[role="tooltip"]
+):not(.avatar-frame):not(.country-flag){
+  border-radius:3px!important;
+}
+/* Backdropy ekranów logowania, profilu i potwierdzeń również mają narożniki 3 px. */
+#authOverlay,.auth-overlay,#profileOverlay,.profile-overlay,.profile-exit-overlay,[class*="backdrop"]{
+  border-radius:3px!important;
+}
+/* Wszystkie zwykłe przyciski: 90% szerokości kontenera, wyśrodkowane.
+   Wyjątki: przyciski menu startowego przed logowaniem i przyciski ikonowe. */
+#appStage button:not(#start .start-buttons button):not(.side-menu button):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-mini-avatar-button):not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn):not([data-view="neighbors"]):not([data-view="settings"]){
+  display:flex!important;
+  width:90%!important;
+  max-width:90%!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  box-sizing:border-box!important;
+  border-radius:3px!important;
+}
+#profileOverlay button:not(.profile-mini-avatar-button):not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn){
+  width:90%!important;
+  max-width:90%!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  box-sizing:border-box!important;
+  border-radius:3px!important;
+}
+
 </style>
 </head>
 
