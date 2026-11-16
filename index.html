@@ -8992,7 +8992,7 @@ html.profile-editor-open .side-menu{
                         <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Nazwa gracza</span></div><button type="button" class="settings-secondary-button settings-account-action" disabled>Dane profilu</button></div>
                         <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Adres e-mail</span></div><button type="button" class="settings-secondary-button settings-account-action" disabled>Dane konta</button></div>
                         <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Zmiana hasła</span></div><button type="button" class="settings-secondary-button settings-account-action" disabled>Zmień hasło</button></div>
-                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Zarządzanie graczami</span></div><button type="button" class="settings-secondary-button settings-account-action" disabled>Otwórz</button></div>
+
                         <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Dezaktywacja konta</span></div><button type="button" class="settings-secondary-button settings-account-action" disabled>Dezaktywuj konto</button></div>
                         <div class="settings-general-row settings-account-row settings-account-last-row"><div class="settings-general-copy"><span class="settings-general-label">Usunięcie konta</span></div><button type="button" class="settings-danger-button settings-account-action" disabled>Usuń konto</button></div>
                       </section>
@@ -9015,6 +9015,7 @@ html.profile-editor-open .side-menu{
                   <button class="social-tab" data-social-tab="messages" onclick="showSocialTab('messages')"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> Wiadomości <span id="unreadCount"></span></button>
                   <button class="social-tab" data-social-tab="search" onclick="showSocialTab('search')"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg> Szukaj graczy</button>
                   <button class="social-tab" data-social-tab="requests" onclick="showSocialTab('requests')"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16l2 11v5H2v-5L4 4Z"/><path d="M2 15h6l2 3h4l2-3h6"/></svg> Zaproszenia <span id="requestsCount"></span></button>
+                  <button class="social-tab" data-social-tab="management" onclick="showSocialTab(&quot;management&quot;)">Zarządzanie graczami</button>
                 </div>
 
                 <section class="social-pane active" id="socialFriends"><div class="social-list" id="friendsList"></div></section>
@@ -9047,6 +9048,12 @@ html.profile-editor-open .side-menu{
                   <div class="social-list" id="incomingRequests"></div>
                   <h3>Wysłane zaproszenia</h3>
                   <div class="social-list" id="outgoingRequests"></div>
+                </section>
+                <section class="social-pane" id="socialManagement">
+                  <h3>Zablokowani gracze</h3>
+                  <div class="social-list"><div class="social-empty">Lista zablokowanych graczy będzie dostępna w tej sekcji.</div></div>
+                  <h3>Zgłoszenia</h3>
+                  <div class="social-list"><div class="social-empty">Tutaj znajdziesz wysłane zgłoszenia dotyczące graczy.</div></div>
                 </section>
               </div>
             </section>
