@@ -6709,23 +6709,6 @@ body.profile-editor-open #appStage{
 }
 
 
-/* USTAWIENIA — WYGLĄD PROFILU */
-.settings-profile-panel{width:min(680px,calc(100% - 32px));margin:24px auto;padding:24px;border:1px solid #72965B;border-radius:12px;background:#111a;color:#F5F1E7}
-.settings-section-heading{margin:0 0 8px;font:300 22px 'Exo 2',sans-serif;color:#F5F1E7}
-.settings-section-description{margin:0 0 22px;font:500 13px 'Nunito',sans-serif;color:#F5F1E7;line-height:1.5}
-.settings-profile-card{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.settings-profile-field{display:flex;flex-direction:column;gap:8px;font:500 13px 'Nunito',sans-serif;color:#F5F1E7}
-.settings-profile-field select{width:100%;min-height:40px;padding:8px 10px;border:1px solid #72965B;border-radius:6px;background:#050505;color:#F5F1E7;font:500 13px 'Nunito',sans-serif}
-.settings-badge-preview{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:14px;border:1px solid #72965B;border-radius:8px;background:#050505}
-.settings-preview-label{font:500 12px 'Nunito',sans-serif;color:#F5F1E7}
-.player-title-badge{display:inline-flex;align-items:center;justify-content:center;padding:5px 12px;border:1px solid transparent;border-radius:999px;font:700 12px 'Nunito',sans-serif;line-height:1.2}
-.title-style-green{background:#72965B;color:#F5F1E7;border-color:#91b477}
-
-
-.settings-profile-status{grid-column:1/-1;min-height:18px;margin:0;color:#F5F1E7;font:500 12px 'Nunito',sans-serif}
-
-
-
 /* Zewnętrzne pasy poza kontenerem gry — czarne wyłącznie w widoku Ustawień. */
 html:has(#game.settings-page-active),
 body:has(#game.settings-page-active),
@@ -6882,8 +6865,6 @@ body:has(#game.settings-page-active),
   .settings-general-select{flex-basis:130px;max-width:42%;}
 }
 
-.settings-profile-actions{grid-column:1/-1;display:flex;justify-content:flex-end}
-@media(max-width:620px){.settings-profile-panel{width:calc(100% - 20px);margin:14px auto;padding:16px}.settings-profile-card{grid-template-columns:1fr}.settings-badge-preview,.settings-profile-status,.settings-profile-actions{grid-column:1}}
 
 
 /* AWATAR W EDYCJI PROFILU — zdjęcie wypełnia całą kartę. */
@@ -8133,34 +8114,6 @@ html.profile-editor-open .side-menu{
 }
 
 
-@keyframes settingsRainbowBorder{
-  0%{border-color:#ed5555}
-  16%{border-color:#e9a33b}
-  33%{border-color:#d8d34b}
-  50%{border-color:#64b96b}
-  66%{border-color:#54b9c5}
-  83%{border-color:#8d73d2}
-  100%{border-color:#ed72a8}
-}
-.settings-rainbow #settingsContent .settings-navigation,
-.settings-rainbow #settingsContent .settings-main-panel,
-.settings-rainbow #settingsContent .settings-nav-item.active,
-.settings-rainbow #settingsContent .settings-general-section+ .settings-general-section,
-.settings-rainbow #settingsContent .settings-general-row,
-.settings-rainbow #settingsContent .settings-reset-row,
-.settings-rainbow #settingsContent .settings-toggle-track{
-  animation:settingsRainbowBorder 18s linear infinite;
-}
-@media(prefers-reduced-motion:reduce){
- .settings-rainbow #settingsContent .settings-navigation,
- .settings-rainbow #settingsContent .settings-main-panel,
- .settings-rainbow #settingsContent .settings-nav-item.active,
- .settings-rainbow #settingsContent .settings-general-section+ .settings-general-section,
- .settings-rainbow #settingsContent .settings-general-row,
- .settings-rainbow #settingsContent .settings-reset-row,
- .settings-rainbow #settingsContent .settings-toggle-track{animation:none}
-}
-
 </style>
 </head>
 
@@ -8596,8 +8549,6 @@ html.profile-editor-open .side-menu{
                   <button type="button" class="settings-nav-item" data-settings-tab="gameplay" onclick="showSettingsTab('gameplay')"><span>⌘</span> Rozgrywka</button>
                   <button type="button" class="settings-nav-item" data-settings-tab="sound" onclick="showSettingsTab('sound')"><span>♫</span> Dźwięk</button>
                   <button type="button" class="settings-nav-item" data-settings-tab="notifications" onclick="showSettingsTab('notifications')"><span>◎</span> Powiadomienia</button>
-                  <button type="button" class="settings-nav-item" data-settings-tab="profile" onclick="showSettingsTab('profile')"><span>◈</span> Wygląd profilu</button>
-                  <button type="button" class="settings-nav-item" data-settings-tab="gameappearance" onclick="showSettingsTab('gameappearance')"><span>✧</span> Wygląd gry</button>
                   <button type="button" class="settings-nav-item" data-settings-tab="account" onclick="showSettingsTab('account')"><span>♙</span> Konto i bezpieczeństwo</button>
                   <button type="button" class="settings-nav-item" data-settings-tab="privacy" onclick="showSettingsTab('privacy')"><span>⌑</span> Prywatność i bezpieczeństwo</button>
                 </nav>
@@ -8649,29 +8600,6 @@ html.profile-editor-open .side-menu{
                       </section>
                       <p class="settings-inline-note">Wybór zdarzeń, o których chcesz otrzymywać powiadomienia, będzie dostępny po uruchomieniu systemu powiadomień.</p>
                     </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="notifications">Przywróć ustawienia domyślne</button></div></section>
-                  <section class="settings-tab-panel" data-settings-panel="profile"><h2 class="settings-section-heading">Wygląd profilu</h2><p class="settings-section-description">Wybierz tytuł, który będzie Cię reprezentował, i dostosuj wygląd jego odznaki.</p>
-                    <div class="settings-profile-card">
-                      <label class="settings-profile-field">Tytuł gracza
-                        <select id="settingsPlayerTitleSelect"><option value="">Bez tytułu</option><option value="Początkujący farmer">Początkujący farmer</option><option value="Młody gospodarz">Młody gospodarz</option><option value="Miłośnik zwierząt">Miłośnik zwierząt</option><option value="Mistrz plonów">Mistrz plonów</option></select>
-                      </label>
-                      <label class="settings-profile-field">Wygląd odznaki
-                        <select id="settingsTitleStyleSelect"><option value="green">Zielona</option><option value="chestnut">Kasztanowa</option><option value="gold">Złota</option></select>
-                      </label>
-                      <div class="settings-badge-preview"><span class="settings-preview-label">Podgląd odznaki</span><span id="settingsTitleBadgePreview" class="player-title-badge title-style-green">Bez tytułu</span></div>
-                      <p id="settingsProfileStatus" class="settings-profile-status" aria-live="polite"></p>
-                      <div class="settings-profile-actions"><button type="button" onclick="saveProfileAppearance()">Zapisz zmiany</button></div>
-                    </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="profile">Przywróć ustawienia domyślne</button></div></section>
-                  <section class="settings-tab-panel" data-settings-panel="gameappearance"><h2 class="settings-section-heading">Wygląd gry</h2><p class="settings-section-description">Dostosuj akcenty i wskaźniki interfejsu do własnego gustu.</p>
-                    <div class="settings-general-content">
-                      <section class="settings-general-section"><h3>Kolor interfejsu</h3>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Kolor przewodni</span><span class="settings-general-help">Wybierz gotowy kolor, własny odcień lub płynnie zmieniające się barwy.</span></div><select class="settings-control-select" data-setting="accentMode"><option value="green">Zielony</option><option value="blue">Niebieski</option><option value="lavender">Lawendowy</option><option value="pink">Różowy</option><option value="amber">Bursztynowy</option><option value="brick">Ceglasty</option><option value="mint">Miętowy</option><option value="custom">Własny kolor</option><option value="rainbow">Kolorowy 🌈</option></select></div>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Własny odcień</span><span class="settings-general-help">Wybierz kolor akcentowy. Czerń i biel interfejsu pozostają bez zmian.</span></div><input type="color" value="#72965B" data-setting="customAccent" aria-label="Wybierz własny kolor"></div>
-                      </section>
-                      <section class="settings-general-section"><h3>Kursor i kafelki</h3>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Wygląd kursora</span><span class="settings-general-help">Wybierz styl kursora na komputerze.</span></div><select class="settings-control-select" data-setting="cursorStyle"><option value="classic">Klasyczny</option><option value="farm">Wiejski</option><option value="simple">Prosty</option></select></div>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Podświetlenie kafelka</span><span class="settings-general-help">Wybierz sposób zaznaczania pola pod kursorem lub palcem.</span></div><select class="settings-control-select" data-setting="tileHighlight"><option value="outline">Delikatna ramka</option><option value="soft">Miękkie podświetlenie</option><option value="strong">Wyraźne podświetlenie</option></select></div>
-                      </section>
-                    </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="gameappearance">Przywróć ustawienia domyślne</button></div></section>
                   <section class="settings-tab-panel" data-settings-panel="account"><h2 class="settings-section-heading">Konto i bezpieczeństwo</h2><p class="settings-section-description">Zarządzaj dostępem do konta i jego statusem.</p>
                     <div class="settings-general-content">
                       <section class="settings-general-section"><h3>Dostęp do konta</h3>
@@ -10260,46 +10188,7 @@ function showSettingsTab(name){
   initGameSettings();
   document.querySelectorAll('#settingsContent [data-settings-tab]').forEach(button=>button.classList.toggle('active',button.dataset.settingsTab===name));
   document.querySelectorAll('#settingsContent [data-settings-panel]').forEach(panel=>panel.classList.toggle('active',panel.dataset.settingsPanel===name));
-  if(name==='profile')renderProfileAppearanceSettings();
 }
-
-function renderProfileAppearanceSettings(){
-  const titleSelect=document.getElementById("settingsPlayerTitleSelect");
-  const styleSelect=document.getElementById("settingsTitleStyleSelect");
-  if(!titleSelect||!styleSelect)return;
-  titleSelect.value=player.playerTitle||"";
-  styleSelect.value=player.titleBadgeStyle||"green";
-  updateTitleBadgePreview();
-}
-
-function updateTitleBadgePreview(){
-  const title=document.getElementById("settingsPlayerTitleSelect")?.value||"";
-  const style=document.getElementById("settingsTitleStyleSelect")?.value||"green";
-  const preview=document.getElementById("settingsTitleBadgePreview");
-  if(!preview)return;
-  preview.textContent=title||"Bez tytułu";
-  preview.className="player-title-badge title-style-"+style;
-}
-
-document.getElementById("settingsPlayerTitleSelect")?.addEventListener("change",updateTitleBadgePreview);
-document.getElementById("settingsTitleStyleSelect")?.addEventListener("change",updateTitleBadgePreview);
-
-async function saveProfileAppearance(){
-  const status=document.getElementById("settingsProfileStatus");
-  const previous={...player};
-  player.playerTitle=document.getElementById("settingsPlayerTitleSelect").value||"";
-  player.titleBadgeStyle=document.getElementById("settingsTitleStyleSelect").value||"green";
-  if(!await saveDemoProfile()){
-    player=previous;
-    status.textContent="Nie udało się zapisać zmian. Spróbuj ponownie.";
-    renderProfileAppearanceSettings();
-    return;
-  }
-  updatePlayerPanel();
-  status.textContent="Zmiany zostały zapisane.";
-  updateTitleBadgePreview();
-}
-
 
 /* USTAWIENIA — lokalne preferencje demonstracyjne. */
 const SETTINGS_DEFAULTS={
@@ -10307,21 +10196,10 @@ const SETTINGS_DEFAULTS={
  actionIndicator:true,confirmPremium:true,confirmCancelProduction:true,confirmBuildingRemoval:true,
  musicVolume:70,effectsVolume:80,ambienceVolume:65,muteInBackground:true,
  inGameNotifications:true,pushNotifications:false,quietHours:false,quietStart:"22:00",quietEnd:"08:00",
- accentMode:"green",customAccent:"#72965B",cursorStyle:"classic",tileHighlight:"outline"
 };
 let gameSettings={...SETTINGS_DEFAULTS};
 try{const saved=JSON.parse(localStorage.getItem("zagrodowoSettings")||"{}");gameSettings={...gameSettings,...saved};}catch(e){}
 function saveGameSettings(){try{localStorage.setItem("zagrodowoSettings",JSON.stringify(gameSettings));}catch(e){}}
-function applyGameAccent(){
- const palette={green:"#72965B",blue:"#6599D0",lavender:"#9A83C7",pink:"#CE83A7",amber:"#D3A34A",brick:"#B96F5B",mint:"#72B7A0",custom:gameSettings.customAccent};
- const color=palette[gameSettings.accentMode]||palette.green;
- document.documentElement.style.setProperty("--settings-accent",color);
- document.querySelectorAll("#settingsContent .settings-navigation,#settingsContent .settings-main-panel").forEach(el=>el.style.borderColor=color);
- document.querySelectorAll("#settingsContent .settings-nav-item.active,#settingsContent .settings-nav-item:hover").forEach(el=>el.style.borderColor=color);
- document.querySelectorAll("#settingsContent .settings-nav-item span,#settingsContent .settings-general-section+ .settings-general-section,#settingsContent .settings-general-row,#settingsContent .settings-reset-row").forEach(el=>{if(el.classList.contains("settings-general-section")||el.classList.contains("settings-reset-row"))el.style.borderColor=color;});
- document.querySelectorAll("#settingsContent input[type=range],#settingsContent .settings-toggle-track").forEach(el=>el.style.accentColor=color);
- document.documentElement.classList.toggle("settings-rainbow",gameSettings.accentMode==="rainbow");
-}
 function syncSettingsControls(){
  document.querySelectorAll("#settingsContent [data-setting]").forEach(el=>{
   const key=el.dataset.setting;if(!(key in gameSettings))return;
@@ -10331,7 +10209,6 @@ function syncSettingsControls(){
  const quiet=!!gameSettings.quietHours;
  ["quietStart","quietEnd"].forEach(k=>{const el=document.querySelector('[data-setting="'+k+'"]');if(el)el.disabled=!quiet;});
  const custom=document.querySelector('[data-setting="customAccent"]');if(custom)custom.disabled=gameSettings.accentMode!=="custom";
- applyGameAccent();
 }
 function initGameSettings(){
  const root=document.getElementById("settingsContent");if(!root||root.dataset.initialized)return;root.dataset.initialized="1";
@@ -10340,7 +10217,6 @@ function initGameSettings(){
   const key=el.dataset.setting;gameSettings[key]=el.type==="checkbox"?el.checked:el.value;
   const out=el.closest(".settings-range")?.querySelector("output");if(out)out.textContent=el.value+"%";
   if(key==="quietHours")syncSettingsControls();
-  if(key==="accentMode"||key==="customAccent"){const custom=root.querySelector('[data-setting="customAccent"]');if(custom)custom.disabled=gameSettings.accentMode!=="custom";applyGameAccent();}
   saveGameSettings();
  }));
  root.querySelectorAll("[data-reset-category]").forEach(button=>button.addEventListener("click",async()=>{
@@ -10350,17 +10226,9 @@ function initGameSettings(){
    gameplay:["actionIndicator","confirmPremium","confirmCancelProduction","confirmBuildingRemoval"],
    sound:["musicVolume","effectsVolume","ambienceVolume","muteInBackground"],
    notifications:["inGameNotifications","pushNotifications","quietHours","quietStart","quietEnd"],
-   gameappearance:["accentMode","customAccent","cursorStyle","tileHighlight"]
   };
   if(!window.confirm("Przywrócić domyślne ustawienia tej kategorii?"))return;
   const keys=groups[category]||[];
-  if(category==="profile"){
-   document.getElementById("settingsPlayerTitleSelect").value="";
-   document.getElementById("settingsTitleStyleSelect").value="green";
-   updateTitleBadgePreview();
-   await saveProfileAppearance();
-   return;
-  }
   if(!keys.length)return;
   keys.forEach(k=>gameSettings[k]=SETTINGS_DEFAULTS[k]);saveGameSettings();syncSettingsControls();
  }));
