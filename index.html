@@ -8663,6 +8663,29 @@ html.profile-editor-open .side-menu{
 
 
 
+
+/* Okno zmiany hasła — odstępy i zielone obramowanie pól. */
+#settingsAccountDialogFields{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin:0 0 20px;
+}
+#settingsAccountDialogFields .settings-account-dialog-input{
+  width:100%;
+  min-height:38px;
+  box-sizing:border-box;
+  border:1px solid #72965B!important;
+  border-radius:3px;
+  background:#050505;
+  color:#F5F1E7;
+  outline:none;
+}
+#settingsAccountDialogFields .settings-account-dialog-input:focus{
+  border-color:#72965B!important;
+  outline:1px solid rgba(114,150,91,.35);
+  box-shadow:0 0 0 1px rgba(114,150,91,.18);
+}
 </style>
 </head>
 
@@ -9109,7 +9132,7 @@ html.profile-editor-open .side-menu{
                     <p id="settingsAccountDialogMessage"></p>
                     <div id="settingsAccountDialogFields"></div>
                     <div class="settings-reset-confirm-actions">
-                      <button type="button" id="settingsAccountDialogConfirm" disabled>Zapisz hasło</button>
+                      <button type="button" id="settingsAccountDialogConfirm" disabled>Potwierdź</button>
                       <button type="button" id="settingsAccountDialogCancel">Anuluj</button>
                     </div>
                   </div>
