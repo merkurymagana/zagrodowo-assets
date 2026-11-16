@@ -8383,6 +8383,33 @@ html.profile-editor-open .side-menu{
 @media(max-width:700px){
   .settings-main-panel:has(.settings-tab-panel[data-settings-panel="account"].active){min-height:0!important;height:auto;padding-top:18px;padding-bottom:18px}
 }
+
+/* Konto i prywatność — oddzielenie nazw opcji od akcji po prawej. */
+.settings-tab-panel[data-settings-panel="account"] .settings-account-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) max-content;
+  align-items:center;
+  column-gap:24px;
+}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-row .settings-general-copy{
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+#appStage .settings-tab-panel[data-settings-panel="account"] button.settings-account-action{
+  justify-self:end;
+  position:static!important;
+  max-width:100%!important;
+}
+@media(max-width:700px){
+  .settings-tab-panel[data-settings-panel="account"] .settings-account-row{
+    grid-template-columns:minmax(0,1fr);
+    row-gap:6px;
+  }
+  #appStage .settings-tab-panel[data-settings-panel="account"] button.settings-account-action{
+    justify-self:end;
+  }
+}
+
 </style>
 </head>
 
