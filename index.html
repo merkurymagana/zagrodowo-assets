@@ -8228,13 +8228,15 @@ html.profile-editor-open .side-menu{
 /* „Rozgrywka” — taki sam zwarty rytm wierszy jak w „Ogólne”. */
 .settings-tab-panel[data-settings-panel="gameplay"] .settings-general-row,
 .settings-tab-panel[data-settings-panel="sound"] .settings-general-row,
-.settings-tab-panel[data-settings-panel="notifications"] .settings-general-row{
+.settings-tab-panel[data-settings-panel="notifications"] .settings-general-row,
+.settings-tab-panel[data-settings-panel="account"] .settings-general-row{
   min-height:48px;
   padding:6px 0;
 }
 .settings-tab-panel[data-settings-panel="gameplay"] .settings-gameplay-last-row,
 .settings-tab-panel[data-settings-panel="sound"] .settings-sound-last-row,
-.settings-tab-panel[data-settings-panel="notifications"] .settings-notifications-last-row{
+.settings-tab-panel[data-settings-panel="notifications"] .settings-notifications-last-row,
+.settings-tab-panel[data-settings-panel="account"] .settings-account-last-row{
   border-bottom:1px solid rgba(114,150,91,.55);
 }
 
@@ -8826,20 +8828,22 @@ html.profile-editor-open .side-menu{
                       </section>
                     </div>
                     <div class="settings-reset-row settings-general-reset-row"><button type="button" class="settings-reset-button" data-reset-category="notifications">Przywróć ustawienia domyślne</button></div></section>
-                  <section class="settings-tab-panel" data-settings-panel="account"><h2 class="settings-section-heading">Konto i prywatność</h2><p class="settings-section-description">Zarządzaj swoim kontem, prywatnością i kontaktami w społeczności Zagrodowa.</p>
+                  <section class="settings-tab-panel" data-settings-panel="account"><h2 class="settings-section-heading">Konto i prywatność</h2>
                     <div class="settings-general-content">
-                      <section class="settings-general-section"><h3>Dostęp do konta</h3>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Zmiana hasła</span><span class="settings-general-help">Zmień hasło zabezpieczające Twoje konto.</span></div><button type="button" class="settings-secondary-button" disabled>Zmiana hasła — w przygotowaniu</button></div>
+                      <section class="settings-general-section settings-account-section">
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Nazwa gracza</span></div><button type="button" class="settings-secondary-button" disabled>Dane profilu</button></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Adres e-mail</span></div><button type="button" class="settings-secondary-button" disabled>Dane konta</button></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Zmiana hasła</span></div><button type="button" class="settings-secondary-button" disabled>Zmień hasło</button></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Widoczność profilu</span></div><select class="settings-control-select" disabled><option>Wszyscy</option><option>Tylko znajomi</option><option>Tylko ja</option></select></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Widoczność aktywności</span></div><select class="settings-control-select" disabled><option>Wszyscy</option><option>Tylko znajomi</option><option>Nikt</option></select></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Kto może się ze mną kontaktować</span></div><select class="settings-control-select" disabled><option>Wszyscy</option><option>Tylko znajomi</option><option>Nikt</option></select></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Aktywne sesje</span></div><button type="button" class="settings-secondary-button" disabled>Zarządzaj sesjami</button></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Wyloguj ze wszystkich urządzeń</span></div><button type="button" class="settings-secondary-button" disabled>Wyloguj wszędzie</button></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Zablokowani gracze</span></div><button type="button" class="settings-secondary-button" disabled>Lista zablokowanych</button></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Zgłoszenia</span></div><button type="button" class="settings-secondary-button" disabled>Moje zgłoszenia</button></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Dezaktywacja konta</span></div><button type="button" class="settings-secondary-button" disabled>Dezaktywuj konto</button></div>
+                        <div class="settings-general-row settings-account-last-row"><div class="settings-general-copy"><span class="settings-general-label">Usunięcie konta</span></div><button type="button" class="settings-danger-button" disabled>Usuń konto</button></div>
                       </section>
-                      <section class="settings-general-section"><h3>Status konta</h3>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Dezaktywacja konta</span><span class="settings-general-help">Tymczasowo zawieś konto. Twoje postępy powinny pozostać zachowane.</span></div><button type="button" class="settings-secondary-button" disabled>Dezaktywuj konto</button></div>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Usunięcie konta</span><span class="settings-general-help">Trwale usuń konto i powiązane z nim dane po dodatkowym potwierdzeniu.</span></div><button type="button" class="settings-danger-button" disabled>Usuń konto</button></div>
-                      </section>
-                      <p class="settings-inline-note">Operacje konta wymagają działającego systemu kont i bezpiecznej obsługi po stronie serwera. Przyciski są na razie nieaktywne.</p>
-                      <section class="settings-general-section"><h3>Prywatność i społeczność</h3>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Zablokowani gracze</span><span class="settings-general-help">Przeglądaj zablokowanych użytkowników i w razie potrzeby ich odblokuj.</span></div><button type="button" class="settings-secondary-button" disabled>Lista zablokowanych</button></div>
-                      </section>
-                      <p class="settings-inline-note">Zgłaszanie graczy będzie dostępne bezpośrednio z ich profilu, czatu i innych miejsc interakcji. Blokowanie i zgłoszenia wymagają jeszcze systemu społeczności po stronie serwera.</p>
                     </div></section>
                 </div>
               </section>
