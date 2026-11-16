@@ -8410,6 +8410,46 @@ html.profile-editor-open .side-menu{
   }
 }
 
+
+/* Konto i prywatność — minimalistyczne akcje inspirowane menu Tekken 7. */
+.settings-tab-panel[data-settings-panel="account"] .settings-account-row{
+  transition:background-color .16s ease;
+}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-row:hover,
+.settings-tab-panel[data-settings-panel="account"] .settings-account-row:focus-within{
+  background:rgba(114,150,91,.12);
+}
+#appStage .settings-tab-panel[data-settings-panel="account"] button.settings-account-action{
+  color:#F5F1E7!important;
+  -webkit-text-fill-color:#F5F1E7!important;
+  font:600 12px 'Nunito',Arial,sans-serif!important;
+  letter-spacing:.15px;
+  opacity:.82!important;
+  transition:color .16s ease,opacity .16s ease;
+}
+#appStage .settings-tab-panel[data-settings-panel="account"] button.settings-account-action::after{
+  content:none!important;
+}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-row:hover button.settings-account-action,
+.settings-tab-panel[data-settings-panel="account"] .settings-account-row:focus-within button.settings-account-action{
+  color:#E9C342!important;
+  -webkit-text-fill-color:#E9C342!important;
+  opacity:1!important;
+}
+#appStage .settings-tab-panel[data-settings-panel="account"] button.settings-account-action.settings-danger-button{
+  color:#D58A83!important;
+  -webkit-text-fill-color:#D58A83!important;
+}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-last-row:hover button.settings-account-action{
+  color:#E7A09A!important;
+  -webkit-text-fill-color:#E7A09A!important;
+}
+@media(max-width:700px){
+  #appStage .settings-tab-panel[data-settings-panel="account"] button.settings-account-action{
+    font-size:11px!important;
+  }
+}
+
 </style>
 </head>
 
