@@ -11526,3 +11526,56 @@ renderNeighbors();
 
 </body>
 </html>
+
+/* OSTATECZNE DOPIĘCIE: obramowanie 1 px i pełna szerokość kontenera dla wskazanych przycisków. */
+#profileOverlay .profile-mini-avatar-button,
+#miniAvatarEditor .mini-avatar-editor-actions button,
+#profileOverlay .profile-exit-actions button,
+#game .settings-navigation .settings-nav-item,
+#game .settings-reset-button{
+  border-width:1px!important;
+  border-style:solid!important;
+  border-color:#72965B!important;
+  width:100%!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+#profileOverlay .profile-mini-avatar-button:hover,
+#profileOverlay .profile-mini-avatar-button:active,
+#profileOverlay .profile-mini-avatar-button:focus-visible,
+#miniAvatarEditor .mini-avatar-editor-actions button:hover,
+#miniAvatarEditor .mini-avatar-editor-actions button:active,
+#miniAvatarEditor .mini-avatar-editor-actions button:focus-visible,
+#profileOverlay .profile-exit-actions button:hover,
+#profileOverlay .profile-exit-actions button:active,
+#profileOverlay .profile-exit-actions button:focus-visible,
+#game .settings-navigation .settings-nav-item:hover,
+#game .settings-navigation .settings-nav-item:active,
+#game .settings-navigation .settings-nav-item:focus-visible,
+#game .settings-reset-button:hover,
+#game .settings-reset-button:active,
+#game .settings-reset-button:focus-visible{
+  border-width:1px!important;
+  border-style:solid!important;
+  border-color:#72965B!important;
+}
+#miniAvatarEditor .mini-avatar-editor-actions{
+  width:100%!important;
+  max-width:100%!important;
+}
+#miniAvatarEditor .mini-avatar-editor-actions button{
+  display:flex!important;
+  flex:0 0 100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+#profileOverlay .profile-exit-actions{
+  width:100%!important;
+  max-width:260px!important;
+}
+#profileOverlay .profile-exit-actions button{
+  display:flex!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+
