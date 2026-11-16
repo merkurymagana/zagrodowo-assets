@@ -8103,6 +8103,8 @@ html.profile-editor-open .side-menu{
 .settings-range output{flex:0 0 38px;color:#fff;font:500 12px 'Nunito',sans-serif;text-align:right}
 .settings-time-row input:disabled{opacity:.35}
 .settings-reset-row{display:flex;justify-content:flex-end;margin-top:25px;padding-top:16px;border-top:1px solid rgba(114,150,91,.55)}
+/* Ustawienia Ogólne: reset zachowuje ten sam rytm odstępów co pozostałe opcje. */
+.settings-general-reset-row{min-height:68px;margin-top:0;padding:13px 0;border-top:0;box-sizing:border-box;align-items:center}
 .settings-reset-button,.settings-secondary-button,.settings-danger-button{min-height:34px;padding:7px 12px;border:1px solid #72965B;border-radius:3px;background:transparent;color:#fff;font:500 12px 'Nunito',sans-serif}
 .settings-reset-button:hover,.settings-secondary-button:not(:disabled):hover{background:rgba(114,150,91,.16)}
 .settings-secondary-button:disabled,.settings-danger-button:disabled{opacity:.48;cursor:not-allowed}
@@ -8591,11 +8593,9 @@ html.profile-editor-open .side-menu{
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Jasność ekranu</span><span class="settings-general-help"></span></div><label class="settings-range"><input type="range" min="0" max="100" value="100" data-setting="brightness"><output>100%</output></label></div>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Kontrast</span><span class="settings-general-help"></span></div><label class="settings-range"><input type="range" min="0" max="100" value="100" data-setting="contrast"><output>100%</output></label></div>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Nie wygaszaj ekranu podczas gry</span><span class="settings-general-help"></span></div><label class="settings-toggle"><input type="checkbox" data-setting="keepAwake" ><span class="settings-toggle-track"></span></label></div>
-                      </section>
-                      <section class="settings-general-section">
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Tryb oszczędzania baterii</span><span class="settings-general-help"></span></div><select class="settings-control-select" data-setting="batteryMode"><option value="off">Wyłączony</option><option value="auto">Automatyczny</option><option value="on">Włączony</option></select></div>
                       </section>
-                    </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="general">Przywróć ustawienia domyślne</button></div></section>
+                    </div><div class="settings-reset-row settings-general-reset-row"><button type="button" class="settings-reset-button" data-reset-category="general">Przywróć ustawienia domyślne</button></div></section>
                   <section class="settings-tab-panel" data-settings-panel="gameplay"><h2 class="settings-section-heading">Rozgrywka</h2><p class="settings-section-description">Dostosuj sposób wykonywania czynności w gospodarstwie.</p>
                     <div class="settings-general-content">
                       <section class="settings-general-section"><h3>Wskaźniki</h3>
