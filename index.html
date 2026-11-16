@@ -8281,6 +8281,38 @@ html.profile-editor-open .side-menu{
   margin-right:0!important;
 }
 
+
+/* Potwierdzenie przywracania ustawień — okno w stylistyce gry. */
+.settings-reset-confirm{
+  position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;
+  padding:20px;box-sizing:border-box;background:rgba(0,0,0,.66);backdrop-filter:blur(3px);
+}
+.settings-reset-confirm.visible{display:flex}
+.settings-reset-confirm-dialog{
+  width:min(440px,100%);padding:30px 28px;box-sizing:border-box;
+  border:1px solid #72965B;border-radius:3px;background:#000;
+  box-shadow:0 14px 36px rgba(0,0,0,.42);color:#F5F1E7;text-align:center;
+}
+.settings-reset-confirm-dialog h3{
+  margin:0 0 10px;color:#F5F1E7;
+  font:300 18px/1.15 'Exo 2',Arial,sans-serif;letter-spacing:normal;
+}
+.settings-reset-confirm-dialog p{
+  margin:0 0 22px;color:#F5F1E7;
+  font:500 13px/1.5 'Nunito',Arial,sans-serif;letter-spacing:normal;
+}
+.settings-reset-confirm-actions{display:flex;flex-direction:column;gap:9px;width:100%}
+.settings-reset-confirm-actions button{
+  width:100%;max-width:100%;min-width:0;min-height:32px;box-sizing:border-box;
+  border:1px solid #72965B;border-radius:3px;background:rgba(0,0,0,.5);
+  color:#F5F1E7;font:500 13px/1.2 'Nunito',Arial,sans-serif;cursor:pointer;
+}
+.settings-reset-confirm-actions button:hover,
+.settings-reset-confirm-actions button:active{
+  border:1px solid #72965B;background:rgba(114,150,91,.5);color:#F5F1E7;
+}
+@media(max-width:700px){.settings-reset-confirm-dialog{padding:22px 16px}}
+
 </style>
 </head>
 
@@ -8711,6 +8743,16 @@ html.profile-editor-open .side-menu{
               </div>
 
               <section class="settings-screen" id="settingsContent" style="display:none" aria-label="Ustawienia gry">
+                <div class="settings-reset-confirm" id="settingsResetConfirm" aria-hidden="true">
+                  <div class="settings-reset-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="settingsResetConfirmTitle" aria-describedby="settingsResetConfirmMessage">
+                    <h3 id="settingsResetConfirmTitle">Przywrócić ustawienia domyślne?</h3>
+                    <p id="settingsResetConfirmMessage">Czy na pewno chcesz przywrócić domyślne ustawienia tej kategorii? Obecne ustawienia zostaną zastąpione.</p>
+                    <div class="settings-reset-confirm-actions">
+                      <button type="button" id="settingsResetConfirmYes">Tak</button>
+                      <button type="button" id="settingsResetConfirmNo">Nie</button>
+                    </div>
+                  </div>
+                </div>
                 <nav class="settings-navigation" aria-label="Kategorie ustawień">
                   <button type="button" class="settings-nav-item" data-settings-tab="general" onclick="showSettingsTab('general')">Ogólne</button>
                   <button type="button" class="settings-nav-item" data-settings-tab="gameplay" onclick="showSettingsTab('gameplay')">Rozgrywka</button>
@@ -10371,6 +10413,40 @@ function syncSettingsControls(){
  ["quietStart","quietEnd"].forEach(k=>{const el=document.querySelector('[data-setting="'+k+'"]');if(el)el.disabled=!quiet;});
  const custom=document.querySelector('[data-setting="customAccent"]');if(custom)custom.disabled=gameSettings.accentMode!=="custom";
 }
+let pendingSettingsReset=null;
+function closeSettingsResetConfirmation(){
+ const dialog=document.getElementById("settingsResetConfirm");
+ if(!dialog)return;
+ dialog.classList.remove("visible");
+ dialog.setAttribute("aria-hidden","true");
+ pendingSettingsReset=null;
+}
+function openSettingsResetConfirmation(category,keys){
+ const dialog=document.getElementById("settingsResetConfirm");
+ if(!dialog)return;
+ pendingSettingsReset={category,keys:[...keys]};
+ dialog.classList.add("visible");
+ dialog.setAttribute("aria-hidden","false");
+ document.getElementById("settingsResetConfirmYes")?.focus();
+}
+function confirmSettingsReset(){
+ if(!pendingSettingsReset)return;
+ const {keys}=pendingSettingsReset;
+ keys.forEach(key=>gameSettings[key]=SETTINGS_DEFAULTS[key]);
+ saveGameSettings();
+ syncSettingsControls();
+ closeSettingsResetConfirmation();
+}
+document.getElementById("settingsResetConfirmYes")?.addEventListener("click",confirmSettingsReset);
+document.getElementById("settingsResetConfirmNo")?.addEventListener("click",closeSettingsResetConfirmation);
+document.getElementById("settingsResetConfirm")?.addEventListener("click",event=>{
+ if(event.target.id==="settingsResetConfirm")closeSettingsResetConfirmation();
+});
+document.addEventListener("keydown",event=>{
+ if(event.key==="Escape" && document.getElementById("settingsResetConfirm")?.classList.contains("visible")){
+  closeSettingsResetConfirmation();
+ }
+});
 function initGameSettings(){
  const root=document.getElementById("settingsContent");if(!root||root.dataset.initialized)return;root.dataset.initialized="1";
  syncSettingsControls();
@@ -10388,10 +10464,9 @@ function initGameSettings(){
    sound:["musicVolume","effectsVolume","ambienceVolume","muteInBackground"],
    notifications:["inGameNotifications","pushNotifications","quietHours","quietStart","quietEnd"],
   };
-  if(!window.confirm("Przywrócić domyślne ustawienia tej kategorii?"))return;
   const keys=groups[category]||[];
   if(!keys.length)return;
-  keys.forEach(k=>gameSettings[k]=SETTINGS_DEFAULTS[k]);saveGameSettings();syncSettingsControls();
+  openSettingsResetConfirmation(category,keys);
  }));
 }
 initGameSettings();
