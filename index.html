@@ -8520,6 +8520,19 @@ html.profile-editor-open .side-menu{
 }
 .settings-account-dialog-input:focus{outline:1px solid #E9C342;border-color:#E9C342}
 .settings-account-dialog .settings-reset-confirm-actions button:disabled{opacity:.45;cursor:not-allowed}
+.settings-account-dialog .settings-reset-confirm-actions button{
+  transition:background .18s ease,border-color .18s ease,color .18s ease;
+}
+.settings-account-dialog .settings-reset-confirm-actions button:not(:disabled):hover,
+.settings-account-dialog .settings-reset-confirm-actions button:not(:disabled):focus-visible{
+  border-color:#72965B;
+  background:rgba(114,150,91,.5);
+  color:#F5F1E7;
+}
+.settings-account-dialog .settings-reset-confirm-actions button:not(:disabled):active{
+  background:rgba(114,150,91,.5);
+  border-color:#72965B;
+}
 @media(max-width:700px){
   .settings-tab-panel[data-settings-panel="account"] .settings-account-input{width:min(58%,230px);min-width:120px}
 }
@@ -9096,7 +9109,7 @@ html.profile-editor-open .side-menu{
                     <p id="settingsAccountDialogMessage"></p>
                     <div id="settingsAccountDialogFields"></div>
                     <div class="settings-reset-confirm-actions">
-                      <button type="button" id="settingsAccountDialogConfirm" disabled>Potwierdź</button>
+                      <button type="button" id="settingsAccountDialogConfirm" disabled>Zapisz hasło</button>
                       <button type="button" id="settingsAccountDialogCancel">Anuluj</button>
                     </div>
                   </div>
