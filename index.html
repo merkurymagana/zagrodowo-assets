@@ -10734,10 +10734,10 @@ function resizeAccountField(input){
   const row=input.closest(".settings-account-row");
   const label=row?.querySelector(".settings-general-copy");
   const available=Math.max(120,(row?.clientWidth||input.parentElement.clientWidth)-(label?.offsetWidth||0)-24);
-  const minWidth=Math.min(230,available);
+  const minWidth=Math.min(160,available);
   const maxWidth=Math.min(420,available);
   const text=(input.value||input.placeholder||"");
-  const estimatedWidth=Math.ceil(text.length*8+32);
+  const estimatedWidth=Math.ceil(text.length*7.2+26);
   const width=Math.max(minWidth,Math.min(estimatedWidth,maxWidth));
   input.style.setProperty("width",width+"px","important");
   input.style.setProperty("flex-basis",width+"px","important");
