@@ -8214,146 +8214,68 @@ html.profile-editor-open .side-menu{
 }
 
 
-/* GLOBALNA ZASADA: zwykłe przyciski wypełniają szerokość własnego kontenera.
-   Wyjątki: przyciski ekranu startowego i logowania/rejestracji oraz kontrolki ikonowe. */
-#appStage button:not(#start .start-buttons button):not(#authOverlay button):not(.side-menu button):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn):not([data-view="neighbors"]):not([data-view="settings"]){
-  width:100%!important;
-  max-width:100%!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-  box-sizing:border-box!important;
-}
+/* JEDEN WSPÓLNY STANDARD ZWYKŁYCH PRZYCISKÓW W ZAGRODOWIE.
+   Wyjątki: ekran startowy, logowanie/rejestracja i kontrolki ikonowe/menu. */
+#appStage button:not(#start .start-buttons button):not(#authOverlay button):not(.side-menu button):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn):not([data-view="neighbors"]):not([data-view="settings"]),
 #profileOverlay button:not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn){
   width:100%!important;
   max-width:100%!important;
+  min-width:0!important;
   margin-left:auto!important;
   margin-right:auto!important;
   box-sizing:border-box!important;
+  border:1px solid #72965B!important;
+  border-radius:var(--ui-radius)!important;
+  background:rgba(0,0,0,.5)!important;
+  color:#F5F1E7!important;
+  -webkit-text-fill-color:#F5F1E7!important;
+  font-family:'Nunito',Arial,sans-serif!important;
+  font-size:13px!important;
+  font-weight:500!important;
+  letter-spacing:normal!important;
+  text-shadow:none!important;
+  box-shadow:none!important;
+  transition:background .18s ease,border-color .18s ease,color .18s ease!important;
 }
-#playerPanel button:not(.side-menu button):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn){
+#appStage button:not(#start .start-buttons button):not(#authOverlay button):not(.side-menu button):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn):not([data-view="neighbors"]):not([data-view="settings"]):hover,
+#appStage button:not(#start .start-buttons button):not(#authOverlay button):not(.side-menu button):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn):not([data-view="neighbors"]):not([data-view="settings"]):active,
+#profileOverlay button:not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn):hover,
+#profileOverlay button:not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn):active{
+  border:1px solid #72965B!important;
+  background:rgba(114,150,91,.5)!important;
+  color:#F5F1E7!important;
+  -webkit-text-fill-color:#F5F1E7!important;
+}
+#appStage button:not(#start .start-buttons button):not(#authOverlay button):not(.side-menu button):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn):not([data-view="neighbors"]):not([data-view="settings"]):disabled,
+#profileOverlay button:not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn):disabled{
+  opacity:.6!important;
+  cursor:not-allowed!important;
+}
+/* Przyciski kategorii i resetowania ustawień wypełniają swoje kontenery. */
+#game .settings-navigation,
+#game .settings-reset-row,
+#miniAvatarEditor .mini-avatar-editor-actions,
+#profileOverlay .profile-exit-actions{
   width:100%!important;
-  max-width:100%!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
   box-sizing:border-box!important;
 }
-
-
-/* KOŃCOWE UJEDNOLICENIE: zwykłe przyciski mają obramowanie 1px i 100% szerokości kontenera. */
-#appStage button:not(#start .start-buttons button):not(#authOverlay button):not(.side-menu button):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn),
-#profileOverlay button:not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn),
-#playerPanel button:not(.side-menu button):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn){
-  border-width:1px!important;
-  border-style:solid!important;
-  width:100%!important;
-  max-width:100%!important;
-  box-sizing:border-box!important;
-}
-
-/* Przyciski miniatury i potwierdzenia — jawne obramowanie oraz pełna szerokość ich kontenerów. */
-#profileOverlay .profile-mini-avatar-button,
-#miniAvatarEditor .mini-avatar-editor-actions button,
-#profileOverlay .profile-exit-actions button,
 #game .settings-navigation .settings-nav-item,
-#game .settings-reset-button{
+#game .settings-reset-button,
+#miniAvatarEditor .mini-avatar-editor-actions button,
+#profileOverlay .profile-mini-avatar-button,
+#profileOverlay .profile-exit-actions button{
+  width:100%!important;
+  max-width:100%!important;
   border:1px solid #72965B!important;
   box-sizing:border-box!important;
 }
-#profileOverlay .profile-mini-avatar-button,
-#miniAvatarEditor .mini-avatar-editor-actions button,
-#profileOverlay .profile-exit-actions button,
-#game .settings-navigation .settings-nav-item,
-#game .settings-reset-button{
-  width:100%!important;
-  max-width:100%!important;
-}
-#miniAvatarEditor .mini-avatar-editor-actions{
-  width:100%!important;
-  max-width:100%!important;
-}
-#miniAvatarEditor .mini-avatar-editor-actions button{
-  display:flex!important;
-  flex:0 0 100%!important;
-  margin-left:0!important;
-  margin-right:0!important;
-}
 #profileOverlay .profile-exit-actions{
-  width:100%!important;
   max-width:260px!important;
 }
-#profileOverlay .profile-exit-actions button{
-  display:flex!important;
-  margin-left:0!important;
-  margin-right:0!important;
-}
-#game .settings-navigation .settings-nav-item{
-  display:flex!important;
-  flex:0 0 100%!important;
-}
-#game .settings-reset-row{
-  width:100%!important;
-  box-sizing:border-box!important;
-}
-#game .settings-reset-button{
-  display:flex!important;
-}
-#game .settings-navigation .settings-nav-item:hover,
-#game .settings-navigation .settings-nav-item:active,
-#game .settings-navigation .settings-nav-item:focus-visible,
-#game .settings-reset-button:hover,
-#game .settings-reset-button:active,
-#game .settings-reset-button:focus-visible{
-  border:1px solid #72965B!important;
-}
-
-/* OSTATECZNE DOPIĘCIE: obramowanie 1 px i pełna szerokość kontenera dla wskazanych przycisków. */
-#profileOverlay .profile-mini-avatar-button,
 #miniAvatarEditor .mini-avatar-editor-actions button,
-#profileOverlay .profile-exit-actions button,
-#game .settings-navigation .settings-nav-item,
-#game .settings-reset-button{
-  border-width:1px!important;
-  border-style:solid!important;
-  border-color:#72965B!important;
-  width:100%!important;
-  max-width:100%!important;
-  box-sizing:border-box!important;
-}
-#profileOverlay .profile-mini-avatar-button:hover,
-#profileOverlay .profile-mini-avatar-button:active,
-#profileOverlay .profile-mini-avatar-button:focus-visible,
-#miniAvatarEditor .mini-avatar-editor-actions button:hover,
-#miniAvatarEditor .mini-avatar-editor-actions button:active,
-#miniAvatarEditor .mini-avatar-editor-actions button:focus-visible,
-#profileOverlay .profile-exit-actions button:hover,
-#profileOverlay .profile-exit-actions button:active,
-#profileOverlay .profile-exit-actions button:focus-visible,
-#game .settings-navigation .settings-nav-item:hover,
-#game .settings-navigation .settings-nav-item:active,
-#game .settings-navigation .settings-nav-item:focus-visible,
-#game .settings-reset-button:hover,
-#game .settings-reset-button:active,
-#game .settings-reset-button:focus-visible{
-  border-width:1px!important;
-  border-style:solid!important;
-  border-color:#72965B!important;
-}
-#miniAvatarEditor .mini-avatar-editor-actions{
-  width:100%!important;
-  max-width:100%!important;
-}
-#miniAvatarEditor .mini-avatar-editor-actions button{
-  display:flex!important;
-  flex:0 0 100%!important;
-  margin-left:0!important;
-  margin-right:0!important;
-}
-#profileOverlay .profile-exit-actions{
-  width:100%!important;
-  max-width:260px!important;
-}
 #profileOverlay .profile-exit-actions button{
   display:flex!important;
+  flex:0 0 100%!important;
   margin-left:0!important;
   margin-right:0!important;
 }
