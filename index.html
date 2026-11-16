@@ -6797,13 +6797,21 @@ body:has(#game.settings-page-active),
   padding:10px;border:1px solid #72965B;border-radius:3px;background:#000;
 }
 .settings-nav-item{
-  display:flex;align-items:center;gap:12px;width:100%;min-height:46px;
-  padding:10px 13px;border:1px solid transparent;border-radius:3px;
-  background:transparent;color:#fff;text-align:left;
-  font:500 14px 'Nunito',sans-serif;cursor:pointer;transition:background .18s,border-color .18s,color .18s;
+  display:flex;align-items:center;justify-content:flex-start;width:100%;min-height:46px;
+  padding:10px 13px;border:1px solid var(--hud-line);border-radius:9px;
+  background:rgba(255,255,255,.055);color:#d9d0bf;text-align:left;
+  font:800 14px 'Nunito',Arial,sans-serif;cursor:pointer;
+  transition:background .18s ease,border-color .18s ease,color .18s ease,transform .18s ease,box-shadow .18s ease;
 }
-.settings-nav-item span{display:inline-flex;align-items:center;justify-content:center;width:20px;font-size:18px;color:#72965B}
-.settings-nav-item:hover,.settings-nav-item.active{border-color:#72965B;background:rgba(114,150,91,.13);color:#fff}
+.settings-nav-item:hover,.settings-nav-item:focus-visible{
+  background:rgba(255,255,255,.09);border-color:rgba(224,199,142,.42);
+  color:#fff2d8;transform:translateY(-1px);outline:none;
+}
+.settings-nav-item.active{
+  background:linear-gradient(135deg,rgba(185,148,88,.34),rgba(107,87,57,.3));
+  color:#fff2d8;border-color:rgba(224,199,142,.55);
+  box-shadow:inset 0 0 0 1px rgba(224,199,142,.08),0 4px 12px #0002;
+}
 .settings-main-panel{
   min-width:0;min-height:460px;padding:30px 34px;
   border:1px solid #72965B;border-radius:3px;background:#000;color:#fff;
@@ -8545,11 +8553,11 @@ html.profile-editor-open .side-menu{
 
               <section class="settings-screen" id="settingsContent" style="display:none" aria-label="Ustawienia gry">
                 <nav class="settings-navigation" aria-label="Kategorie ustawień">
-                  <button type="button" class="settings-nav-item active" data-settings-tab="general" onclick="showSettingsTab('general')"><span>◉</span> Ogólne</button>
-                  <button type="button" class="settings-nav-item" data-settings-tab="gameplay" onclick="showSettingsTab('gameplay')"><span>⌘</span> Rozgrywka</button>
-                  <button type="button" class="settings-nav-item" data-settings-tab="sound" onclick="showSettingsTab('sound')"><span>♫</span> Dźwięk</button>
-                  <button type="button" class="settings-nav-item" data-settings-tab="notifications" onclick="showSettingsTab('notifications')"><span>◎</span> Powiadomienia</button>
-                  <button type="button" class="settings-nav-item" data-settings-tab="account" onclick="showSettingsTab('account')"><span>♙</span> Konto i prywatność</button>
+                  <button type="button" class="settings-nav-item active" data-settings-tab="general" onclick="showSettingsTab('general')">Ogólne</button>
+                  <button type="button" class="settings-nav-item" data-settings-tab="gameplay" onclick="showSettingsTab('gameplay')">Rozgrywka</button>
+                  <button type="button" class="settings-nav-item" data-settings-tab="sound" onclick="showSettingsTab('sound')">Dźwięk</button>
+                  <button type="button" class="settings-nav-item" data-settings-tab="notifications" onclick="showSettingsTab('notifications')">Powiadomienia</button>
+                  <button type="button" class="settings-nav-item" data-settings-tab="account" onclick="showSettingsTab('account')">Konto i prywatność</button>
                 </nav>
                 <div class="settings-main-panel">
                   <section class="settings-tab-panel" data-settings-panel="general"><h2 class="settings-section-heading">Ogólne</h2><p class="settings-section-description">Podstawowe ustawienia działania Zagrodowa i komfortu korzystania z gry.</p>
