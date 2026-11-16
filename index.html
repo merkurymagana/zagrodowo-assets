@@ -8549,14 +8549,13 @@ html.profile-editor-open .side-menu{
                   <button type="button" class="settings-nav-item" data-settings-tab="gameplay" onclick="showSettingsTab('gameplay')"><span>⌘</span> Rozgrywka</button>
                   <button type="button" class="settings-nav-item" data-settings-tab="sound" onclick="showSettingsTab('sound')"><span>♫</span> Dźwięk</button>
                   <button type="button" class="settings-nav-item" data-settings-tab="notifications" onclick="showSettingsTab('notifications')"><span>◎</span> Powiadomienia</button>
-                  <button type="button" class="settings-nav-item" data-settings-tab="account" onclick="showSettingsTab('account')"><span>♙</span> Konto i bezpieczeństwo</button>
-                  <button type="button" class="settings-nav-item" data-settings-tab="privacy" onclick="showSettingsTab('privacy')"><span>⌑</span> Prywatność i bezpieczeństwo</button>
+                  <button type="button" class="settings-nav-item" data-settings-tab="account" onclick="showSettingsTab('account')"><span>♙</span> Konto</button>
+                  <button type="button" class="settings-nav-item" data-settings-tab="privacy" onclick="showSettingsTab('privacy')"><span>⌑</span> Prywatność i społeczność</button>
                 </nav>
                 <div class="settings-main-panel">
                   <section class="settings-tab-panel" data-settings-panel="general"><h2 class="settings-section-heading">Ogólne</h2><p class="settings-section-description">Podstawowe ustawienia działania Zagrodowa i komfortu korzystania z gry.</p>
                     <div class="settings-general-content">
                       <section class="settings-general-section"><h3>Obsługa i ekran</h3>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Automatyczne rozpoznawanie multi-touch</span><span class="settings-general-help">Dopasuj obsługę dotyku do liczby palców używanych jednocześnie.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="multiTouch" checked><span class="settings-toggle-track"></span></label></div>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Jasność ekranu</span><span class="settings-general-help">Dostosuj jasność obrazu w grze.</span></div><label class="settings-range"><input type="range" min="0" max="100" value="100" data-setting="brightness"><output>100%</output></label></div>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Kontrast</span><span class="settings-general-help">Dostosuj różnicę między jasnymi i ciemnymi elementami.</span></div><label class="settings-range"><input type="range" min="0" max="100" value="100" data-setting="contrast"><output>100%</output></label></div>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Nie wygaszaj ekranu podczas gry</span><span class="settings-general-help">Utrzymuj ekran aktywny, gdy korzystasz z aplikacji.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="keepAwake" ><span class="settings-toggle-track"></span></label></div>
@@ -8572,7 +8571,8 @@ html.profile-editor-open .side-menu{
                       </section>
                       <section class="settings-general-section"><h3>Potwierdzenia</h3>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Potwierdzaj wydawanie diamentów</span><span class="settings-general-help">Zapytaj przed każdą czynnością wymagającą waluty premium.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="confirmPremium" checked><span class="settings-toggle-track"></span></label></div>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Potwierdzaj przerywanie produkcji</span><span class="settings-general-help">Ostrzeż przed wyrwaniem niedojrzałej rośliny lub przerwaniem produkcji.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="confirmCancelProduction" checked><span class="settings-toggle-track"></span></label></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Potwierdzaj wyrywanie niedojrzałych roślin</span><span class="settings-general-help">Zapytaj przed usunięciem rośliny, która nie jest jeszcze gotowa do zbioru.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="confirmUnripeRemoval" checked><span class="settings-toggle-track"></span></label></div>
+                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Potwierdzaj przerywanie produkcji</span><span class="settings-general-help">Zapytaj przed zatrzymaniem trwającej produkcji w budynku.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="confirmCancelProduction" checked><span class="settings-toggle-track"></span></label></div>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Potwierdzaj usuwanie budynków</span><span class="settings-general-help">Chroń budynek i jego zawartość przed przypadkowym usunięciem.</span></div><label class="settings-toggle"><input type="checkbox" data-setting="confirmBuildingRemoval" checked><span class="settings-toggle-track"></span></label></div>
                       </section>
                     </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="gameplay">Przywróć ustawienia domyślne</button></div></section>
@@ -8600,7 +8600,7 @@ html.profile-editor-open .side-menu{
                       </section>
                       <p class="settings-inline-note">Wybór zdarzeń, o których chcesz otrzymywać powiadomienia, będzie dostępny po uruchomieniu systemu powiadomień.</p>
                     </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="notifications">Przywróć ustawienia domyślne</button></div></section>
-                  <section class="settings-tab-panel" data-settings-panel="account"><h2 class="settings-section-heading">Konto i bezpieczeństwo</h2><p class="settings-section-description">Zarządzaj dostępem do konta i jego statusem.</p>
+                  <section class="settings-tab-panel" data-settings-panel="account"><h2 class="settings-section-heading">Konto</h2><p class="settings-section-description">Zarządzaj dostępem do konta i jego statusem.</p>
                     <div class="settings-general-content">
                       <section class="settings-general-section"><h3>Dostęp do konta</h3>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Zmiana hasła</span><span class="settings-general-help">Zmień hasło zabezpieczające Twoje konto.</span></div><button type="button" class="settings-secondary-button" disabled>Zmiana hasła — w przygotowaniu</button></div>
@@ -8611,7 +8611,7 @@ html.profile-editor-open .side-menu{
                       </section>
                       <p class="settings-inline-note">Operacje konta wymagają działającego systemu kont i bezpiecznej obsługi po stronie serwera. Przyciski są na razie nieaktywne.</p>
                     </div></section>
-                  <section class="settings-tab-panel" data-settings-panel="privacy"><h2 class="settings-section-heading">Prywatność i bezpieczeństwo</h2><p class="settings-section-description">Zarządzaj kontaktami i bezpieczeństwem w społeczności Zagrodowa.</p>
+                  <section class="settings-tab-panel" data-settings-panel="privacy"><h2 class="settings-section-heading">Prywatność i społeczność</h2><p class="settings-section-description">Zarządzaj kontaktami i bezpieczeństwem w społeczności Zagrodowa.</p>
                     <div class="settings-general-content">
                       <section class="settings-general-section"><h3>Kontakty</h3>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Zablokowani gracze</span><span class="settings-general-help">Przeglądaj zablokowanych użytkowników i w razie potrzeby ich odblokuj.</span></div><button type="button" class="settings-secondary-button" disabled>Lista zablokowanych</button></div>
@@ -10192,8 +10192,8 @@ function showSettingsTab(name){
 
 /* USTAWIENIA — lokalne preferencje demonstracyjne. */
 const SETTINGS_DEFAULTS={
- multiTouch:true,brightness:100,contrast:100,keepAwake:false,batteryMode:"auto",
- actionIndicator:true,confirmPremium:true,confirmCancelProduction:true,confirmBuildingRemoval:true,
+ brightness:100,contrast:100,keepAwake:false,batteryMode:"auto",
+ actionIndicator:true,confirmPremium:true,confirmUnripeRemoval:true,confirmCancelProduction:true,confirmBuildingRemoval:true,
  musicVolume:70,effectsVolume:80,ambienceVolume:65,muteInBackground:true,
  inGameNotifications:true,pushNotifications:false,quietHours:false,quietStart:"22:00",quietEnd:"08:00",
 };
@@ -10222,8 +10222,8 @@ function initGameSettings(){
  root.querySelectorAll("[data-reset-category]").forEach(button=>button.addEventListener("click",async()=>{
   const category=button.dataset.resetCategory;
   const groups={
-   general:["multiTouch","brightness","contrast","keepAwake","batteryMode"],
-   gameplay:["actionIndicator","confirmPremium","confirmCancelProduction","confirmBuildingRemoval"],
+   general:["brightness","contrast","keepAwake","batteryMode"],
+   gameplay:["actionIndicator","confirmPremium","confirmUnripeRemoval","confirmCancelProduction","confirmBuildingRemoval"],
    sound:["musicVolume","effectsVolume","ambienceVolume","muteInBackground"],
    notifications:["inGameNotifications","pushNotifications","quietHours","quietStart","quietEnd"],
   };
