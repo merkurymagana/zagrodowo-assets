@@ -8169,6 +8169,34 @@ html.profile-editor-open .side-menu{
 }
 
 
+/* Przycisk przywracania ustawień — wspólne właściwości przycisków gry. */
+#game .settings-reset-button{
+  min-height:32px!important;
+  height:auto!important;
+  padding:6px 11px!important;
+  border:1px solid #72965B!important;
+  border-radius:var(--ui-radius)!important;
+  background:rgba(0,0,0,.5)!important;
+  color:#F5F1E7!important;
+  -webkit-text-fill-color:#F5F1E7!important;
+  font:500 13px/1.2 'Nunito',Arial,sans-serif!important;
+  letter-spacing:normal!important;
+  text-shadow:none!important;
+  box-shadow:none!important;
+  cursor:pointer!important;
+  transition:background .18s ease,border-color .18s ease!important;
+}
+#game .settings-reset-button:hover,
+#game .settings-reset-button:active,
+#game .settings-reset-button:focus-visible{
+  background:rgba(114,150,91,.5)!important;
+  border-color:transparent!important;
+  color:#F5F1E7!important;
+  -webkit-text-fill-color:#F5F1E7!important;
+  outline:none!important;
+  box-shadow:none!important;
+}
+
 /* „Ogólne” — taki sam rytm wierszy jak w „Dane gracza” (48 px). */
 .settings-tab-panel[data-settings-panel="general"] .settings-general-row{
   min-height:48px;
