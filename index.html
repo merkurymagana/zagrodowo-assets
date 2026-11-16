@@ -8569,6 +8569,34 @@ html.profile-editor-open .side-menu{
   }
 }
 
+
+/* Konto — biały tekst i pola rozszerzające się w lewo przy dłuższej zawartości. */
+.settings-tab-panel[data-settings-panel="account"] .settings-account-input{
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  field-sizing:content;
+  width:auto!important;
+  min-width:230px!important;
+  max-width:min(48%,420px)!important;
+  flex:0 1 auto!important;
+  text-align:left!important;
+}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-input::placeholder{
+  color:rgba(255,255,255,.45)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.45)!important;
+}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-input:-webkit-autofill,
+.settings-tab-panel[data-settings-panel="account"] .settings-account-input:-webkit-autofill:hover,
+.settings-tab-panel[data-settings-panel="account"] .settings-account-input:-webkit-autofill:focus{
+  -webkit-text-fill-color:#FFFFFF!important;
+}
+@media(max-width:700px){
+  .settings-tab-panel[data-settings-panel="account"] .settings-account-input{
+    min-width:120px!important;
+    max-width:58%!important;
+  }
+}
+
 </style>
 </head>
 
