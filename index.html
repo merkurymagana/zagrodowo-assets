@@ -8341,6 +8341,40 @@ html.profile-editor-open .side-menu{
 @media(max-width:700px){.settings-reset-confirm-dialog{padding:22px 16px}}
 
 
+/* Konto i prywatność — czytelne wiersze z opisami i dyskretnymi akcjami tekstowymi. */
+.settings-tab-panel[data-settings-panel="account"] .settings-account-row{
+  min-height:62px;
+  padding:9px 0;
+  gap:20px;
+}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-row .settings-general-copy{
+  flex:1 1 auto;
+  gap:2px;
+}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-row .settings-general-label{font-size:13px}
+.settings-tab-panel[data-settings-panel="account"] .settings-account-row .settings-general-help{
+  color:rgba(245,241,231,.68);
+  font-size:11px;
+  line-height:1.35;
+}
+#appStage .settings-tab-panel[data-settings-panel="account"] button.settings-account-action{
+  flex:0 0 auto!important;width:auto!important;max-width:none!important;min-width:0!important;
+  min-height:0!important;margin:0!important;padding:4px 0!important;
+  border:0!important;border-radius:0!important;background:transparent!important;
+  color:#72965B!important;-webkit-text-fill-color:#72965B!important;
+  font:600 12px 'Nunito',Arial,sans-serif!important;text-align:right;white-space:nowrap;
+  box-shadow:none!important;opacity:.88!important;
+}
+#appStage .settings-tab-panel[data-settings-panel="account"] button.settings-account-action::after{content:" ›";color:inherit}
+#appStage .settings-tab-panel[data-settings-panel="account"] button.settings-account-action.settings-danger-button{
+  color:#D58A83!important;-webkit-text-fill-color:#D58A83!important;
+}
+@media(max-width:700px){
+  .settings-tab-panel[data-settings-panel="account"] .settings-account-row{gap:10px}
+  .settings-tab-panel[data-settings-panel="account"] .settings-account-row .settings-general-help{font-size:10px}
+  #appStage .settings-tab-panel[data-settings-panel="account"] button.settings-account-action{font-size:11px!important}
+}
+
 /* Konto i prywatność — kontener dopasowany do sześciu pozycji, bez wymuszania dużej wysokości. */
 @media(min-width:701px){
   .settings-screen:has(.settings-tab-panel[data-settings-panel="account"].active){min-height:0}
@@ -8840,12 +8874,12 @@ html.profile-editor-open .side-menu{
                   <section class="settings-tab-panel" data-settings-panel="account"><h2 class="settings-section-heading">Konto i prywatność</h2>
                     <div class="settings-general-content">
                       <section class="settings-general-section settings-account-section">
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Nazwa gracza</span></div><button type="button" class="settings-secondary-button" disabled>Dane profilu</button></div>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Adres e-mail</span></div><button type="button" class="settings-secondary-button" disabled>Dane konta</button></div>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Zmiana hasła</span></div><button type="button" class="settings-secondary-button" disabled>Zmień hasło</button></div>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Zarządzanie graczami</span></div><button type="button" class="settings-secondary-button" disabled>Otwórz</button></div>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Dezaktywacja konta</span></div><button type="button" class="settings-secondary-button" disabled>Dezaktywuj konto</button></div>
-                        <div class="settings-general-row settings-account-last-row"><div class="settings-general-copy"><span class="settings-general-label">Usunięcie konta</span></div><button type="button" class="settings-danger-button" disabled>Usuń konto</button></div>
+                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Nazwa gracza</span><span class="settings-general-help">Zarządzanie nazwą i danymi profilu</span></div><button type="button" class="settings-secondary-button settings-account-action" disabled>Dane profilu</button></div>
+                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Adres e-mail</span><span class="settings-general-help">Zarządzanie adresem przypisanym do konta</span></div><button type="button" class="settings-secondary-button settings-account-action" disabled>Dane konta</button></div>
+                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Zmiana hasła</span><span class="settings-general-help">Ustaw nowe hasło do swojego konta</span></div><button type="button" class="settings-secondary-button settings-account-action" disabled>Zmień hasło</button></div>
+                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Zarządzanie graczami</span><span class="settings-general-help">Zablokowani gracze i wysłane zgłoszenia</span></div><button type="button" class="settings-secondary-button settings-account-action" disabled>Otwórz</button></div>
+                        <div class="settings-general-row settings-account-row"><div class="settings-general-copy"><span class="settings-general-label">Dezaktywacja konta</span><span class="settings-general-help">Tymczasowo wyłącz swoje konto</span></div><button type="button" class="settings-secondary-button settings-account-action" disabled>Dezaktywuj konto</button></div>
+                        <div class="settings-general-row settings-account-row settings-account-last-row"><div class="settings-general-copy"><span class="settings-general-label">Usunięcie konta</span><span class="settings-general-help">Trwale usuń konto i powiązane z nim dane</span></div><button type="button" class="settings-danger-button settings-account-action" disabled>Usuń konto</button></div>
                       </section>
                     </div></section>
                 </div>
