@@ -8378,10 +8378,10 @@ html.profile-editor-open .side-menu{
 /* Konto — kontener dopasowany do sześciu pozycji, bez wymuszania dużej wysokości. */
 @media(min-width:701px){
   .settings-screen:has(.settings-tab-panel[data-settings-panel="account"].active){min-height:0}
-  .settings-main-panel:has(.settings-tab-panel[data-settings-panel="account"].active){min-height:0!important;height:auto; padding-top:24px;padding-bottom:24px}
+  .settings-main-panel:has(.settings-tab-panel[data-settings-panel="account"].active){min-height:0!important;height:auto;padding:30px 34px}
 }
 @media(max-width:700px){
-  .settings-main-panel:has(.settings-tab-panel[data-settings-panel="account"].active){min-height:0!important;height:auto;padding-top:18px;padding-bottom:18px}
+  .settings-main-panel:has(.settings-tab-panel[data-settings-panel="account"].active){min-height:0!important;height:auto;padding:20px}
 }
 
 /* Konto — oddzielenie nazw opcji od akcji po prawej. */
@@ -9098,6 +9098,17 @@ html.profile-editor-open .side-menu{
                     <div class="settings-reset-confirm-actions">
                       <button type="button" id="settingsAccountDialogConfirm" disabled>Potwierdź</button>
                       <button type="button" id="settingsAccountDialogCancel">Anuluj</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="settings-reset-confirm settings-account-changes-dialog" id="settingsAccountChangesDialog" aria-hidden="true">
+                  <div class="settings-reset-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="settingsAccountChangesTitle" aria-describedby="settingsAccountChangesMessage">
+                    <h3 id="settingsAccountChangesTitle">Niezapisane zmiany</h3>
+                    <p id="settingsAccountChangesMessage">Czy chcesz zapisać wprowadzone zmiany przed opuszczeniem ustawień konta?</p>
+                    <div class="settings-reset-confirm-actions">
+                      <button type="button" id="settingsAccountChangesSave">Zapisz</button>
+                      <button type="button" id="settingsAccountChangesDiscard">Odrzuć</button>
+                      <button type="button" id="settingsAccountChangesCancel">Wróć</button>
                     </div>
                   </div>
                 </div>
@@ -10745,21 +10756,46 @@ function resizeAccountField(input){
   input.style.setProperty("width",width+"px","important");
   input.style.setProperty("flex-basis",width+"px","important");
 }
-function saveAccountFields(){
+let pendingAccountSettingsTab=null;
+function hasPendingAccountChanges(){
   const nickname=document.getElementById("accountNickname");
   const email=document.getElementById("accountEmail");
-  if(!nickname||!email)return;
+  if(!nickname||!email)return false;
+  return nickname.value.trim().slice(0,16)!==(player.nickname||"") || email.value.trim()!==(player.email||"");
+}
+async function saveAccountFields(){
+  const nickname=document.getElementById("accountNickname");
+  const email=document.getElementById("accountEmail");
+  if(!nickname||!email)return false;
+  const previous={...player};
   const nextNickname=nickname.value.trim().slice(0,16);
+  if(!nextNickname){
+    const message=document.getElementById("settingsAccountChangesMessage");
+    if(message)message.textContent="Nazwa gracza nie może być pusta. Uzupełnij ją przed zapisaniem zmian.";
+    return false;
+  }
   nickname.value=nextNickname;
-  if(nextNickname)player.nickname=nextNickname;
+  player.nickname=nextNickname;
   player.email=email.value.trim();
   updatePlayerPanel();
-  saveDemoProfile();
+  if(!await saveDemoProfile()){
+    player=previous;
+    updatePlayerPanel();
+    const message=document.getElementById("settingsAccountChangesMessage");
+    if(message)message.textContent="Nie udało się zapisać zmian. Spróbuj ponownie.";
+    return false;
+  }
+  return true;
 }
-function showSettingsTab(name){
-  initGameSettings();
-  if(document.querySelector('#settingsContent [data-settings-panel="account"].active') && name!=="account")saveAccountFields();
-  // Kategoria nie otrzymuje klasy active — wybór zmienia wyłącznie zawartość panelu.
+function closeAccountChangesDialog(){
+  const dialog=document.getElementById("settingsAccountChangesDialog");
+  dialog?.classList.remove("visible");
+  dialog?.setAttribute("aria-hidden","true");
+  pendingAccountSettingsTab=null;
+  const message=document.getElementById("settingsAccountChangesMessage");
+  if(message)message.textContent="Czy chcesz zapisać wprowadzone zmiany przed opuszczeniem ustawień konta?";
+}
+function applySettingsTab(name){
   document.querySelectorAll('#settingsContent [data-settings-panel]').forEach(panel=>panel.classList.toggle('active',panel.dataset.settingsPanel===name));
   if(name==="account"){
     const nickname=document.getElementById("accountNickname");
@@ -10768,6 +10804,34 @@ function showSettingsTab(name){
     if(email){email.value=player.email||"";resizeAccountField(email);}
   }
 }
+function showSettingsTab(name){
+  initGameSettings();
+  const leavingAccount=document.querySelector('#settingsContent [data-settings-panel="account"].active') && name!=="account";
+  if(leavingAccount && hasPendingAccountChanges()){
+    pendingAccountSettingsTab=name;
+    const dialog=document.getElementById("settingsAccountChangesDialog");
+    dialog?.classList.add("visible");
+    dialog?.setAttribute("aria-hidden","false");
+    return;
+  }
+  applySettingsTab(name);
+}
+document.getElementById("settingsAccountChangesSave")?.addEventListener("click",async()=>{
+  if(!await saveAccountFields())return;
+  const nextTab=pendingAccountSettingsTab;
+  closeAccountChangesDialog();
+  if(nextTab)applySettingsTab(nextTab);
+});
+document.getElementById("settingsAccountChangesDiscard")?.addEventListener("click",()=>{
+  const nextTab=pendingAccountSettingsTab;
+  closeAccountChangesDialog();
+  if(nextTab)applySettingsTab(nextTab);
+});
+document.getElementById("settingsAccountChangesCancel")?.addEventListener("click",closeAccountChangesDialog);
+document.getElementById("settingsAccountChangesDialog")?.addEventListener("click",event=>{
+  if(event.target.id==="settingsAccountChangesDialog")closeAccountChangesDialog();
+});
+
 function openAccountDialog(type){
   const dialog=document.getElementById("settingsAccountDialog");
   const title=document.getElementById("settingsAccountDialogTitle");
