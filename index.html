@@ -6804,11 +6804,11 @@ body:has(#game.settings-page-active),
   box-shadow:none;cursor:pointer;
   transition:background .18s ease,border-color .18s ease,color .18s ease;
 }
-.settings-nav-item:hover,.settings-nav-item:focus-visible,.settings-nav-item.active{
+.settings-nav-item:hover,.settings-nav-item:focus-visible{
   background:rgba(114,150,91,.5);border-color:transparent;color:#F5F1E7;
   outline:none;box-shadow:none;transform:none;
 }
-.settings-nav-item.active{font-weight:800}
+/* Wybrana kategoria nie jest stale wyróżniana — wszystkie przyciski mają ten sam wygląd. */
 .settings-main-panel{
   min-width:0;min-height:460px;padding:30px 34px;
   border:1px solid #72965B;border-radius:3px;background:#000;color:#fff;
