@@ -8238,6 +8238,74 @@ html.profile-editor-open .side-menu{
   box-sizing:border-box!important;
 }
 
+
+/* KOŃCOWE UJEDNOLICENIE: zwykłe przyciski mają obramowanie 1px i 100% szerokości kontenera. */
+#appStage button:not(#start .start-buttons button):not(#authOverlay button):not(.side-menu button):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn),
+#profileOverlay button:not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn),
+#playerPanel button:not(.side-menu button):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-edit):not(.profile-back-btn):not(.profile-back-button):not(.profile-back-icon):not(.close-btn):not(.eye-btn){
+  border-width:1px!important;
+  border-style:solid!important;
+  width:100%!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+
+/* Przyciski miniatury i potwierdzenia — jawne obramowanie oraz pełna szerokość ich kontenerów. */
+#profileOverlay .profile-mini-avatar-button,
+#miniAvatarEditor .mini-avatar-editor-actions button,
+#profileOverlay .profile-exit-actions button,
+#game .settings-navigation .settings-nav-item,
+#game .settings-reset-button{
+  border:1px solid #72965B!important;
+  box-sizing:border-box!important;
+}
+#profileOverlay .profile-mini-avatar-button,
+#miniAvatarEditor .mini-avatar-editor-actions button,
+#profileOverlay .profile-exit-actions button,
+#game .settings-navigation .settings-nav-item,
+#game .settings-reset-button{
+  width:100%!important;
+  max-width:100%!important;
+}
+#miniAvatarEditor .mini-avatar-editor-actions{
+  width:100%!important;
+  max-width:100%!important;
+}
+#miniAvatarEditor .mini-avatar-editor-actions button{
+  display:flex!important;
+  flex:0 0 100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+#profileOverlay .profile-exit-actions{
+  width:100%!important;
+  max-width:260px!important;
+}
+#profileOverlay .profile-exit-actions button{
+  display:flex!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+#game .settings-navigation .settings-nav-item{
+  display:flex!important;
+  flex:0 0 100%!important;
+}
+#game .settings-reset-row{
+  width:100%!important;
+  box-sizing:border-box!important;
+}
+#game .settings-reset-button{
+  display:flex!important;
+}
+#game .settings-navigation .settings-nav-item:hover,
+#game .settings-navigation .settings-nav-item:active,
+#game .settings-navigation .settings-nav-item:focus-visible,
+#game .settings-reset-button:hover,
+#game .settings-reset-button:active,
+#game .settings-reset-button:focus-visible{
+  border:1px solid #72965B!important;
+}
+
 </style>
 </head>
 
