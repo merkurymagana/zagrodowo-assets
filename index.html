@@ -8450,6 +8450,54 @@ html.profile-editor-open .side-menu{
   }
 }
 
+
+
+/* Konto i prywatność — akcje jako wyraźne pola wyboru w stylu menu Tekken 7. */
+#appStage .settings-tab-panel[data-settings-panel="account"] button.settings-account-action{
+  box-sizing:border-box!important;
+  min-width:118px!important;
+  min-height:30px!important;
+  padding:6px 12px!important;
+  border:1px solid rgba(245,241,231,.28)!important;
+  border-radius:1px!important;
+  background:linear-gradient(180deg,rgba(31,27,22,.82),rgba(12,11,10,.78))!important;
+  color:#F5F1E7!important;
+  -webkit-text-fill-color:#F5F1E7!important;
+  font:500 12px 'Nunito',Arial,sans-serif!important;
+  letter-spacing:.2px;
+  text-align:center!important;
+  opacity:1!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 2px 5px rgba(0,0,0,.22)!important;
+  transition:background .14s ease,border-color .14s ease,box-shadow .14s ease,color .14s ease!important;
+}
+#appStage .settings-tab-panel[data-settings-panel="account"] .settings-account-row:hover button.settings-account-action,
+#appStage .settings-tab-panel[data-settings-panel="account"] .settings-account-row:focus-within button.settings-account-action{
+  border-color:#E9C342!important;
+  background:linear-gradient(180deg,rgba(233,195,66,.24),rgba(116,83,24,.28))!important;
+  color:#FFE58A!important;
+  -webkit-text-fill-color:#FFE58A!important;
+  box-shadow:inset 3px 0 0 #E9C342,inset 0 1px 0 rgba(255,255,255,.12),0 2px 7px rgba(0,0,0,.28)!important;
+}
+#appStage .settings-tab-panel[data-settings-panel="account"] button.settings-account-action.settings-danger-button{
+  border-color:rgba(213,138,131,.55)!important;
+  background:linear-gradient(180deg,rgba(76,31,29,.7),rgba(27,13,13,.82))!important;
+  color:#E7A09A!important;
+  -webkit-text-fill-color:#E7A09A!important;
+}
+#appStage .settings-tab-panel[data-settings-panel="account"] .settings-account-last-row:hover button.settings-account-action{
+  border-color:#D58A83!important;
+  background:linear-gradient(180deg,rgba(213,138,131,.24),rgba(76,31,29,.42))!important;
+  color:#FFD0CB!important;
+  -webkit-text-fill-color:#FFD0CB!important;
+}
+@media(max-width:700px){
+  #appStage .settings-tab-panel[data-settings-panel="account"] button.settings-account-action{
+    min-width:118px!important;
+    min-height:29px!important;
+    padding:5px 10px!important;
+  }
+}
+
 </style>
 </head>
 
