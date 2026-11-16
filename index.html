@@ -8212,13 +8212,42 @@ html.profile-editor-open .side-menu{
 }
 
 
-/* Wspólna szerokość zwykłych przycisków w grze — 90% kontenera.
-   Menu startowe przed zalogowaniem i przyciski ikonowe pozostają bez zmian. */
-#game button:not([aria-label]):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-mini-avatar-button){
+/* WSPÓLNE ZASADY ZWYKŁYCH PRZYCISKÓW.
+   90% szerokości kontenera i promień 3px.
+   Wyjątki: menu startowe przed logowaniem oraz przyciski ikonowe. */
+#appStage button:not(#start .start-buttons button)
+  :not(.side-menu button)
+  :not(.compass-menu-button)
+  :not(.tasks-menu-button)
+  :not(.premium-menu-button)
+  :not(.help-menu-button)
+  :not(.logout-menu-button)
+  :not(.profile-mini-avatar-button)
+  :not(.profile-edit)
+  :not(.profile-back-btn)
+  :not(.close-btn)
+  :not(.eye-btn){
   width:90%!important;
   max-width:90%!important;
   margin-left:auto!important;
   margin-right:auto!important;
+  box-sizing:border-box!important;
+  border-radius:3px!important;
+}
+
+/* Wspólny promień 3px dla prostokątnych powierzchni i kontenerów UI.
+   Okrągłe awatary, znaczniki i ikony zachowują dotychczasowy kształt. */
+#appStage :is(
+  [class*="panel"],[class*="card"],[class*="window"],[class*="dialog"],
+  [class*="modal"],[class*="container"],[class*="notice"],[class*="popup"],
+  [class*="tab"],[class*="field"],[class*="menu"],[class*="button"],
+  [class$="-btn"],[class$="btn"],[class*="list"],[class*="box"],
+  .farm-land,.farm-area,.farm-home,.map-farm-button
+):not(.avatar-frame):not(.social-avatar):not(.country-flag):not(.coin-icon):not(.xp-track > div){
+  border-radius:3px!important;
+}
+#appStage :is(.avatar-frame,.social-avatar,.country-flag,.coin-icon,.xp-track > div){
+  border-radius:revert-layer;
 }
 
 </style>
