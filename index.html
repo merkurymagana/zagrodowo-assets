@@ -8215,18 +8215,7 @@ html.profile-editor-open .side-menu{
 /* WSPÓLNE ZASADY ZWYKŁYCH PRZYCISKÓW.
    90% szerokości kontenera i promień 3px.
    Wyjątki: menu startowe przed logowaniem oraz przyciski ikonowe. */
-#appStage button:not(#start .start-buttons button)
-  :not(.side-menu button)
-  :not(.compass-menu-button)
-  :not(.tasks-menu-button)
-  :not(.premium-menu-button)
-  :not(.help-menu-button)
-  :not(.logout-menu-button)
-  :not(.profile-mini-avatar-button)
-  :not(.profile-edit)
-  :not(.profile-back-btn)
-  :not(.close-btn)
-  :not(.eye-btn){
+#appStage button:not(#start .start-buttons button):not(.side-menu button):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-mini-avatar-button):not(.profile-edit):not(.profile-back-btn):not(.close-btn):not(.eye-btn):not([data-view="neighbors"]):not([data-view="settings"]){
   width:90%!important;
   max-width:90%!important;
   margin-left:auto!important;
@@ -8236,14 +8225,14 @@ html.profile-editor-open .side-menu{
 }
 
 /* Wspólny promień 3px dla prostokątnych powierzchni i kontenerów UI.
-   Okrągłe awatary, znaczniki i ikony zachowują dotychczasowy kształt. */
+   Przyciski ikonowe i okrągłe elementy pozostają bez zmian. */
 #appStage :is(
   [class*="panel"],[class*="card"],[class*="window"],[class*="dialog"],
   [class*="modal"],[class*="container"],[class*="notice"],[class*="popup"],
   [class*="tab"],[class*="field"],[class*="menu"],[class*="button"],
   [class$="-btn"],[class$="btn"],[class*="list"],[class*="box"],
   .farm-land,.farm-area,.farm-home,.map-farm-button
-):not(.avatar-frame):not(.social-avatar):not(.country-flag):not(.coin-icon):not(.xp-track > div){
+):not(button):not(.compass-menu-button):not(.tasks-menu-button):not(.premium-menu-button):not(.help-menu-button):not(.logout-menu-button):not(.profile-mini-avatar-button):not(.profile-edit):not(.profile-back-btn):not(.close-btn):not(.eye-btn):not(.avatar-frame):not(.social-avatar):not(.country-flag):not(.coin-icon):not(.xp-track > div){
   border-radius:3px!important;
 }
 #appStage :is(.avatar-frame,.social-avatar,.country-flag,.coin-icon,.xp-track > div){
