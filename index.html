@@ -6836,6 +6836,7 @@ body:has(#game.settings-page-active),
   min-height:68px;padding:13px 0;border-bottom:1px solid rgba(114,150,91,.55);
 }
 .settings-general-row:last-child{border-bottom:0}
+.settings-general-battery-row{border-bottom:1px solid rgba(114,150,91,.55)}
 .settings-general-copy{display:flex;flex-direction:column;gap:5px;min-width:0}
 .settings-general-label{color:#fff;font:600 13px 'Nunito',sans-serif}
 .settings-general-help{color:rgba(255,255,255,.7);font:400 12px/1.45 'Nunito',sans-serif}
@@ -8593,7 +8594,7 @@ html.profile-editor-open .side-menu{
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Jasność ekranu</span><span class="settings-general-help"></span></div><label class="settings-range"><input type="range" min="0" max="100" value="100" data-setting="brightness"><output>100%</output></label></div>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Kontrast</span><span class="settings-general-help"></span></div><label class="settings-range"><input type="range" min="0" max="100" value="100" data-setting="contrast"><output>100%</output></label></div>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Nie wygaszaj ekranu podczas gry</span><span class="settings-general-help"></span></div><label class="settings-toggle"><input type="checkbox" data-setting="keepAwake" ><span class="settings-toggle-track"></span></label></div>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Tryb oszczędzania baterii</span><span class="settings-general-help"></span></div><select class="settings-control-select" data-setting="batteryMode"><option value="off">Wyłączony</option><option value="auto">Automatyczny</option><option value="on">Włączony</option></select></div>
+                        <div class="settings-general-row settings-general-battery-row"><div class="settings-general-copy"><span class="settings-general-label">Tryb oszczędzania baterii</span><span class="settings-general-help"></span></div><select class="settings-control-select" data-setting="batteryMode"><option value="off">Wyłączony</option><option value="auto">Automatyczny</option><option value="on">Włączony</option></select></div>
                       </section>
                     </div><div class="settings-reset-row settings-general-reset-row"><button type="button" class="settings-reset-button" data-reset-category="general">Przywróć ustawienia domyślne</button></div></section>
                   <section class="settings-tab-panel" data-settings-panel="gameplay"><h2 class="settings-section-heading">Rozgrywka</h2><p class="settings-section-description">Dostosuj sposób wykonywania czynności w gospodarstwie.</p>
