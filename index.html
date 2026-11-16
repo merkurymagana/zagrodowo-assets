@@ -7336,7 +7336,7 @@ body:has(#game.settings-page-active),
 }
 .profile-exit-actions{
   display:flex;flex-direction:column;align-items:center;gap:9px;
-  width:min(260px,100%);margin:0 auto;
+  width:100%;max-width:100%;margin:0 auto;box-sizing:border-box;
 }
 .profile-exit-actions button{
   display:flex;align-items:center;justify-content:center;
@@ -8270,7 +8270,8 @@ html.profile-editor-open .side-menu{
   box-sizing:border-box!important;
 }
 #profileOverlay .profile-exit-actions{
-  max-width:260px!important;
+  width:100%!important;
+  max-width:100%!important;
 }
 #miniAvatarEditor .mini-avatar-editor-actions button,
 #profileOverlay .profile-exit-actions button{
