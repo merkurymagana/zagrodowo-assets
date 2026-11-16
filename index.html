@@ -8220,6 +8220,9 @@ html.profile-editor-open .side-menu{
   min-height:48px;
   padding:6px 0;
 }
+.settings-tab-panel[data-settings-panel="gameplay"] .settings-gameplay-last-row{
+  border-bottom:1px solid rgba(114,150,91,.55);
+}
 
 
 /* JEDEN WSPÓLNY STANDARD ZWYKŁYCH PRZYCISKÓW W ZAGRODOWIE.
@@ -8785,9 +8788,9 @@ html.profile-editor-open .side-menu{
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Potwierdzaj wydawanie diamentów</span></div><label class="settings-toggle"><input type="checkbox" data-setting="confirmPremium" checked><span class="settings-toggle-track"></span></label></div>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Potwierdzaj wyrywanie niedojrzałych roślin</span></div><label class="settings-toggle"><input type="checkbox" data-setting="confirmUnripeRemoval" checked><span class="settings-toggle-track"></span></label></div>
                         <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Potwierdzaj przerywanie produkcji</span></div><label class="settings-toggle"><input type="checkbox" data-setting="confirmCancelProduction" checked><span class="settings-toggle-track"></span></label></div>
-                        <div class="settings-general-row"><div class="settings-general-copy"><span class="settings-general-label">Potwierdzaj usuwanie budynków</span></div><label class="settings-toggle"><input type="checkbox" data-setting="confirmBuildingRemoval" checked><span class="settings-toggle-track"></span></label></div>
+                        <div class="settings-general-row settings-gameplay-last-row"><div class="settings-general-copy"><span class="settings-general-label">Potwierdzaj usuwanie budynków</span></div><label class="settings-toggle"><input type="checkbox" data-setting="confirmBuildingRemoval" checked><span class="settings-toggle-track"></span></label></div>
                       </section>
-                    </div><div class="settings-reset-row"><button type="button" class="settings-reset-button" data-reset-category="gameplay">Przywróć ustawienia domyślne</button></div></section>
+                    </div><div class="settings-reset-row settings-general-reset-row"><button type="button" class="settings-reset-button" data-reset-category="gameplay">Przywróć ustawienia domyślne</button></div></section>
                   <section class="settings-tab-panel" data-settings-panel="sound"><h2 class="settings-section-heading">Dźwięk</h2><p class="settings-section-description">Ustaw osobno głośność muzyki, efektów i odgłosów otoczenia.</p>
                     <div class="settings-general-content">
                       <section class="settings-general-section"><h3>Poziomy głośności</h3>
